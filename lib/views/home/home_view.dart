@@ -1,0 +1,68 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:bizreh_paints_store/controllers/home_controller.dart';
+import 'package:bizreh_paints_store/utils/consts/text.dart';
+import 'package:bizreh_paints_store/views/allBrands/all_brands_view.dart';
+import 'package:bizreh_paints_store/views/allCategories/all_categories_view.dart';
+import 'package:bizreh_paints_store/views/allProducts/all_products_view.dart';
+import 'package:bizreh_paints_store/views/home/widgets/bulletin_board.dart';
+import 'package:bizreh_paints_store/views/home/widgets/categories.dart';
+import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
+import 'package:bizreh_paints_store/views/home/widgets/section_header.dart';
+import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
+
+class HomeView extends StatelessWidget {
+  HomeView({super.key});
+  final HomeController controller = Get.put(HomeController());
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: const Text(nameApp),
+        centerTitle: true,
+        elevation: 0,
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              BulletinBoard(),
+              const SizedBox(height: 16),
+              SectionHeader(
+                title: 'Top Brands',
+                onSeeAll: () {
+                  Get.to(() => const AllBrandsView());
+                },
+              ),
+              const SizedBox(height: 8),
+              TopBrands(),
+              const SizedBox(height: 16),
+              SectionHeader(
+                title: 'Categories',
+                onSeeAll: () {
+                  Get.to(() => const AllCategoriesView());
+                },
+              ),
+              const SizedBox(height: 8),
+              Categories(),
+              const SizedBox(height: 16),
+              SectionHeader(
+                title: "Featured Products",
+                onSeeAll: () {
+                  Get.to(() => AllProductsView());
+                },
+              ),
+              const SizedBox(height: 8),
+              ProductsGrid(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

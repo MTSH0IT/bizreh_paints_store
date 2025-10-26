@@ -47,7 +47,7 @@ class MapCard extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withValues(alpha: 0.1),
+                      //color: Colors.black.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(

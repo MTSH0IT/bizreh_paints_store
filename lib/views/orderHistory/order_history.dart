@@ -1,5 +1,7 @@
+import 'package:bizreh_paints_store/views/orderDetails/order_details_view.dart';
 import 'package:flutter/material.dart';
 import 'widgets/order_history_item.dart';
+import 'package:get/get.dart';
 
 class OrderHistory extends StatelessWidget {
   const OrderHistory({super.key});
@@ -55,7 +57,9 @@ class OrderHistory extends StatelessWidget {
             date: o['date'] as String,
             amount: o['amount'] as double,
             statusLabel: o['status'] as String,
-            onAction: () {},
+            onAction: () {
+              Get.to(() => const OrderDetailsView());
+            },
           );
         },
       ),

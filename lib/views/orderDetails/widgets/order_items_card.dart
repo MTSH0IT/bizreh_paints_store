@@ -72,7 +72,6 @@ class ItemOredr extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          // Image with fixed size
           Container(
             width: 60,
             height: 60,

@@ -21,6 +21,7 @@ class _OtpCodeFieldsState extends State<OtpCodeFields> {
     super.initState();
     _controllers = List.generate(_length, (_) => TextEditingController());
     _nodes = List.generate(_length, (_) => FocusNode());
+    _nodes[0].requestFocus();
   }
 
   @override
@@ -50,9 +51,9 @@ class _OtpCodeFieldsState extends State<OtpCodeFields> {
         _nodes[index + 1].requestFocus();
       }
       // الحذف: نقل التركيز للحقل السابق
-      if (value.isEmpty && index > 0) {
-        _nodes[index - 1].requestFocus();
-      }
+      // if (value.isEmpty && index > 0) {
+      //   _nodes[index - 1].requestFocus();
+      // }
     }
     // تحديث الكود الحالي وإرسال الحالة
     final code = _controllers.map((e) => e.text).join();
@@ -78,13 +79,16 @@ class _OtpCodeFieldsState extends State<OtpCodeFields> {
                   if (_controllers[i].text.isNotEmpty) {
                     // إذا كان الحقل الحالي غير فارغ، احذفه وابق التركيز فيه
                     _controllers[i].clear();
-
+                    final code = _controllers.map((e) => e.text).join();
+                    widget.onCompleted?.call(code);
                     setState(() {});
                     return KeyEventResult.handled;
                   } else if (i > 0) {
                     // إذا كان الحقل الحالي فارغ، انتقل للحقل السابق وامسحه
                     _controllers[i - 1].clear();
                     _nodes[i - 1].requestFocus();
+                    final code = _controllers.map((e) => e.text).join();
+                    widget.onCompleted?.call(code);
 
                     setState(() {});
                     return KeyEventResult.handled;

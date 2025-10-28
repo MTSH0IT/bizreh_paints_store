@@ -33,9 +33,9 @@ final List<DiscountModel> demoDiscount = [
     value: 0.10,
   ),
   DiscountModel(
-    title: 'Win 150 points without discount',
-    subtitle: 'Earn points for future purchases',
-    type: 'none',
-    value: 0,
+    title: 'Buy 150 points get \$20 off',
+    subtitle: 'Get \$20 off your total purchase',
+    type: 'fixed',
+    value: 20,
   ),
 ];

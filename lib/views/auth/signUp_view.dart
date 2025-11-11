@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
-import 'package:bizreh_paints_store/views/auth/verification_view.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_field.dart';
+import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({super.key});
@@ -14,24 +14,10 @@ class SignUpView extends StatefulWidget {
   State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SignUpViewState extends State<SignUpView> {
-  final emailCtrl = TextEditingController();
-  final passCtrl = TextEditingController();
-  final confirmCtrl = TextEditingController();
-  final phoneCtrl = TextEditingController();
-  final firstNameCtrl = TextEditingController();
-  final lastNameCtrl = TextEditingController();
+final AuthController _auth = Get.put(AuthController(), permanent: true);
 
-  @override
-  void dispose() {
-    emailCtrl.dispose();
-    passCtrl.dispose();
-    confirmCtrl.dispose();
-    phoneCtrl.dispose();
-    firstNameCtrl.dispose();
-    lastNameCtrl.dispose();
-    super.dispose();
-  }
+class _SignUpViewState extends State<SignUpView> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -39,63 +25,119 @@ class _SignUpViewState extends State<SignUpView> {
       backgroundColor: backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const AuthHeader(title: 'Create an account'),
-              AuthTextField(controller: firstNameCtrl, hint: 'First Name'),
-              AuthTextField(controller: lastNameCtrl, hint: 'Last Name'),
-              AuthTextField(
-                controller: phoneCtrl,
-                hint: 'Phone Number',
-                keyboardType: TextInputType.phone,
-              ),
-              AuthTextField(
-                controller: emailCtrl,
-                hint: 'Email',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              AuthTextField(
-                controller: passCtrl,
-                hint: 'Password',
-                obscure: true,
-              ),
-              AuthTextField(
-                controller: confirmCtrl,
-                hint: 'Confirm Password',
-                obscure: true,
-              ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const AuthHeader(title: 'Create an account'),
+                AuthTextField(
+                  controller: _auth.firstNameCtrl,
+                  hint: 'First Name',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your first name';
+                    }
+                    return null;
+                  },
+                ),
+                AuthTextField(
+                  controller: _auth.lastNameCtrl,
+                  hint: 'Last Name',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your last name';
+                    }
+                    return null;
+                  },
+                ),
+                AuthTextField(
+                  controller: _auth.phoneCtrl,
+                  hint: 'Phone Number',
+                  keyboardType: TextInputType.phone,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    }
+                    return null;
+                  },
+                ),
+                AuthTextField(
+                  controller: _auth.emailCtrl,
+                  hint: 'Email',
+                  keyboardType: TextInputType.emailAddress,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!GetUtils.isEmail(value)) {
+                      return 'Please enter a valid email';
+                    }
+                    return null;
+                  },
+                ),
+                AuthTextField(
+                  controller: _auth.passwordCtrl,
+                  hint: 'Password',
+                  obscure: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+                AuthTextField(
+                  controller: _auth.confirmCtrl,
+                  hint: 'Confirm Password',
+                  obscure: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please confirm your password';
+                    }
+                    if (value != _auth.passwordCtrl.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                ),
 
-              const SizedBox(height: 8),
-              MainButton(
-                title: 'Create Account',
-                onPressed: () {
-                  Get.to(() => const VerificationView());
-                },
-              ),
-              const SizedBox(height: 8),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 24.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text('Already have an account? '),
-                    GestureDetector(
-                      onTap: () {
-                        Get.to(() => const SignInView());
-                      },
-                      child: const Text(
-                        'Sign in',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.w600,
+                const SizedBox(height: 8),
+                MainButton(
+                  title: 'Create Account',
+                  onPressed: () async {
+                    if (_formKey.currentState?.validate() ?? false) {
+                      await _auth.signUp();
+                    }
+                  },
+                ),
+                const SizedBox(height: 8),
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 24.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Already have an account? '),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => const SignInView());
+                        },
+                        child: const Text(
+                          'Sign in',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

@@ -39,14 +39,25 @@ class MyCartController extends GetxController {
 
   void incrementQuantity(int index) {
     if (index >= 0 && index < cartItems.length) {
-      cartItems[index].incrementQuantity();
-      cartItems.refresh();
+      if (cartItems[index].quantity < 999) {
+        cartItems[index].incrementQuantity();
+        cartItems.refresh();
+      }
     }
   }
 
   void decrementQuantity(int index) {
     if (index >= 0 && index < cartItems.length) {
-      cartItems[index].decrementQuantity();
+      if (cartItems[index].quantity > 1) {
+        cartItems[index].decrementQuantity();
+        cartItems.refresh();
+      }
+    }
+  }
+
+  void updateQuantity(int index, int newQuantity) {
+    if (index >= 0 && index < cartItems.length && newQuantity > 0) {
+      cartItems[index].quantity = newQuantity;
       cartItems.refresh();
     }
   }

@@ -1,7 +1,11 @@
+import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter/services.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
 
-class CartItemTile extends StatelessWidget {
+class CartItemTile extends StatefulWidget {
   const CartItemTile({
     super.key,
     required this.image,
@@ -10,6 +14,7 @@ class CartItemTile extends StatelessWidget {
     required this.quantity,
     required this.onIncrement,
     required this.onDecrement,
+    this.onSetQuantity,
   });
 
   final String image;
@@ -18,6 +23,20 @@ class CartItemTile extends StatelessWidget {
   final int quantity;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final Function(int)? onSetQuantity;
+
+  @override
+  State<CartItemTile> createState() => _CartItemTileState();
+}
+
+class _CartItemTileState extends State<CartItemTile> {
+  Timer? timer;
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +60,7 @@ class CartItemTile extends StatelessWidget {
             height: 80,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.network(
-                image,
-                fit: BoxFit.fill,
-                errorBuilder: (c, e, s) => Container(
-                  color: Colors.grey.shade200,
-                  child: const Icon(Icons.format_paint, color: Colors.black38),
-                ),
-              ),
+              child: ImageNetwork(image: widget.image),
             ),
           ),
           const SizedBox(width: 12),
@@ -57,7 +69,7 @@ class CartItemTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  widget.title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
@@ -65,7 +77,7 @@ class CartItemTile extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  '\$${price.toStringAsFixed(2)}',
+                  '\$${widget.price.toStringAsFixed(2)}',
                   style: const TextStyle(color: Colors.black54),
                 ),
               ],
@@ -76,21 +88,32 @@ class CartItemTile extends StatelessWidget {
               color: Colors.grey.shade100,
               borderRadius: BorderRadius.circular(20),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+            padding: const EdgeInsets.symmetric(vertical: 2),
             child: Row(
               children: [
-                _circleIcon(icon: Icons.remove, onTap: onDecrement),
+                _circleIcon(
+                  icon: Icons.remove,
+                  onTap: widget.onDecrement,
+                  repeatWhile: () => widget.quantity > 1,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Text(
-                    quantity.toString(),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                  child: GestureDetector(
+                    onTap: _showQuantityDialog,
+                    child: Text(
+                      widget.quantity.toString(),
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),
-                _circleIcon(icon: Icons.add, onTap: onIncrement, filled: true),
+                _circleIcon(
+                  icon: Icons.add,
+                  onTap: widget.onIncrement,
+                  filled: true,
+                ),
               ],
             ),
           ),
@@ -103,24 +126,122 @@ class CartItemTile extends StatelessWidget {
     required IconData icon,
     required VoidCallback onTap,
     bool filled = false,
+    bool Function()? repeatWhile,
   }) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(16),
-      child: Container(
-        width: 28,
-        height: 28,
-        decoration: BoxDecoration(
-          color: filled ? primaryColor : Colors.white,
-          shape: BoxShape.circle,
-          border: Border.all(color: Colors.black12),
-        ),
-        child: Icon(
-          icon,
-          size: 16,
-          color: filled ? Colors.white : Colors.black87,
+    return GestureDetector(
+      onLongPress: () {
+        HapticFeedback.lightImpact();
+        timer?.cancel();
+        timer = Timer.periodic(const Duration(milliseconds: 120), (_) {
+          if (repeatWhile == null || repeatWhile()) {
+            onTap();
+          } else {
+            timer?.cancel();
+            timer = null;
+          }
+        });
+      },
+      onLongPressUp: () {
+        timer?.cancel();
+        timer = null;
+      },
+      onTapCancel: () {
+        timer?.cancel();
+        timer = null;
+      },
+
+      child: InkWell(
+        customBorder: const CircleBorder(),
+        splashColor: primaryColor.withValues(alpha: 0.15),
+        onTap: () {
+          HapticFeedback.lightImpact();
+          onTap();
+        },
+
+        child: SizedBox(
+          width: 28,
+          height: 28,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: filled ? primaryColor : Colors.white,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black12),
+            ),
+            child: Icon(
+              icon,
+              size: 16,
+              color: filled ? Colors.white : Colors.black87,
+            ),
+          ),
         ),
       ),
     );
+  }
+
+  Future<void> _showQuantityDialog() async {
+    if (widget.onSetQuantity == null) return;
+    final controller = TextEditingController(text: widget.quantity.toString());
+    String? errorText;
+    final result = await showDialog<int>(
+      context: context,
+      builder: (context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text(
+                'Set new quantity',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    controller: controller,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    decoration: InputDecoration(
+                      label: const Text('Quantity'),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      errorText: errorText,
+                      errorMaxLines: 2,
+                    ),
+                  ),
+                ],
+              ),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Cancel'),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        final q = int.tryParse(controller.text);
+                        if (q != null && q > 0 && q < 1000) {
+                          Navigator.of(context).pop(q);
+                        } else {
+                          setState(() {
+                            errorText =
+                                'Please enter a valid number\nbetween 1 and 999';
+                          });
+                        }
+                      },
+                      child: const Text('OK'),
+                    ),
+                  ],
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+    if (result != null && result > 0) {
+      widget.onSetQuantity!(result);
+    }
   }
 }

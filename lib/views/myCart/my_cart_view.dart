@@ -7,17 +7,12 @@ import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 
-class MyCartView extends StatefulWidget {
-  const MyCartView({super.key});
+class MyCartView extends StatelessWidget {
+  MyCartView({super.key});
 
-  @override
-  State<MyCartView> createState() => _MyCartViewState();
-}
-
-class _MyCartViewState extends State<MyCartView> {
   final MyCartController cartController = Get.put(MyCartController());
-  // Discount state moved to controller (selectedDiscount, discountAmount)
 
+  // Discount state moved to controller (selectedDiscount, discountAmount)
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,148 +32,146 @@ class _MyCartViewState extends State<MyCartView> {
           if (isEmpty) {
             return const Center(child: Text('Your cart is empty'));
           }
-          return Visibility(
-            visible: !cartController.isEmpty(),
-            child: Column(
-              children: [
-                Expanded(
-                  child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: cartController.cartItems.length,
-                          itemBuilder: (context, index) {
-                            final item = cartController.cartItems[index];
-                            return Padding(
-                              padding: EdgeInsets.only(bottom: 12),
-                              child: CartItemTile(
-                                image: item.product.image,
-                                title: item.product.title,
-                                price: item.product.price,
-                                quantity: item.quantity,
-                                onIncrement: () {
-                                  cartController.incrementQuantity(index);
-                                },
-                                onDecrement: () {
-                                  if (item.quantity > 1) {
-                                    cartController.decrementQuantity(index);
-                                  } else {
-                                    // Confirm before removing the item from cart
-                                    Get.defaultDialog(
-                                      title: 'Remove Item',
-                                      middleText:
-                                          'Aremove this item from the cart?',
-                                      confirm: MainButton(
-                                        title: 'Remove',
-                                        onPressed: () {
-                                          cartController.removeFromCart(index);
-                                          Get.back();
-                                        },
-                                      ),
-                                      cancel: MainButton(
-                                        title: 'Cancel',
-                                        onPressed: () => Get.back(),
-                                      ),
-                                    );
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                        const SizedBox(height: 12),
-                        // Subtotal and shipping
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          padding: const EdgeInsets.all(12),
-                          child: Column(
-                            children: [
-                              PriceRow(
-                                label: 'Items (${cartController.totalItems()})',
-                                amount: subtotal,
-                              ),
-                              PriceRow(label: 'Shipping', amount: shipping),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        // Discounts
-                        cartController.discounts.isEmpty
-                            ? SizedBox()
-                            : Row(
-                                children: [
-                                  Text(
-                                    'Available Discounts',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16,
+          return Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: cartController.cartItems.length,
+                        itemBuilder: (context, index) {
+                          final item = cartController.cartItems[index];
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 12),
+                            child: CartItemTile(
+                              image: item.product.image,
+                              title: item.product.title,
+                              price: item.product.price,
+                              quantity: item.quantity,
+                              onIncrement: () {
+                                cartController.incrementQuantity(index);
+                              },
+                              onDecrement: () {
+                                if (item.quantity > 1) {
+                                  cartController.decrementQuantity(index);
+                                } else {
+                                  // Confirm before removing the item from cart
+                                  Get.defaultDialog(
+                                    title: 'Remove Item',
+                                    middleText:
+                                        'Aremove this item from the cart?',
+                                    confirm: MainButton(
+                                      title: 'Remove',
+                                      onPressed: () {
+                                        cartController.removeFromCart(index);
+                                        Get.back();
+                                      },
                                     ),
-                                  ),
-                                ],
-                              ),
-                        const SizedBox(height: 12),
-                        ListView.separated(
-                          itemCount: cartController.discounts.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          separatorBuilder: (_, __) =>
-                              const SizedBox(height: 10),
-                          itemBuilder: (context, index) {
-                            final d = cartController.discounts[index];
-                            return DiscountOptionTile(
-                              selected:
-                                  cartController.selectedDiscount.value ==
-                                  index,
-                              title: d.title,
-                              subtitle: d.subtitle,
-                              amount: d.type == 'percentage'
-                                  ? -(subtotal * d.value)
-                                  : d.type == 'fixed'
-                                  ? -d.value
-                                  : 0.0,
-                              onTap: () =>
-                                  cartController.setSelectedDiscount(index),
-                            );
-                          },
+                                    cancel: MainButton(
+                                      title: 'Cancel',
+                                      onPressed: () => Get.back(),
+                                    ),
+                                  );
+                                }
+                              },
+                              onSetQuantity: (newQty) {
+                                cartController.updateQuantity(index, newQty);
+                              },
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      // Subtotal and shipping
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        const SizedBox(height: 12),
-                      ],
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Divider(color: Colors.grey, thickness: 1),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: PriceRow(
-                    label: 'Total',
-                    amount: total,
-                    emphasis: true,
-                    color: primaryColor,
-                  ),
-                ),
-                MainButton(
-                  title: 'Proceed to Checkout',
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          'Proceeding to checkout with total: \$${total.toStringAsFixed(2)}',
+                        padding: const EdgeInsets.all(12),
+                        child: Column(
+                          children: [
+                            PriceRow(
+                              label: 'Items (${cartController.totalItems()})',
+                              amount: subtotal,
+                            ),
+                            PriceRow(label: 'Shipping', amount: shipping),
+                          ],
                         ),
                       ),
-                    );
-                  },
+                      const SizedBox(height: 16),
+                      // Discounts
+                      cartController.discounts.isEmpty
+                          ? SizedBox()
+                          : Row(
+                              children: [
+                                Text(
+                                  'Available Discounts',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            ),
+                      const SizedBox(height: 12),
+                      ListView.separated(
+                        itemCount: cartController.discounts.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (_, __) => const SizedBox(height: 10),
+                        itemBuilder: (context, index) {
+                          final d = cartController.discounts[index];
+                          return DiscountOptionTile(
+                            selected:
+                                cartController.selectedDiscount.value == index,
+                            title: d.title,
+                            subtitle: d.subtitle,
+                            amount: d.type == 'percentage'
+                                ? -(subtotal * d.value)
+                                : d.type == 'fixed'
+                                ? -d.value
+                                : 0.0,
+                            onTap: () =>
+                                cartController.setSelectedDiscount(index),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Divider(color: Colors.grey, thickness: 1),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: PriceRow(
+                  label: 'Total',
+                  amount: total,
+                  emphasis: true,
+                  color: primaryColor,
+                ),
+              ),
+              MainButton(
+                title: 'Proceed to Checkout',
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Proceeding to checkout with total: \$${total.toStringAsFixed(2)}',
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           );
         }),
       ),

@@ -10,13 +10,11 @@ import 'package:bizreh_paints_store/views/auth/widgets/auth_text_link.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/secondary_button.dart';
 
 class SignInView extends StatefulWidget {
-  const SignInView({super.key});
-
+  SignInView({super.key});
+  final AuthController _auth = Get.put(AuthController());
   @override
   State<SignInView> createState() => _SignInViewState();
 }
-
-final AuthController _auth = Get.put(AuthController(), permanent: true);
 
 class _SignInViewState extends State<SignInView> {
   final formKey = GlobalKey<FormState>();
@@ -37,7 +35,7 @@ class _SignInViewState extends State<SignInView> {
                   subtitle: 'Please enter your details to sign in.',
                 ),
                 AuthTextField(
-                  controller: _auth.loginEmailCtrl,
+                  controller: widget._auth.loginEmailCtrl,
                   hint: 'Email address',
                   keyboardType: TextInputType.emailAddress,
                   validator: (value) {
@@ -51,7 +49,7 @@ class _SignInViewState extends State<SignInView> {
                   },
                 ),
                 AuthTextField(
-                  controller: _auth.loginPasswordCtrl,
+                  controller: widget._auth.loginPasswordCtrl,
                   hint: 'Password',
                   obscure: true,
                   validator: (value) {
@@ -71,7 +69,7 @@ class _SignInViewState extends State<SignInView> {
                   title: 'Log In',
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      _auth.signIn();
+                      widget._auth.signIn();
                     }
                   },
                 ),

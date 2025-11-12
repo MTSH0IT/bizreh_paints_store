@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_field.dart';
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
@@ -14,7 +13,7 @@ class SignUpView extends StatefulWidget {
   State<SignUpView> createState() => _SignUpViewState();
 }
 
-final AuthController _auth = Get.put(AuthController(), permanent: true);
+final _auth = Get.find<AuthController>();
 
 class _SignUpViewState extends State<SignUpView> {
   final _formKey = GlobalKey<FormState>();
@@ -123,7 +122,7 @@ class _SignUpViewState extends State<SignUpView> {
                       const Text('Already have an account? '),
                       GestureDetector(
                         onTap: () {
-                          Get.to(() => const SignInView());
+                          Get.back();
                         },
                         child: const Text(
                           'Sign in',

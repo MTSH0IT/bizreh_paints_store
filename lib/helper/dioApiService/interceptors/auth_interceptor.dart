@@ -13,7 +13,7 @@ class AuthInterceptor extends Interceptor {
   ) async {
     // Get access token from storage and attach to headers if present
     try {
-      final token = _storageService.getString(StorageKey.accessToken);
+      final token = _storageService.getString(StorageKey.token);
       if (token != null && token.isNotEmpty) {
         options.headers['Authorization'] = 'Bearer $token';
       }

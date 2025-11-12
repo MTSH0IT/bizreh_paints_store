@@ -1,9 +1,14 @@
+import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
+import 'package:bizreh_paints_store/views/settings/change_password_view.dart';
+import 'package:bizreh_paints_store/views/settings/delete_account_view.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'widgets/settings_tile.dart';
 
 class SettingsView extends StatelessWidget {
-  const SettingsView({super.key});
-
+  SettingsView({super.key});
+  final PersonalController personalController = Get.put(PersonalController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,18 +21,47 @@ class SettingsView extends StatelessWidget {
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
-          children: const [
+          children: [
             SingleChildScrollView(
               child: Column(
                 children: [
-                  SettingsTile(title: 'Language'),
-                  SettingsTile(title: 'Change Password'),
-                  SettingsTile(title: 'Contact Support'),
-                  SettingsTile(title: 'Submit a Complaint'),
-                  SettingsTile(title: 'Privacy Policy'),
-                  SettingsTile(title: 'Terms of Service'),
-                  SettingsTile(title: 'Delete Account', destructive: true),
-                  SettingsTile(title: 'Logout', destructive: true),
+                  const SettingsTile(title: 'Language'),
+                  SettingsTile(
+                    title: 'Change Password',
+                    onTap: () {
+                      Get.to(() => ChangePasswordView());
+                    },
+                  ),
+                  const SettingsTile(title: 'Contact Support'),
+                  const SettingsTile(title: 'Submit a Complaint'),
+                  const SettingsTile(title: 'Privacy Policy'),
+                  const SettingsTile(title: 'Terms of Service'),
+                  SettingsTile(
+                    title: 'Delete Account',
+                    destructive: true,
+                    onTap: () {
+                      Get.to(() => DeleteAccountView());
+                    },
+                  ),
+                  SettingsTile(
+                    title: 'Logout',
+                    destructive: true,
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => ConfirmationDialog(
+                          title: 'تسجيل الخروج',
+                          message: 'هل أنت متأكد من رغبتك في تسجيل الخروج؟',
+                          confirmText: 'تسجيل الخروج',
+                          cancelText: 'إلغاء',
+                          isDestructive: false,
+                          onConfirm: () {
+                            personalController.signOut();
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
             ),

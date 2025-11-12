@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/controllers/personal_information_controller.dart';
+import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 
 import 'widgets/labeled_text_field.dart';
 
@@ -13,9 +13,7 @@ class PersonalInformation extends StatefulWidget {
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
-  final PersonalInformationController ctrl = Get.put(
-    PersonalInformationController(),
-  );
+  final PersonalController ctrl = Get.put(PersonalController());
 
   @override
   Widget build(BuildContext context) {
@@ -29,36 +27,55 @@ class _PersonalInformationState extends State<PersonalInformation> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 16),
-              LabeledTextField(
-                label: 'Name',
-                hint: 'Enter your name',
-                controller: ctrl.nameCtrl,
-              ),
-              LabeledTextField(
-                label: 'Email',
-                hint: 'Enter your email',
-                controller: ctrl.emailCtrl,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              LabeledTextField(
-                label: 'Phone Number',
-                hint: 'Enter your phone number',
-                controller: ctrl.phoneCtrl,
-                keyboardType: TextInputType.phone,
-              ),
-              const Spacer(),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 12.0),
-                child: MainButton(
-                  title: 'Save Changes',
-                  onPressed: () => ctrl.changeInfo(),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                Obx(
+                  () => LabeledTextField(
+                    label: 'First Name',
+                    hint: 'Enter your first name',
+                    controller: ctrl.firstNameCtrl,
+                    errorText: ctrl.firstNameError.value,
+                  ),
                 ),
-              ),
-            ],
+                Obx(
+                  () => LabeledTextField(
+                    label: 'Last Name',
+                    hint: 'Enter your last name',
+                    controller: ctrl.lastNameCtrl,
+                    errorText: ctrl.lastNameError.value,
+                  ),
+                ),
+                Obx(
+                  () => LabeledTextField(
+                    label: 'Email',
+                    hint: 'Enter your email',
+                    controller: ctrl.emailCtrl,
+                    keyboardType: TextInputType.emailAddress,
+                    errorText: ctrl.emailError.value,
+                  ),
+                ),
+                Obx(
+                  () => LabeledTextField(
+                    label: 'Phone Number',
+                    hint: 'Enter your phone number',
+                    controller: ctrl.phoneCtrl,
+                    keyboardType: TextInputType.phone,
+                    errorText: ctrl.phoneError.value,
+                  ),
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 12.0),
+                  child: MainButton(
+                    title: 'Save Changes',
+                    onPressed: () => ctrl.changeInfo(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

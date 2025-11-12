@@ -5,6 +5,8 @@ class LabeledTextField extends StatelessWidget {
   final String hint;
   final TextEditingController controller;
   final TextInputType keyboardType;
+  final String? errorText;
+  final bool obscureText;
 
   const LabeledTextField({
     super.key,
@@ -12,6 +14,8 @@ class LabeledTextField extends StatelessWidget {
     required this.hint,
     required this.controller,
     this.keyboardType = TextInputType.text,
+    this.errorText,
+    this.obscureText = false,
   });
 
   @override
@@ -26,6 +30,7 @@ class LabeledTextField extends StatelessWidget {
           TextField(
             controller: controller,
             keyboardType: keyboardType,
+            obscureText: obscureText,
             decoration: InputDecoration(
               hintText: hint,
               filled: true,
@@ -39,6 +44,7 @@ class LabeledTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Colors.blue),
               ),
+              errorText: errorText,
             ),
           ),
         ],

@@ -1,6 +1,5 @@
 class StorageKey {
-  static const String accessToken = 'access_token';
-  static const String refreshToken = 'refresh_token';
+  static const String token = 'token';
   static const String user = 'user';
 }
 
@@ -23,4 +22,6 @@ class JsonKey {
   static const String createdAt = "created_at";
   static const String isActive = "is_active";
   static const String ordersCount = "orders_count";
+  static const String currentPassword = "current_password";
+  static const String newPassword = "new_password";
 }

@@ -5,4 +5,9 @@ class ApiEndpoint {
   // Auth
   static const String login = "/user/profile/login";
   static const String signup = "/user/profile/signup";
+  //user
+  static const String getProfile = "/user/profile/profile";
+  static const String updateProfile = "/user/profile/profile";
+  static const String deleteAccount = "/user/profile/account";
+  static const String changePassword = "/user/profile/change-password";
 }

@@ -67,15 +67,11 @@ class ErrorInterceptor extends Interceptor {
       case 400:
         return BadRequestException(message: message);
       case 401:
-        return UnauthorizedException(
-          message: 'Unauthorized. Please login again.',
-        );
+        return UnauthorizedException(message: message);
       case 403:
         return ForbiddenException(message: 'Access forbidden');
       case 404:
         return NotFoundException(message: 'Resource not found');
-      case 415:
-        return NotFoundException(message: 'Unsupported media type 415');
       case 422:
         return ValidationException(
           message: message,

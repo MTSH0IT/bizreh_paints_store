@@ -21,6 +21,11 @@ class HomeController extends GetxController {
     loadBanners();
     loadProducts();
     pageController.addListener(_onPageChanged);
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
     _startBannerAutoScroll();
   }
 
@@ -33,8 +38,10 @@ class HomeController extends GetxController {
   }
 
   void _onPageChanged() {
-    if (pageController.page != null) {
-      currentBannerIndex.value = pageController.page!.round();
+    if (!pageController.hasClients) return;
+    final p = pageController.page;
+    if (p != null) {
+      currentBannerIndex.value = p.round();
     }
   }
 
@@ -53,14 +60,19 @@ class HomeController extends GetxController {
 
   void _startBannerAutoScroll() {
     if (banners.isEmpty) return;
+    _bannerTimer?.cancel();
     _bannerTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      int nextPage = (pageController.page!.round()) + 1;
+      if (!pageController.hasClients) return;
+      final current = pageController.page?.round() ?? 0;
+      int nextPage = current + 1;
       if (nextPage >= banners.length) nextPage = 0;
-      pageController.animateToPage(
-        nextPage,
-        duration: const Duration(milliseconds: 500),
-        curve: Curves.easeInOut,
-      );
+      if (pageController.hasClients) {
+        pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
+        );
+      }
     });
   }
 }

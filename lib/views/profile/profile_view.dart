@@ -6,8 +6,6 @@ import 'package:bizreh_paints_store/views/personalInformation/personal_informati
 import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
 import 'package:bizreh_paints_store/views/wishList/wish_list.dart';
-
-import 'widgets/profile_header.dart';
 import 'widgets/profile_list_item.dart';
 import 'widgets/section_title.dart';
 
@@ -29,7 +27,7 @@ class ProfileView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              const ProfileHeader(name: 'mohammad altaher'),
+              //const ProfileHeader(name: 'mohammad altaher'),
               const SectionTitle(title: 'Account'),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -112,7 +110,7 @@ class ProfileView extends StatelessWidget {
                       icon: Icons.settings_outlined,
                       title: 'App Preferences',
                       onTap: () {
-                        Get.to(() => const SettingsView());
+                        Get.to(() => SettingsView());
                       },
                     ),
                   ],

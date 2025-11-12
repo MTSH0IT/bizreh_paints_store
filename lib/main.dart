@@ -8,6 +8,7 @@ import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
+
   await StorageService.init();
   runApp(const MainApp());
 }
@@ -20,7 +21,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
-      home: const SignInView(),
+      home: SignInView(),
     );
   }
 }

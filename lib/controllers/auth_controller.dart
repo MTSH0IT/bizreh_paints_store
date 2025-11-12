@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:bizreh_paints_store/views/mainView/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -68,11 +69,11 @@ class AuthController extends GetxController {
     } on AppException catch (e) {
       generalError.value = e.message;
       log("auth controller AppException sign in : ${generalError.value}");
-      _showError(e.message);
+      showMassage(e.message, false);
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch sign in : ${generalError.value}");
-      _showError("حدث خطأ ما حاول مرة اخرى");
+      showMassage("حدث خطأ ما حاول مرة اخرى", false);
     } finally {
       isLoading.value = false;
     }
@@ -98,36 +99,21 @@ class AuthController extends GetxController {
     } on AppException catch (e) {
       generalError.value = e.message;
       log("auth controller AppException sign up : ${generalError.value}");
-      _showError(e.message);
+      showMassage(e.message, false);
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch sign up : ${generalError.value}");
-      _showError("حدث خطأ  حاول مرة اخرى");
+      showMassage("حدث خطأ  حاول مرة اخرى", false);
     } finally {
       isLoading.value = false;
     }
   }
 
-  Future<void> signOut() async {
-    // TODO: implement signOut
-  }
-
   Future<void> _persistAuth(AuthResponse res) async {
     log("persistAuth token:\n ${res.token}");
-    await _storage.setString(StorageKey.accessToken, res.token);
+    await _storage.setString(StorageKey.token, res.token);
 
     log("persistAuth user:\n ${res.user.toString()}");
     await _storage.setJson(StorageKey.user, res.user.toJson());
-  }
-
-  void _showError(String message) {
-    Get.snackbar(
-      'خطأ',
-      message,
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: const Color(0xFFB00020),
-      colorText: Colors.white,
-      duration: const Duration(seconds: 3),
-    );
   }
 }

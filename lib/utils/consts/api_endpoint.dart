@@ -10,4 +10,7 @@ class ApiEndpoint {
   static const String updateProfile = "/user/profile/profile";
   static const String deleteAccount = "/user/profile/account";
   static const String changePassword = "/user/profile/change-password";
+  //brands
+  static const String brandsFeatured = "/user/brand/brands/featured";
+  static const String brands = "/user/brand/brands";
 }

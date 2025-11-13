@@ -1,54 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:bizreh_paints_store/controllers/home_controller.dart';
+import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 import '../../utils/widgets/see_all_card.dart';
 
 class AllBrandsView extends StatelessWidget {
   const AllBrandsView({super.key});
 
-  List<Map<String, String>> get _brands => const [
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-    {
-      'image':
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRWbvsXkRkBLypibCkCWT_GQ9VWFXkGWU79Q&s',
-      'name': 'Bizreh Group',
-    },
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find<HomeController>();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -59,31 +20,39 @@ class AllBrandsView extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          children: [
-            const SizedBox(height: 8),
-            Expanded(
-              child: GridView.builder(
-                padding: const EdgeInsets.only(top: 8, bottom: 24),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 18,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 1.25,
-                ),
-                itemCount: _brands.length,
-                itemBuilder: (context, index) {
-                  final brand = _brands[index];
-                  return SeeAllCard(
-                    name: brand['name']!,
-                    imageUrl: brand['image']!,
-                    onTap: () {},
-                  );
-                },
+        child: Obx(() {
+          if (controller.isBrandsLoading.value) {
+            return const Center(
+              child: SizedBox(
+                height: 32,
+                width: 32,
+                child: CircularProgressIndicator(strokeWidth: 2.5),
               ),
+            );
+          }
+          final List<BrandModel> items = controller.brands;
+          if (items.isEmpty) {
+            return const Center(child: Text('No brands'));
+          }
+          return GridView.builder(
+            padding: const EdgeInsets.only(top: 8, bottom: 24),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              mainAxisSpacing: 18,
+              crossAxisSpacing: 16,
+              childAspectRatio: 1.25,
             ),
-          ],
-        ),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final item = items[index];
+              return SeeAllCard(
+                name: item.title ?? '',
+                imageUrl: item.image ?? '',
+                onTap: () {},
+              );
+            },
+          );
+        }),
       ),
     );
   }

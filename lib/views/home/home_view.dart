@@ -36,7 +36,8 @@ class HomeView extends StatelessWidget {
               SectionHeader(
                 title: 'Top Brands',
                 onSeeAll: () {
-                  Get.to(() => const AllBrandsView());
+                  controller.loadBrands();
+                  Get.to(() => AllBrandsView());
                 },
               ),
               const SizedBox(height: 8),

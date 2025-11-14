@@ -20,7 +20,6 @@ class _BrandProductsViewState extends State<BrandProductsView> {
   int _page = 1;
   final int _limit = 20;
   bool _isLoadingMore = false;
-  // hasMore سيُقرأ من controller.brandProductsPagination
 
   @override
   void initState() {

@@ -13,4 +13,15 @@ class ApiEndpoint {
   //brands
   static const String brandsFeatured = "/user/brand/brands/featured";
   static const String brands = "/user/brand/brands";
+  static String brandProducts(int id) => "/user/brand/brands/$id/products";
+
+  //category
+  static const String superCategories = "/user/category/super-categories";
+  static const String categories = "/user/category/categories";
+  static const String subCategories = "/user/category/sub-categories";
+  static const String categoryTree = "/user/category/category-tree";
+  static String superCategoryById(int id) =>
+      "/user/category/super-categories/$id";
+  static String categoryById(int id) => "/user/category/categories/$id";
+  static String subCategoryById(int id) => "/user/category/sub-categories/$id";
 }

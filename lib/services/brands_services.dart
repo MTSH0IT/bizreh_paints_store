@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 import 'package:bizreh_paints_store/models/productb_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
@@ -83,7 +82,7 @@ class BrandsServices {
   }) async {
     try {
       final response = await _dioClient.get(
-        "${ApiEndpoint.brands}/$brandId/products",
+        ApiEndpoint.brandProducts(brandId),
         queryParameters: {'page': page, 'limit': limit},
       );
 

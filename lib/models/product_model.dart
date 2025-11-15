@@ -1,92 +1,74 @@
 class ProductModel {
-  final String image;
-  final String title;
-  final String subTitle;
-  final String description;
-  final double price;
+  int? id;
+  String? title;
+  String? arTitle;
+  String? description;
+  String? arDescription;
+  double? pricePerUnit;
+  int? subCategoryId;
+  int? brandId;
+  int? isActive;
+  DateTime? createdAt;
+  String? brandName;
+  String? brandArName;
+  String? subCategoryName;
+  String? subCategoryArName;
 
   ProductModel({
-    required this.image,
-    required this.title,
-    required this.subTitle,
-    required this.description,
-    required this.price,
+    this.id,
+    this.title,
+    this.arTitle,
+    this.description,
+    this.arDescription,
+    this.pricePerUnit,
+    this.subCategoryId,
+    this.brandId,
+    this.isActive,
+    this.createdAt,
+    this.brandName,
+    this.brandArName,
+    this.subCategoryName,
+    this.subCategoryArName,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      'image': image,
-      'title': title,
-      'subTitle': subTitle,
-      'description': description,
-      'price': price,
-    };
+  @override
+  String toString() {
+    return 'ProductModel(id: $id, title: $title, arTitle: $arTitle, description: $description, arDescription: $arDescription, pricePerUnit: $pricePerUnit, subCategoryId: $subCategoryId, brandId: $brandId, isActive: $isActive, createdAt: $createdAt, brandName: $brandName, brandArName: $brandArName, subCategoryName: $subCategoryName, subCategoryArName: $subCategoryArName)';
   }
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      image: json['image'] as String,
-      title: json['title'] as String,
-      subTitle: json['subTitle'] as String,
-      description: json['description'] as String,
-      price: (json['price'] as num).toDouble(),
-    );
-  }
+  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
+    id: json['id'] as int?,
+    title: json['title'] as String?,
+    arTitle: json['ar_title'] as String?,
+    description: json['description'] as String?,
+    arDescription: json['ar_description'] as String?,
+    pricePerUnit: (json['price_per_unit'] as num?)?.toDouble(),
+    subCategoryId: json['sub_category_id'] as int?,
+    brandId: json['brand_id'] as int?,
+    isActive: json['is_active'] as int?,
+    createdAt: json['created_at'] == null
+        ? null
+        : DateTime.parse(json['created_at'] as String),
+    brandName: json['brand_name'] as String?,
+    brandArName: json['brand_ar_name'] as String?,
+    subCategoryName: json['sub_category_name'] as String?,
+    subCategoryArName: json['sub_category_ar_name'] as String?,
+  );
+
+  Map<String, dynamic> toJson() => {
+    'id': id,
+    'title': title,
+    'ar_title': arTitle,
+    'description': description,
+    'ar_description': arDescription,
+    'price_per_unit': pricePerUnit,
+    'sub_category_id': subCategoryId,
+    'brand_id': brandId,
+    'is_active': isActive,
+    'created_at': createdAt?.toIso8601String(),
+    'brand_name': brandName,
+    'brand_ar_name': brandArName,
+    'sub_category_name': subCategoryName,
+    'sub_category_ar_name': subCategoryArName,
+  };
 }
-
-final List<ProductModel> demoProducts = [
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EicNy1W3l04-ZEW1Tnp1TUN6FlX6SJ77Zg&s",
-    title: "Eco-Friendly White",
-    subTitle: "Low VOC, Matte",
-    description:
-        "Premium eco-friendly white paint with low VOC emissions, perfect for interior walls. Provides excellent coverage and a smooth matte finish.",
-    price: 34.99,
-  ),
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXh0jbwHf8ilhZiuSgraDthUCCn6kke6Lwgw&s",
-    title: "Ocean Blue",
-    subTitle: "Exterior, Satin",
-    description:
-        "Beautiful ocean blue exterior paint with satin finish. Weather-resistant and durable for outdoor applications.",
-    price: 42.50,
-  ),
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EicNy1W3l04-ZEW1Tnp1TUN6FlX6SJ77Zg&s",
-    title: "Sunset Orange",
-    subTitle: "Interior, Eggshell",
-    description:
-        "Vibrant sunset orange with eggshell finish. Adds warmth and energy to any interior space with easy maintenance.",
-    price: 38.00,
-  ),
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EicNy1W3l04-ZEW1Tnp1TUN6FlX6SJ77Zg&s",
-    title: "Forest Green",
-    subTitle: "Exterior, Semi-Gloss",
-    description:
-        "Rich forest green with semi-gloss finish. Ideal for exterior doors, trim, and accent walls with superior durability.",
-    price: 45.99,
-  ),
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EicNy1W3l04-ZEW1Tnp1TUN6FlX6SJ77Zg&s",
-    title: "Classic Gray",
-    subTitle: "Interior, Matte",
-    description:
-        "Timeless classic gray with matte finish. Perfect for modern interiors and complements any decor style.",
-    price: 36.50,
-  ),
-  ProductModel(
-    image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0EicNy1W3l04-ZEW1Tnp1TUN6FlX6SJ77Zg&s",
-    title: "Royal Purple",
-    subTitle: "Interior, Satin",
-    description:
-        "Luxurious royal purple with satin finish. Creates a bold statement in bedrooms and accent walls.",
-    price: 39.99,
-  ),
-];

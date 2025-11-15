@@ -10,6 +10,8 @@ class JsonKey {
   static const String errors = "errors";
   static const String token = "token";
   static const String tokenType = "token_type";
+  static const String urlImageUploads =
+      "https://phpstack-1546924-5983780.cloudwaysapps.com";
   // user
   static const String user = "user";
   static const String id = "id";
@@ -24,4 +26,6 @@ class JsonKey {
   static const String ordersCount = "orders_count";
   static const String currentPassword = "current_password";
   static const String newPassword = "new_password";
+  // wishlist
+  static const String productOptionId = "product_option_id";
 }

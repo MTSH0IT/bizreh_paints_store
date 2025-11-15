@@ -24,4 +24,14 @@ class ApiEndpoint {
       "/user/category/super-categories/$id";
   static String categoryById(int id) => "/user/category/categories/$id";
   static String subCategoryById(int id) => "/user/category/sub-categories/$id";
+
+  //wishlist
+  static const String addWishlistItems = "/user/wishlist/items";
+  static String removeWishlistItems(int id) => "/user/wishlist/items/$id";
+  static const String getWishlist = "/user/wishlist/wishlist";
+  static const String clearWishlist = "/user/wishlist/wishlist";
+
+  //product
+  static const String getProducts = "/user/product/products";
+  static String productById(int id) => "/user/product/products/$id";
 }

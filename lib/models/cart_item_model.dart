@@ -7,7 +7,7 @@ class CartItemModel {
   CartItemModel({required this.product, required this.quantity});
 
   num calculateTotalPrice() {
-    return product.price * quantity;
+    return product.pricePerUnit! * quantity;
   }
 
   void incrementQuantity() {

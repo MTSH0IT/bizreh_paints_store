@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/views/manageAddress/manage_address_view.dart';
@@ -13,6 +14,8 @@ class SavedAddressView extends StatefulWidget {
 }
 
 class _SavedAddressViewState extends State<SavedAddressView> {
+  final AddressController addressController = Get.put(AddressController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +34,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
         actions: [
           IconButton(
             onPressed: () {
+              addressController.clearForm();
               Get.to(() => ManageAddressView());
             },
             icon: const Icon(Icons.add, color: primaryColor),
@@ -38,23 +42,35 @@ class _SavedAddressViewState extends State<SavedAddressView> {
         ],
       ),
       body: SafeArea(
-        child: ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: demoAddressesModel.length,
-          itemBuilder: (context, index) {
-            final address = demoAddressesModel[index];
-            return AddressCard(
-              address: address,
-              onEdit: () => Get.to(() => ManageAddressView(address: address)),
-              onDelete: () => _deleteAddress(address),
-            );
-          },
-        ),
+        child: Obx(() {
+          final List<AddressModel> items = addressController.addresses;
+          if (addressController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (items.isEmpty) {
+            return const Center(child: Text('No addresses found'));
+          }
+          return ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: items.length,
+            itemBuilder: (context, index) {
+              final address = items[index];
+
+              return AddressCard(
+                address: address,
+                onEdit: () {
+                  Get.to(() => ManageAddressView(address: address));
+                },
+                onDelete: () => _confirmDelete(address.id, address),
+              );
+            },
+          );
+        }),
       ),
     );
   }
 
-  void _deleteAddress(AddressModel address) {
+  void _confirmDelete(int? id, AddressModel address) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -67,9 +83,9 @@ class _SavedAddressViewState extends State<SavedAddressView> {
           ),
           TextButton(
             onPressed: () {
-              setState(() {
-                demoAddressesModel.removeWhere((a) => a.id == address.id);
-              });
+              if (id != null) {
+                addressController.deleteAddress(id);
+              }
               Navigator.pop(context);
             },
             child: const Text('Delete'),

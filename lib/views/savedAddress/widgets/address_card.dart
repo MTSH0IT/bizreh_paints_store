@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
 class AddressCard extends StatelessWidget {
@@ -36,7 +36,7 @@ class AddressCard extends StatelessWidget {
                   Icon(Icons.location_on, color: primaryColor, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    address.nickname,
+                    address.nickname ?? "nickname",
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -73,7 +73,7 @@ class AddressCard extends StatelessWidget {
           const SizedBox(height: 12),
           // Full name
           Text(
-            address.city,
+            address.cityName ?? "cityName",
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -83,13 +83,13 @@ class AddressCard extends StatelessWidget {
           const SizedBox(height: 4),
           // Address
           Text(
-            address.address,
+            address.addressLine ?? "addressLine",
             style: const TextStyle(fontSize: 14, color: Colors.black87),
           ),
           const SizedBox(height: 8),
           // Notes
           Text(
-            'Notes: ${address.notes}',
+            'Notes: ${address.note ?? "note"}',
             style: TextStyle(fontSize: 12, color: primaryColor),
           ),
         ],

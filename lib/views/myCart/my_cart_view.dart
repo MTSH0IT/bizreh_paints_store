@@ -47,41 +47,43 @@ class MyCartView extends StatelessWidget {
                           final item = cartController.cartItems[index];
                           return Padding(
                             padding: EdgeInsets.only(bottom: 12),
-                            child: CartItemTile(
-                              image: item.product.image,
-                              title: item.product.title,
-                              price: item.product.price,
-                              quantity: item.quantity,
-                              onIncrement: () {
-                                cartController.incrementQuantity(index);
-                              },
-                              onDecrement: () {
-                                if (item.quantity > 1) {
-                                  cartController.decrementQuantity(index);
-                                } else {
-                                  // Confirm before removing the item from cart
-                                  Get.defaultDialog(
-                                    title: 'Remove Item',
-                                    middleText:
-                                        'Aremove this item from the cart?',
-                                    confirm: MainButton(
-                                      title: 'Remove',
-                                      onPressed: () {
-                                        cartController.removeFromCart(index);
-                                        Get.back();
-                                      },
-                                    ),
-                                    cancel: MainButton(
-                                      title: 'Cancel',
-                                      onPressed: () => Get.back(),
-                                    ),
-                                  );
-                                }
-                              },
-                              onSetQuantity: (newQty) {
-                                cartController.updateQuantity(index, newQty);
-                              },
-                            ),
+                            child: null,
+
+                            // CartItemTile(
+                            //   image: item.product.image,
+                            //   title: item.product.title,
+                            //   price: item.product.price,
+                            //   quantity: item.quantity,
+                            //   onIncrement: () {
+                            //     cartController.incrementQuantity(index);
+                            //   },
+                            //   onDecrement: () {
+                            //     if (item.quantity > 1) {
+                            //       cartController.decrementQuantity(index);
+                            //     } else {
+                            //       // Confirm before removing the item from cart
+                            //       Get.defaultDialog(
+                            //         title: 'Remove Item',
+                            //         middleText:
+                            //             'Aremove this item from the cart?',
+                            //         confirm: MainButton(
+                            //           title: 'Remove',
+                            //           onPressed: () {
+                            //             cartController.removeFromCart(index);
+                            //             Get.back();
+                            //           },
+                            //         ),
+                            //         cancel: MainButton(
+                            //           title: 'Cancel',
+                            //           onPressed: () => Get.back(),
+                            //         ),
+                            //       );
+                            //     }
+                            //   },
+                            //   onSetQuantity: (newQty) {
+                            //     cartController.updateQuantity(index, newQty);
+                            //   },
+                            // ),
                           );
                         },
                       ),

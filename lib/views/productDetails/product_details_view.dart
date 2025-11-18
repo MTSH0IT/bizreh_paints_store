@@ -1,10 +1,10 @@
+import 'package:bizreh_paints_store/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/circle_icon_button.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/sheen_option.dart';
@@ -12,7 +12,7 @@ import 'package:bizreh_paints_store/views/productDetails/widgets/sheen_option.da
 class ProductDetailsView extends StatelessWidget {
   ProductDetailsView({super.key, required this.product});
 
-  final ProductModel product;
+  final ItemModel product;
   final controller = Get.put(ProductDetailsController());
   final wishCtrl = Get.put(WishListController());
 
@@ -27,7 +27,10 @@ class ProductDetailsView extends StatelessWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  ImageNetwork(image: product.image, icon: Icons.format_paint),
+                  ImageNetwork(
+                    image: product.mainImage ?? "",
+                    icon: Icons.format_paint,
+                  ),
                   Positioned(
                     top: 8,
                     left: 8,
@@ -40,15 +43,15 @@ class ProductDetailsView extends StatelessWidget {
                           onPressed: Get.back,
                         ),
                         Obx(() {
-                          final isFav = wishCtrl.items.any(
-                            (e) => e.title == product.title,
-                          );
+                          final isFav = wishCtrl.isFavorite(product.id!);
                           return CircleIconButton(
                             icon: isFav
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             onPressed: () {
-                              wishCtrl.toggle(product);
+                              isFav
+                                  ? wishCtrl.removeItem(product.id!)
+                                  : wishCtrl.addToWishList(product.id!);
                             },
                           );
                         }),
@@ -67,7 +70,7 @@ class ProductDetailsView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      product.title,
+                      product.title ?? "",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -136,7 +139,7 @@ class ProductDetailsView extends StatelessWidget {
 
                     const SizedBox(height: 20),
                     Text(
-                      product.description,
+                      product.description ?? "",
                       style: TextStyle(
                         color: Colors.black,
                         height: 2,
@@ -149,7 +152,11 @@ class ProductDetailsView extends StatelessWidget {
             ),
 
             // Bottom bar button
-            MainButton(onPressed: () => controller.addToCart(product)),
+            MainButton(
+              onPressed: () {
+                //return controller.addToCart(product);
+              },
+            ),
           ],
         ),
       ),

@@ -18,6 +18,9 @@ class WishList extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Obx(() {
+        if (ctrl.isGetLoading.value) {
+          return const Center(child: CircularProgressIndicator());
+        }
         if (ctrl.items.isEmpty) {
           return const Center(child: Text('No items in wishlist'));
         }
@@ -27,14 +30,14 @@ class WishList extends StatelessWidget {
           itemBuilder: (context, index) {
             final item = ctrl.items[index];
             return WishListItemCard(
-              imageUrl: item.image,
-              title: item.title,
-              subtitle: item.subTitle,
-              price: '\$${item.price.toStringAsFixed(0)}',
-              onMoveToCart: () {
-                ctrl.addToCart(item);
+              imageUrl: "",
+              title: item.title ?? "",
+              subtitle: "",
+              price: '\$${item.pricePerUnit}',
+              onMoveToCart: () {},
+              onRemove: () {
+                ctrl.removeItem(item.id!);
               },
-              onRemove: () => ctrl.toggle(item),
             );
           },
         );

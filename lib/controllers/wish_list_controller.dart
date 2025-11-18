@@ -1,56 +1,84 @@
+import 'dart:developer';
+
+import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
+import 'package:bizreh_paints_store/models/item_model.dart';
+import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 
 class WishListController extends GetxController {
-  static const String boxName = 'wishlist';
-  late Box _box;
-  final RxList<ProductModel> items = <ProductModel>[].obs;
+  final wishListServices = WishListServices();
+  final RxList<ItemModel> items = <ItemModel>[].obs;
+  final RxBool isGetLoading = false.obs;
+  final RxBool isRemoveLoading = false.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _ensureBox().then((_) {
-      _reload();
-      _box.watch().listen((_) => _reload());
-    });
+    loadWishListProducts();
   }
 
-  Future<void> _ensureBox() async {
-    if (!Hive.isBoxOpen(boxName)) {
-      _box = await Hive.openBox(boxName);
-    } else {
-      _box = Hive.box(boxName);
+  Future<void> loadWishListProducts() async {
+    isGetLoading.value = true;
+    try {
+      final list = await wishListServices.getWishlist();
+      items.assignAll(list);
+      isGetLoading.value = false;
+    } on AppException catch (e) {
+      log("wish list controller AppException : ${e.message}");
+    } catch (e) {
+      log("wish list controller catch : ${e.toString()}");
+    } finally {
+      isGetLoading.value = false;
     }
   }
 
-  void _reload() {
-    final data = _box.values
-        .whereType<Map>()
-        .map((e) => ProductModel.fromJson(Map<String, dynamic>.from(e)))
-        .toList();
-    items.assignAll(data);
-  }
-
-  Future<void> toggle(ProductModel item) async {
-    await _ensureBox();
-    if (_box.containsKey(item.title)) {
-      await _box.delete(item.title);
-    } else {
-      await _box.put(item.title, item.toJson());
+  Future<void> addToWishList(int id) async {
+    isRemoveLoading.value = true;
+    try {
+      await wishListServices.addWishlistItems(productOptionId: id);
+      await loadWishListProducts();
+      isRemoveLoading.value = false;
+    } on AppException catch (e) {
+      log("wish list controller AppException : ${e.message}");
+    } catch (e) {
+      log("wish list controller catch : ${e.toString()}");
+    } finally {
+      isRemoveLoading.value = false;
     }
   }
 
-  bool isFavorite(String id) {
-    if (!Hive.isBoxOpen(boxName)) return false;
-    return Hive.box(boxName).containsKey(id);
+  Future<void> toggle(ItemModel product) async {
+    if (isFavorite(product.id!)) {
+      await removeItem(product.id!);
+    } else {
+      await addToWishList(product.id!);
+    }
   }
 
-  void addToCart(ProductModel product) {
+  Future<void> removeItem(int id) async {
+    isRemoveLoading.value = true;
+    try {
+      await wishListServices.removeWishlistItem(wishlistId: id);
+      await loadWishListProducts();
+      isRemoveLoading.value = false;
+    } on AppException catch (e) {
+      log("wish list controller AppException : ${e.message}");
+    } catch (e) {
+      log("wish list controller catch : ${e.toString()}");
+    } finally {
+      isRemoveLoading.value = false;
+    }
+  }
+
+  bool isFavorite(int id) {
+    return items.any((item) => item.id == id);
+  }
+
+  void addToCart(ItemModel product) {
     final cartController = Get.find<MyCartController>();
-    cartController.addToCart(product);
+    //cartController.addToCart(product);
 
     Get.snackbar(
       'تمت الإضافة',

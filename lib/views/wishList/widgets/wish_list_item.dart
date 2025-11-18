@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
@@ -34,11 +35,10 @@ class WishListItemCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                    imageUrl,
+                  child: SizedBox(
                     width: 80,
                     height: 80,
-                    fit: BoxFit.fill,
+                    child: ImageNetwork(image: imageUrl),
                   ),
                 ),
                 const SizedBox(width: 12),

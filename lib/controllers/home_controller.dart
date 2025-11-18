@@ -1,14 +1,17 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
+import 'package:bizreh_paints_store/models/item_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 import 'package:bizreh_paints_store/models/banner_model.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/productb_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/services/brands_services.dart';
+import 'package:bizreh_paints_store/services/product_services.dart';
+import 'package:bizreh_paints_store/services/category_services.dart';
+import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dart';
 import 'dart:async';
 
 class HomeController extends GetxController {
@@ -16,7 +19,8 @@ class HomeController extends GetxController {
 
   Timer? _bannerTimer;
 
-  RxList<ProductModel> products = <ProductModel>[].obs;
+  RxList<ItemModel> products = <ItemModel>[].obs;
+  RxList<ItemModel> subCategoryProducts = <ItemModel>[].obs;
   RxList<BannerModel> banners = <BannerModel>[].obs;
   RxList<BrandModel> featuredBrands = <BrandModel>[].obs;
   RxList<BrandModel> brands = <BrandModel>[].obs;
@@ -24,13 +28,22 @@ class HomeController extends GetxController {
   RxInt currentBannerIndex = 0.obs;
 
   RxBool isLoading = false.obs;
+  RxBool isSubCategoryProductsLoading = false.obs;
   RxBool isBrandsFeaturedLoading = false.obs;
   RxBool isBrandsLoading = false.obs;
   RxBool isBrandProductsLoading = false.obs;
+  RxBool isCategoryTreeLoading = false.obs;
 
   Rxn<Pagination> brandProductsPagination = Rxn<Pagination>();
+  Rxn<Pagination> productsPagination = Rxn<Pagination>();
+  Rxn<Pagination> subCategoryProductsPagination = Rxn<Pagination>();
 
   final BrandsServices _brandsServices = BrandsServices();
+  final ProductServices _productServices = ProductServices();
+  final CategoryServices _categoryServices = CategoryServices();
+
+  // Category tree state
+  RxList<CategoryTreeModle> categoryTree = <CategoryTreeModle>[].obs;
 
   @override
   void onInit() {
@@ -38,7 +51,23 @@ class HomeController extends GetxController {
     loadBanners();
     loadProducts();
     loadFeaturedBrands();
+    loadCategoryTree();
     pageController.addListener(_onPageChanged);
+  }
+
+  // Load category tree
+  Future<void> loadCategoryTree() async {
+    isCategoryTreeLoading.value = true;
+    try {
+      final list = await _categoryServices.getCategoryTree();
+      categoryTree.assignAll(list);
+    } on AppException catch (e) {
+      log("home controller AppException category tree : ${e.message}");
+    } catch (e) {
+      log("home controller catch category tree : ${e.toString()}");
+    } finally {
+      isCategoryTreeLoading.value = false;
+    }
   }
 
   @override
@@ -63,11 +92,57 @@ class HomeController extends GetxController {
     }
   }
 
-  void loadProducts() {
+  Future<void> loadProducts({
+    int page = 1,
+    int limit = 20,
+    bool append = false,
+  }) async {
     isLoading.value = true;
+    try {
+      final api = await _productServices.getProducts(page: page, limit: limit);
+      final data = api.data ?? [];
+      productsPagination.value = api.pagination;
+      if (append) {
+        products.addAll(data);
+      } else {
+        products.assignAll(data);
+      }
+    } on AppException catch (e) {
+      log("home controller AppException products : ${e.message}");
+    } catch (e) {
+      log("home controller catch products : ${e.toString()}");
+    } finally {
+      isLoading.value = false;
+    }
+  }
 
-    products.value = demoProducts;
-    isLoading.value = false;
+  Future<void> loadSubCategoryProducts({
+    int page = 1,
+    int limit = 20,
+    bool append = false,
+    int? subCategory = 1,
+  }) async {
+    isSubCategoryProductsLoading.value = true;
+    try {
+      final api = await _productServices.getProducts(
+        page: page,
+        limit: limit,
+        subCategory: subCategory,
+      );
+      final data = api.data ?? [];
+      subCategoryProductsPagination.value = api.pagination;
+      if (append) {
+        subCategoryProducts.addAll(data);
+      } else {
+        subCategoryProducts.assignAll(data);
+      }
+    } on AppException catch (e) {
+      log("home controller AppException products : ${e.message}");
+    } catch (e) {
+      log("home controller catch products : ${e.toString()}");
+    } finally {
+      isSubCategoryProductsLoading.value = false;
+    }
   }
 
   void loadBanners() {

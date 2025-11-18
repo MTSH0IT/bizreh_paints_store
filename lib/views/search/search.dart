@@ -137,7 +137,7 @@ class _SearchState extends State<Search> {
               ),
             ),
             const SizedBox(height: 8),
-            Expanded(child: SingleChildScrollView(child: ProductsGrid())),
+            //Expanded(child: SingleChildScrollView(child: ProductsGrid())),
             const SizedBox(height: 16),
           ],
         ),

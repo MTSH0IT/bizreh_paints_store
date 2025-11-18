@@ -55,11 +55,26 @@ class HomeView extends StatelessWidget {
               SectionHeader(
                 title: "Featured Products",
                 onSeeAll: () {
-                  Get.to(() => AllProductsView());
+                  Get.to(() => AllProductsView(products: controller.products));
                 },
               ),
               const SizedBox(height: 8),
-              ProductsGrid(),
+              Obx(() {
+                if (controller.isLoading.value) {
+                  return const Padding(
+                    padding: EdgeInsets.all(40.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+
+                if (controller.products.isEmpty) {
+                  return const Padding(
+                    padding: EdgeInsets.all(40.0),
+                    child: Center(child: Text('No products available')),
+                  );
+                }
+                return ProductsGrid(products: controller.products);
+              }),
             ],
           ),
         ),

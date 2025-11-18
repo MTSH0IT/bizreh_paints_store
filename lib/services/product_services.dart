@@ -14,11 +14,16 @@ class ProductServices {
   Future<ApiResponse<List<ItemModel>>> getProducts({
     int page = 1,
     int limit = 20,
+    int? subCategory,
   }) async {
     try {
       final response = await _dioClient.get(
         ApiEndpoint.getProducts,
-        queryParameters: {'page': page, 'limit': limit},
+        queryParameters: {
+          'page': page,
+          'limit': limit,
+          'sub_category': subCategory,
+        },
       );
 
       final apiResponse = ApiResponse<List<ItemModel>>.fromJson(response.data, (

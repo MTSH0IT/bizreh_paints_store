@@ -78,7 +78,7 @@ class ProfileView extends StatelessWidget {
                       icon: Icons.local_shipping_outlined,
                       title: 'Order History',
                       onTap: () {
-                        Get.to(() => const OrderHistory());
+                        // Get.to(() => const OrderHistory());
                       },
                     ),
                     ProfileListItem(

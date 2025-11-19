@@ -6,10 +6,12 @@ class AddressCard extends StatelessWidget {
   final AddressModel address;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
+  final bool isDefaultAddress;
 
   const AddressCard({
     super.key,
     required this.address,
+    required this.isDefaultAddress,
     this.onEdit,
     this.onDelete,
   });
@@ -22,7 +24,10 @@ class AddressCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[300]!),
+        border: Border.all(
+          color: isDefaultAddress ? primaryColor : Colors.grey[300]!,
+          width: isDefaultAddress ? 2 : 1,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,6 +48,26 @@ class AddressCard extends StatelessWidget {
                       color: Colors.black87,
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  if (isDefaultAddress)
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: primaryColor.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        'Default',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ),
                 ],
               ),
               const Spacer(),

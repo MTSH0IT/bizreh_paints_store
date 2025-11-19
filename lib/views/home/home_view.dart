@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -63,7 +64,7 @@ class HomeView extends StatelessWidget {
                 if (controller.isLoading.value) {
                   return const Padding(
                     padding: EdgeInsets.all(40.0),
-                    child: Center(child: CircularProgressIndicator()),
+                    child: BuildProgressIndicator(),
                   );
                 }
 

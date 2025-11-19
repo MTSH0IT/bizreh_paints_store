@@ -17,6 +17,7 @@ class AddressController extends GetxController {
 
   // Data
   final RxList<AddressModel> addresses = <AddressModel>[].obs;
+  final RxList<AddressModel> addressesActive = <AddressModel>[].obs;
   final RxList<CitiesModel> cities = <CitiesModel>[].obs;
   final Rxn<AddressModel> defaultAddress = Rxn<AddressModel>();
 
@@ -41,9 +42,9 @@ class AddressController extends GetxController {
 
   @override
   void onInit() {
+    loadDefaultAddress();
     loadAddresses();
     loadCities();
-    loadDefaultAddress();
 
     super.onInit();
   }
@@ -164,7 +165,6 @@ class AddressController extends GetxController {
     try {
       await _addressServices.setDefaultAddress(id: id);
       await loadDefaultAddress();
-      await loadAddresses();
       showMassage("تم تعيين العنوان الافتراضي", true);
       isSubmitting.value = false;
     } catch (e) {

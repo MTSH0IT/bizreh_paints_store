@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:get/get.dart';
@@ -15,13 +16,7 @@ class TopBrands extends StatelessWidget {
       height: 110,
       child: Obx(() {
         if (controller.isBrandsFeaturedLoading.value) {
-          return const Center(
-            child: SizedBox(
-              height: 28,
-              width: 28,
-              child: CircularProgressIndicator(strokeWidth: 2.5),
-            ),
-          );
+          return const BuildProgressIndicator();
         }
         final List<BrandModel> items = controller.featuredBrands;
         if (items.isEmpty) {

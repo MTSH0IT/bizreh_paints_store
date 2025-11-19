@@ -154,7 +154,9 @@ class AddressServices {
 
   Future<void> setDefaultAddress({required int id}) async {
     try {
-      final response = await _dioClient.put(ApiEndpoint.setDefaultAddress(id));
+      final response = await _dioClient.patch(
+        ApiEndpoint.setDefaultAddress(id),
+      );
       final apiResponse = ApiResponse.fromJson(response.data, null);
       if (apiResponse.success) {
         return;
@@ -185,6 +187,9 @@ class AddressServices {
         return AddressModel.fromJson(json['address']);
       });
       if (apiResponse.success && apiResponse.data != null) {
+        log("getDefaultAddress");
+        log(apiResponse.data.toString());
+
         return apiResponse.data as AddressModel;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');

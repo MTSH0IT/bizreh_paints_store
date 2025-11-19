@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/catogorieDetails/catogorie_ditails_view.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
@@ -14,10 +15,7 @@ class Categories extends StatelessWidget {
 
     return Obx(() {
       if (controller.isCategoryTreeLoading.value) {
-        return const SizedBox(
-          height: 120,
-          child: Center(child: CircularProgressIndicator()),
-        );
+        return const SizedBox(height: 120, child: BuildProgressIndicator());
       }
       final list = controller.categoryTree;
       if (list.isEmpty) {

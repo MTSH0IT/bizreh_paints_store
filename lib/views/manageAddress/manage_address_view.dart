@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -92,7 +93,7 @@ class ManageAddressView extends StatelessWidget {
                     options: citiesOptions.isEmpty ? const [''] : citiesOptions,
                     onChanged: (v) {
                       final matched = addressController.cities.firstWhere(
-                        (c) => c.title == v || c.arTitle == v,
+                        (c) => c.title == v,
                         orElse: () => CitiesModel(),
                       );
                       if (matched.id != null) {
@@ -141,7 +142,7 @@ class ManageAddressView extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     color: Colors.black38,
-                    child: const Center(child: CircularProgressIndicator()),
+                    child: const BuildProgressIndicator(),
                   ),
                 ),
             ],

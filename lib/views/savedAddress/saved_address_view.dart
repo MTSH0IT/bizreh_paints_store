@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
@@ -45,7 +46,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
         child: Obx(() {
           final List<AddressModel> items = addressController.addresses;
           if (addressController.isLoading.value) {
-            return const Center(child: CircularProgressIndicator());
+            return const BuildProgressIndicator();
           }
           if (items.isEmpty) {
             return const Center(child: Text('No addresses found'));
@@ -56,12 +57,19 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             itemBuilder: (context, index) {
               final address = items[index];
 
-              return AddressCard(
-                address: address,
-                onEdit: () {
-                  Get.to(() => ManageAddressView(address: address));
+              return GestureDetector(
+                onTap: () {
+                  addressController.setDefault(address.id!);
                 },
-                onDelete: () => _confirmDelete(address.id, address),
+                child: AddressCard(
+                  isDefaultAddress:
+                      address.id == addressController.defaultAddress.value?.id!,
+                  address: address,
+                  onEdit: () {
+                    Get.to(() => ManageAddressView(address: address));
+                  },
+                  onDelete: () => _confirmDelete(address.id, address),
+                ),
               );
             },
           );

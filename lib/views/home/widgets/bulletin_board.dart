@@ -1,8 +1,9 @@
+import 'package:bizreh_paints_store/models/ads_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
-import 'package:bizreh_paints_store/models/banner_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 
 class BulletinBoard extends StatelessWidget {
   BulletinBoard({super.key});
@@ -10,7 +11,13 @@ class BulletinBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.banners.isEmpty) {
+      if (controller.isAdsLoading.value) {
+        return const Padding(
+          padding: EdgeInsets.all(40.0),
+          child: BuildProgressIndicator(),
+        );
+      }
+      if (controller.ads.isEmpty) {
         return const SizedBox(
           height: 150,
           child: Center(child: Text('No banners available')),
@@ -23,9 +30,9 @@ class BulletinBoard extends StatelessWidget {
             height: 150,
             child: PageView.builder(
               controller: controller.pageController,
-              itemCount: controller.banners.length,
+              itemCount: controller.ads.length,
               itemBuilder: (context, index) {
-                final BannerModel banner = controller.banners[index];
+                final AdsModel banner = controller.ads[index];
                 return _BannerCard(banner: banner);
               },
             ),
@@ -33,7 +40,7 @@ class BulletinBoard extends StatelessWidget {
           const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(controller.banners.length, (i) {
+            children: List.generate(controller.ads.length, (i) {
               final isActive = i == controller.currentBannerIndex.value;
               return AnimatedContainer(
                 duration: const Duration(milliseconds: 250),
@@ -54,7 +61,7 @@ class BulletinBoard extends StatelessWidget {
 }
 
 class _BannerCard extends StatelessWidget {
-  final BannerModel banner;
+  final AdsModel banner;
 
   const _BannerCard({required this.banner});
 
@@ -67,7 +74,7 @@ class _BannerCard extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            ImageNetwork(image: banner.image),
+            ImageNetwork(image: banner.image ?? ""),
             Positioned(
               left: 16,
               top: 16,
@@ -75,7 +82,7 @@ class _BannerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    banner.title,
+                    banner.title ?? "",
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,
@@ -83,10 +90,10 @@ class _BannerCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 4),
-                  Text(
-                    banner.subtitle,
-                    style: const TextStyle(color: Colors.black54),
-                  ),
+                  // Text(
+                  //   banner.description ?? "",
+                  //   style: const TextStyle(color: Colors.black54),
+                  // ),
                 ],
               ),
             ),

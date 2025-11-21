@@ -1,10 +1,11 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
+import 'package:bizreh_paints_store/models/ads_model.dart';
 import 'package:bizreh_paints_store/models/item_model.dart';
+import 'package:bizreh_paints_store/services/ads_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/models/banner_model.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/productb_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
@@ -21,10 +22,10 @@ class HomeController extends GetxController {
 
   RxList<ItemModel> products = <ItemModel>[].obs;
   RxList<ItemModel> subCategoryProducts = <ItemModel>[].obs;
-  RxList<BannerModel> banners = <BannerModel>[].obs;
   RxList<BrandModel> featuredBrands = <BrandModel>[].obs;
   RxList<BrandModel> brands = <BrandModel>[].obs;
   RxList<ProductbModel> brandProducts = <ProductbModel>[].obs;
+  RxList<AdsModel> ads = <AdsModel>[].obs;
   RxInt currentBannerIndex = 0.obs;
 
   RxBool isLoading = false.obs;
@@ -33,6 +34,7 @@ class HomeController extends GetxController {
   RxBool isBrandsLoading = false.obs;
   RxBool isBrandProductsLoading = false.obs;
   RxBool isCategoryTreeLoading = false.obs;
+  RxBool isAdsLoading = false.obs;
 
   Rxn<Pagination> brandProductsPagination = Rxn<Pagination>();
   Rxn<Pagination> productsPagination = Rxn<Pagination>();
@@ -41,6 +43,7 @@ class HomeController extends GetxController {
   final BrandsServices _brandsServices = BrandsServices();
   final ProductServices _productServices = ProductServices();
   final CategoryServices _categoryServices = CategoryServices();
+  final AdsServices _adsServices = AdsServices();
 
   // Category tree state
   RxList<CategoryTreeModle> categoryTree = <CategoryTreeModle>[].obs;
@@ -48,10 +51,10 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadBanners();
     loadProducts();
     loadFeaturedBrands();
     loadCategoryTree();
+    loadAds();
     pageController.addListener(_onPageChanged);
   }
 
@@ -82,6 +85,22 @@ class HomeController extends GetxController {
     pageController.dispose();
     _bannerTimer?.cancel();
     super.onClose();
+  }
+
+  Future<void> loadAds() async {
+    isAdsLoading.value = true;
+    try {
+      final list = await _adsServices.getAds();
+      ads.assignAll(list);
+      _startBannerAutoScroll();
+      isAdsLoading.value = false;
+    } on AppException catch (e) {
+      log("home controller AppException ads : ${e.message}");
+    } catch (e) {
+      log("home controller catch ads : ${e.toString()}");
+    } finally {
+      isAdsLoading.value = false;
+    }
   }
 
   void _onPageChanged() {
@@ -145,20 +164,14 @@ class HomeController extends GetxController {
     }
   }
 
-  void loadBanners() {
-    banners.value = demoBanners;
-    // Restart auto scroll if banners are reloaded
-    _startBannerAutoScroll();
-  }
-
   void _startBannerAutoScroll() {
-    if (banners.isEmpty) return;
+    if (ads.isEmpty) return;
     _bannerTimer?.cancel();
     _bannerTimer = Timer.periodic(const Duration(seconds: 5), (timer) {
       if (!pageController.hasClients) return;
       final current = pageController.page?.round() ?? 0;
       int nextPage = current + 1;
-      if (nextPage >= banners.length) nextPage = 0;
+      if (nextPage >= ads.length) nextPage = 0;
       if (pageController.hasClients) {
         pageController.animateToPage(
           nextPage,

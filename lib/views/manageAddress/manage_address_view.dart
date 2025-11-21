@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:get/get.dart';

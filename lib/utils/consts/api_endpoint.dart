@@ -44,4 +44,14 @@ class ApiEndpoint {
   static String setDefaultAddress(int id) =>
       "/user/address/addresses/$id/set-default";
   static const String getDefaultAddress = "/user/address/addresses/default";
+
+  //notifications
+  static const String getNotifications = "/user/notifications/notifications";
+  static const String readAllNotifications = "/user/notifications/read-all";
+  static String readNotification(int id) => "/user/notifications/$id/read";
+  static const String unreadCount =
+      "/user/notifications/notifications/unread-count";
+
+  //ads
+  static const String getAds = "/user/ads/ads";
 }

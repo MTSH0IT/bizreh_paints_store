@@ -19,15 +19,15 @@ class ApiResponse<T> {
     Map<String, dynamic> json,
     T Function(dynamic)? fromJsonT,
   ) {
+    final data = json['data'];
+
     return ApiResponse<T>(
       success: json['success'] ?? false,
       message: json['message'],
-      data: json['data'] != null && fromJsonT != null
-          ? fromJsonT(json['data'])
-          : json['data'],
+      data: data != null && fromJsonT != null ? fromJsonT(data) : data,
       errors: json['errors'],
-      pagination: json['data'] != null && json['data']['pagination'] != null
-          ? Pagination.fromJson(json['data']['pagination'])
+      pagination: data is Map<String, dynamic> && data['pagination'] != null
+          ? Pagination.fromJson(data['pagination'] as Map<String, dynamic>)
           : null,
     );
   }

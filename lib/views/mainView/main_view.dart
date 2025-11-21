@@ -8,10 +8,11 @@ import 'package:bizreh_paints_store/views/profile/profile_view.dart';
 import 'package:bizreh_paints_store/views/search/search.dart';
 
 class MainView extends StatelessWidget {
-  MainView({super.key});
-  final controller = Get.put(MainViewController());
+  const MainView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(MainViewController());
     return Obx(
       () => Scaffold(
         body: SafeArea(

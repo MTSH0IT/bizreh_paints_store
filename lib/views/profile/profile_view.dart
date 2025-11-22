@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/views/eranedPoints/eraned_points_view.dart';
-import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
 import 'package:bizreh_paints_store/views/personalInformation/personal_information_view.dart';
 import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
+import 'package:bizreh_paints_store/views/notifications/notifications_view.dart';
 import 'package:bizreh_paints_store/views/wishList/wish_list.dart';
 import 'widgets/profile_list_item.dart';
 import 'widgets/section_title.dart';
@@ -105,6 +105,9 @@ class ProfileView extends StatelessWidget {
                     ProfileListItem(
                       icon: Icons.notifications_none_rounded,
                       title: 'Notifications',
+                      onTap: () {
+                        Get.to(() => NotificationsView());
+                      },
                     ),
                     ProfileListItem(
                       icon: Icons.settings_outlined,

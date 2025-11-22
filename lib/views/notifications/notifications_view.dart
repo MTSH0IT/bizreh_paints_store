@@ -1,0 +1,108 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'widgets/notification_card.dart';
+import 'widgets/notification_details_sheet.dart';
+
+class NotificationsView extends StatelessWidget {
+  NotificationsView({super.key});
+
+  final NotificationsControllers controller = Get.put(
+    NotificationsControllers(),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Obx(() {
+          final count = controller.unreadCount.value;
+          if (count > 0) {
+            return Text('Notifications ($count)');
+          }
+          return const Text('Notifications');
+        }),
+        actions: [
+          Obx(() {
+            final hasNotifications = controller.notifications.isNotEmpty;
+            final loading = controller.isReadAllNotificationsLoading.value;
+            if (!hasNotifications) {
+              return const SizedBox.shrink();
+            }
+            return TextButton(
+              onPressed: loading || controller.unreadCount.value == 0
+                  ? null
+                  : () async {
+                      await controller.readAllNotifications();
+                      controller.unreadCount.value = 0;
+                      for (final item in controller.notifications) {
+                        item.isRead = 1;
+                      }
+                      controller.notifications.refresh();
+                    },
+              child: loading
+                  ? const SizedBox(
+                      width: 18,
+                      height: 18,
+                      child: BuildProgressIndicator(),
+                    )
+                  : const Icon(Icons.mark_email_read_outlined),
+            );
+          }),
+        ],
+      ),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.isNotificationsLoading.value) {
+            return const BuildProgressIndicator();
+          }
+
+          if (controller.notifications.isEmpty) {
+            return const Center(child: Text('لا توجد إشعارات حالياً'));
+          }
+
+          final list = controller.notifications;
+
+          return ListView.separated(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+            itemCount: list.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 12),
+            itemBuilder: (context, index) {
+              final notification = list[index];
+              return NotificationCard(
+                notification: notification,
+                onTap: () async {
+                  final id = notification.id;
+                  if (id != null && (notification.isRead ?? 0) != 1) {
+                    await controller.readNotification(id: id);
+                    notification.isRead = 1;
+                    controller.unreadCount.value--;
+                    controller.notifications.refresh();
+                  }
+
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: CardColor,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20),
+                      ),
+                    ),
+                    builder: (context) =>
+                        NotificationDetailsSheet(notification: notification),
+                  );
+                },
+              );
+            },
+          );
+        }),
+      ),
+    );
+  }
+}

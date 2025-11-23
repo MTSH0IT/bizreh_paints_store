@@ -1,11 +1,11 @@
-import 'package:bizreh_paints_store/models/item_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 
 class AllProductsView extends StatelessWidget {
   const AllProductsView({super.key, required this.products});
 
-  final List<ItemModel> products;
+  final List<ProductModel> products;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/product_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 
 class CartItemModel {
   final ProductModel product;

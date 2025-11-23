@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/item_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,7 +9,7 @@ import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 
 class WishListController extends GetxController {
   final wishListServices = WishListServices();
-  final RxList<ItemModel> items = <ItemModel>[].obs;
+  final RxList<ProductModel> items = <ProductModel>[].obs;
   final RxBool isGetLoading = false.obs;
   final RxBool isRemoveLoading = false.obs;
 
@@ -49,7 +49,7 @@ class WishListController extends GetxController {
     }
   }
 
-  Future<void> toggle(ItemModel product) async {
+  Future<void> toggle(ProductModel product) async {
     if (isFavorite(product.id!)) {
       await removeItem(product.id!);
     } else {
@@ -76,9 +76,9 @@ class WishListController extends GetxController {
     return items.any((item) => item.id == id);
   }
 
-  void addToCart(ItemModel product) {
+  void addToCart(ProductModel product) {
     final cartController = Get.find<MyCartController>();
-    //cartController.addToCart(product);
+    cartController.addToCart(product);
 
     Get.snackbar(
       'تمت الإضافة',

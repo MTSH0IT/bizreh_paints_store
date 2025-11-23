@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/item_model.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
@@ -11,7 +10,7 @@ import 'package:dio/dio.dart';
 class ProductServices {
   final DioClient _dioClient = DioClient();
 
-  Future<ApiResponse<List<ItemModel>>> getProducts({
+  Future<ApiResponse<List<ProductModel>>> getProducts({
     int page = 1,
     int limit = 20,
     int? subCategory,
@@ -26,14 +25,15 @@ class ProductServices {
         },
       );
 
-      final apiResponse = ApiResponse<List<ItemModel>>.fromJson(response.data, (
-        json,
-      ) {
-        final List raw = (json['products'] as List?) ?? [];
-        return raw
-            .map((e) => ItemModel.fromJson(e as Map<String, dynamic>))
-            .toList();
-      });
+      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
+        response.data,
+        (json) {
+          final List raw = (json['products'] as List?) ?? [];
+          return raw
+              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+      );
 
       if (apiResponse.success) {
         log("product service get products : ${apiResponse.message}");

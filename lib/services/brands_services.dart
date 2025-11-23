@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
-import 'package:bizreh_paints_store/models/productb_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
@@ -75,7 +75,7 @@ class BrandsServices {
     }
   }
 
-  Future<ApiResponse<List<ProductbModel>>> getBrandProducts({
+  Future<ApiResponse<List<ProductModel>>> getBrandProducts({
     required int brandId,
     int page = 1,
     int limit = 20,
@@ -86,12 +86,12 @@ class BrandsServices {
         queryParameters: {'page': page, 'limit': limit},
       );
 
-      final apiResponse = ApiResponse<List<ProductbModel>>.fromJson(
+      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
         response.data,
         (json) {
           final List raw = (json['products'] as List?) ?? [];
           return raw
-              .map((e) => ProductbModel.fromJson(e as Map<String, dynamic>))
+              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
               .toList();
         },
       );

@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/ads_model.dart';
-import 'package:bizreh_paints_store/models/item_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/services/ads_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
-import 'package:bizreh_paints_store/models/productb_model.dart';
+
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/services/brands_services.dart';
 import 'package:bizreh_paints_store/services/product_services.dart';
@@ -20,11 +20,11 @@ class HomeController extends GetxController {
 
   Timer? _bannerTimer;
 
-  RxList<ItemModel> products = <ItemModel>[].obs;
-  RxList<ItemModel> subCategoryProducts = <ItemModel>[].obs;
+  RxList<ProductModel> products = <ProductModel>[].obs;
+  RxList<ProductModel> subCategoryProducts = <ProductModel>[].obs;
   RxList<BrandModel> featuredBrands = <BrandModel>[].obs;
   RxList<BrandModel> brands = <BrandModel>[].obs;
-  RxList<ProductbModel> brandProducts = <ProductbModel>[].obs;
+  RxList<ProductModel> brandProducts = <ProductModel>[].obs;
   RxList<AdsModel> ads = <AdsModel>[].obs;
   RxInt currentBannerIndex = 0.obs;
 
@@ -225,7 +225,7 @@ class HomeController extends GetxController {
         page: page,
         limit: limit,
       );
-      final data = api.data ?? <ProductbModel>[];
+      final data = api.data ?? <ProductModel>[];
       brandProductsPagination.value = api.pagination;
       if (append) {
         brandProducts.addAll(data);

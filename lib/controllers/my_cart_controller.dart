@@ -1,6 +1,6 @@
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/models/cart_item_model.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 import 'package:bizreh_paints_store/models/discount_model.dart';
 
 class MyCartController extends GetxController {

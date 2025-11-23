@@ -69,9 +69,9 @@ class ErrorInterceptor extends Interceptor {
       case 401:
         return UnauthorizedException(message: message);
       case 403:
-        return ForbiddenException(message: 'Access forbidden');
+        return ForbiddenException(message: message);
       case 404:
-        return NotFoundException(message: 'Resource not found');
+        return NotFoundException(message: message);
       case 422:
         return ValidationException(
           message: message,

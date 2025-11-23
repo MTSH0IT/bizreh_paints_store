@@ -62,10 +62,7 @@ class HomeView extends StatelessWidget {
               const SizedBox(height: 8),
               Obx(() {
                 if (controller.isLoading.value) {
-                  return const Padding(
-                    padding: EdgeInsets.all(40.0),
-                    child: BuildProgressIndicator(),
-                  );
+                  return BuildProgressIndicator();
                 }
 
                 if (controller.products.isEmpty) {

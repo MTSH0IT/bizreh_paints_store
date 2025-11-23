@@ -1,6 +1,6 @@
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 import 'package:flutter/material.dart';
-import 'package:bizreh_paints_store/models/item_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:get/get.dart';
 
@@ -9,14 +9,17 @@ class ProductsGrid extends StatelessWidget {
     super.key,
     this.isNeverScrollable = true,
     required this.products,
+    this.scrollController,
   });
   final bool isNeverScrollable;
-  final List<ItemModel> products;
+  final List<ProductModel> products;
+  final ScrollController? scrollController;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: GridView.builder(
+        controller: scrollController,
         shrinkWrap: isNeverScrollable,
         physics: isNeverScrollable
             ? const NeverScrollableScrollPhysics()
@@ -29,7 +32,7 @@ class ProductsGrid extends StatelessWidget {
         ),
         itemCount: products.length,
         itemBuilder: (_, i) {
-          final ItemModel product = products[i];
+          final ProductModel product = products[i];
           return _ProductCard(product: product);
         },
       ),
@@ -38,7 +41,7 @@ class ProductsGrid extends StatelessWidget {
 }
 
 class _ProductCard extends StatelessWidget {
-  final ItemModel product;
+  final ProductModel product;
 
   const _ProductCard({required this.product});
 
@@ -69,7 +72,7 @@ class _ProductCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: ImageNetwork(
-                      image: product.mainImage ?? '',
+                      image: product.image ?? '',
                       icon: Icons.format_paint,
                     ),
                   ),
@@ -84,7 +87,7 @@ class _ProductCard extends StatelessWidget {
               ),
               const SizedBox(height: 2),
               Text(
-                product.arTitle ?? '',
+                product.brandName ?? '',
                 style: const TextStyle(fontSize: 12, color: Colors.black54),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

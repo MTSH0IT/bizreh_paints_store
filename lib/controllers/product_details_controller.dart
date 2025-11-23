@@ -1,36 +1,32 @@
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
-import 'package:bizreh_paints_store/models/product_model.dart';
 
 class ProductDetailsController extends GetxController {
-  var selectedColor = 0.obs;
-  var selectedSheen = 'Matte'.obs;
+  var selectedOption = 0.obs;
+  var selectedPackaging = 0.obs;
 
-  final List<Color> colors = const [
-    Color(0xFFF2F2F2),
-    Color(0xFFE6E6E6),
-    Color(0xFFDADADA),
-    Color(0xFFCDCDCD),
-    Color(0xFFC0C0C0),
-    Color(0xFFB3B3B3),
-    Color(0xFFA6A6A6),
-    Color(0xFF999999),
-  ];
-
-  void selectColor(int index) {
-    selectedColor.value = index;
+  void selectOption(int index) {
+    selectedOption.value = index;
   }
 
-  void selectSheen(String sheen) {
-    selectedSheen.value = sheen;
-  }
-
-  void addToWishlist() {
-    // TODO: Implement add to wishlist logic
+  void selectPackaging(int index) {
+    selectedPackaging.value = index;
   }
 
   void addToCart(ProductModel product) {
+    if (selectedOption.value == 0 || selectedPackaging.value == 0) {
+      Get.snackbar(
+        'خطأ',
+        'الرجاء اختيار خيار وحزمة',
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+        duration: const Duration(seconds: 2),
+      );
+      return;
+    }
     final cartController = Get.find<MyCartController>();
     cartController.addToCart(product);
 

@@ -1,7 +1,9 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/wish_list_item.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
+import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 
 class WishList extends StatelessWidget {
   const WishList({super.key});
@@ -19,7 +21,7 @@ class WishList extends StatelessWidget {
       ),
       body: Obx(() {
         if (ctrl.isGetLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const BuildProgressIndicator();
         }
         if (ctrl.items.isEmpty) {
           return const Center(child: Text('No items in wishlist'));
@@ -29,15 +31,20 @@ class WishList extends StatelessWidget {
           itemCount: ctrl.items.length,
           itemBuilder: (context, index) {
             final item = ctrl.items[index];
-            return WishListItemCard(
-              imageUrl: "",
-              title: item.title ?? "",
-              subtitle: "",
-              price: '\$${item.pricePerUnit}',
-              onMoveToCart: () {},
-              onRemove: () {
-                ctrl.removeItem(item.id!);
+            return GestureDetector(
+              onTap: () {
+                Get.to(() => ProductDetailsView(product: item));
               },
+              child: WishListItemCard(
+                imageUrl: item.image ?? "",
+                title: item.title ?? "",
+                subtitle: item.brandName ?? "",
+                price: '\$${item.pricePerUnit}',
+                onMoveToCart: () {},
+                onRemove: () {
+                  ctrl.removeItem(item.id!);
+                },
+              ),
             );
           },
         );

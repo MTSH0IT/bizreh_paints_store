@@ -1,7 +1,7 @@
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
-import 'package:bizreh_paints_store/models/productb_model.dart';
-import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -70,85 +70,16 @@ class _BrandProductsViewState extends State<BrandProductsView> {
         ),
       ),
       body: Obx(() {
-        if (controller.isBrandProductsLoading.value &&
-            controller.brandProducts.isEmpty) {
+        if (controller.isBrandProductsLoading.value) {
           return const Center(
             child: CircularProgressIndicator(strokeWidth: 2.5),
           );
         }
-        final List<ProductbModel> items = controller.brandProducts;
+        final List<ProductModel> items = controller.brandProducts;
         if (items.isEmpty) {
           return const Center(child: Text('No products'));
         }
-        return Column(
-          children: [
-            Expanded(
-              child: GridView.builder(
-                controller: _scroll,
-                padding: const EdgeInsets.all(16),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 16,
-                  crossAxisSpacing: 16,
-                  childAspectRatio: 0.78,
-                ),
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final p = items[index];
-                  return Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      border: Border.all(color: Colors.grey.shade200),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.04),
-                          blurRadius: 6,
-                          offset: const Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(12),
-                              topRight: Radius.circular(12),
-                            ),
-                            child: const ImageNetwork(image: ''),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            p.title ?? '',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
-                          child: Text(
-                            p.pricePerUnit != null ? '${p.pricePerUnit}' : '',
-                            style: const TextStyle(color: Colors.blueGrey),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-            if (controller.isBrandProductsLoading.value || _isLoadingMore)
-              const Padding(
-                padding: EdgeInsets.only(bottom: 16),
-                child: CircularProgressIndicator(strokeWidth: 2.5),
-              ),
-          ],
-        );
+        return ProductsGrid(products: items, scrollController: _scroll);
       }),
     );
   }

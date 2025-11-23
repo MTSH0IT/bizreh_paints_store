@@ -5,7 +5,7 @@ import 'package:bizreh_paints_store/views/personalInformation/personal_informati
 import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
 import 'package:bizreh_paints_store/views/notifications/notifications_view.dart';
-import 'package:bizreh_paints_store/views/wishList/wish_list.dart';
+import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'widgets/profile_list_item.dart';
 import 'widgets/section_title.dart';
 

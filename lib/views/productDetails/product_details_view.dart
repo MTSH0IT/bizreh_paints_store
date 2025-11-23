@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
@@ -13,7 +14,7 @@ class ProductDetailsView extends StatelessWidget {
 
   final ProductModel product;
   final controller = Get.put(ProductDetailsController());
-  final wishCtrl = Get.put(WishListController());
+  final wishCtrl = Get.find<WishListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class ProductDetailsView extends StatelessWidget {
                 fit: StackFit.expand,
                 children: [
                   ImageNetwork(
-                    image: "product.mainImage" ?? "",
+                    image: product.image ?? "",
                     icon: Icons.format_paint,
                   ),
                   Positioned(
@@ -42,15 +43,19 @@ class ProductDetailsView extends StatelessWidget {
                           onPressed: Get.back,
                         ),
                         Obx(() {
-                          final isFav = wishCtrl.isFavorite(product.id!);
+                          final opid = controller.selectedOption.value;
+                          final isFav = wishCtrl.isFavorite(opid);
+                          if (wishCtrl.isAddRemoveLoading.value) {
+                            return BuildProgressIndicator();
+                          }
                           return CircleIconButton(
                             icon: isFav
                                 ? Icons.favorite
                                 : Icons.favorite_border,
                             onPressed: () {
                               isFav
-                                  ? wishCtrl.removeItem(product.id!)
-                                  : wishCtrl.addToWishList(product.id!);
+                                  ? wishCtrl.removeItem(opid)
+                                  : wishCtrl.addToWishList(opid);
                             },
                           );
                         }),

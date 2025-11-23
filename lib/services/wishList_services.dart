@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/models/wishlist_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
@@ -96,13 +96,13 @@ class WishListServices {
     }
   }
 
-  Future<List<ProductModel>> getWishlist() async {
+  Future<List<WishlistModel>> getWishlist() async {
     try {
       final response = await _dioClient.get(ApiEndpoint.getWishlist);
       final apiResponse = ApiResponse.fromJson(response.data, (json) {
         final list = (json['wishlist'] as List?) ?? [];
         return list
-            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+            .map((e) => WishlistModel.fromJson(e as Map<String, dynamic>))
             .toList();
       });
 

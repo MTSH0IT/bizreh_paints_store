@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   final HomeController controller = Get.put(HomeController());
+  final wishCtrl = Get.put(WishListController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(

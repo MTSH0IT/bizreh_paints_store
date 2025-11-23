@@ -2,16 +2,19 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/models/wishlist_model.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 
 class WishListController extends GetxController {
   final wishListServices = WishListServices();
-  final RxList<ProductModel> items = <ProductModel>[].obs;
+  final RxList<WishlistModel> items = <WishlistModel>[].obs;
   final RxBool isGetLoading = false.obs;
-  final RxBool isRemoveLoading = false.obs;
+  final RxBool isAddRemoveLoading = false.obs;
+  final RxInt removingId = (-1).obs;
 
   @override
   void onInit() {
@@ -35,17 +38,21 @@ class WishListController extends GetxController {
   }
 
   Future<void> addToWishList(int id) async {
-    isRemoveLoading.value = true;
+    if (id < 0) {
+      showMassage("اختر عنصر لأضافته الى المفضلة", false);
+      return;
+    }
+    isAddRemoveLoading.value = true;
     try {
       await wishListServices.addWishlistItems(productOptionId: id);
       await loadWishListProducts();
-      isRemoveLoading.value = false;
+      isAddRemoveLoading.value = false;
     } on AppException catch (e) {
       log("wish list controller AppException : ${e.message}");
     } catch (e) {
       log("wish list controller catch : ${e.toString()}");
     } finally {
-      isRemoveLoading.value = false;
+      isAddRemoveLoading.value = false;
     }
   }
 
@@ -58,17 +65,18 @@ class WishListController extends GetxController {
   }
 
   Future<void> removeItem(int id) async {
-    isRemoveLoading.value = true;
+    isAddRemoveLoading.value = true;
+    removingId.value = id;
     try {
       await wishListServices.removeWishlistItem(wishlistId: id);
-      await loadWishListProducts();
-      isRemoveLoading.value = false;
+      items.removeWhere((e) => e.id == id);
+      isAddRemoveLoading.value = false;
     } on AppException catch (e) {
       log("wish list controller AppException : ${e.message}");
     } catch (e) {
       log("wish list controller catch : ${e.toString()}");
     } finally {
-      isRemoveLoading.value = false;
+      isAddRemoveLoading.value = false;
     }
   }
 

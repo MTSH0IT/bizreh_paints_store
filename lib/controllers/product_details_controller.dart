@@ -1,11 +1,11 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
-import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 
 class ProductDetailsController extends GetxController {
-  var selectedOption = 0.obs;
-  var selectedPackaging = 0.obs;
+  var selectedOption = (-1).obs;
+  var selectedPackaging = (-1).obs;
 
   void selectOption(int index) {
     selectedOption.value = index;
@@ -16,27 +16,13 @@ class ProductDetailsController extends GetxController {
   }
 
   void addToCart(ProductModel product) {
-    if (selectedOption.value == 0 || selectedPackaging.value == 0) {
-      Get.snackbar(
-        'خطأ',
-        'الرجاء اختيار خيار وحزمة',
-        snackPosition: SnackPosition.TOP,
-        backgroundColor: Colors.red,
-        colorText: Colors.white,
-        duration: const Duration(seconds: 2),
-      );
+    if (selectedOption.value <= 0 || selectedPackaging.value <= 0) {
+      showMassage("اختر الخيار المناسب وطريقة التغليف", false);
       return;
     }
     final cartController = Get.find<MyCartController>();
     cartController.addToCart(product);
 
-    Get.snackbar(
-      'تمت الإضافة',
-      '${product.title} تم إضافته إلى السلة',
-      snackPosition: SnackPosition.TOP,
-      backgroundColor: Colors.green,
-      colorText: Colors.white,
-      duration: const Duration(seconds: 2),
-    );
+    showMassage("تم اضافة المنتج الى السلة", true);
   }
 }

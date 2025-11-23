@@ -1,27 +1,26 @@
+import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
+import 'package:bizreh_paints_store/models/wishlist_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:get/get.dart';
 
 class WishListItemCard extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String subtitle;
-  final String price;
+  final WishlistModel item;
   final VoidCallback onMoveToCart;
   final VoidCallback onRemove;
 
   const WishListItemCard({
     super.key,
-    required this.imageUrl,
-    required this.title,
-    required this.subtitle,
-    required this.price,
+    required this.item,
     required this.onMoveToCart,
     required this.onRemove,
   });
 
   @override
   Widget build(BuildContext context) {
+    final cont = Get.find<WishListController>();
     return Card(
       color: Colors.white,
       elevation: 1,
@@ -38,7 +37,7 @@ class WishListItemCard extends StatelessWidget {
                   child: SizedBox(
                     width: 80,
                     height: 80,
-                    child: ImageNetwork(image: imageUrl),
+                    child: ImageNetwork(image: item.mainImage ?? ""),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -47,7 +46,7 @@ class WishListItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        item.title ?? "",
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -55,7 +54,7 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        subtitle,
+                        item.optionName ?? "",
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black54,
@@ -63,7 +62,7 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        price,
+                        "\$ ${item.pricePerUnit?.toStringAsFixed(2) ?? '0.00'}",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
@@ -94,17 +93,26 @@ class WishListItemCard extends StatelessWidget {
                 ),
                 Text("|", style: TextStyle(color: Colors.grey)),
                 Expanded(
-                  child: TextButton(
-                    onPressed: onRemove,
-                    style: TextButton.styleFrom(foregroundColor: primaryColor),
-                    child: const Text(
-                      'Remove',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                  child: Obx(() {
+                    final isRemoving =
+                        cont.isAddRemoveLoading.value &&
+                        cont.removingId.value == item.id;
+                    return TextButton(
+                      onPressed: isRemoving ? null : onRemove,
+                      style: TextButton.styleFrom(
+                        foregroundColor: primaryColor,
                       ),
-                    ),
-                  ),
+                      child: isRemoving
+                          ? const BuildProgressIndicator()
+                          : const Text(
+                              'Remove',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    );
+                  }),
                 ),
               ],
             ),

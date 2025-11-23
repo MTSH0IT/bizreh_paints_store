@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/wish_list_item.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
-import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 
 class WishList extends StatelessWidget {
   const WishList({super.key});
@@ -33,13 +32,10 @@ class WishList extends StatelessWidget {
             final item = ctrl.items[index];
             return GestureDetector(
               onTap: () {
-                Get.to(() => ProductDetailsView(product: item));
+                // Get.to(() => ProductDetailsView(product: item));
               },
               child: WishListItemCard(
-                imageUrl: item.image ?? "",
-                title: item.title ?? "",
-                subtitle: item.brandName ?? "",
-                price: '\$${item.pricePerUnit}',
+                item: item,
                 onMoveToCart: () {},
                 onRemove: () {
                   ctrl.removeItem(item.id!);

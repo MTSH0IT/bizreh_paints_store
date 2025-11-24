@@ -3,11 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
+import 'package:bizreh_paints_store/controllers/auth_controller.dart';
+import 'package:bizreh_paints_store/controllers/home_controller.dart';
+import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
+import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
+import 'package:bizreh_paints_store/controllers/address_controllers.dart';
+import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
+import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageService.init();
   runApp(const MainApp());
+}
+
+class AppBindings extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
+    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
+    Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
+    Get.lazyPut<MyCartController>(() => MyCartController(), fenix: true);
+    Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
+    Get.lazyPut<PersonalController>(() => PersonalController(), fenix: true);
+    Get.lazyPut<NotificationsControllers>(
+      () => NotificationsControllers(),
+      fenix: true,
+    );
+    Get.lazyPut<MainViewController>(() => MainViewController(), fenix: true);
+  }
 }
 
 class MainApp extends StatelessWidget {
@@ -18,6 +43,7 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
+      initialBinding: AppBindings(),
       home: SignInView(),
     );
   }

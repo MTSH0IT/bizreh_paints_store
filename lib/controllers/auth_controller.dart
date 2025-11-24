@@ -52,6 +52,29 @@ class AuthController extends GetxController {
     super.onClose();
   }
 
+  void closeCtrl() {
+    emailCtrl.dispose();
+    passwordCtrl.dispose();
+    confirmCtrl.dispose();
+    firstNameCtrl.dispose();
+    lastNameCtrl.dispose();
+    phoneCtrl.dispose();
+    loginEmailCtrl.dispose();
+    loginPasswordCtrl.dispose();
+    log("message👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌");
+  }
+
+  void clearCtrl() {
+    emailCtrl.clear();
+    passwordCtrl.clear();
+    confirmCtrl.clear();
+    firstNameCtrl.clear();
+    lastNameCtrl.clear();
+    phoneCtrl.clear();
+    loginEmailCtrl.clear();
+    loginPasswordCtrl.clear();
+  }
+
   Future<void> signIn() async {
     isLoading.value = true;
     try {
@@ -61,6 +84,7 @@ class AuthController extends GetxController {
       );
       await _persistAuth(res);
       Get.offAll(() => MainView());
+      clearCtrl();
       Get.snackbar(
         'مرحبًا',
         'تم تسجيل الدخول بنجاح',

@@ -13,7 +13,7 @@ class PersonalInformation extends StatefulWidget {
 }
 
 class _PersonalInformationState extends State<PersonalInformation> {
-  final PersonalController ctrl = Get.put(PersonalController());
+  final PersonalController ctrl = Get.find<PersonalController>();
 
   @override
   Widget build(BuildContext context) {

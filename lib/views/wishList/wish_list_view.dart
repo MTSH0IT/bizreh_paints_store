@@ -9,7 +9,7 @@ class WishList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.put(WishListController());
+    final ctrl = Get.find<WishListController>();
 
     return Scaffold(
       appBar: AppBar(

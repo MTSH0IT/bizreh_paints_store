@@ -10,9 +10,7 @@ import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 class MyCartView extends StatelessWidget {
   MyCartView({super.key});
 
-  final MyCartController cartController = Get.put(MyCartController());
-
-  // Discount state moved to controller (selectedDiscount, discountAmount)
+  final MyCartController cartController = Get.find<MyCartController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -10,11 +10,11 @@ import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 class SignUpView extends StatelessWidget {
   SignUpView({super.key});
 
-  final AuthController _auth = Get.find<AuthController>();
   final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final AuthController auth = Get.find<AuthController>();
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Obx(
@@ -30,7 +30,7 @@ class SignUpView extends StatelessWidget {
                     children: [
                       const AuthHeader(title: 'Create an account'),
                       AuthTextField(
-                        controller: _auth.firstNameCtrl,
+                        controller: auth.firstNameCtrl,
                         hint: 'First Name',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -40,7 +40,7 @@ class SignUpView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.lastNameCtrl,
+                        controller: auth.lastNameCtrl,
                         hint: 'Last Name',
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -50,7 +50,7 @@ class SignUpView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.phoneCtrl,
+                        controller: auth.phoneCtrl,
                         hint: 'Phone Number',
                         keyboardType: TextInputType.phone,
                         validator: (value) {
@@ -61,7 +61,7 @@ class SignUpView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.emailCtrl,
+                        controller: auth.emailCtrl,
                         hint: 'Email',
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
@@ -75,7 +75,7 @@ class SignUpView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.passwordCtrl,
+                        controller: auth.passwordCtrl,
                         hint: 'Password',
                         obscure: true,
                         validator: (value) {
@@ -89,14 +89,14 @@ class SignUpView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.confirmCtrl,
+                        controller: auth.confirmCtrl,
                         hint: 'Confirm Password',
                         obscure: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please confirm your password';
                           }
-                          if (value != _auth.passwordCtrl.text) {
+                          if (value != auth.passwordCtrl.text) {
                             return 'Passwords do not match';
                           }
                           return null;
@@ -105,15 +105,15 @@ class SignUpView extends StatelessWidget {
 
                       const SizedBox(height: 8),
                       MainButton(
-                        title: _auth.isLoading.value
+                        title: auth.isLoading.value
                             ? 'الرجاء الانتظار...'
                             : 'Create Account',
-                        onPressed: _auth.isLoading.value
+                        onPressed: auth.isLoading.value
                             ? null
                             : () async {
                                 if (_formKey.currentState?.validate() ??
                                     false) {
-                                  await _auth.signUp();
+                                  await auth.signUp();
                                 }
                               },
                       ),
@@ -144,7 +144,7 @@ class SignUpView extends StatelessWidget {
                 ),
               ),
             ),
-            if (_auth.isLoading.value)
+            if (auth.isLoading.value)
               Positioned.fill(
                 child: Container(
                   color: Colors.black38,

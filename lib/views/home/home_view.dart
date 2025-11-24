@@ -16,8 +16,8 @@ import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
-  final HomeController controller = Get.put(HomeController());
-  final wishCtrl = Get.put(WishListController());
+  final HomeController controller = Get.find<HomeController>();
+  final WishListController wishCtrl = Get.find<WishListController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -15,7 +15,7 @@ class SavedAddressView extends StatefulWidget {
 }
 
 class _SavedAddressViewState extends State<SavedAddressView> {
-  final AddressController addressController = Get.put(AddressController());
+  final AddressController addressController = Get.find<AddressController>();
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +56,15 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final address = items[index];
+              final isDefault =
+                  address.id == addressController.defaultAddress.value?.id;
 
               return GestureDetector(
                 onTap: () {
                   addressController.setDefault(address.id!);
                 },
                 child: AddressCard(
-                  isDefaultAddress:
-                      address.id == addressController.defaultAddress.value?.id!,
+                  isDefaultAddress: isDefault,
                   address: address,
                   onEdit: () {
                     Get.to(() => ManageAddressView(address: address));

@@ -149,7 +149,23 @@ class AddressController extends GetxController {
     isSubmitting.value = true;
     try {
       await _addressServices.deleteAddress(id: id);
-      loadAddresses();
+      // تحديث محلي لقائمة العناوين بدون إعادة تحميل من السيرفر
+      AddressModel? removed;
+      for (final a in addresses) {
+        if (a.id == id) {
+          removed = a;
+          break;
+        }
+      }
+
+      addresses.removeWhere((e) => e.id == id);
+      addresses.refresh();
+
+      // إذا كان العنوان المحذوف هو الافتراضي، أفرغ القيمة الافتراضية
+      if (removed != null && defaultAddress.value?.id == removed.id) {
+        defaultAddress.value = null;
+      }
+
       showMassage("تم حذف العنوان", true);
       isSubmitting.value = false;
     } catch (e) {
@@ -164,7 +180,20 @@ class AddressController extends GetxController {
     isSubmitting.value = true;
     try {
       await _addressServices.setDefaultAddress(id: id);
-      await loadDefaultAddress();
+      // تحديث محلي للعنوان الافتراضي من القائمة الحالية بدون طلب جديد
+      AddressModel? newDefault;
+      for (final a in addresses) {
+        if (a.id == id) {
+          newDefault = a;
+          break;
+        }
+      }
+
+      if (newDefault != null) {
+        defaultAddress.value = newDefault;
+        addresses.refresh();
+      }
+
       showMassage("تم تعيين العنوان الافتراضي", true);
       isSubmitting.value = false;
     } catch (e) {

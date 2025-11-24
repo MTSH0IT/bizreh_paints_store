@@ -13,11 +13,11 @@ import 'package:bizreh_paints_store/views/auth/widgets/secondary_button.dart';
 class SignInView extends StatelessWidget {
   SignInView({super.key});
 
-  final AuthController _auth = Get.put(AuthController());
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    final AuthController auth = Get.find<AuthController>();
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Obx(
@@ -36,7 +36,7 @@ class SignInView extends StatelessWidget {
                         subtitle: 'Please enter your details to sign in.',
                       ),
                       AuthTextField(
-                        controller: _auth.loginEmailCtrl,
+                        controller: auth.loginEmailCtrl,
                         hint: 'Email address',
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
@@ -50,7 +50,7 @@ class SignInView extends StatelessWidget {
                         },
                       ),
                       AuthTextField(
-                        controller: _auth.loginPasswordCtrl,
+                        controller: auth.loginPasswordCtrl,
                         hint: 'Password',
                         obscure: true,
                         validator: (value) {
@@ -67,14 +67,14 @@ class SignInView extends StatelessWidget {
                       AuthTextLink(text: 'Forgot password?', onTap: () {}),
                       const SizedBox(height: 8),
                       MainButton(
-                        title: _auth.isLoading.value
+                        title: auth.isLoading.value
                             ? 'الرجاء الانتظار...'
                             : 'Log In',
-                        onPressed: _auth.isLoading.value
+                        onPressed: auth.isLoading.value
                             ? null
                             : () {
                                 if (formKey.currentState!.validate()) {
-                                  _auth.signIn();
+                                  auth.signIn();
                                 }
                               },
                       ),
@@ -90,7 +90,7 @@ class SignInView extends StatelessWidget {
                 ),
               ),
             ),
-            if (_auth.isLoading.value)
+            if (auth.isLoading.value)
               Positioned.fill(
                 child: Container(
                   color: Colors.black38,

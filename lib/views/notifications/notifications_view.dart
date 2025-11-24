@@ -9,9 +9,8 @@ import 'widgets/notification_details_sheet.dart';
 class NotificationsView extends StatelessWidget {
   NotificationsView({super.key});
 
-  final NotificationsControllers controller = Get.put(
-    NotificationsControllers(),
-  );
+  final NotificationsControllers controller =
+      Get.find<NotificationsControllers>();
 
   @override
   Widget build(BuildContext context) {

@@ -12,7 +12,7 @@ class MainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(MainViewController());
+    final controller = Get.find<MainViewController>();
     return Obx(
       () => Scaffold(
         body: SafeArea(

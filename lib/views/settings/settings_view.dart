@@ -8,7 +8,7 @@ import 'widgets/settings_tile.dart';
 
 class SettingsView extends StatelessWidget {
   SettingsView({super.key});
-  final PersonalController personalController = Get.put(PersonalController());
+  final PersonalController personalController = Get.find<PersonalController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

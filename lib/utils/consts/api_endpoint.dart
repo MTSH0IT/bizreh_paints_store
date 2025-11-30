@@ -54,4 +54,12 @@ class ApiEndpoint {
 
   //ads
   static const String getAds = "/user/ads/ads";
+
+  //order
+  static const String createOrder = "/user/order";
+  static const String getOrder = "/user/order";
+  static String detailsOrder(int id) => "/user/order/$id";
+  static String cancelOrder(int id) => "/user/order/$id/cancel";
+  static String reorder(int id) => "/user/order/$id/reorder";
+  static String complaint(int id) => "/user/order/$id/complaint";
 }

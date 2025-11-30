@@ -9,6 +9,8 @@ class ProductDetailsController extends GetxController {
 
   void selectOption(int index) {
     selectedOption.value = index;
+    // reset packaging selection when option changes
+    selectedPackaging.value = -1;
   }
 
   void selectPackaging(int index) {
@@ -16,12 +18,35 @@ class ProductDetailsController extends GetxController {
   }
 
   void addToCart(ProductModel product) {
-    if (selectedOption.value <= 0 || selectedPackaging.value <= 0) {
+    if (selectedOption.value < 0 || selectedPackaging.value < 0) {
       showMassage("اختر الخيار المناسب وطريقة التغليف", false);
       return;
     }
     final cartController = Get.find<MyCartController>();
-    cartController.addToCart(product);
+
+    final options = product.options ?? [];
+    final selectedOptionId = selectedOption.value;
+    final selectedPackagingId = selectedPackaging.value;
+
+    var optionModel = options.firstWhere(
+      (o) => o.id == selectedOptionId,
+      orElse: () => options.first,
+    );
+
+    final packagingList = optionModel.packaging ?? [];
+    final packagingModel = packagingList.firstWhere(
+      (p) => p.id == selectedPackagingId,
+      orElse: () => packagingList.first,
+    );
+
+    final unitPrice = packagingModel.pricePerUnit ?? 0.0;
+
+    cartController.addToCart(
+      product,
+      optionId: optionModel.id ?? selectedOptionId,
+      packagingId: packagingModel.id ?? selectedPackagingId,
+      unitPrice: unitPrice,
+    );
 
     showMassage("تم اضافة المنتج الى السلة", true);
   }

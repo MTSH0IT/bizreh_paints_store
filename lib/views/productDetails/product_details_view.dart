@@ -1,3 +1,5 @@
+import 'package:bizreh_paints_store/models/product_model/option.dart'
+    as product_models;
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,8 @@ import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/circle_icon_button.dart';
-import 'package:bizreh_paints_store/views/productDetails/widgets/option.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/option.dart'
+    as option_widget;
 
 class ProductDetailsView extends StatelessWidget {
   ProductDetailsView({super.key, required this.product});
@@ -128,7 +131,7 @@ class ProductDetailsView extends StatelessWidget {
                               final selected =
                                   option.id == controller.selectedOption.value;
 
-                              return Option(
+                              return option_widget.Option(
                                 title: option.optionName ?? '',
                                 selected: selected,
                                 onTap: () =>
@@ -140,36 +143,69 @@ class ProductDetailsView extends StatelessWidget {
                         const SizedBox(height: 24),
                       ],
 
-                      // Packaging section
-                      if ((product.packaging ?? []).isNotEmpty) ...[
-                        Text(
-                          'Packaging',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        Obx(() {
-                          final packagingList = product.packaging!;
-                          return Wrap(
-                            spacing: 12,
-                            runSpacing: 12,
-                            children: List.generate(packagingList.length, (i) {
-                              final pkg = packagingList[i];
-                              final selected =
-                                  pkg.id == controller.selectedPackaging.value;
-                              final title = pkg.title ?? '';
-                              return Option(
-                                title: title,
-                                selected: selected,
-                                onTap: () =>
-                                    controller.selectPackaging(pkg.id!),
-                              );
-                            }),
-                          );
-                        }),
-                      ],
+                      // Packaging section (depends on selected option)
+                      Obx(() {
+                        final options = product.options ?? [];
+                        if (options.isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+
+                        final selectedOptionId =
+                            controller.selectedOption.value;
+                        if (selectedOptionId < 0) {
+                          return const SizedBox.shrink();
+                        }
+
+                        // find the selected option by id
+                        product_models.Option? selectedOptionModel;
+                        for (final o in options) {
+                          if (o.id == selectedOptionId) {
+                            selectedOptionModel = o;
+                            break;
+                          }
+                        }
+
+                        if (selectedOptionModel == null ||
+                            (selectedOptionModel.packaging ?? []).isEmpty) {
+                          return const SizedBox.shrink();
+                        }
+
+                        final packagingList = selectedOptionModel.packaging!;
+
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Packaging',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 20,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            Wrap(
+                              spacing: 12,
+                              runSpacing: 12,
+                              children: List.generate(packagingList.length, (
+                                index,
+                              ) {
+                                final pkg = packagingList[index];
+                                final selected =
+                                    pkg.id ==
+                                    controller.selectedPackaging.value;
+                                final title = pkg.packagingTitle ?? '';
+                                return option_widget.Option(
+                                  title: title,
+                                  selected: selected,
+                                  onTap: () =>
+                                      controller.selectPackaging(pkg.id!),
+                                );
+                              }),
+                            ),
+                            const SizedBox(height: 24),
+                          ],
+                        );
+                      }),
 
                       const SizedBox(height: 20),
                       Text(

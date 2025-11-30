@@ -94,7 +94,7 @@ class _ProductCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '\$${(product.pricePerUnit ?? 0).toStringAsFixed(2)}',
+                '\$${(product.id ?? 0).toStringAsFixed(2)}',
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
             ],

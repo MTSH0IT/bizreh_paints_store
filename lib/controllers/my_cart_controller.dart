@@ -19,15 +19,30 @@ class MyCartController extends GetxController {
     discounts.value = demoDiscount;
   }
 
-  void addToCart(ProductModel product) {
+  void addToCart(
+    ProductModel product, {
+    required int optionId,
+    required int packagingId,
+    required double unitPrice,
+  }) {
     final existingIndex = cartItems.indexWhere(
-      (item) => item.product.title == product.title,
+      (item) =>
+          item.product.id == product.id &&
+          item.optionId == optionId &&
+          item.packagingId == packagingId,
     );
 
     if (existingIndex != -1) {
       cartItems[existingIndex].incrementQuantity();
     } else {
-      cartItems.add(CartItemModel.fromProduct(product));
+      cartItems.add(
+        CartItemModel.fromProduct(
+          product,
+          optionId: optionId,
+          packagingId: packagingId,
+          unitPrice: unitPrice,
+        ),
+      );
     }
   }
 

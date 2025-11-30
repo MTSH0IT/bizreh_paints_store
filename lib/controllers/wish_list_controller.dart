@@ -85,7 +85,7 @@ class WishListController extends GetxController {
 
   void addToCart(ProductModel product) {
     final cartController = Get.find<MyCartController>();
-    cartController.addToCart(product);
+    //cartController.addToCart(product);
 
     showMassage("تمت إضافة المنتج إلى السلة", true);
   }

@@ -7,6 +7,7 @@ class OrderHistoryItem extends StatelessWidget {
   final double amount;
   final String statusLabel;
   final VoidCallback onAction;
+  final VoidCallback? onCancel;
 
   const OrderHistoryItem({
     super.key,
@@ -15,6 +16,7 @@ class OrderHistoryItem extends StatelessWidget {
     required this.amount,
     required this.statusLabel,
     required this.onAction,
+    this.onCancel,
   });
 
   Color get statusColor {
@@ -23,8 +25,10 @@ class OrderHistoryItem extends StatelessWidget {
         return const Color(0xFF16A34A);
       case 'Shipped':
         return const Color(0xFFF59E0B);
-      case 'Processing':
+      case 'pending':
         return const Color(0xFF2563EB);
+      case 'canceled':
+        return const Color.fromARGB(255, 216, 29, 16);
       default:
         return Colors.grey;
     }
@@ -103,13 +107,25 @@ class OrderHistoryItem extends StatelessWidget {
                   ),
                 ),
               ),
+              if (statusLabel == 'pending' && onCancel != null) ...[
+                TextButton(
+                  onPressed: onCancel,
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.redAccent,
+                  ),
+                  child: const Text(
+                    'Cancel',
+                    style: TextStyle(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                const SizedBox(width: 8),
+              ],
               TextButton(
                 onPressed: onAction,
                 style: TextButton.styleFrom(foregroundColor: primaryColor),
-
-                child: Text(
-                  "View Details",
-                  style: const TextStyle(fontWeight: FontWeight.w600),
+                child: const Text(
+                  'View Details',
+                  style: TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
             ],

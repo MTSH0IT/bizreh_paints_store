@@ -1,3 +1,5 @@
+import 'package:bizreh_paints_store/controllers/order_controller.dart';
+import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/views/eranedPoints/eraned_points_view.dart';
@@ -15,19 +17,12 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: const Text('Profile'),
-      //   backgroundColor: Colors.transparent,
-      //   centerTitle: true,
-      //   elevation: 0,
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              //const ProfileHeader(name: 'mohammad altaher'),
               const SectionTitle(title: 'Account'),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -78,7 +73,8 @@ class ProfileView extends StatelessWidget {
                       icon: Icons.local_shipping_outlined,
                       title: 'Order History',
                       onTap: () {
-                        // Get.to(() => const OrderHistory());
+                        Get.find<OrderController>().loadOrderHistory();
+                        Get.to(() => const OrderHistory());
                       },
                     ),
                     ProfileListItem(

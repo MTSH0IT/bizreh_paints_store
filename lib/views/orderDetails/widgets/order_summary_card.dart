@@ -4,13 +4,13 @@ class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({
     super.key,
     required this.subtotal,
-    required this.shipping,
-    required this.total,
+    required this.discountAmount,
+    required this.finalAmount,
   });
 
   final String subtotal;
-  final String shipping;
-  final String total;
+  final String discountAmount;
+  final String finalAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -27,13 +27,17 @@ class OrderSummaryCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
-            _buildSummaryRow('Subtotal', _formatCurrency(subtotal)),
+            _buildSummaryRow('total', _formatCurrency(subtotal)),
             const SizedBox(height: 8),
-            _buildSummaryRow('Shipping', _formatCurrency(shipping)),
+            _buildSummaryRow('discount', _formatCurrency(discountAmount)),
             const SizedBox(height: 8),
             const Divider(thickness: 1),
             const SizedBox(height: 8),
-            _buildSummaryRow('Total', _formatCurrency(total), isBold: true),
+            _buildSummaryRow(
+              'final Amount',
+              _formatCurrency(finalAmount),
+              isBold: true,
+            ),
           ],
         ),
       ),

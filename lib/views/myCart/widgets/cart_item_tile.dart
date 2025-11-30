@@ -15,6 +15,8 @@ class CartItemTile extends StatefulWidget {
     required this.onIncrement,
     required this.onDecrement,
     this.onSetQuantity,
+    this.optionName,
+    this.packagingTitle,
   });
 
   final String image;
@@ -24,6 +26,8 @@ class CartItemTile extends StatefulWidget {
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final Function(int)? onSetQuantity;
+  final String? optionName;
+  final String? packagingTitle;
 
   @override
   State<CartItemTile> createState() => _CartItemTileState();
@@ -76,6 +80,17 @@ class _CartItemTileState extends State<CartItemTile> {
                   ),
                 ),
                 const SizedBox(height: 4),
+                if (widget.optionName != null || widget.packagingTitle != null)
+                  Text(
+                    [
+                      if (widget.optionName != null) widget.optionName!,
+                      if (widget.packagingTitle != null) widget.packagingTitle!,
+                    ].join(' • '),
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                const SizedBox(height: 2),
                 Text(
                   '\$${widget.price.toStringAsFixed(2)}',
                   style: const TextStyle(color: Colors.black54),

@@ -6,11 +6,13 @@ import 'package:bizreh_paints_store/views/myCart/widgets/discount_option_tile.da
 import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
+import 'package:bizreh_paints_store/controllers/order_controller.dart';
 
 class MyCartView extends StatelessWidget {
   MyCartView({super.key});
 
   final MyCartController cartController = Get.find<MyCartController>();
+  final OrderController orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +45,38 @@ class MyCartView extends StatelessWidget {
                         itemCount: cartController.cartItems.length,
                         itemBuilder: (context, index) {
                           final item = cartController.cartItems[index];
+                          String? optionName;
+                          String? packagingTitle;
+
+                          final options = item.product.options ?? [];
+                          if (options.isNotEmpty) {
+                            final option = options.firstWhere(
+                              (o) => o.id == item.optionId,
+                              orElse: () => options.first,
+                            );
+                            optionName =
+                                option.optionName ?? option.arOptionName;
+
+                            final packagingList = option.packaging ?? [];
+                            if (packagingList.isNotEmpty) {
+                              final packaging = packagingList.firstWhere(
+                                (p) => p.id == item.packagingId,
+                                orElse: () => packagingList.first,
+                              );
+                              packagingTitle =
+                                  packaging.packagingTitle ??
+                                  packaging.arPackagingTitle;
+                            }
+                          }
                           return Padding(
                             padding: EdgeInsets.only(bottom: 12),
                             child: CartItemTile(
                               image: item.product.image ?? '',
                               title: item.product.title ?? '',
-                              price: item.product.pricePerUnit ?? 1,
+                              price: item.unitPrice,
                               quantity: item.quantity,
+                              optionName: optionName,
+                              packagingTitle: packagingTitle,
                               onIncrement: () {
                                 cartController.incrementQuantity(index);
                               },
@@ -150,24 +177,99 @@ class MyCartView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: PriceRow(
-                  label: 'Total',
-                  amount: total,
-                  emphasis: true,
-                  color: primaryColor,
-                ),
-              ),
-              MainButton(
-                title: 'Proceed to Checkout',
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(
-                        'Proceeding to checkout with total: \$${total.toStringAsFixed(2)}',
-                      ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // const SizedBox(height: 8),
+                    // Text(
+                    //   'معلومات الاتصال',
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.w700,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
+                    //const SizedBox(height: 8),
+                    // TextField(
+                    //   keyboardType: TextInputType.phone,
+                    //   decoration: const InputDecoration(
+                    //     labelText: 'رقم الهاتف',
+                    //     border: OutlineInputBorder(),
+                    //   ),
+                    //   onChanged: orderController.setPhone,
+                    // ),
+                    //const SizedBox(height: 12),
+                    // Text(
+                    //   'عنوان التوصيل',
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.w700,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 8),
+                    // Obx(() {
+                    //   final address = orderController.selectedAddress.value;
+                    //   return Container(
+                    //     width: double.infinity,
+                    //     padding: const EdgeInsets.all(12),
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.circular(8),
+                    //       border: Border.all(color: Colors.grey.shade300),
+                    //     ),
+                    //     child: Text(
+                    //       address?.addressLine ?? 'لا يوجد عنوان افتراضي محدد',
+                    //       style: TextStyle(fontSize: 14),
+                    //     ),
+                    //   );
+                    // }),
+                    // const SizedBox(height: 12),
+                    // Text(
+                    //   'طريقة الدفع',
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.w700,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
+                    // const SizedBox(height: 8),
+                    // Obx(() {
+                    //   return Row(
+                    //     children: orderController.paymentMethods.map((m) {
+                    //       final selected =
+                    //           orderController.paymentMethod.value == m;
+                    //       return Padding(
+                    //         padding: const EdgeInsets.only(right: 8),
+                    //         child: ChoiceChip(
+                    //           label: Text(m),
+                    //           selected: selected,
+                    //           onSelected: (_) =>
+                    //               orderController.setPaymentMethod(m),
+                    //         ),
+                    //       );
+                    //     }).toList(),
+                    //   );
+                    // }),
+                    const SizedBox(height: 12),
+                    PriceRow(
+                      label: 'Total',
+                      amount: total,
+                      emphasis: true,
+                      color: primaryColor,
                     ),
-                  );
-                },
+                    const SizedBox(height: 8),
+                    Obx(() {
+                      return MainButton(
+                        title: orderController.isSubmitting.value
+                            ? 'جاري ارسال الطلب...'
+                            : 'ارسال الطلب',
+                        onPressed: orderController.isSubmitting.value
+                            ? null
+                            : () {
+                                orderController.submitOrder();
+                              },
+                      );
+                    }),
+                  ],
+                ),
               ),
             ],
           );

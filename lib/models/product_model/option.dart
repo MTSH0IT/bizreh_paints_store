@@ -1,13 +1,14 @@
+import 'packaging.dart';
+
 class Option {
   int? id;
   int? productId;
   String? optionName;
   String? arOptionName;
   String? optionSku;
-  String? mainImage;
-  int? extraPricePerUnit;
   int? stockQuantity;
   DateTime? createdAt;
+  List<Packaging>? packaging;
 
   Option({
     this.id,
@@ -15,15 +16,14 @@ class Option {
     this.optionName,
     this.arOptionName,
     this.optionSku,
-    this.mainImage,
-    this.extraPricePerUnit,
     this.stockQuantity,
     this.createdAt,
+    this.packaging,
   });
 
   @override
   String toString() {
-    return 'Option(id: $id, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, mainImage: $mainImage, extraPricePerUnit: $extraPricePerUnit, stockQuantity: $stockQuantity, createdAt: $createdAt)';
+    return 'Option(id: $id, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, stockQuantity: $stockQuantity, createdAt: $createdAt, packaging: $packaging)';
   }
 
   factory Option.fromJson(Map<String, dynamic> json) => Option(
@@ -32,12 +32,13 @@ class Option {
     optionName: json['option_name'] as String?,
     arOptionName: json['ar_option_name'] as String?,
     optionSku: json['option_sku'] as String?,
-    mainImage: json['main_image'] as String?,
-    extraPricePerUnit: json['extra_price_per_unit'] as int?,
     stockQuantity: json['stock_quantity'] as int?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
+    packaging: (json['packaging'] as List<dynamic>?)
+        ?.map((e) => Packaging.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 
   Map<String, dynamic> toJson() => {
@@ -46,9 +47,8 @@ class Option {
     'option_name': optionName,
     'ar_option_name': arOptionName,
     'option_sku': optionSku,
-    'main_image': mainImage,
-    'extra_price_per_unit': extraPricePerUnit,
     'stock_quantity': stockQuantity,
     'created_at': createdAt?.toIso8601String(),
+    'packaging': packaging?.map((e) => e.toJson()).toList(),
   };
 }

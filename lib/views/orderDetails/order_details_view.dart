@@ -8,6 +8,7 @@ import 'package:bizreh_paints_store/views/orderDetails/widgets/order_summary_car
 import 'package:bizreh_paints_store/views/orderDetails/widgets/shipping_details.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:bizreh_paints_store/utils/func/text_input_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -36,27 +37,14 @@ class OrderDetailsView extends StatelessWidget {
               onPressed: orderController.isSubmitting.value
                   ? null
                   : () {
-                      final messageController = TextEditingController();
-                      Get.defaultDialog(
+                      showTextInputDialog(
                         title: 'إرسال شكوى',
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(height: 8),
-                            TextField(
-                              controller: messageController,
-                              maxLines: 3,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'اكتب الشكوى هنا',
-                              ),
-                            ),
-                          ],
-                        ),
-                        textConfirm: 'إرسال',
-                        textCancel: 'إلغاء',
-                        onConfirm: () async {
-                          final msg = messageController.text.trim();
+                        hintText: 'اكتب الشكوى هنا',
+                        maxLines: 3,
+                        confirmText: 'إرسال',
+                        cancelText: 'إلغاء',
+                        onConfirm: (controller) async {
+                          final msg = controller.text.trim();
                           if (msg.isEmpty) {
                             return;
                           }

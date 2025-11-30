@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
+import 'package:bizreh_paints_store/utils/func/text_input_dialog.dart';
 import 'widgets/order_history_item.dart';
 
 class OrderHistory extends StatelessWidget {
@@ -68,28 +69,14 @@ class OrderHistory extends StatelessWidget {
               },
               onCancel: status == 'pending' && o.id != null
                   ? () {
-                      final reasonController = TextEditingController();
-                      Get.defaultDialog(
+                      showTextInputDialog(
                         title: 'إلغاء الطلب',
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // const Text('أدخل سبب الإلغاء'),
-                            const SizedBox(height: 12),
-                            TextField(
-                              controller: reasonController,
-                              decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                hintText: 'سبب الإلغاء',
-                              ),
-                              maxLines: 2,
-                            ),
-                          ],
-                        ),
-                        textConfirm: 'تأكيد',
-                        textCancel: 'إلغاء',
-                        onConfirm: () async {
-                          String reason = reasonController.text.trim();
+                        hintText: 'سبب الإلغاء',
+                        maxLines: 2,
+                        confirmText: 'تأكيد',
+                        cancelText: 'إلغاء',
+                        onConfirm: (controller) async {
+                          String reason = controller.text.trim();
                           if (reason.isEmpty) {
                             reason = 'no reason';
                           }

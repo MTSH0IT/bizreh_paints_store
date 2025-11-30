@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class WishListItemCard extends StatelessWidget {
   final WishlistModel item;
@@ -62,7 +63,7 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "\$ ${item.pricePerUnit?.toStringAsFixed(2) ?? '0.00'}",
+                        "\$ ${formatPrice(item.pricePerUnit ?? 0)}",
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,

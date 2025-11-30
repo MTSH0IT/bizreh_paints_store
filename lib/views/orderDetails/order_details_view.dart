@@ -6,19 +6,13 @@ import 'package:bizreh_paints_store/views/orderDetails/widgets/order_id_card.dar
 import 'package:bizreh_paints_store/views/orderDetails/widgets/order_items_card.dart';
 import 'package:bizreh_paints_store/views/orderDetails/widgets/order_summary_card.dart';
 import 'package:bizreh_paints_store/views/orderDetails/widgets/shipping_details.dart';
+import 'package:bizreh_paints_store/utils/func/date_format.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView({super.key});
-
-  String _formatDate(DateTime? date) {
-    if (date == null) return '';
-    final d = date.day.toString().padLeft(2, '0');
-    final m = date.month.toString().padLeft(2, '0');
-    final y = date.year.toString();
-    return '$d/$m/$y';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,17 +101,17 @@ class OrderDetailsView extends StatelessWidget {
             children: [
               OrderIdCard(
                 orderNo: order.orderNumber ?? order.id?.toString() ?? '',
-                datePlaced: _formatDate(order.createdAt),
-                dateDelivered: _formatDate(order.updatedAt),
+                datePlaced: formatDate(order.createdAt),
+                dateDelivered: formatDate(order.updatedAt),
                 statusLabel: order.status ?? '',
               ),
               const SizedBox(height: 12),
               OrderItemsCard(items: items),
               const SizedBox(height: 12),
               OrderSummaryCard(
-                subtotal: totalAmount.toStringAsFixed(2),
-                discountAmount: discountAmount.toStringAsFixed(2),
-                finalAmount: finalAmount.toStringAsFixed(2),
+                subtotal: formatPrice(totalAmount),
+                discountAmount: formatPrice(discountAmount),
+                finalAmount: formatPrice(finalAmount),
               ),
               const SizedBox(height: 12),
               ShippingDetails(

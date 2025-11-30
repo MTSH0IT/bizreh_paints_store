@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'dart:async';
 import 'package:flutter/services.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class CartItemTile extends StatefulWidget {
   const CartItemTile({
@@ -92,7 +93,7 @@ class _CartItemTileState extends State<CartItemTile> {
                   ),
                 const SizedBox(height: 2),
                 Text(
-                  '\$${widget.price.toStringAsFixed(2)}',
+                  '\$${formatPrice(widget.price)}',
                   style: const TextStyle(color: Colors.black54),
                 ),
               ],

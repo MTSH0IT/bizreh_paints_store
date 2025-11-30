@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/func/status_color.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class OrderHistoryItem extends StatelessWidget {
   final String orderNo;
@@ -18,21 +20,6 @@ class OrderHistoryItem extends StatelessWidget {
     required this.onAction,
     this.onCancel,
   });
-
-  Color get statusColor {
-    switch (statusLabel) {
-      case 'Delivered':
-        return const Color(0xFF16A34A);
-      case 'Shipped':
-        return const Color(0xFFF59E0B);
-      case 'pending':
-        return const Color(0xFF2563EB);
-      case 'canceled':
-        return const Color.fromARGB(255, 216, 29, 16);
-      default:
-        return Colors.grey;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +65,7 @@ class OrderHistoryItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$${amount.toStringAsFixed(2)}',
+                '\$${formatPrice(amount)}',
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,
@@ -93,7 +80,7 @@ class OrderHistoryItem extends StatelessWidget {
                 width: 10,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: statusColor,
+                  color: getStatusColor(statusLabel),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -102,7 +89,7 @@ class OrderHistoryItem extends StatelessWidget {
                 child: Text(
                   statusLabel,
                   style: TextStyle(
-                    color: statusColor,
+                    color: getStatusColor(statusLabel),
                     fontWeight: FontWeight.w600,
                   ),
                 ),

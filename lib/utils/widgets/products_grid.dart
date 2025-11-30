@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/views/productDetails/product_details_view.da
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class ProductsGrid extends StatelessWidget {
   const ProductsGrid({
@@ -94,7 +95,7 @@ class _ProductCard extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '\$${(product.id ?? 0).toStringAsFixed(2)}',
+                '\$${formatPrice(product.id ?? 0)}',
                 style: const TextStyle(fontWeight: FontWeight.w700),
               ),
             ],

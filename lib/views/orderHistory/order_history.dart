@@ -3,18 +3,11 @@ import 'package:bizreh_paints_store/views/orderDetails/order_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
+import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'widgets/order_history_item.dart';
 
 class OrderHistory extends StatelessWidget {
   const OrderHistory({super.key});
-
-  String _formatDate(DateTime? date) {
-    if (date == null) return '';
-    final d = date.day.toString().padLeft(2, '0');
-    final m = date.month.toString().padLeft(2, '0');
-    final y = date.year.toString();
-    return '$d/$m/$y';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +51,7 @@ class OrderHistory extends StatelessWidget {
           itemCount: orders.length,
           itemBuilder: (context, index) {
             final o = orders[index];
-            final date = _formatDate(o.createdAt);
+            final date = formatDate(o.createdAt);
             final amount = o.finalAmount ?? o.totalAmount ?? 0.0;
             final status = o.status ?? '';
 

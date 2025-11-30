@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class PriceRow extends StatelessWidget {
   const PriceRow({
@@ -35,7 +36,7 @@ class PriceRow extends StatelessWidget {
 
   String _format(double value) {
     final prefix = value < 0 ? '-' : '';
-    final abs = value.abs().toStringAsFixed(2);
-    return '$prefix\$$abs';
+    final abs = formatPrice(value.abs());
+    return '$prefix \$$abs';
   }
 }

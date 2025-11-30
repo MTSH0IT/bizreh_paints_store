@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/utils/func/status_color.dart';
 
 class OrderIdCard extends StatelessWidget {
   final String orderNo;
@@ -13,19 +14,6 @@ class OrderIdCard extends StatelessWidget {
     required this.dateDelivered,
     required this.statusLabel,
   });
-
-  Color get statusColor {
-    switch (statusLabel) {
-      case 'Delivered':
-        return const Color(0xFF16A34A);
-      case 'Shipped':
-        return const Color(0xFFF59E0B);
-      case 'Processing':
-        return const Color(0xFF2563EB);
-      default:
-        return Colors.grey;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +42,7 @@ class OrderIdCard extends StatelessWidget {
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                        color: statusColor,
+                        color: getStatusColor(statusLabel),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -63,7 +51,7 @@ class OrderIdCard extends StatelessWidget {
                     Text(
                       statusLabel,
                       style: TextStyle(
-                        color: statusColor,
+                        color: getStatusColor(statusLabel),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

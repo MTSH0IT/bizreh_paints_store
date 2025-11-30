@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/models/order_model/item.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemsCard extends StatelessWidget {
@@ -86,7 +87,7 @@ class _ItemOrder extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '\$${price.toStringAsFixed(2)}',
+                      '\$${formatPrice(price)}',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

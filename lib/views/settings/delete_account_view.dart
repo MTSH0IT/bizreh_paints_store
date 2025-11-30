@@ -1,7 +1,7 @@
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/views/personalInformation/widgets/labeled_text_field.dart';
+import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 
-import 'widgets/labeled_text_field.dart';
+import '../../utils/widgets/labeled_text_field.dart';
 
 class PersonalInformation extends StatefulWidget {
   const PersonalInformation({super.key});

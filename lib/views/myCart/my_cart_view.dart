@@ -45,34 +45,13 @@ class MyCartView extends StatelessWidget {
                         itemCount: cartController.cartItems.length,
                         itemBuilder: (context, index) {
                           final item = cartController.cartItems[index];
-                          String? optionName;
-                          String? packagingTitle;
-
-                          final options = item.product.options ?? [];
-                          if (options.isNotEmpty) {
-                            final option = options.firstWhere(
-                              (o) => o.id == item.optionId,
-                              orElse: () => options.first,
-                            );
-                            optionName =
-                                option.optionName ?? option.arOptionName;
-
-                            final packagingList = option.packaging ?? [];
-                            if (packagingList.isNotEmpty) {
-                              final packaging = packagingList.firstWhere(
-                                (p) => p.id == item.packagingId,
-                                orElse: () => packagingList.first,
-                              );
-                              packagingTitle =
-                                  packaging.packagingTitle ??
-                                  packaging.arPackagingTitle;
-                            }
-                          }
+                          final optionName = item.optionName;
+                          final packagingTitle = item.packagingTitle;
                           return Padding(
                             padding: EdgeInsets.only(bottom: 12),
                             child: CartItemTile(
-                              image: item.product.image ?? '',
-                              title: item.product.title ?? '',
+                              image: item.image ?? "",
+                              title: item.title ?? "",
                               price: item.unitPrice,
                               quantity: item.quantity,
                               optionName: optionName,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/wish_list_item.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 
 class WishList extends StatelessWidget {
   const WishList({super.key});
@@ -17,6 +18,19 @@ class WishList extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.delete_outline),
+            tooltip: 'حذف كل المفضلة',
+            onPressed: () {
+              if (ctrl.items.isEmpty) {
+                showMassage("لا يوجد منتجات في مفضلة", false);
+                return;
+              }
+              ctrl.clearAll();
+            },
+          ),
+        ],
       ),
       body: Obx(() {
         if (ctrl.isGetLoading.value) {
@@ -36,7 +50,9 @@ class WishList extends StatelessWidget {
               },
               child: WishListItemCard(
                 item: item,
-                onMoveToCart: () {},
+                onMoveToCart: () {
+                  ctrl.addWishlistItemToCart(item);
+                },
                 onRemove: () {
                   ctrl.removeItem(item.id!);
                 },

@@ -52,6 +52,8 @@ class WishListItemCard extends StatelessWidget {
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 4),
                       Text(
@@ -60,6 +62,8 @@ class WishListItemCard extends StatelessWidget {
                           fontSize: 14,
                           color: Colors.black54,
                         ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       const SizedBox(height: 8),
                       Text(

@@ -5,17 +5,16 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/wishlist_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:bizreh_paints_store/utils/consts/const_key.dart';
 import 'package:dio/dio.dart';
 
 class WishListServices {
   final DioClient _dioClient = DioClient();
 
-  Future<void> addWishlistItems({required int productOptionId}) async {
+  Future<void> addWishlistItems({required int optionPackagingId}) async {
     try {
       final response = await _dioClient.post(
         ApiEndpoint.addWishlistItems,
-        data: {JsonKey.productOptionId: productOptionId},
+        data: {'option_packaging_id': optionPackagingId},
       );
 
       final apiResponse = ApiResponse.fromJson(response.data, null);

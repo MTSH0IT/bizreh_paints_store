@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
+import 'package:bizreh_paints_store/models/cart_item_model.dart';
 
 class WishListController extends GetxController {
   final wishListServices = WishListServices();
@@ -43,13 +44,29 @@ class WishListController extends GetxController {
     }
     isAddRemoveLoading.value = true;
     try {
-      await wishListServices.addWishlistItems(productOptionId: id);
+      await wishListServices.addWishlistItems(optionPackagingId: id);
       await loadWishListProducts();
       isAddRemoveLoading.value = false;
     } on AppException catch (e) {
       log("wish list controller AppException : ${e.message}");
     } catch (e) {
       log("wish list controller catch : ${e.toString()}");
+    } finally {
+      isAddRemoveLoading.value = false;
+    }
+  }
+
+  Future<void> clearAll() async {
+    if (items.isEmpty) return;
+    isAddRemoveLoading.value = true;
+    try {
+      await wishListServices.clearWishlist();
+      items.clear();
+      showMassage("تم حذف كل العناصر من المفضلة", true);
+    } on AppException catch (e) {
+      log("wish list controller AppException clear : ${e.message}");
+    } catch (e) {
+      log("wish list controller catch clear : ${e.toString()}");
     } finally {
       isAddRemoveLoading.value = false;
     }
@@ -83,10 +100,10 @@ class WishListController extends GetxController {
     return items.any((item) => item.id == id);
   }
 
-  void addToCart(ProductModel product) {
+  void addWishlistItemToCart(WishlistModel wishlistItem) {
     final cartController = Get.find<MyCartController>();
-    //cartController.addToCart(product);
-
+    final cartItem = CartItemModel.fromWishlist(wishlistItem);
+    cartController.addToCart(cartItem);
     showMassage("تمت إضافة المنتج إلى السلة", true);
   }
 }

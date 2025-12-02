@@ -46,7 +46,7 @@ class ProductDetailsView extends StatelessWidget {
                           onPressed: Get.back,
                         ),
                         Obx(() {
-                          final opid = controller.selectedOption.value;
+                          final opid = controller.selectedPackaging.value;
                           final isFav = wishCtrl.isFavorite(opid);
                           if (wishCtrl.isAddRemoveLoading.value) {
                             return BuildProgressIndicator();

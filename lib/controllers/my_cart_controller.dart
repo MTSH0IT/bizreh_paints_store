@@ -1,4 +1,3 @@
-import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/models/cart_item_model.dart';
 import 'package:bizreh_paints_store/models/discount_model.dart';
@@ -19,30 +18,17 @@ class MyCartController extends GetxController {
     discounts.value = demoDiscount;
   }
 
-  void addToCart(
-    ProductModel product, {
-    required int optionId,
-    required int packagingId,
-    required double unitPrice,
-  }) {
+  void addToCart(CartItemModel cartItem) {
     final existingIndex = cartItems.indexWhere(
       (item) =>
-          item.product.id == product.id &&
-          item.optionId == optionId &&
-          item.packagingId == packagingId,
+          (item.optionId == cartItem.optionId &&
+          item.packagingId == cartItem.packagingId),
     );
 
     if (existingIndex != -1) {
       cartItems[existingIndex].incrementQuantity();
     } else {
-      cartItems.add(
-        CartItemModel.fromProduct(
-          product,
-          optionId: optionId,
-          packagingId: packagingId,
-          unitPrice: unitPrice,
-        ),
-      );
+      cartItems.add(cartItem);
     }
   }
 

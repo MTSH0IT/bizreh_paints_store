@@ -1,16 +1,16 @@
+import 'dart:developer';
+
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/order_history_model.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
-import 'package:bizreh_paints_store/services/address_services.dart';
 import 'package:bizreh_paints_store/services/order_services.dart';
-import 'package:bizreh_paints_store/utils/func/get_user.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
   final MyCartController cartController = Get.find<MyCartController>();
-  final AddressServices _addressServices = AddressServices();
+  //final AddressServices _addressServices = AddressServices();
   final OrderServices _orderServices = OrderServices();
 
   var phoneNumber = ''.obs;
@@ -29,19 +29,6 @@ class OrderController extends GetxController {
   var orderDetailsError = ''.obs;
 
   List<String> get paymentMethods => ['cash', 'visa'];
-
-  @override
-  void onInit() {
-    super.onInit();
-    _loadDefaultAddress();
-  }
-
-  Future<void> _loadDefaultAddress() async {
-    try {
-      final address = await _addressServices.getDefaultAddress();
-      selectedAddress.value = address;
-    } catch (_) {}
-  }
 
   Future<void> loadOrderDetails(int id) async {
     try {
@@ -115,38 +102,27 @@ class OrderController extends GetxController {
       await _orderServices.complaint(id, message);
       await loadOrderHistory();
 
-      showMassage('تم الشكوى بنجاح', true);
+      showMassage('تمت الشكوى بنجاح', true);
     } catch (e) {
-      showMassage('فشل الشكوى، حاول مرة اخرى', false);
+      showMassage('فشلت الشكوى، حاول مرة اخرى', false);
     } finally {
       isSubmitting.value = false;
     }
   }
 
   Future<void> submitOrder() async {
-    if (cartController.isEmpty()) {
-      showMassage('السلة فارغة', false);
-      return;
-    }
-    if (phoneNumber.value.isEmpty) {
-      try {
-        final user = await getUser();
-        if (user.phone.isNotEmpty) {
-          phoneNumber.value = user.phone;
-        } else {
-          showMassage('ادخل رقم الهاتف', false);
-          return;
-        }
-      } catch (e) {
-        showMassage('فشل جلب رقم الهاتف، الرجاء إدخاله يدويًا', false);
-        return;
-      }
-    }
-    if (selectedAddress.value == null ||
-        (selectedAddress.value?.addressLine?.isEmpty ?? true)) {
-      showMassage('اختر عنوان التوصيل', false);
-      return;
-    }
+    // if (cartController.isEmpty()) {
+    //   showMassage('السلة فارغة', false);
+    //   return;
+    // }
+    // if (phoneNumber.value.isEmpty) {
+    //   showMassage('ادخل رقم الهاتف', false);
+    //   return;
+    // }
+    // if (selectedAddress.value == null) {
+    //   showMassage('اختر عنوان التوصيل', false);
+    //   return;
+    // }
 
     final items = cartController.cartItems
         .map(
@@ -156,10 +132,11 @@ class OrderController extends GetxController {
           },
         )
         .toList();
+    log(selectedAddress.value!.id.toString());
 
     final body = {
       'items': items,
-      'delivery_address': selectedAddress.value!.addressLine ?? '',
+      'delivery_address': selectedAddress.value!.id,
       'phone_number': phoneNumber.value,
       'payment_method': paymentMethod.value,
     };
@@ -169,6 +146,8 @@ class OrderController extends GetxController {
       await _orderServices.createOrder(body: body);
       showMassage('تم ارسال الطلب بنجاح', true);
       cartController.clearCart();
+
+      Get.back();
     } catch (e) {
       showMassage('فشل ارسال الطلب، حاول مرة اخرى', false);
     } finally {

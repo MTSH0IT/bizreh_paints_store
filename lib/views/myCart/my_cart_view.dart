@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
+import 'package:bizreh_paints_store/views/orderInit/order_init_flow_view.dart';
 
 class MyCartView extends StatelessWidget {
   MyCartView({super.key});
@@ -159,74 +160,6 @@ class MyCartView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const SizedBox(height: 8),
-                    // Text(
-                    //   'معلومات الاتصال',
-                    //   style: const TextStyle(
-                    //     fontWeight: FontWeight.w700,
-                    //     fontSize: 16,
-                    //   ),
-                    // ),
-                    //const SizedBox(height: 8),
-                    // TextField(
-                    //   keyboardType: TextInputType.phone,
-                    //   decoration: const InputDecoration(
-                    //     labelText: 'رقم الهاتف',
-                    //     border: OutlineInputBorder(),
-                    //   ),
-                    //   onChanged: orderController.setPhone,
-                    // ),
-                    //const SizedBox(height: 12),
-                    // Text(
-                    //   'عنوان التوصيل',
-                    //   style: const TextStyle(
-                    //     fontWeight: FontWeight.w700,
-                    //     fontSize: 16,
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 8),
-                    // Obx(() {
-                    //   final address = orderController.selectedAddress.value;
-                    //   return Container(
-                    //     width: double.infinity,
-                    //     padding: const EdgeInsets.all(12),
-                    //     decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       borderRadius: BorderRadius.circular(8),
-                    //       border: Border.all(color: Colors.grey.shade300),
-                    //     ),
-                    //     child: Text(
-                    //       address?.addressLine ?? 'لا يوجد عنوان افتراضي محدد',
-                    //       style: TextStyle(fontSize: 14),
-                    //     ),
-                    //   );
-                    // }),
-                    // const SizedBox(height: 12),
-                    // Text(
-                    //   'طريقة الدفع',
-                    //   style: const TextStyle(
-                    //     fontWeight: FontWeight.w700,
-                    //     fontSize: 16,
-                    //   ),
-                    // ),
-                    // const SizedBox(height: 8),
-                    // Obx(() {
-                    //   return Row(
-                    //     children: orderController.paymentMethods.map((m) {
-                    //       final selected =
-                    //           orderController.paymentMethod.value == m;
-                    //       return Padding(
-                    //         padding: const EdgeInsets.only(right: 8),
-                    //         child: ChoiceChip(
-                    //           label: Text(m),
-                    //           selected: selected,
-                    //           onSelected: (_) =>
-                    //               orderController.setPaymentMethod(m),
-                    //         ),
-                    //       );
-                    //     }).toList(),
-                    //   );
-                    // }),
                     const SizedBox(height: 12),
                     PriceRow(
                       label: 'Total',
@@ -243,7 +176,7 @@ class MyCartView extends StatelessWidget {
                         onPressed: orderController.isSubmitting.value
                             ? null
                             : () {
-                                orderController.submitOrder();
+                                Get.to(() => const OrderInitFlowView());
                               },
                       );
                     }),

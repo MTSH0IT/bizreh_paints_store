@@ -34,6 +34,7 @@ class ApiEndpoint {
   //product
   static const String getProducts = "/user/product/products";
   static String productById(int id) => "/user/product/products/$id";
+  static const topSellingProduct = "/user/product/top-selling";
 
   //address
   static const String createAddress = "/user/address/addresses";

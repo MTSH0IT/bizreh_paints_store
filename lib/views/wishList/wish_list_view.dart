@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'widgets/wish_list_item.dart';
@@ -46,7 +47,7 @@ class WishList extends StatelessWidget {
             final item = ctrl.items[index];
             return GestureDetector(
               onTap: () {
-                // Get.to(() => ProductDetailsView(product: item));
+                //  Get.to(() => ProductDetailsView(product: item));
               },
               child: WishListItemCard(
                 item: item,

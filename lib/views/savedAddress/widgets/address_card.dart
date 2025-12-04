@@ -6,12 +6,14 @@ class AddressCard extends StatelessWidget {
   final AddressModel address;
   final VoidCallback? onEdit;
   final VoidCallback? onDelete;
-  final bool isDefaultAddress;
+  final bool? isDefaultAddress;
+  final bool? isSelcted;
 
   const AddressCard({
     super.key,
     required this.address,
-    required this.isDefaultAddress,
+    this.isDefaultAddress,
+    this.isSelcted,
     this.onEdit,
     this.onDelete,
   });
@@ -25,8 +27,8 @@ class AddressCard extends StatelessWidget {
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: isDefaultAddress ? primaryColor : Colors.grey[300]!,
-          width: isDefaultAddress ? 2 : 1,
+          color: isSelcted == true ? primaryColor : Colors.grey[300]!,
+          width: isSelcted == true ? 2 : 1,
         ),
       ),
       child: Column(
@@ -49,7 +51,7 @@ class AddressCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  if (isDefaultAddress)
+                  if (isDefaultAddress == true)
                     Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 8,
@@ -72,27 +74,31 @@ class AddressCard extends StatelessWidget {
               ),
               const Spacer(),
 
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: onEdit,
-                    icon: Icon(Icons.edit, color: primaryColor, size: 20),
-                    constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
-                  ),
-                  const SizedBox(width: 4),
-                  IconButton(
-                    onPressed: onDelete,
-                    icon: Icon(
-                      Icons.delete_outline,
-                      color: primaryColor,
-                      size: 20,
-                    ),
-                    constraints: const BoxConstraints(),
-                    padding: EdgeInsets.zero,
-                  ),
-                ],
-              ),
+              if (onEdit != null || onDelete != null)
+                Row(
+                  children: [
+                    if (onEdit != null)
+                      IconButton(
+                        onPressed: onEdit,
+                        icon: Icon(Icons.edit, color: primaryColor, size: 20),
+                        constraints: const BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                      ),
+                    // if (onEdit != null && onDelete != null)
+                    const SizedBox(width: 4),
+                    if (onDelete != null)
+                      IconButton(
+                        onPressed: onDelete,
+                        icon: Icon(
+                          Icons.delete_outline,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                        constraints: const BoxConstraints(),
+                        padding: EdgeInsets.zero,
+                      ),
+                  ],
+                ),
             ],
           ),
           const SizedBox(height: 12),

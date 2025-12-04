@@ -76,7 +76,7 @@ class CartItemModel {
       title: item.title ?? '',
       image: item.mainImage ?? '',
       optionName: item.optionName ?? '',
-      packagingTitle: "item.packagingTitle" ?? '',
+      packagingTitle: item.packagintTitle ?? '',
       quantity: 1,
     );
   }

@@ -18,6 +18,13 @@ class _SavedAddressViewState extends State<SavedAddressView> {
   final AddressController addressController = Get.find<AddressController>();
 
   @override
+  void initState() {
+    addressController.loadDefaultAddress();
+    addressController.loadCities();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

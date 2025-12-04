@@ -20,6 +20,8 @@ class WishlistModel {
   int? packagingId;
   int? stockQuantity;
   double? pricePerUnit;
+  String? packagintTitle;
+  String? packagintArTitle;
 
   WishlistModel({
     this.id,
@@ -43,11 +45,13 @@ class WishlistModel {
     this.packagingId,
     this.stockQuantity,
     this.pricePerUnit,
+    this.packagintTitle,
+    this.packagintArTitle,
   });
 
   @override
   String toString() {
-    return 'WishlistModel(id: $id, userId: $userId, optionPackagingId: $optionPackagingId, createdAt: $createdAt, title: $title, arTitle: $arTitle, description: $description, arDescription: $arDescription, image: $image, subCategoryId: $subCategoryId, brandId: $brandId, isActive: $isActive, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, mainImage: $mainImage, productOptionId: $productOptionId, packagingId: $packagingId, stockQuantity: $stockQuantity, pricePerUnit: $pricePerUnit)';
+    return 'WishlistModel(id: $id, userId: $userId, optionPackagingId: $optionPackagingId, createdAt: $createdAt, title: $title, arTitle: $arTitle, description: $description, arDescription: $arDescription, image: $image, subCategoryId: $subCategoryId, brandId: $brandId, isActive: $isActive, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, mainImage: $mainImage, productOptionId: $productOptionId, packagingId: $packagingId, stockQuantity: $stockQuantity, pricePerUnit: $pricePerUnit, packagintTitle: $packagintTitle, packagintArTitle: $packagintArTitle)';
   }
 
   factory WishlistModel.fromJson(Map<String, dynamic> json) => WishlistModel(
@@ -74,6 +78,8 @@ class WishlistModel {
     packagingId: json['packaging_id'] as int?,
     stockQuantity: json['stock_quantity'] as int?,
     pricePerUnit: (json['price_per_unit'] as num?)?.toDouble(),
+    packagintTitle: json['packagint_title'] as String?,
+    packagintArTitle: json['packagint_ar_title'] as String?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -98,5 +104,7 @@ class WishlistModel {
     'packaging_id': packagingId,
     'stock_quantity': stockQuantity,
     'price_per_unit': pricePerUnit,
+    'packagint_title': packagintTitle,
+    'packagint_ar_title': packagintArTitle,
   };
 }

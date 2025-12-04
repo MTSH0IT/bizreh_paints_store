@@ -1,13 +1,16 @@
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
-import 'package:bizreh_paints_store/models/address_model.dart';
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/get_user.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
-import 'package:bizreh_paints_store/views/savedAddress/widgets/address_card.dart';
+import 'package:bizreh_paints_store/views/orderInit/widgets/step_indicator.dart';
+import 'package:bizreh_paints_store/views/orderInit/widgets/phone_step.dart';
+import 'package:bizreh_paints_store/views/orderInit/widgets/address_step.dart';
+import 'package:bizreh_paints_store/views/orderInit/widgets/confirm_step.dart';
+import 'package:progress_tracker/progress_tracker.dart';
 
 class OrderInitFlowView extends StatefulWidget {
   const OrderInitFlowView({super.key});
@@ -55,14 +58,14 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
     if (_currentPage == 0) {
       final v = _phoneCtrl.text.trim();
       if (v.isEmpty) {
-        Get.snackbar('تنبيه', 'يرجى إدخال رقم الهاتف');
+        showMassage('يرجى إدخال رقم الهاتف', false);
         return;
       }
       orderController.setPhone(v);
       _goToPage(1);
     } else if (_currentPage == 1) {
       if (orderController.selectedAddress.value == null) {
-        Get.snackbar('تنبيه', 'يرجى اختيار عنوان التوصيل');
+        showMassage('يرجى اختيار عنوان التوصيل', false);
         return;
       }
       _goToPage(2);
@@ -80,9 +83,13 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
   }
 
   void _goToPage(int index) {
+    if (_currentPage == index) return;
+    setState(() {
+      _currentPage = index;
+    });
     _pageController.animateToPage(
       index,
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 350),
       curve: Curves.easeInOut,
     );
   }
@@ -112,9 +119,17 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 8),
-            _buildStepIndicator(),
-            const SizedBox(height: 8),
+            // const SizedBox(height: 8),
+            // StepIndicator(currentPage: _currentPage),
+            ProgressTracker(
+              currentIndex: _currentPage, // Active step
+              statusList: [
+                Status(name: "Phon", icon: Icons.phone_enabled_outlined),
+                Status(name: "Address", icon: Icons.maps_home_work_outlined),
+                Status(name: "Enroute", icon: Icons.directions_car),
+              ],
+              activeColor: primaryColor,
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -132,9 +147,15 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
                       });
                     },
                     children: [
-                      _buildPhoneStep(),
-                      _buildAddressStep(),
-                      _buildConfirmStep(),
+                      PhoneStep(phoneController: _phoneCtrl),
+                      AddressStep(
+                        orderController: orderController,
+                        addressController: addressController,
+                        onAddressSelected: () {
+                          setState(() {});
+                        },
+                      ),
+                      ConfirmStep(orderController: orderController),
                     ],
                   ),
                 ),
@@ -151,188 +172,6 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildStepIndicator() {
-    const titles = ['الهاتف', 'العنوان', 'التأكيد'];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            children: List.generate(3, (index) {
-              final isActive = index == _currentPage;
-              return Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 26,
-                      height: 26,
-                      decoration: BoxDecoration(
-                        color: isActive ? primaryColor : Colors.grey[300],
-                        shape: BoxShape.circle,
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${index + 1}',
-                        style: TextStyle(
-                          color: isActive ? Colors.white : Colors.black87,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    if (index < 2)
-                      Expanded(
-                        child: Container(
-                          height: 2,
-                          margin: const EdgeInsets.symmetric(horizontal: 4),
-                          color: index < _currentPage
-                              ? primaryColor
-                              : Colors.grey[300],
-                        ),
-                      ),
-                  ],
-                ),
-              );
-            }),
-          ),
-          const SizedBox(height: 4),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: List.generate(3, (index) {
-              final isActive = index == _currentPage;
-              return SizedBox(
-                width: 80,
-                child: Text(
-                  titles[index],
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: isActive ? primaryColor : Colors.black54,
-                  ),
-                ),
-              );
-            }),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildPhoneStep() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 16),
-          const Text(
-            'ادخل رقم الهاتف للتواصل معك بخصوص الطلب',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          const SizedBox(height: 16),
-          TextField(
-            controller: _phoneCtrl,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(
-              labelText: 'رقم الهاتف',
-              border: OutlineInputBorder(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildAddressStep() {
-    return Obx(() {
-      if (addressController.isLoading.value) {
-        return const BuildProgressIndicator();
-      }
-      final List<AddressModel> items = addressController.addresses;
-      if (items.isEmpty) {
-        return const Center(
-          child: Text(
-            'لا توجد عناوين محفوظة، قم بإضافة عنوان أولاً من صفحة العناوين',
-          ),
-        );
-      }
-      return ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final address = items[index];
-          final isSelected =
-              address.id == orderController.selectedAddress.value?.id;
-          return GestureDetector(
-            onTap: () {
-              orderController.selectedAddress.value = address;
-              setState(() {});
-            },
-            child: Opacity(
-              opacity: isSelected ? 1.0 : 0.8,
-              child: AddressCard(
-                isDefaultAddress: isSelected,
-                address: address,
-                onEdit: null,
-                onDelete: null,
-              ),
-            ),
-          );
-        },
-      );
-    });
-  }
-
-  Widget _buildConfirmStep() {
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Obx(() {
-        final address = orderController.selectedAddress.value;
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'تأكيد الطلب',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'رقم الهاتف:',
-              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              orderController.phoneNumber.value,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 16),
-            Text(
-              'عنوان التوصيل:',
-              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-            ),
-            const SizedBox(height: 4),
-            if (address != null)
-              Text(
-                '${address.cityName ?? ''} - ${address.addressLine ?? ''}',
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              )
-            else
-              const Text('لم يتم اختيار عنوان'),
-            const SizedBox(height: 24),
-            Text(
-              'عند الضغط على "ارسال الطلب" سيتم إرسال طلبك باستخدام البيانات أعلاه.',
-              style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-            ),
-          ],
-        );
-      }),
     );
   }
 }

@@ -42,9 +42,9 @@ class AddressController extends GetxController {
 
   @override
   void onInit() {
-    loadDefaultAddress();
+    //loadDefaultAddress();
     loadAddresses();
-    loadCities();
+    //loadCities();
 
     super.onInit();
   }

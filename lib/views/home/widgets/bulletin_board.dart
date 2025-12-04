@@ -32,8 +32,8 @@ class BulletinBoard extends StatelessWidget {
               controller: controller.pageController,
               itemCount: controller.ads.length,
               itemBuilder: (context, index) {
-                final AdsModel banner = controller.ads[index];
-                return _BannerCard(banner: banner);
+                final AdsModel ads = controller.ads[index];
+                return _BannerCard(banner: ads);
               },
             ),
           ),

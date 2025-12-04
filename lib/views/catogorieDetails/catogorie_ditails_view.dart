@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dart';
@@ -188,9 +189,12 @@ class _SubCategoryProducts extends StatelessWidget {
       ),
       body: Obx(() {
         if (controler.isSubCategoryProductsLoading.value) {
-          return const Center(child: CircularProgressIndicator());
+          return const BuildProgressIndicator();
         }
-        return ProductsGrid(products: controler.subCategoryProducts);
+        return ProductsGrid(
+          products: controler.subCategoryProducts,
+          isNeverScrollable: false,
+        );
       }),
     );
   }

@@ -1,3 +1,5 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/views/brand/brand_products_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
@@ -22,13 +24,7 @@ class AllBrandsView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {
           if (controller.isBrandsLoading.value) {
-            return const Center(
-              child: SizedBox(
-                height: 32,
-                width: 32,
-                child: CircularProgressIndicator(strokeWidth: 2.5),
-              ),
-            );
+            return const BuildProgressIndicator();
           }
           final List<BrandModel> items = controller.brands;
           if (items.isEmpty) {
@@ -48,7 +44,9 @@ class AllBrandsView extends StatelessWidget {
               return SeeAllCard(
                 name: item.title ?? '',
                 imageUrl: item.image ?? '',
-                onTap: () {},
+                onTap: () {
+                  Get.to(() => BrandProductsView(brand: item));
+                },
               );
             },
           );

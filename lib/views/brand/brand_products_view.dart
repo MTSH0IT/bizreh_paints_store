@@ -69,18 +69,24 @@ class _BrandProductsViewState extends State<BrandProductsView> {
           style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: Obx(() {
-        if (controller.isBrandProductsLoading.value) {
-          return const Center(
-            child: CircularProgressIndicator(strokeWidth: 2.5),
+      body: SafeArea(
+        child: Obx(() {
+          if (controller.isBrandProductsLoading.value) {
+            return const Center(
+              child: CircularProgressIndicator(strokeWidth: 2.5),
+            );
+          }
+          final List<ProductModel> items = controller.brandProducts;
+          if (items.isEmpty) {
+            return const Center(child: Text('No products'));
+          }
+          return ProductsGrid(
+            products: items,
+            scrollController: _scroll,
+            isNeverScrollable: false,
           );
-        }
-        final List<ProductModel> items = controller.brandProducts;
-        if (items.isEmpty) {
-          return const Center(child: Text('No products'));
-        }
-        return ProductsGrid(products: items, scrollController: _scroll);
-      }),
+        }),
+      ),
     );
   }
 }

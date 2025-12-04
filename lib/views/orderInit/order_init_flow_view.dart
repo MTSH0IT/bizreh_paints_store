@@ -6,7 +6,6 @@ import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/utils/func/get_user.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/views/orderInit/widgets/step_indicator.dart';
 import 'package:bizreh_paints_store/views/orderInit/widgets/phone_step.dart';
 import 'package:bizreh_paints_store/views/orderInit/widgets/address_step.dart';
 import 'package:bizreh_paints_store/views/orderInit/widgets/confirm_step.dart';
@@ -58,14 +57,14 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
     if (_currentPage == 0) {
       final v = _phoneCtrl.text.trim();
       if (v.isEmpty) {
-        showMassage('يرجى إدخال رقم الهاتف', false);
+        showMassage('Please enter your phone number', false);
         return;
       }
       orderController.setPhone(v);
       _goToPage(1);
     } else if (_currentPage == 1) {
       if (orderController.selectedAddress.value == null) {
-        showMassage('يرجى اختيار عنوان التوصيل', false);
+        showMassage('Please select a delivery address', false);
         return;
       }
       _goToPage(2);
@@ -84,9 +83,6 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
 
   void _goToPage(int index) {
     if (_currentPage == index) return;
-    setState(() {
-      _currentPage = index;
-    });
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 350),
@@ -95,8 +91,8 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
   }
 
   String get _buttonTitle {
-    if (_currentPage == 2) return 'ارسال الطلب';
-    return 'التالي';
+    if (_currentPage == 2) return 'Submit order';
+    return 'Next';
   }
 
   @override
@@ -111,7 +107,7 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
           onPressed: _back,
         ),
         title: const Text(
-          'تهيئة الطلب',
+          'Order setup',
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -122,19 +118,25 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
             // const SizedBox(height: 8),
             // StepIndicator(currentPage: _currentPage),
             ProgressTracker(
-              currentIndex: _currentPage, // Active step
+              key: ValueKey(_currentPage),
+              currentIndex: _currentPage,
               statusList: [
-                Status(name: "Phon", icon: Icons.phone_enabled_outlined),
-                Status(name: "Address", icon: Icons.maps_home_work_outlined),
-                Status(name: "Enroute", icon: Icons.directions_car),
+                Status(name: "Phone", icon: null),
+                Status(name: "Address", icon: null),
+                Status(name: "Check", icon: null),
               ],
               activeColor: primaryColor,
+              height: 80,
+              showStepNumber: true,
+              verticalPadding: 8,
             ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Card(
-                  elevation: 0,
+                  color: Colors.white,
+                  elevation: 2,
+
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
@@ -164,7 +166,7 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
             Obx(() {
               return MainButton(
                 title: orderController.isSubmitting.value
-                    ? 'جاري ارسال الطلب...'
+                    ? 'Submitting order...'
                     : _buttonTitle,
                 onPressed: orderController.isSubmitting.value ? null : _next,
               );

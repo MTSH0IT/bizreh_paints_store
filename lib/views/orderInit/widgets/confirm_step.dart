@@ -13,16 +13,24 @@ class ConfirmStep extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Obx(() {
         final address = orderController.selectedAddress.value;
+        final cart = orderController.cartController;
+        final subtotal = cart.subtotal();
+        final total = subtotal + 0;
+        final itemsCount = cart.totalItems();
+        final paymentMethod = orderController.paymentMethod.value;
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'تأكيد الطلب',
+              'Confirm Order',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 16),
+
+            // Contact info
             Text(
-              'رقم الهاتف:',
+              'Phone number',
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 4),
@@ -30,9 +38,12 @@ class ConfirmStep extends StatelessWidget {
               orderController.phoneNumber.value,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
+
             const SizedBox(height: 16),
+
+            // Address
             Text(
-              'عنوان التوصيل:',
+              'Delivery address',
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 4),
@@ -45,10 +56,47 @@ class ConfirmStep extends StatelessWidget {
                 ),
               )
             else
-              const Text('لم يتم اختيار عنوان'),
+              const Text('No delivery address selected'),
+
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 8),
+
+            // Order summary
+            const Text(
+              'Order summary',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 8),
+            Text('Items: $itemsCount', style: const TextStyle(fontSize: 14)),
+            const SizedBox(height: 4),
+            Text(
+              'Subtotal: ${subtotal.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 14),
+            ),
+
+            const SizedBox(height: 8),
+            Text(
+              'Total: ${total.toStringAsFixed(2)}',
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+
+            const SizedBox(height: 16),
+
+            // Payment method
+            Text(
+              'Payment method',
+              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              paymentMethod.capitalizeFirst ?? paymentMethod,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+
             const SizedBox(height: 24),
             Text(
-              'عند الضغط على "ارسال الطلب" سيتم إرسال طلبك باستخدام البيانات أعلاه.',
+              'By pressing "Submit order", your order will be sent using the details above.',
               style: TextStyle(fontSize: 13, color: Colors.grey[700]),
             ),
           ],

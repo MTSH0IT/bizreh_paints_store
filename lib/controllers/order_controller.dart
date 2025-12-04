@@ -144,11 +144,10 @@ class OrderController extends GetxController {
 
     try {
       isSubmitting.value = true;
-      //await _orderServices.createOrder(body: body);
-      //showMassage('تم ارسال الطلب بنجاح', true);
+      await _orderServices.createOrder(body: body);
       cartController.clearCart();
-      //Get.offAll(() => MainView());
       Get.back();
+      showMassage('تم ارسال الطلب بنجاح', true);
     } catch (e) {
       showMassage('فشل ارسال الطلب، حاول مرة اخرى', false);
     } finally {

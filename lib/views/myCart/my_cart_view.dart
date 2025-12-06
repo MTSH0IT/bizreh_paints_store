@@ -13,7 +13,7 @@ class MyCartView extends StatelessWidget {
   MyCartView({super.key});
 
   final MyCartController cartController = Get.find<MyCartController>();
-  final OrderController orderController = Get.put(OrderController());
+  final OrderController orderController = Get.find<OrderController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

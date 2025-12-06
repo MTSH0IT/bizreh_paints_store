@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
+import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
@@ -25,6 +26,7 @@ class AppBindings extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
     Get.lazyPut<MyCartController>(() => MyCartController(), fenix: true);
+    Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
     Get.lazyPut<PersonalController>(() => PersonalController(), fenix: true);
     Get.lazyPut<NotificationsControllers>(

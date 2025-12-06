@@ -56,6 +56,39 @@ class ProductServices {
     }
   }
 
+  Future<List<ProductModel>> getTopSelling() async {
+    try {
+      final response = await _dioClient.get(ApiEndpoint.topSellingProduct);
+      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
+        response.data,
+        (json) {
+          final List raw = (json['products'] as List?) ?? [];
+          return raw
+              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+              .toList();
+        },
+      );
+      if (apiResponse.success || apiResponse.data != null) {
+        log("product service get top selling : ${apiResponse.message}");
+        return apiResponse.data!;
+      } else {
+        throw Exception(apiResponse.message ?? 'Something went wrong');
+      }
+    } on DioException catch (e) {
+      final err = e.error;
+      if (err is AppException) {
+        log(
+          "product service AppException get top selling : ${err.message}${err.statusCode}",
+        );
+        throw err;
+      }
+      log("product service DioException get top selling : ${e.message}");
+      throw Exception(e.message);
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
   Future<ProductModel> getProductById({required int id}) async {
     try {
       final response = await _dioClient.get(ApiEndpoint.productById(id));

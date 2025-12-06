@@ -1,6 +1,8 @@
 import 'package:bizreh_paints_store/models/product_model/option.dart'
     as product_models;
+import 'package:bizreh_paints_store/models/product_model/packaging.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -71,12 +73,8 @@ class ProductDetailsView extends StatelessWidget {
 
             // Content
             Expanded(
-              child: Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(40)),
-                ),
+              child: Card(
+                color: Colors.white,
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20,
@@ -95,14 +93,14 @@ class ProductDetailsView extends StatelessWidget {
                       const SizedBox(height: 8),
 
                       Text(
-                        "brand : ${product.brandName}",
+                        "Brand : ${product.brandName}",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade600,
                         ),
                       ),
                       Text(
-                        "subCategory : ${product.subCategoryName}",
+                        "Category : ${product.subCategoryName}",
                         style: TextStyle(
                           fontSize: 14,
                           color: Colors.grey.shade600,
@@ -114,10 +112,10 @@ class ProductDetailsView extends StatelessWidget {
                       // Options section
                       if ((product.options ?? []).isNotEmpty) ...[
                         Text(
-                          'Options',
+                          'Options :',
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 20,
+                            fontSize: 18,
                           ),
                         ),
                         const SizedBox(height: 12),
@@ -143,7 +141,6 @@ class ProductDetailsView extends StatelessWidget {
                         const SizedBox(height: 24),
                       ],
 
-                      // Packaging section (depends on selected option)
                       Obx(() {
                         final options = product.options ?? [];
                         if (options.isEmpty) {
@@ -156,7 +153,6 @@ class ProductDetailsView extends StatelessWidget {
                           return const SizedBox.shrink();
                         }
 
-                        // find the selected option by id
                         product_models.Option? selectedOptionModel;
                         for (final o in options) {
                           if (o.id == selectedOptionId) {
@@ -172,14 +168,24 @@ class ProductDetailsView extends StatelessWidget {
 
                         final packagingList = selectedOptionModel.packaging!;
 
+                        final selectedPackagingId =
+                            controller.selectedPackaging.value;
+                        Packaging? selectedPackagingModel;
+                        for (final pkg in packagingList) {
+                          if (pkg.id == selectedPackagingId) {
+                            selectedPackagingModel = pkg;
+                            break;
+                          }
+                        }
+
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Packaging',
+                              'Packaging :',
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
-                                fontSize: 20,
+                                fontSize: 18,
                               ),
                             ),
                             const SizedBox(height: 12),
@@ -202,12 +208,30 @@ class ProductDetailsView extends StatelessWidget {
                                 );
                               }),
                             ),
-                            const SizedBox(height: 24),
+                            const SizedBox(height: 16),
+                            if (selectedPackagingModel != null)
+                              Text(
+                                'Price: ${formatPrice(selectedPackagingModel.pricePerUnit ?? 0)}',
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  //fontWeight: FontWeight.w700,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            // const SizedBox(height: 24),
                           ],
                         );
                       }),
 
                       const SizedBox(height: 20),
+                      Text(
+                        'description :',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(height: 4),
                       Text(
                         product.description ?? "",
                         style: TextStyle(

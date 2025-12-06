@@ -105,6 +105,7 @@ class AddressController extends GetxController {
     isSubmitting.value = true;
     try {
       await _addressServices.createAddress(
+        nickName: nickname,
         cityId: cityId!,
         addressLine: addressLine,
         note: note,

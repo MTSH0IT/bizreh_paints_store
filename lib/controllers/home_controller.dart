@@ -22,6 +22,7 @@ class HomeController extends GetxController {
 
   RxList<ProductModel> products = <ProductModel>[].obs;
   RxList<ProductModel> subCategoryProducts = <ProductModel>[].obs;
+  RxList<ProductModel> topSellingProducts = <ProductModel>[].obs;
   RxList<BrandModel> featuredBrands = <BrandModel>[].obs;
   RxList<BrandModel> brands = <BrandModel>[].obs;
   RxList<ProductModel> brandProducts = <ProductModel>[].obs;
@@ -30,6 +31,7 @@ class HomeController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isSubCategoryProductsLoading = false.obs;
+  RxBool isTopSellingLoading = false.obs;
   RxBool isBrandsFeaturedLoading = false.obs;
   RxBool isBrandsLoading = false.obs;
   RxBool isBrandProductsLoading = false.obs;
@@ -51,7 +53,7 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    loadProducts();
+    getTopSelling();
     loadFeaturedBrands();
     loadCategoryTree();
     loadAds();
@@ -238,6 +240,20 @@ class HomeController extends GetxController {
       log("home controller catch brand products : ${e.toString()}");
     } finally {
       isBrandProductsLoading.value = false;
+    }
+  }
+
+  Future<void> getTopSelling() async {
+    isTopSellingLoading.value = true;
+    try {
+      final list = await _productServices.getTopSelling();
+      topSellingProducts.assignAll(list);
+    } on AppException catch (e) {
+      log("home controller AppException top selling : ${e.message}");
+    } catch (e) {
+      log("home controller catch top selling : ${e.toString()}");
+    } finally {
+      isTopSellingLoading.value = false;
     }
   }
 }

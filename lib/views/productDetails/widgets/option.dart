@@ -33,7 +33,7 @@ class Option extends StatelessWidget {
           textAlign: TextAlign.center,
           style: TextStyle(
             color: selected ? Colors.white : Colors.black87,
-            fontWeight: FontWeight.w600,
+            //fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
         ),

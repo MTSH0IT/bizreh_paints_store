@@ -72,6 +72,7 @@ class AddressServices {
   Future<void> createAddress({
     required int cityId,
     required String addressLine,
+    required String nickName,
     required String note,
     required double latitude,
     required double longitude,
@@ -80,6 +81,7 @@ class AddressServices {
       final response = await _dioClient.post(
         ApiEndpoint.createAddress,
         data: {
+          'nickname': nickName,
           'city_id': cityId,
           'address_line': addressLine,
           'note': note,

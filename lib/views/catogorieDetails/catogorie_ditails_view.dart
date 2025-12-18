@@ -176,7 +176,7 @@ class ListCategory extends StatelessWidget {
 }
 
 class _SubCategoryProducts extends StatelessWidget {
-  _SubCategoryProducts({super.key, required this.title});
+  _SubCategoryProducts({required this.title});
   final String title;
   final controler = Get.find<HomeController>();
   @override

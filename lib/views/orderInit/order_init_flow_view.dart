@@ -36,6 +36,7 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
   void dispose() {
     _pageController.dispose();
     _phoneCtrl.dispose();
+    orderController.selectedAddress.value = null;
     super.dispose();
   }
 

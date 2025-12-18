@@ -11,10 +11,16 @@ import 'widgets/city_dropdown.dart';
 import 'widgets/map_card.dart';
 import 'widgets/full_screen_map.dart';
 
-class ManageAddressView extends StatelessWidget {
+class ManageAddressView extends StatefulWidget {
   final AddressModel? address;
+  const ManageAddressView({super.key, this.address});
+
+  @override
+  State<ManageAddressView> createState() => _ManageAddressViewState();
+}
+
+class _ManageAddressViewState extends State<ManageAddressView> {
   final AddressController addressController = Get.find<AddressController>();
-  ManageAddressView({super.key, this.address});
 
   Future<void> _ensureCitiesLoaded() async {
     if (addressController.cities.isEmpty) {
@@ -23,9 +29,7 @@ class ManageAddressView extends StatelessWidget {
   }
 
   Future<void> _lodedata() async {
-    if (address != null) {
-      addressController.fillFormFrom(address!);
-    }
+    addressController.fillFormFrom(widget.address!);
   }
 
   LatLng? _currentCenter() {
@@ -36,21 +40,33 @@ class ManageAddressView extends StatelessWidget {
   }
 
   Future<void> _saveAddress() async {
-    if (address != null) {
-      await addressController.updateAddress(id: address!.id!);
+    if (widget.address != null) {
+      await addressController.updateAddress(id: widget.address!.id!);
     } else {
       await addressController.createAddress();
     }
   }
 
   @override
+  void initState() {
+    super.initState();
+    Future.microtask(() async {
+      await _ensureCitiesLoaded();
+      if (widget.address == null) {
+        addressController.getLocationAndFill();
+      } else {
+        await _lodedata();
+      }
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Ensure data readiness without causing rebuild loops
-    _ensureCitiesLoaded();
-    _lodedata();
     return Scaffold(
       appBar: AppBar(
-        title: Text(address != null ? 'Edit Address' : 'Add New Address'),
+        title: Text(
+          widget.address != null ? 'Edit Address' : 'Add New Address',
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -132,7 +148,9 @@ class ManageAddressView extends StatelessWidget {
                         : _saveAddress,
                     title: addressController.isSubmitting.value
                         ? 'Please wait...'
-                        : (address != null ? 'Update Address' : 'Save Address'),
+                        : (widget.address != null
+                              ? 'Update Address'
+                              : 'Save Address'),
                   ),
                 ],
               ),

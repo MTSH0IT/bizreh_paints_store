@@ -106,8 +106,8 @@ class OrderDetailsView extends StatelessWidget {
                 name: order.userName ?? '',
                 phone: order.userPhone ?? '',
                 address: order.addressLine ?? '',
-                nickname: order.cityId?.toString() ?? '',
-                note: '',
+                nickname: order.cityName ?? '',
+                note: order.note ?? '',
               ),
               const SizedBox(height: 12),
               if (order.id != null)

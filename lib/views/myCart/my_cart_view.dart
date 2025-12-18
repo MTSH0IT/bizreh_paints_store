@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/cart_item_tile.dart';
-import 'package:bizreh_paints_store/views/myCart/widgets/discount_option_tile.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
@@ -27,8 +26,8 @@ class MyCartView extends StatelessWidget {
         child: Obx(() {
           final subtotal = cartController.subtotal();
           final shipping = cartController.shipping();
-          final discountAmount = cartController.discountAmount(subtotal);
-          final total = subtotal + shipping + discountAmount;
+          //final discountAmount = cartController.discountAmount(subtotal);
+          final total = subtotal + shipping;
           final isEmpty = cartController.isEmpty();
           if (isEmpty) {
             return const Center(child: Text('Your cart is empty'));
@@ -37,6 +36,7 @@ class MyCartView extends StatelessWidget {
             children: [
               Expanded(
                 child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
@@ -108,79 +108,93 @@ class MyCartView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: 16),
+                      //const SizedBox(height: 16),
                       // Discounts
-                      cartController.discounts.isEmpty
-                          ? SizedBox()
-                          : Row(
-                              children: [
-                                Text(
-                                  'Available Discounts',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                      const SizedBox(height: 12),
-                      ListView.separated(
-                        itemCount: cartController.discounts.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (_, __) => const SizedBox(height: 10),
-                        itemBuilder: (context, index) {
-                          final d = cartController.discounts[index];
-                          return DiscountOptionTile(
-                            selected:
-                                cartController.selectedDiscount.value == index,
-                            title: d.title,
-                            subtitle: d.subtitle,
-                            amount: d.type == 'percentage'
-                                ? -(subtotal * d.value)
-                                : d.type == 'fixed'
-                                ? -d.value
-                                : 0.0,
-                            onTap: () =>
-                                cartController.setSelectedDiscount(index),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
+                      // cartController.discounts.isEmpty
+                      //     ? SizedBox()
+                      //     : Row(
+                      //         children: [
+                      //           Text(
+                      //             'Available Discounts',
+                      //             style: const TextStyle(
+                      //               fontWeight: FontWeight.w700,
+                      //               fontSize: 16,
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      // const SizedBox(height: 12),
+                      // ListView.separated(
+                      //   itemCount: cartController.discounts.length,
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      //   itemBuilder: (context, index) {
+                      //     final d = cartController.discounts[index];
+                      //     return DiscountOptionTile(
+                      //       selected:
+                      //           cartController.selectedDiscount.value == index,
+                      //       title: d.title,
+                      //       subtitle: d.subtitle,
+                      //       amount: d.type == 'percentage'
+                      //           ? -(subtotal * d.value)
+                      //           : d.type == 'fixed'
+                      //           ? -d.value
+                      //           : 0.0,
+                      //       onTap: () =>
+                      //           cartController.setSelectedDiscount(index),
+                      //     );
+                      //   },
+                      // ),
+                      // const SizedBox(height: 12),
                     ],
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Divider(color: Colors.grey, thickness: 1),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 12),
-                    PriceRow(
-                      label: 'Total',
-                      amount: total,
-                      emphasis: true,
-                      color: primaryColor,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(16),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, -2),
                     ),
-                    const SizedBox(height: 8),
-                    Obx(() {
-                      return MainButton(
-                        title: orderController.isSubmitting.value
-                            ? 'جاري ارسال الطلب...'
-                            : 'ارسال الطلب',
-                        onPressed: orderController.isSubmitting.value
-                            ? null
-                            : () {
-                                Get.to(() => const OrderInitFlowView());
-                              },
-                      );
-                    }),
                   ],
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      PriceRow(
+                        label: 'Total',
+                        amount: total,
+                        emphasis: true,
+                        color: primaryColor,
+                      ),
+                      const SizedBox(height: 8),
+                      Obx(() {
+                        return MainButton(
+                          title: orderController.isSubmitting.value
+                              ? 'جاري ارسال الطلب...'
+                              : 'ارسال الطلب',
+                          onPressed: orderController.isSubmitting.value
+                              ? null
+                              : () {
+                                  Get.to(() => const OrderInitFlowView());
+                                },
+                        );
+                      }),
+                    ],
+                  ),
                 ),
               ),
             ],

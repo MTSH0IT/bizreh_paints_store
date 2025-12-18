@@ -82,14 +82,30 @@ class _CartItemTileState extends State<CartItemTile> {
                 ),
                 const SizedBox(height: 4),
                 if (widget.optionName != null || widget.packagingTitle != null)
-                  Text(
-                    [
-                      if (widget.optionName != null) widget.optionName!,
-                      if (widget.packagingTitle != null) widget.packagingTitle!,
-                    ].join(' • '),
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (widget.optionName != null)
+                        Text(
+                          widget.optionName!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      if (widget.packagingTitle != null)
+                        Text(
+                          widget.packagingTitle!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey.shade600,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
                   ),
                 const SizedBox(height: 2),
                 Text(

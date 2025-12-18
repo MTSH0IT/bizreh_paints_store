@@ -48,15 +48,15 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     errorText: ctrl.lastNameError.value,
                   ),
                 ),
-                Obx(
-                  () => LabeledTextField(
-                    label: 'Email',
-                    hint: 'Enter your email',
-                    controller: ctrl.emailCtrl,
-                    keyboardType: TextInputType.emailAddress,
-                    errorText: ctrl.emailError.value,
-                  ),
-                ),
+                // Obx(
+                //   () => LabeledTextField(
+                //     label: 'Email',
+                //     hint: 'Enter your email',
+                //     controller: ctrl.emailCtrl,
+                //     keyboardType: TextInputType.emailAddress,
+                //     errorText: ctrl.emailError.value,
+                //   ),
+                // ),
                 Obx(
                   () => LabeledTextField(
                     label: 'Phone Number',

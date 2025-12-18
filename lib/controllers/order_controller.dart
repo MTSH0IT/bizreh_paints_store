@@ -6,7 +6,6 @@ import 'package:bizreh_paints_store/models/order_history_model.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/services/order_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
-import 'package:bizreh_paints_store/views/mainView/main_view.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {

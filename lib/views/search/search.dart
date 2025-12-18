@@ -1,146 +1,202 @@
+import 'package:bizreh_paints_store/controllers/filter_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
-import 'package:bizreh_paints_store/views/search/widgets/filter_button.dart';
+import 'package:bizreh_paints_store/views/search/widgets/search_filter_dropdown.dart';
 import 'package:bizreh_paints_store/views/search/widgets/search_input.dart';
+import 'package:get/get.dart';
 
-class Search extends StatefulWidget {
-  const Search({super.key});
+class Search extends StatelessWidget {
+  Search({super.key});
 
-  @override
-  State<Search> createState() => _SearchState();
-}
-
-class _SearchState extends State<Search> {
-  final TextEditingController _controller = TextEditingController();
-  String? selectedBrand;
-  String? selectedCategory;
-
-  final List<String> brands = [
-    'All Brands',
-    'Dulux',
-    'Nippon',
-    'Jotun',
-    'Sikkens',
-    'Beckers',
-    'Crown',
-    'Farrow & Ball',
-  ];
-
-  final List<String> categories = [
-    'All Categories',
-    'Interior Paint',
-    'Exterior Paint',
-    'Primer',
-    'Varnish',
-    'Wood Stain',
-    'Metal Paint',
-    'Specialty Paint',
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _controller.addListener(() => setState(() {}));
-    selectedBrand = brands.first;
-    selectedCategory = categories.first;
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final _searchController = Get.put(FilterController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SearchInput(
-                controller: _controller,
-                onClear: () {
-                  _controller.clear();
-                },
+        child: Obx(() {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
+                child: SearchInput(
+                  controller: _searchController.queryController,
+                  onClear: () {
+                    _searchController.queryController.clear();
+                  },
+                  onSubmitted: (_) => _searchController.search(),
+                ),
               ),
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: FilterButton(
-                      label: 'Brand',
-                      selectedValue: selectedBrand,
-                      items: brands,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedBrand = value;
-                        });
-                      },
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: FilterButton(
-                      label: 'Category',
-                      selectedValue: selectedCategory,
-                      items: categories,
-                      onChanged: (value) {
-                        setState(() {
-                          selectedCategory = value;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 16),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    '1,284 Results',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        'Sort by: ',
-                        style: TextStyle(color: Colors.grey.shade700),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.keyboard_arrow_down_rounded,
-                          size: 18,
-                        ),
-                        label: const Text(
-                          'Relevance',
-                          style: TextStyle(color: primaryColor),
-                        ),
-                        style: TextButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                        ),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.grey.shade200),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
                       ),
                     ],
                   ),
-                ],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SearchFilterDropdown(
+                              label: 'Brand',
+                              allLabel: 'All Brands',
+                              selectedId:
+                                  _searchController.selectedBrandId.value,
+                              isLoading:
+                                  _searchController.isOptionsLoading.value,
+                              options: _searchController.brands,
+                              idOf: (b) => b.id,
+                              titleOf: (b) => b.title ?? '',
+                              onChanged: _searchController.setBrand,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: SearchFilterDropdown(
+                              label: 'Category',
+                              allLabel: 'All Categories',
+                              selectedId:
+                                  _searchController.selectedSubCategoryId.value,
+                              isLoading:
+                                  _searchController.isOptionsLoading.value,
+                              options: _searchController.subCategories,
+                              idOf: (c) => c.id,
+                              titleOf: (c) => c.title ?? '',
+                              onChanged: _searchController.setSubCategory,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: SizedBox(
+                              height: 46,
+                              child: ElevatedButton.icon(
+                                onPressed: _searchController.isSearching.value
+                                    ? null
+                                    : () {
+                                        FocusScope.of(context).unfocus();
+                                        _searchController.search();
+                                      },
+                                icon: const Icon(Icons.search_rounded),
+                                label: Text(
+                                  _searchController.isSearching.value
+                                      ? 'Searching...'
+                                      : 'Search',
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: primaryColor,
+                                  foregroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      if (_searchController.isOptionsLoading.value)
+                        const Padding(
+                          padding: EdgeInsets.only(top: 10),
+                          child: LinearProgressIndicator(minHeight: 2),
+                        ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 8),
-            //Expanded(child: SingleChildScrollView(child: ProductsGrid())),
-            const SizedBox(height: 16),
-          ],
-        ),
+
+              // const SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      '${_searchController.results.length} Results',
+                      style: const TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: _searchController.isSearching.value
+                          ? null
+                          : () {
+                              _searchController.clearFilters();
+                            },
+                      child: const Text(
+                        'clear results',
+                        style: TextStyle(color: primaryColor),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              //const SizedBox(height: 8),
+              Expanded(
+                child: Builder(
+                  builder: (_) {
+                    final err = _searchController.errorMessage.value;
+                    if (err.isNotEmpty) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(err, textAlign: TextAlign.center),
+                        ),
+                      );
+                    }
+
+                    if (_searchController.isSearching.value &&
+                        _searchController.results.isEmpty) {
+                      return const BuildProgressIndicator();
+                    }
+
+                    if (_searchController.results.isEmpty) {
+                      return Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'No results yet. Enter a query or choose filters then press Search.',
+                            style: TextStyle(color: Colors.grey.shade700),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      );
+                    }
+
+                    return ProductsGrid(
+                      products: _searchController.results,
+                      isNeverScrollable: false,
+                    );
+                  },
+                ),
+              ),
+            ],
+          );
+        }),
       ),
     );
   }

@@ -67,6 +67,16 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
+                        item.packagintTitle ?? "",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
                         "\$ ${formatPrice(item.pricePerUnit ?? 0)}",
                         style: const TextStyle(
                           fontSize: 20,

@@ -1,3 +1,5 @@
+import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
+import 'package:bizreh_paints_store/views/manageAddress/manage_address_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
@@ -26,10 +28,21 @@ class AddressStep extends StatelessWidget {
       }
       final List<AddressModel> items = addressController.addresses;
       if (items.isEmpty) {
-        return const Center(
-          child: Text(
-            'لا توجد عناوين محفوظة، قم بإضافة عنوان أولاً من صفحة العناوين',
-          ),
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'لا توجد عناوين محفوظة، قم بإضافة عنوان أولاً من صفحة العناوين',
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            MainButton(
+              title: 'Add Address',
+              onPressed: () {
+                Get.to(() => ManageAddressView());
+              },
+            ),
+          ],
         );
       }
       return ListView.builder(

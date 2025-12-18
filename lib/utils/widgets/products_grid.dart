@@ -3,7 +3,6 @@ import 'package:bizreh_paints_store/views/productDetails/product_details_view.da
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class ProductsGrid extends StatelessWidget {
   const ProductsGrid({

@@ -1,7 +1,6 @@
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/auth/signUp_view.dart';
@@ -19,7 +18,6 @@ class SignInView extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController auth = Get.find<AuthController>();
     return Scaffold(
-      backgroundColor: backgroundColor,
       body: Obx(
         () => Stack(
           fit: StackFit.expand,

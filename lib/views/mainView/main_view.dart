@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
@@ -18,7 +19,13 @@ class MainView extends StatelessWidget {
         body: SafeArea(
           child: IndexedStack(
             index: controller.selectedIndex.value,
-            children: [HomeView(), Search(), MyCartView(), ProfileView()],
+            children: [
+              HomeView(),
+              Search(),
+              WishList(),
+              MyCartView(),
+              ProfileView(),
+            ],
           ),
         ),
         bottomNavigationBar: BottomNavigationBar(
@@ -33,6 +40,10 @@ class MainView extends StatelessWidget {
               label: 'Home',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border),
+              label: 'WishList',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.shopping_cart_outlined),
               label: 'Cart',

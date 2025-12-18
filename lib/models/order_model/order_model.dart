@@ -18,6 +18,8 @@ class OrderModel {
   String? userPhone;
   dynamic driverName;
   String? addressLine;
+  String? cityName;
+  String? note;
   int? cityId;
   List<Item>? items;
 
@@ -39,6 +41,8 @@ class OrderModel {
     this.userPhone,
     this.driverName,
     this.addressLine,
+    this.cityName,
+    this.note,
     this.cityId,
     this.items,
   });
@@ -70,6 +74,8 @@ class OrderModel {
     userPhone: json['user_phone'] as String?,
     driverName: json['driver_name'] as dynamic,
     addressLine: json['address_line'] as String?,
+    cityName: json['city_name'] as String?,
+    note: json['note'] as String?,
     cityId: json['city_id'] as int?,
     items: (json['items'] as List<dynamic>?)
         ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
@@ -94,6 +100,8 @@ class OrderModel {
     'user_phone': userPhone,
     'driver_name': driverName,
     'address_line': addressLine,
+    'city_name': cityName,
+    'note': note,
     'city_id': cityId,
     'items': items?.map((e) => e.toJson()).toList(),
   };

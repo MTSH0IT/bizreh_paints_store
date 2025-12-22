@@ -15,6 +15,8 @@ class AuthController extends GetxController {
   final AuthService _authService = AuthService();
   final StorageService _storage = StorageService();
 
+  static String? token;
+
   // Form controllers
   final TextEditingController emailCtrl = TextEditingController();
   final TextEditingController passwordCtrl = TextEditingController();
@@ -83,6 +85,8 @@ class AuthController extends GetxController {
         password: loginPassword,
       );
       await _persistAuth(res);
+      await _storage.setString(StorageKey.email, loginEmail);
+      await _storage.setString(StorageKey.password, loginPassword);
       Get.offAll(() => MainView());
       clearCtrl();
       Get.snackbar(
@@ -98,6 +102,28 @@ class AuthController extends GetxController {
       generalError.value = e.toString();
       log("auth controller catch sign in : ${generalError.value}");
       showMassage("حدث خطأ ما حاول مرة اخرى", false);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<bool> tryAutoLogin() async {
+    isLoading.value = true;
+    try {
+      final savedEmail = _storage.getString(StorageKey.email);
+      final savedPassword = _storage.getString(StorageKey.password);
+
+      if (savedEmail == null || savedEmail.isEmpty) return false;
+      if (savedPassword == null || savedPassword.isEmpty) return false;
+
+      final AuthResponse res = await _authService.signin(
+        email: savedEmail,
+        password: savedPassword,
+      );
+      await _persistAuth(res);
+      return true;
+    } catch (e) {
+      return false;
     } finally {
       isLoading.value = false;
     }
@@ -135,7 +161,8 @@ class AuthController extends GetxController {
 
   Future<void> _persistAuth(AuthResponse res) async {
     log("persistAuth token:\n ${res.token}");
-    await _storage.setString(StorageKey.token, res.token);
+    token = res.token;
+    //await _storage.setString(StorageKey.token, res.token);
 
     log("persistAuth user:\n ${res.user.toString()}");
     await _storage.setJson(StorageKey.user, res.user.toJson());

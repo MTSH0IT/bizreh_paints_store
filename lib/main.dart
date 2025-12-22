@@ -2,7 +2,7 @@ import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
-import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
+import 'package:bizreh_paints_store/views/splash/splash_view.dart';
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
       initialBinding: AppBindings(),
-      home: SignInView(),
+      home: const SplashView(),
     );
   }
 }

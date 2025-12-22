@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
-class Option extends StatelessWidget {
-  const Option({
+class ProductOption extends StatelessWidget {
+  const ProductOption({
     super.key,
     required this.title,
     required this.selected,
@@ -19,7 +19,7 @@ class Option extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
         decoration: BoxDecoration(
           color: selected ? primaryColor : Colors.white,
           borderRadius: BorderRadius.circular(8),
@@ -34,7 +34,7 @@ class Option extends StatelessWidget {
           style: TextStyle(
             color: selected ? Colors.white : Colors.black87,
             //fontWeight: FontWeight.w600,
-            fontSize: 16,
+            fontSize: 14,
           ),
         ),
       ),

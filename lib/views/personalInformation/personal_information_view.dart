@@ -66,14 +66,12 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     errorText: ctrl.phoneError.value,
                   ),
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 12.0),
-                  child: MainButton(
-                    title: 'Save Changes',
-                    onPressed: () => ctrl.changeInfo(),
-                  ),
+                SizedBox(height: 24),
+                MainButton(
+                  title: 'Save Changes',
+                  onPressed: () => ctrl.changeInfo(),
                 ),
+                SizedBox(height: 16),
               ],
             ),
           ),

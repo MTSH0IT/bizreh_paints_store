@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,6 +30,7 @@ class AppBindings extends Bindings {
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
     Get.lazyPut<PersonalController>(() => PersonalController(), fenix: true);
+    Get.lazyPut<CartController>(() => CartController(), fenix: true);
     Get.lazyPut<NotificationsControllers>(
       () => NotificationsControllers(),
       fenix: true,

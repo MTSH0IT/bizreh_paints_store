@@ -2,6 +2,7 @@ import 'package:bizreh_paints_store/controllers/product_details_controller.dart'
 import 'package:bizreh_paints_store/models/product_model/option.dart';
 import 'package:bizreh_paints_store/models/product_model/packaging.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart';
@@ -17,25 +18,6 @@ class ProductPackagingSection extends StatelessWidget {
 
   final ProductModel product;
   final ProductDetailsController controller;
-
-  Color parseColorDegree(dynamic degree) {
-    if (degree == null) return Colors.white;
-    if (degree is int) return Color(degree);
-    if (degree is String) {
-      final v = degree.trim();
-      final normalized = v.startsWith('#') ? v.substring(1) : v;
-      final hex = normalized.startsWith('0x')
-          ? normalized.substring(2)
-          : normalized;
-      final value = int.tryParse(hex, radix: 16);
-      if (value == null) return Colors.grey;
-      if (hex.length <= 6) {
-        return Color(0xFF000000 | value);
-      }
-      return Color(value);
-    }
-    return Colors.grey;
-  }
 
   @override
   Widget build(BuildContext context) {

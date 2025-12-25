@@ -1,18 +1,16 @@
+import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
 import 'package:flutter/material.dart';
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
-import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
-import 'package:bizreh_paints_store/views/myCart/widgets/cart_item_tile.dart';
-import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
+import 'package:bizreh_paints_store/views/myCart/widgets/cart_items_section.dart';
+import 'package:bizreh_paints_store/views/myCart/widgets/cart_summary_section.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
-import 'package:bizreh_paints_store/controllers/order_controller.dart';
+import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/views/orderInit/order_init_flow_view.dart';
 
 class MyCartView extends StatelessWidget {
   MyCartView({super.key});
 
-  final MyCartController cartController = Get.find<MyCartController>();
-  final OrderController orderController = Get.find<OrderController>();
+  final CartController cartController = Get.find<CartController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,179 +22,38 @@ class MyCartView extends StatelessWidget {
       ),
       body: SafeArea(
         child: Obx(() {
-          final subtotal = cartController.subtotal();
-          final shipping = cartController.shipping();
-          //final discountAmount = cartController.discountAmount(subtotal);
-          final total = subtotal + shipping;
-          final isEmpty = cartController.isEmpty();
-          if (isEmpty) {
+          if (cartController.isLoading.value) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          final cart = cartController.cart.value ?? CartModel();
+          final items = cart.items ?? const [];
+
+          if (items.isEmpty) {
             return const Center(child: Text('Your cart is empty'));
           }
-          return Column(
+          return Stack(
             children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: cartController.cartItems.length,
-                        itemBuilder: (context, index) {
-                          final item = cartController.cartItems[index];
-                          final optionName = item.optionName;
-                          final packagingTitle = item.packagingTitle;
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 12),
-                            child: CartItemTile(
-                              image: item.image ?? "",
-                              title: item.title ?? "",
-                              price: item.unitPrice,
-                              quantity: item.quantity,
-                              optionName: optionName,
-                              packagingTitle: packagingTitle,
-                              onIncrement: () {
-                                cartController.incrementQuantity(index);
-                              },
-                              onDecrement: () {
-                                if (item.quantity > 1) {
-                                  cartController.decrementQuantity(index);
-                                } else {
-                                  // Confirm before removing the item from cart
-                                  Get.defaultDialog(
-                                    title: 'Remove Item',
-                                    middleText:
-                                        'Aremove this item from the cart?',
-                                    confirm: MainButton(
-                                      title: 'Remove',
-                                      onPressed: () {
-                                        cartController.removeFromCart(index);
-                                        Get.back();
-                                      },
-                                    ),
-                                    cancel: MainButton(
-                                      title: 'Cancel',
-                                      onPressed: () => Get.back(),
-                                    ),
-                                  );
-                                }
-                              },
-                              onSetQuantity: (newQty) {
-                                cartController.updateQuantity(index, newQty);
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      // Subtotal and shipping
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        padding: const EdgeInsets.all(12),
-                        child: Column(
-                          children: [
-                            PriceRow(
-                              label: 'Items (${cartController.totalItems()})',
-                              amount: subtotal,
-                            ),
-                            PriceRow(label: 'Shipping', amount: shipping),
-                          ],
-                        ),
-                      ),
-                      //const SizedBox(height: 16),
-                      // Discounts
-                      // cartController.discounts.isEmpty
-                      //     ? SizedBox()
-                      //     : Row(
-                      //         children: [
-                      //           Text(
-                      //             'Available Discounts',
-                      //             style: const TextStyle(
-                      //               fontWeight: FontWeight.w700,
-                      //               fontSize: 16,
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      // const SizedBox(height: 12),
-                      // ListView.separated(
-                      //   itemCount: cartController.discounts.length,
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   separatorBuilder: (_, __) => const SizedBox(height: 10),
-                      //   itemBuilder: (context, index) {
-                      //     final d = cartController.discounts[index];
-                      //     return DiscountOptionTile(
-                      //       selected:
-                      //           cartController.selectedDiscount.value == index,
-                      //       title: d.title,
-                      //       subtitle: d.subtitle,
-                      //       amount: d.type == 'percentage'
-                      //           ? -(subtotal * d.value)
-                      //           : d.type == 'fixed'
-                      //           ? -d.value
-                      //           : 0.0,
-                      //       onTap: () =>
-                      //           cartController.setSelectedDiscount(index),
-                      //     );
-                      //   },
-                      // ),
-                      // const SizedBox(height: 12),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(16),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, -2),
+              Column(
+                children: [
+                  Expanded(
+                    child: CartItemsSection(
+                      items: items,
+                      cartController: cartController,
                     ),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      PriceRow(
-                        label: 'Total',
-                        amount: total,
-                        emphasis: true,
-                        color: primaryColor,
-                      ),
-                      const SizedBox(height: 8),
-                      Obx(() {
-                        return MainButton(
-                          title: orderController.isSubmitting.value
-                              ? 'جاري ارسال الطلب...'
-                              : 'ارسال الطلب',
-                          onPressed: orderController.isSubmitting.value
-                              ? null
-                              : () {
-                                  Get.to(() => const OrderInitFlowView());
-                                },
-                        );
-                      }),
-                    ],
+                  CartSummarySection(
+                    summary: cart.summary,
+                    onCheckout: () => Get.to(() => const OrderInitFlowView()),
                   ),
-                ),
+                ],
               ),
+              if (cartController.isMutating.value)
+                Positioned.fill(
+                  child: Container(
+                    color: Colors.black.withValues(alpha: 0.15),
+                    child: const Center(child: CircularProgressIndicator()),
+                  ),
+                ),
             ],
           );
         }),

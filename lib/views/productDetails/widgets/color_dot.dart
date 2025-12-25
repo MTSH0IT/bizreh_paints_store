@@ -15,8 +15,8 @@ class ColorDot extends StatelessWidget {
         : Colors.black;
 
     return Container(
-      width: 35,
-      height: 35,
+      width: 30,
+      height: 30,
       padding: const EdgeInsets.all(2),
       alignment: Alignment.center,
       decoration: BoxDecoration(

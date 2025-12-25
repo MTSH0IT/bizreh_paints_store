@@ -18,13 +18,13 @@ class PriceRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = TextStyle(
-      fontSize: emphasis ? 18 : 16,
+      fontSize: emphasis ? 16 : 14,
       fontWeight: emphasis ? FontWeight.w700 : FontWeight.w500,
       color: color,
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
       child: Row(
         children: [
           Expanded(child: Text(label, style: style)),

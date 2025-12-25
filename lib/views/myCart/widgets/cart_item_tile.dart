@@ -1,47 +1,64 @@
-import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:flutter/material.dart';
-//import 'package:flutter/services.dart';
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'dart:async';
-import 'package:flutter/services.dart';
+
+import 'package:bizreh_paints_store/models/cart_model/item.dart';
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CartItemTile extends StatefulWidget {
   const CartItemTile({
     super.key,
-    required this.image,
-    required this.title,
-    required this.price,
-    required this.quantity,
+    required this.item,
     required this.onIncrement,
     required this.onDecrement,
     this.onSetQuantity,
-    this.optionName,
-    this.packagingTitle,
   });
 
-  final String image;
-  final String title;
-  final double price;
-  final int quantity;
+  final Item item;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
   final Function(int)? onSetQuantity;
-  final String? optionName;
-  final String? packagingTitle;
 
   @override
   State<CartItemTile> createState() => _CartItemTileState();
 }
 
 class _CartItemTileState extends State<CartItemTile> {
-  Timer? timer;
-
-  @override
-  void dispose() {
-    timer?.cancel();
-    super.dispose();
+  String get _image {
+    final optionImage = widget.item.option?.mainImage ?? "";
+    return optionImage;
   }
+
+  String get _title {
+    final product = widget.item.product?.title ?? "";
+    return product;
+  }
+
+  String? get _optionName {
+    final option = widget.item.option?.optionName ?? "";
+    return option;
+  }
+
+  String? get _packagingTitle {
+    final packaging = widget.item.packaging?.title ?? "";
+    return packaging;
+  }
+
+  String? get _categoryTitle {
+    final category = widget.item.category?.title ?? "";
+    return category;
+  }
+
+  String? get _colorDegreeValue => widget.item.colorFamily?.colorDegree;
+  bool get _hasColor => (_colorDegreeValue?.trim().isNotEmpty ?? false);
+  Color get _colorDegree => parseColorDegree(_colorDegreeValue);
+
+  double get _unitPrice => widget.item.unitPrice ?? 0.0;
+  int get _quantity => widget.item.quantityPerUnit ?? 1;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +82,7 @@ class _CartItemTileState extends State<CartItemTile> {
             height: 80,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: ImageNetwork(image: widget.image),
+              child: ImageNetwork(image: _image),
             ),
           ),
           const SizedBox(width: 12),
@@ -74,80 +91,85 @@ class _CartItemTileState extends State<CartItemTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.title,
+                  _title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
                   ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 4),
-                if (widget.optionName != null || widget.packagingTitle != null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (widget.optionName != null)
-                        Text(
-                          widget.optionName!,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey.shade600,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      if (widget.packagingTitle != null)
-                        Text(
-                          widget.packagingTitle!,
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Colors.grey.shade600,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                    ],
+                if (_optionName != null)
+                  Text(
+                    _optionName!,
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                if (_packagingTitle != null)
+                  Text(
+                    _packagingTitle!,
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                if (_categoryTitle != null)
+                  Text(
+                    _categoryTitle!,
+                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 const SizedBox(height: 2),
+
                 Text(
-                  '\$${formatPrice(widget.price)}',
-                  style: const TextStyle(color: Colors.black54),
+                  'unitPrice : \$${formatPrice(_unitPrice)}',
+                  style: const TextStyle(color: Colors.black87),
                 ),
               ],
             ),
           ),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.grey.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            padding: const EdgeInsets.symmetric(vertical: 2),
-            child: Row(
-              children: [
-                _circleIcon(
-                  icon: Icons.remove,
-                  onTap: widget.onDecrement,
-                  repeatWhile: () => widget.quantity > 1,
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade100,
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: GestureDetector(
-                    onTap: _showQuantityDialog,
-                    child: Text(
-                      widget.quantity.toString(),
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
+                padding: const EdgeInsets.symmetric(vertical: 2),
+                child: Row(
+                  children: [
+                    _circleIcon(
+                      icon: Icons.remove,
+                      onTap: widget.onDecrement,
+                      repeatWhile: () => _quantity > 1,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 14),
+                      child: GestureDetector(
+                        onTap: _showQuantityDialog,
+                        child: Text(
+                          _quantity.toString(),
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    _circleIcon(
+                      icon: Icons.add,
+                      onTap: widget.onIncrement,
+                      filled: true,
+                    ),
+                  ],
                 ),
-                _circleIcon(
-                  icon: Icons.add,
-                  onTap: widget.onIncrement,
-                  filled: true,
-                ),
-              ],
-            ),
+              ),
+              SizedBox(height: 20),
+              ColorDot(color: _colorDegree, selected: false),
+            ],
           ),
         ],
       ),
@@ -160,50 +182,26 @@ class _CartItemTileState extends State<CartItemTile> {
     bool filled = false,
     bool Function()? repeatWhile,
   }) {
-    return GestureDetector(
-      onLongPress: () {
+    return InkWell(
+      customBorder: const CircleBorder(),
+      splashColor: primaryColor.withValues(alpha: 0.15),
+      onTap: () {
         HapticFeedback.lightImpact();
-        timer?.cancel();
-        timer = Timer.periodic(const Duration(milliseconds: 120), (_) {
-          if (repeatWhile == null || repeatWhile()) {
-            onTap();
-          } else {
-            timer?.cancel();
-            timer = null;
-          }
-        });
+        onTap();
       },
-      onLongPressUp: () {
-        timer?.cancel();
-        timer = null;
-      },
-      onTapCancel: () {
-        timer?.cancel();
-        timer = null;
-      },
-
-      child: InkWell(
-        customBorder: const CircleBorder(),
-        splashColor: primaryColor.withValues(alpha: 0.15),
-        onTap: () {
-          HapticFeedback.lightImpact();
-          onTap();
-        },
-
-        child: SizedBox(
-          width: 28,
-          height: 28,
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              color: filled ? primaryColor : Colors.white,
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.black12),
-            ),
-            child: Icon(
-              icon,
-              size: 16,
-              color: filled ? Colors.white : Colors.black87,
-            ),
+      child: SizedBox(
+        width: 28,
+        height: 28,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: filled ? primaryColor : Colors.white,
+            shape: BoxShape.circle,
+            border: Border.all(color: Colors.black12),
+          ),
+          child: Icon(
+            icon,
+            size: 16,
+            color: filled ? Colors.white : Colors.black87,
           ),
         ),
       ),
@@ -212,7 +210,7 @@ class _CartItemTileState extends State<CartItemTile> {
 
   Future<void> _showQuantityDialog() async {
     if (widget.onSetQuantity == null) return;
-    final controller = TextEditingController(text: widget.quantity.toString());
+    final controller = TextEditingController(text: _quantity.toString());
     String? errorText;
     final result = await showDialog<int>(
       context: context,
@@ -258,7 +256,7 @@ class _CartItemTileState extends State<CartItemTile> {
                         } else {
                           setState(() {
                             errorText =
-                                'Please enter a valid number\nbetween 1 and 999';
+                                'Please enter a valid number\\nbetween 1 and 999';
                           });
                         }
                       },

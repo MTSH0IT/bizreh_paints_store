@@ -56,6 +56,14 @@ class ApiEndpoint {
   //ads
   static const String getAds = "/user/ads/ads";
 
+  //cart
+  static const String addToCart = "/user/cart/add";
+  static const String getCart = "/user/cart";
+  static String updateCart(int id) => "/user/cart/$id";
+  static String deleteCart(int id) => "/user/cart/$id";
+  static String increaseCart(int id) => "/user/cart/$id/increase";
+  static String decreaseCart(int id) => "/user/cart/$id/decrease";
+
   //order
   static const String createOrder = "/user/order";
   static const String getOrder = "/user/order";

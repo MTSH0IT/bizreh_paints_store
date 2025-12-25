@@ -1,0 +1,105 @@
+import 'brand.dart';
+import 'category.dart';
+import 'color_family.dart';
+import 'option.dart';
+import 'packaging.dart';
+import 'product.dart';
+
+class Item {
+	int? id;
+	int? orderId;
+	int? optionPackagingId;
+	int? colorFamilyId;
+	int? quantityPerUnit;
+	String? productSku;
+	double? unitPrice;
+	double? totalPrice;
+	DateTime? createdAt;
+	Product? product;
+	Option? option;
+	Packaging? packaging;
+	ColorFamily? colorFamily;
+	Category? category;
+	Brand? brand;
+	double? subtotal;
+	dynamic availableStock;
+
+	Item({
+		this.id, 
+		this.orderId, 
+		this.optionPackagingId, 
+		this.colorFamilyId, 
+		this.quantityPerUnit, 
+		this.productSku, 
+		this.unitPrice, 
+		this.totalPrice, 
+		this.createdAt, 
+		this.product, 
+		this.option, 
+		this.packaging, 
+		this.colorFamily, 
+		this.category, 
+		this.brand, 
+		this.subtotal, 
+		this.availableStock, 
+	});
+
+	@override
+	String toString() {
+		return 'Item(id: $id, orderId: $orderId, optionPackagingId: $optionPackagingId, colorFamilyId: $colorFamilyId, quantityPerUnit: $quantityPerUnit, productSku: $productSku, unitPrice: $unitPrice, totalPrice: $totalPrice, createdAt: $createdAt, product: $product, option: $option, packaging: $packaging, colorFamily: $colorFamily, category: $category, brand: $brand, subtotal: $subtotal, availableStock: $availableStock)';
+	}
+
+	factory Item.fromJson(Map<String, dynamic> json) => Item(
+				id: json['id'] as int?,
+				orderId: json['order_id'] as int?,
+				optionPackagingId: json['option_packaging_id'] as int?,
+				colorFamilyId: json['color_family_id'] as int?,
+				quantityPerUnit: json['quantity_per_unit'] as int?,
+				productSku: json['product_sku'] as String?,
+				unitPrice: (json['unit_price'] as num?)?.toDouble(),
+				totalPrice: (json['total_price'] as num?)?.toDouble(),
+				createdAt: json['created_at'] == null
+						? null
+						: DateTime.parse(json['created_at'] as String),
+				product: json['product'] == null
+						? null
+						: Product.fromJson(json['product'] as Map<String, dynamic>),
+				option: json['option'] == null
+						? null
+						: Option.fromJson(json['option'] as Map<String, dynamic>),
+				packaging: json['packaging'] == null
+						? null
+						: Packaging.fromJson(json['packaging'] as Map<String, dynamic>),
+				colorFamily: json['color_family'] == null
+						? null
+						: ColorFamily.fromJson(json['color_family'] as Map<String, dynamic>),
+				category: json['category'] == null
+						? null
+						: Category.fromJson(json['category'] as Map<String, dynamic>),
+				brand: json['brand'] == null
+						? null
+						: Brand.fromJson(json['brand'] as Map<String, dynamic>),
+				subtotal: (json['subtotal'] as num?)?.toDouble(),
+				availableStock: json['available_stock'] as dynamic,
+			);
+
+	Map<String, dynamic> toJson() => {
+				'id': id,
+				'order_id': orderId,
+				'option_packaging_id': optionPackagingId,
+				'color_family_id': colorFamilyId,
+				'quantity_per_unit': quantityPerUnit,
+				'product_sku': productSku,
+				'unit_price': unitPrice,
+				'total_price': totalPrice,
+				'created_at': createdAt?.toIso8601String(),
+				'product': product?.toJson(),
+				'option': option?.toJson(),
+				'packaging': packaging?.toJson(),
+				'color_family': colorFamily?.toJson(),
+				'category': category?.toJson(),
+				'brand': brand?.toJson(),
+				'subtotal': subtotal,
+				'available_stock': availableStock,
+			};
+}

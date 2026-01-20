@@ -1,6 +1,6 @@
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/models/product_model/option.dart';
-import 'package:bizreh_paints_store/models/product_model/packaging.dart';
+import 'package:bizreh_paints_store/models/product_model/packaging_option.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
@@ -41,14 +41,14 @@ class ProductPackagingSection extends StatelessWidget {
       }
 
       if (selectedOptionModel == null ||
-          (selectedOptionModel.packaging ?? []).isEmpty) {
+          (selectedOptionModel.packagingOptions ?? []).isEmpty) {
         return const SizedBox.shrink();
       }
 
-      final packagingList = selectedOptionModel.packaging!;
+      final packagingList = selectedOptionModel.packagingOptions!;
 
       final selectedPackagingId = controller.selectedPackaging.value;
-      Packaging? selectedPackagingModel;
+      PackagingOption? selectedPackagingModel;
       for (final pkg in packagingList) {
         if (pkg.id == selectedPackagingId) {
           selectedPackagingModel = pkg;
@@ -74,7 +74,10 @@ class ProductPackagingSection extends StatelessWidget {
               return ProductOption(
                 title: title,
                 selected: selected,
-                onTap: () => controller.selectPackaging(pkg.id!),
+                onTap: () => controller.selectPackaging(
+                  pkg.id!,
+                  colorFamilyId: pkg.color?.id,
+                ),
               );
             }),
           ),
@@ -88,60 +91,28 @@ class ProductPackagingSection extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
+          if (selectedPackagingModel != null)
+            Text(
+              'Stock: ${selectedPackagingModel.stockQuantity ?? 0}',
+              style: const TextStyle(fontSize: 14, color: Colors.black),
+            ),
           const SizedBox(height: 16),
 
-          Obx(() {
-            final selectedPackagingId = controller.selectedPackaging.value;
-            if (selectedPackagingId < 0) {
-              return const SizedBox.shrink();
-            }
-
-            final allColors = selectedOptionModel!.colorFamilies ?? [];
-            final colors = allColors
-                .where((c) => c.optionPackagingId == selectedPackagingId)
-                .toList();
-            final selectedColorId = controller.selectedColorId.value;
-
-            if (colors.isEmpty) {
-              return const SizedBox.shrink();
-            }
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          if (selectedPackagingModel != null &&
+              selectedPackagingModel.color != null)
+            Row(
               children: [
-                Text(
-                  'Colors :',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                ColorDot(
+                  color: parseColorDegree(selectedPackagingModel.color!.degree),
+                  selected: true,
                 ),
-                const SizedBox(height: 12),
-                SizedBox(
-                  height: 45,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: colors.length,
-                    itemBuilder: (context, index) {
-                      final c = colors[index];
-                      final id = c.id ?? -1;
-                      final selected = id == selectedColorId;
-
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: GestureDetector(
-                          onTap: id < 0
-                              ? null
-                              : () => controller.selectColor(id),
-                          child: ColorDot(
-                            color: parseColorDegree(c.colorDegree),
-                            selected: selected,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                const SizedBox(width: 10),
+                Text(
+                  selectedPackagingModel.color!.name ?? '',
+                  style: const TextStyle(fontSize: 14),
                 ),
               ],
-            );
-          }),
+            ),
         ],
       );
     });

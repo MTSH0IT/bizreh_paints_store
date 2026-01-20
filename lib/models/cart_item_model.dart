@@ -43,18 +43,44 @@ class CartItemModel {
     int quantity = 1,
   }) {
     final options = product.options ?? [];
+
+    if (options.isEmpty) {
+      return CartItemModel(
+        optionId: optionId,
+        packagingId: packagingId,
+        unitPrice: 0,
+        title: product.title ?? '',
+        image: product.image ?? '',
+        optionName: '',
+        packagingTitle: '',
+        quantity: quantity,
+      );
+    }
+
     final optionModel = options.firstWhere(
       (o) => o.id == optionId,
-      orElse: () => options.isNotEmpty ? options.first : options.first,
+      orElse: () => options.first,
     );
 
-    final packagingList = optionModel.packaging ?? [];
+    final packagingList = optionModel.packagingOptions ?? [];
+    if (packagingList.isEmpty) {
+      return CartItemModel(
+        optionId: optionId,
+        packagingId: packagingId,
+        unitPrice: 0,
+        title: product.title ?? '',
+        image: product.image ?? '',
+        optionName: optionModel.optionName ?? '',
+        packagingTitle: '',
+        quantity: quantity,
+      );
+    }
+
     final packagingModel = packagingList.firstWhere(
       (p) => p.id == packagingId,
-      orElse: () =>
-          packagingList.isNotEmpty ? packagingList.first : packagingList.first,
+      orElse: () => packagingList.first,
     );
-    final unitPrice = packagingModel.pricePerUnit ?? 0.0;
+    final unitPrice = (packagingModel.pricePerUnit ?? 0).toDouble();
 
     return CartItemModel(
       optionId: optionId,

@@ -15,9 +15,9 @@ class ProductDetailsController extends GetxController {
     selectedColorId.value = -1;
   }
 
-  void selectPackaging(int index) {
-    selectedPackaging.value = index;
-    selectedColorId.value = -1;
+  void selectPackaging(int optionPackagingId, {int? colorFamilyId}) {
+    selectedPackaging.value = optionPackagingId;
+    selectedColorId.value = colorFamilyId ?? 0;
   }
 
   void selectColor(int id) {
@@ -26,17 +26,15 @@ class ProductDetailsController extends GetxController {
   }
 
   void addToCart() {
-    if (selectedOption.value < 0 ||
-        selectedPackaging.value < 0 ||
-        selectedColorId.value < 0) {
-      showMassage("اختر النوع وطريقة التغليف واللون", false);
+    if (selectedOption.value < 0 || selectedPackaging.value < 0) {
+      showMassage("اختر النوع وطريقة التغليف", false);
       return;
     }
     final cartController = Get.find<CartController>();
 
     cartController.addToCart(
       optionPackagingId: selectedPackaging.value,
-      colorFamilyId: selectedColorId.value,
+      colorFamilyId: selectedColorId.value < 0 ? 0 : selectedColorId.value,
       quantity: 1,
     );
   }

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/models/wishlist_model.dart';

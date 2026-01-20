@@ -1,5 +1,4 @@
-import 'color_family.dart';
-import 'packaging.dart';
+import 'packaging_option.dart';
 
 class Option {
   int? id;
@@ -7,13 +6,9 @@ class Option {
   String? optionName;
   String? arOptionName;
   String? optionSku;
-  String? mainImage;
+  int? stockQuantity;
   DateTime? createdAt;
-  int? packagingCount;
-  int? imagesCount;
-  List<Packaging>? packaging;
-  List<dynamic>? images;
-  List<ColorFamily>? colorFamilies;
+  List<PackagingOption>? packagingOptions;
 
   Option({
     this.id,
@@ -21,18 +16,14 @@ class Option {
     this.optionName,
     this.arOptionName,
     this.optionSku,
-    this.mainImage,
+    this.stockQuantity,
     this.createdAt,
-    this.packagingCount,
-    this.imagesCount,
-    this.packaging,
-    this.images,
-    this.colorFamilies,
+    this.packagingOptions,
   });
 
   @override
   String toString() {
-    return 'Option(id: $id, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, mainImage: $mainImage, createdAt: $createdAt, packagingCount: $packagingCount, imagesCount: $imagesCount, packaging: $packaging, images: $images, colorFamilies: $colorFamilies)';
+    return 'Option(id: $id, productId: $productId, optionName: $optionName, arOptionName: $arOptionName, optionSku: $optionSku, stockQuantity: $stockQuantity, createdAt: $createdAt, packagingOptions: $packagingOptions)';
   }
 
   factory Option.fromJson(Map<String, dynamic> json) => Option(
@@ -41,18 +32,12 @@ class Option {
     optionName: json['option_name'] as String?,
     arOptionName: json['ar_option_name'] as String?,
     optionSku: json['option_sku'] as String?,
-    mainImage: json['main_image'] as String?,
+    stockQuantity: json['stock_quantity'] as int?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
-    packagingCount: json['packaging_count'] as int?,
-    imagesCount: json['images_count'] as int?,
-    packaging: (json['packaging'] as List<dynamic>?)
-        ?.map((e) => Packaging.fromJson(e as Map<String, dynamic>))
-        .toList(),
-    images: json['images'] as List<dynamic>?,
-    colorFamilies: (json['color_families'] as List<dynamic>?)
-        ?.map((e) => ColorFamily.fromJson(e as Map<String, dynamic>))
+    packagingOptions: (json['packaging_options'] as List<dynamic>?)
+        ?.map((e) => PackagingOption.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 
@@ -62,12 +47,8 @@ class Option {
     'option_name': optionName,
     'ar_option_name': arOptionName,
     'option_sku': optionSku,
-    'main_image': mainImage,
+    'stock_quantity': stockQuantity,
     'created_at': createdAt?.toIso8601String(),
-    'packaging_count': packagingCount,
-    'images_count': imagesCount,
-    'packaging': packaging?.map((e) => e.toJson()).toList(),
-    'images': images,
-    'color_families': colorFamilies?.map((e) => e.toJson()).toList(),
+    'packaging_options': packagingOptions?.map((e) => e.toJson()).toList(),
   };
 }

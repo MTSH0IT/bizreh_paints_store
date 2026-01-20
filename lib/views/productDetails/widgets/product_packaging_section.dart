@@ -22,12 +22,12 @@ class ProductPackagingSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final options = product.options ?? [];
-      if (options.isEmpty) {
-        return const SizedBox.shrink();
-      }
+    final options = product.options ?? [];
+    if (options.isEmpty) {
+      return const SizedBox.shrink();
+    }
 
+    return Obx(() {
       final selectedOptionId = controller.selectedOption.value;
       if (selectedOptionId < 0) {
         return const SizedBox.shrink();
@@ -137,7 +137,6 @@ class ProductPackagingSection extends StatelessWidget {
               style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
           const SizedBox(height: 8),
-
           if (selectedPackagingModel != null &&
               selectedPackagingModel.color != null)
             Row(

@@ -64,17 +64,20 @@ class SignInView extends StatelessWidget {
                       const SizedBox(height: 4),
                       AuthTextLink(text: 'Forgot password?', onTap: () {}),
                       const SizedBox(height: 8),
-                      MainButton(
-                        title: auth.isLoading.value
-                            ? 'الرجاء الانتظار...'
-                            : 'Log In',
-                        onPressed: auth.isLoading.value
-                            ? null
-                            : () {
-                                if (formKey.currentState!.validate()) {
-                                  auth.signIn();
-                                }
-                              },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: MainButton(
+                          title: auth.isLoading.value
+                              ? 'الرجاء الانتظار...'
+                              : 'Log In',
+                          onPressed: auth.isLoading.value
+                              ? null
+                              : () {
+                                  if (formKey.currentState!.validate()) {
+                                    auth.signIn();
+                                  }
+                                },
+                        ),
                       ),
                       SecondaryButton(
                         title: 'New User Sign Up',

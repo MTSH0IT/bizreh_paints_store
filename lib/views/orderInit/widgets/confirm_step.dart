@@ -13,93 +13,198 @@ class ConfirmStep extends StatelessWidget {
       padding: const EdgeInsets.all(16),
       child: Obx(() {
         final address = orderController.selectedAddress.value;
-        final cart = orderController.cartController;
-        final subtotal = cart.subtotal();
-        final total = subtotal + 0;
-        final itemsCount = cart.totalItems();
+        final cart = orderController.cartController.cart.value;
+        final subtotal = cart?.summary?.subtotal?.toStringAsFixed(2) ?? "0.00";
+        final total = cart?.summary?.totalAmount?.toStringAsFixed(2) ?? "0.00";
+        final itemsCount = cart?.summary?.itemsCount?.toString() ?? "0";
+        final deliveryFee = cart?.summary?.deliveryFee?.toString() ?? "0";
+        final discountAmount =
+            cart?.summary?.discountAmount?.toStringAsFixed(2) ?? "0.00";
         final paymentMethod = orderController.paymentMethod.value;
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Confirm Order',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 16),
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Confirm Order',
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 16),
 
-            // Contact info
-            Text(
-              'Phone number',
-              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              orderController.phoneNumber.value,
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Address
-            Text(
-              'Delivery address',
-              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-            ),
-            const SizedBox(height: 4),
-            if (address != null)
+              // Contact info
               Text(
-                '${address.cityName ?? ''} - ${address.addressLine ?? ''}',
+                'Phone number',
+                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                orderController.phoneNumber.value,
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                 ),
-              )
-            else
-              const Text('No delivery address selected'),
+              ),
 
-            const SizedBox(height: 16),
-            const Divider(),
-            const SizedBox(height: 8),
+              const SizedBox(height: 16),
 
-            // Order summary
-            const Text(
-              'Order summary',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            const SizedBox(height: 8),
-            Text('Items: $itemsCount', style: const TextStyle(fontSize: 14)),
-            const SizedBox(height: 4),
-            Text(
-              'Subtotal: ${subtotal.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 14),
-            ),
+              // Address
+              Text(
+                'Delivery address',
+                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+              ),
+              const SizedBox(height: 4),
+              if (address != null)
+                Text(
+                  '${address.cityName ?? ''} - ${address.addressLine ?? ''}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                )
+              else
+                const Text('No delivery address selected'),
 
-            const SizedBox(height: 8),
-            Text(
-              'Total: ${total.toStringAsFixed(2)}',
-              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 8),
 
-            const SizedBox(height: 16),
+              // Cart items
+              const Text(
+                'Order Items',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              if (cart?.items != null && cart!.items!.isNotEmpty) ...[
+                ...cart.items!.map(
+                  (item) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                item.product?.title ?? 'Unknown Product',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              if (item.option?.optionName != null) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  item.option!.optionName!,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                              if (item.colorFamily?.colorDegree != null) ...[
+                                const SizedBox(height: 2),
+                                Text(
+                                  'Color: ${item.colorFamily!.colorDegree!}',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            'Qty: ${item.quantityPerUnit}',
+                            style: const TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            item.totalPrice?.toStringAsFixed(2) ?? "0.00",
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            textAlign: TextAlign.right,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ] else ...[
+                const Text(
+                  'No items in cart',
+                  style: TextStyle(fontSize: 14, color: Colors.grey),
+                ),
+              ],
 
-            // Payment method
-            Text(
-              'Payment method',
-              style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-            ),
-            const SizedBox(height: 4),
-            Text(
-              paymentMethod.capitalizeFirst ?? paymentMethod,
-              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-            ),
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 8),
 
-            const SizedBox(height: 24),
-            Text(
-              'By pressing "Submit order", your order will be sent using the details above.',
-              style: TextStyle(fontSize: 13, color: Colors.grey[700]),
-            ),
-          ],
+              // Order summary
+              const Text(
+                'Order summary',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 8),
+              Text('Items: $itemsCount', style: const TextStyle(fontSize: 14)),
+              const SizedBox(height: 4),
+              Text('Subtotal: $subtotal', style: const TextStyle(fontSize: 14)),
+              const SizedBox(height: 4),
+              Text(
+                'Delivery Fee: $deliveryFee',
+                style: const TextStyle(fontSize: 14),
+              ),
+              if (double.tryParse(discountAmount) != null &&
+                  double.tryParse(discountAmount)! > 0) ...[
+                const SizedBox(height: 4),
+                Text(
+                  'Discount: -$discountAmount',
+                  style: const TextStyle(fontSize: 14, color: Colors.green),
+                ),
+              ],
+              const SizedBox(height: 8),
+              Text(
+                'Total: $total',
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              const SizedBox(height: 16),
+
+              // Payment method
+              Text(
+                'Payment method',
+                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                paymentMethod.capitalizeFirst ?? paymentMethod,
+                style: const TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+
+              const SizedBox(height: 24),
+              Text(
+                'By pressing "Submit order", your order will be sent using the details above.',
+                style: TextStyle(fontSize: 13, color: Colors.grey[700]),
+              ),
+            ],
+          ),
         );
       }),
     );

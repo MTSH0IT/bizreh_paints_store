@@ -104,18 +104,24 @@ class SignUpView extends StatelessWidget {
                       ),
 
                       const SizedBox(height: 8),
-                      MainButton(
-                        title: auth.isLoading.value
-                            ? 'الرجاء الانتظار...'
-                            : 'Create Account',
-                        onPressed: auth.isLoading.value
-                            ? null
-                            : () async {
-                                if (_formKey.currentState?.validate() ??
-                                    false) {
-                                  await auth.signUp();
-                                }
-                              },
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 8,
+                        ),
+                        child: MainButton(
+                          title: auth.isLoading.value
+                              ? 'الرجاء الانتظار...'
+                              : 'Create Account',
+                          onPressed: auth.isLoading.value
+                              ? null
+                              : () async {
+                                  if (_formKey.currentState?.validate() ??
+                                      false) {
+                                    await auth.signUp();
+                                  }
+                                },
+                        ),
                       ),
                       const SizedBox(height: 8),
                       Padding(

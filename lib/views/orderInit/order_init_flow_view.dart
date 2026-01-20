@@ -165,11 +165,17 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
               ),
             ),
             Obx(() {
-              return MainButton(
-                title: orderController.isSubmitting.value
-                    ? 'Submitting order...'
-                    : _buttonTitle,
-                onPressed: orderController.isSubmitting.value ? null : _next,
+              return Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16.0,
+                  vertical: 8,
+                ),
+                child: MainButton(
+                  title: orderController.isSubmitting.value
+                      ? 'Submitting order...'
+                      : _buttonTitle,
+                  onPressed: orderController.isSubmitting.value ? null : _next,
+                ),
               );
             }),
           ],

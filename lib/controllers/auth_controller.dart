@@ -162,7 +162,6 @@ class AuthController extends GetxController {
   Future<void> _persistAuth(AuthResponse res) async {
     log("persistAuth token:\n ${res.token}");
     token = res.token;
-    //await _storage.setString(StorageKey.token, res.token);
 
     log("persistAuth user:\n ${res.user.toString()}");
     await _storage.setJson(StorageKey.user, res.user.toJson());

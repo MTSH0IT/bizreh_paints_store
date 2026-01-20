@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
+import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/order_history_model.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
@@ -9,8 +9,7 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
-  final MyCartController cartController = Get.find<MyCartController>();
-  //final AddressServices _addressServices = AddressServices();
+  final CartController cartController = Get.find<CartController>();
   final OrderServices _orderServices = OrderServices();
 
   var phoneNumber = ''.obs;
@@ -124,14 +123,16 @@ class OrderController extends GetxController {
     //   return;
     // }
 
-    final items = cartController.cartItems
-        .map(
-          (item) => {
-            'option_packaging_id': item.packagingId,
-            'quantity_per_unit': item.quantity,
-          },
-        )
-        .toList();
+    final items =
+        cartController.cart.value?.items ??
+        []
+            .map(
+              (item) => {
+                'option_packaging_id': item.optionPackagingId,
+                'quantity_per_unit': item.quantityPerUnit,
+              },
+            )
+            .toList();
     log(selectedAddress.value!.id.toString());
 
     final body = {
@@ -144,7 +145,7 @@ class OrderController extends GetxController {
     try {
       isSubmitting.value = true;
       await _orderServices.createOrder(body: body);
-      cartController.clearCart();
+      //cartController.clearCart();
       Get.back();
       showMassage('تم ارسال الطلب بنجاح', true);
     } catch (e) {

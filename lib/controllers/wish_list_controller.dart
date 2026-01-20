@@ -1,13 +1,12 @@
 import 'dart:developer';
 
+import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/models/wishlist_model.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/controllers/my_cart_controller.dart';
-import 'package:bizreh_paints_store/models/cart_item_model.dart';
 
 class WishListController extends GetxController {
   final wishListServices = WishListServices();
@@ -100,10 +99,13 @@ class WishListController extends GetxController {
     return items.any((item) => item.id == id);
   }
 
-  void addWishlistItemToCart(WishlistModel wishlistItem) {
-    final cartController = Get.find<MyCartController>();
-    final cartItem = CartItemModel.fromWishlist(wishlistItem);
-    cartController.addToCart(cartItem);
-    showMassage("تمت إضافة المنتج إلى السلة", true);
-  }
+  // void addWishlistItemToCart(WishlistModel wishlistItem) {
+  //   final cartController = Get.find<CartController>();
+  //   cartController.addToCart(
+  //     optionPackagingId: wishlistItem.optionPackagingId!,
+  //     colorFamilyId: wishlistItem.colorFamilyId!,
+  //     quantity: 1,
+  //   );
+  //   showMassage("تمت إضافة المنتج إلى السلة", true);
+  // }
 }

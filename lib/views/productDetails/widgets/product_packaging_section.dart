@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/packaging_variants_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -47,6 +48,15 @@ class ProductPackagingSection extends StatelessWidget {
 
       final packagingList = selectedOptionModel.packagingOptions!;
 
+      final grouped = <String, List<PackagingOption>>{};
+      for (final pkg in packagingList) {
+        final key = (pkg.packagingTitle ?? pkg.arPackagingTitle ?? '').trim();
+        if (key.isEmpty) continue;
+        grouped.putIfAbsent(key, () => <PackagingOption>[]).add(pkg);
+      }
+
+      final groupedKeys = grouped.keys.toList();
+
       final selectedPackagingId = controller.selectedPackaging.value;
       PackagingOption? selectedPackagingModel;
       for (final pkg in packagingList) {
@@ -54,6 +64,15 @@ class ProductPackagingSection extends StatelessWidget {
           selectedPackagingModel = pkg;
           break;
         }
+      }
+
+      String? selectedGroupKey;
+      if (selectedPackagingModel != null) {
+        selectedGroupKey =
+            (selectedPackagingModel.packagingTitle ??
+                    selectedPackagingModel.arPackagingTitle ??
+                    '')
+                .trim();
       }
 
       return Column(
@@ -67,21 +86,42 @@ class ProductPackagingSection extends StatelessWidget {
           Wrap(
             spacing: 12,
             runSpacing: 12,
-            children: List.generate(packagingList.length, (index) {
-              final pkg = packagingList[index];
-              final selected = pkg.id == controller.selectedPackaging.value;
-              final title = pkg.packagingTitle ?? '';
+            children: List.generate(groupedKeys.length, (index) {
+              final key = groupedKeys[index];
+              final selected = key == selectedGroupKey;
               return ProductOption(
-                title: title,
+                title: key,
                 selected: selected,
-                onTap: () => controller.selectPackaging(
-                  pkg.id!,
-                  colorFamilyId: pkg.color?.id,
-                ),
+                onTap: () {
+                  final variants = grouped[key] ?? <PackagingOption>[];
+                  if (variants.isEmpty) return;
+
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(16),
+                      ),
+                    ),
+                    builder: (_) => PackagingVariantsBottomSheet(
+                      title: key,
+                      variants: variants,
+                      selectedPackagingId: controller.selectedPackaging.value,
+                      onSelect: (v) {
+                        if (v.id == null) return;
+                        controller.selectPackaging(
+                          v.id!,
+                          colorFamilyId: v.color?.id,
+                        );
+                      },
+                    ),
+                  );
+                },
               );
             }),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           if (selectedPackagingModel != null)
             Text(
               'Price: ${formatPrice(selectedPackagingModel.pricePerUnit ?? 0)}',
@@ -96,7 +136,7 @@ class ProductPackagingSection extends StatelessWidget {
               'Stock: ${selectedPackagingModel.stockQuantity ?? 0}',
               style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
 
           if (selectedPackagingModel != null &&
               selectedPackagingModel.color != null)

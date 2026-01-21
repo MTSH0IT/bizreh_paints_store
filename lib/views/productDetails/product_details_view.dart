@@ -37,33 +37,39 @@ class ProductDetailsView extends StatelessWidget {
 
                   // Content
                   Expanded(
-                    child: Card(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ProductInfoSection(product: product),
-                            const SizedBox(height: 16),
-                            Divider(color: Colors.grey, thickness: 1),
-                            const SizedBox(height: 16),
-                            ProductOptionsSection(
-                              product: product,
-                              controller: controller,
-                            ),
-                            const SizedBox(height: 24),
-                            ProductPackagingSection(
-                              product: product,
-                              controller: controller,
-                            ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Card(
+                        color: Colors.white,
+                        child: SingleChildScrollView(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 16,
+                          ),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                ProductInfoSection(product: product),
+                                const SizedBox(height: 16),
+                                //Divider(color: Colors.grey, thickness: 1),
+                                //const SizedBox(height: 16),
+                                ProductOptionsSection(
+                                  product: product,
+                                  controller: controller,
+                                ),
+                                const SizedBox(height: 24),
+                                ProductPackagingSection(
+                                  product: product,
+                                  controller: controller,
+                                ),
 
-                            const SizedBox(height: 20),
-                            ProductDescriptionSection(product: product),
-                          ],
+                                const SizedBox(height: 20),
+                                ProductDescriptionSection(product: product),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),

@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/models/wishlist_model.dart';
@@ -98,13 +99,13 @@ class WishListController extends GetxController {
     return items.any((item) => item.id == id);
   }
 
-  // void addWishlistItemToCart(WishlistModel wishlistItem) {
-  //   final cartController = Get.find<CartController>();
-  //   cartController.addToCart(
-  //     optionPackagingId: wishlistItem.optionPackagingId!,
-  //     colorFamilyId: wishlistItem.colorFamilyId!,
-  //     quantity: 1,
-  //   );
-  //   showMassage("تمت إضافة المنتج إلى السلة", true);
-  // }
+  void addWishlistItemToCart(WishlistModel wishlistItem) {
+    final cartController = Get.find<CartController>();
+    cartController.addToCart(
+      optionPackagingId: wishlistItem.optionPackagingId!,
+      //colorFamilyId: wishlistItem.colorFamilyId!,
+      quantity: 1,
+    );
+    showMassage("تمت إضافة المنتج إلى السلة", true);
+  }
 }

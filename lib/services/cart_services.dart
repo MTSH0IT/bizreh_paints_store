@@ -12,7 +12,7 @@ class CartServices {
 
   Future<void> addToCart({
     required int optionPackagingId,
-    required int colorFamilyId,
+    int? colorFamilyId,
     required int quantity,
   }) async {
     try {
@@ -53,12 +53,12 @@ class CartServices {
   Future<void> updateCart({
     required int cartItemId,
     required int quantity,
-    required int colorFamilyId,
+    //required int colorFamilyId,
   }) async {
     try {
       final response = await _dioClient.put(
         ApiEndpoint.updateCart(cartItemId),
-        data: {'quantity': quantity, 'color_family_id': colorFamilyId},
+        data: {'quantity': quantity},
       );
 
       final apiResponse = ApiResponse.fromJson(response.data, null);

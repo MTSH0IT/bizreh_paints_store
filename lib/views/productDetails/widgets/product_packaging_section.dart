@@ -24,7 +24,19 @@ class ProductPackagingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final options = product.options ?? [];
     if (options.isEmpty) {
-      return const SizedBox.shrink();
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Center(
+          child: Text(
+            'قادم قريباً',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+      );
     }
 
     return Obx(() {

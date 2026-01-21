@@ -37,7 +37,7 @@ class CartController extends GetxController {
 
   Future<void> addToCart({
     required int optionPackagingId,
-    required int colorFamilyId,
+    int? colorFamilyId,
     required int quantity,
   }) async {
     isMutating.value = true;
@@ -63,9 +63,9 @@ class CartController extends GetxController {
   Future<void> updateCartItem({
     required int cartItemId,
     required int quantity,
-    required int colorFamilyId,
+    //required int colorFamilyId,
   }) async {
-    if (cartItemId <= 0 || quantity <= 0 || colorFamilyId <= 0) {
+    if (cartItemId <= 0 || quantity <= 0) {
       showMassage("البيانات غير مكتملة لتحديث العنصر", false);
       return;
     }
@@ -74,7 +74,7 @@ class CartController extends GetxController {
       await cartServices.updateCart(
         cartItemId: cartItemId,
         quantity: quantity,
-        colorFamilyId: colorFamilyId,
+        //colorFamilyId: colorFamilyId,
       );
       await getCart();
       showMassage("تم تحديث العنصر", true);

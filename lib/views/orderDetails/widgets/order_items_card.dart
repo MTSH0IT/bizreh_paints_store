@@ -1,14 +1,16 @@
 import 'package:bizreh_paints_store/models/order_model/item.dart';
+import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemsCard extends StatelessWidget {
-  const OrderItemsCard({super.key, required this.items});
+  const OrderItemsCard({super.key, required this.order});
 
-  final List<Item> items;
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
+    final items = order.items ?? <Item>[];
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Colors.white,
@@ -47,11 +49,12 @@ class _ItemOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = item.productTitle ?? item.arProductTitle ?? '';
-    final quantity = item.quantityPerUnit ?? item.totalQuantity ?? 0;
-    final price =
-        item.totalPrice ??
-        ((item.pricePerUnit ?? item.unitPrice ?? 0) * (quantity.toDouble()));
+    final title = item.product?.title ?? '';
+    final quantity = item.quantityPerUnit ?? 0;
+    final unitPrice = (item.unitPrice ?? 0).toDouble();
+    final price = (item.totalPrice ?? 0).toDouble();
+    final optionName = item.productOption?.optionName ?? "";
+    final packagingTitle = item.packaging?.title ?? "";
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -96,6 +99,16 @@ class _ItemOrder extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 4),
+                if (optionName.trim().isNotEmpty)
+                  Text(
+                    optionName,
+                    style: const TextStyle(color: Colors.black54, fontSize: 13),
+                  ),
+                if (packagingTitle.trim().isNotEmpty)
+                  Text(
+                    packagingTitle,
+                    style: const TextStyle(color: Colors.black54, fontSize: 13),
+                  ),
                 Text(
                   'Qty: $quantity',
                   style: const TextStyle(color: Colors.black54, fontSize: 14),

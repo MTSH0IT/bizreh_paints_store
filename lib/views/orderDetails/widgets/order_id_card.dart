@@ -1,22 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
+import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 
 class OrderIdCard extends StatelessWidget {
-  final String orderNo;
+  final OrderModel order;
   final String datePlaced;
-  final String dateDelivered;
-  final String statusLabel;
 
-  const OrderIdCard({
-    super.key,
-    required this.orderNo,
-    required this.datePlaced,
-    required this.dateDelivered,
-    required this.statusLabel,
-  });
+  const OrderIdCard({super.key, required this.order, required this.datePlaced});
 
   @override
   Widget build(BuildContext context) {
+    final orderNo = order.orderNumber ?? order.id?.toString() ?? '';
+    final statusLabel = order.status ?? '';
+    final paymentStatus = order.paymentStatus;
+
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Colors.white,
@@ -66,11 +63,13 @@ class OrderIdCard extends StatelessWidget {
               "Date Placed: $datePlaced",
               style: const TextStyle(color: Colors.black54, fontSize: 14),
             ),
-            const SizedBox(height: 8),
-            Text(
-              "Date Delivered: $dateDelivered",
-              style: const TextStyle(color: Colors.black54, fontSize: 14),
-            ),
+            if (paymentStatus != null && paymentStatus.trim().isNotEmpty) ...[
+              const SizedBox(height: 8),
+              Text(
+                "Payment: $paymentStatus",
+                style: const TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
           ],
         ),
       ),

@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/models/order_model/order_model.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 
 class OrderSummaryCard extends StatelessWidget {
-  const OrderSummaryCard({
-    super.key,
-    required this.subtotal,
-    required this.discountAmount,
-    required this.finalAmount,
-  });
+  const OrderSummaryCard({super.key, required this.order});
 
-  final String subtotal;
-  final String discountAmount;
-  final String finalAmount;
+  final OrderModel order;
 
   @override
   Widget build(BuildContext context) {
+    final totalAmount = (order.totalAmount ?? 0).toDouble();
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Colors.white,
@@ -27,15 +23,9 @@ class OrderSummaryCard extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
-            _buildSummaryRow('total', _formatCurrency(subtotal)),
-            const SizedBox(height: 8),
-            _buildSummaryRow('discount', _formatCurrency(discountAmount)),
-            const SizedBox(height: 8),
-            const Divider(thickness: 1),
-            const SizedBox(height: 8),
             _buildSummaryRow(
-              'final Amount',
-              _formatCurrency(finalAmount),
+              'total',
+              _formatCurrency(formatPrice(totalAmount)),
               isBold: true,
             ),
           ],

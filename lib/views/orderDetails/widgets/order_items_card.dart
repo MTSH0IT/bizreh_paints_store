@@ -109,7 +109,7 @@ class _ItemOrder extends StatelessWidget {
                     ),
                     const SizedBox(width: 8),
                     Text(
-                      '\$${formatPrice(price)}',
+                      formatPriceWithSymbol(price, symbol: '\$'),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,

@@ -124,7 +124,7 @@ class _CartItemTileState extends State<CartItemTile> {
                 const SizedBox(height: 2),
 
                 Text(
-                  'unitPrice : \$${formatPrice(_unitPrice)}',
+                  'unitPrice: ${formatPriceWithSymbol(_unitPrice, symbol: '\$')}',
                   style: const TextStyle(color: Colors.black87),
                 ),
               ],

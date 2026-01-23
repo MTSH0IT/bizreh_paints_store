@@ -65,7 +65,7 @@ class OrderHistoryItem extends StatelessWidget {
                 ),
               ),
               Text(
-                '\$${formatPrice(amount)}',
+                formatPriceWithSymbol(amount, symbol: '\$'),
                 style: const TextStyle(
                   fontWeight: FontWeight.w700,
                   fontSize: 16,

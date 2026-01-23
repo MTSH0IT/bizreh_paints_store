@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/models/notification_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
@@ -13,9 +14,7 @@ class NotificationCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final createdAt = notification.createdAt;
-    final dateText = createdAt != null
-        ? '${createdAt.year.toString().padLeft(4, '0')}-${createdAt.month.toString().padLeft(2, '0')}-${createdAt.day.toString().padLeft(2, '0')}'
-        : '';
+    final dateText = formatDate(createdAt);
 
     return InkWell(
       onTap: onTap,

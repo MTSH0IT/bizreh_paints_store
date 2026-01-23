@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 
 class ConfirmStep extends StatelessWidget {
@@ -14,14 +15,11 @@ class ConfirmStep extends StatelessWidget {
       child: Obx(() {
         final address = orderController.selectedAddress.value;
         final cart = orderController.cartController.cart.value;
-        final subtotal = ((cart?.summary?.subtotal ?? 0).toDouble())
-            .toStringAsFixed(2);
-        final total = ((cart?.summary?.totalAmount ?? 0).toDouble())
-            .toStringAsFixed(2);
-        final itemsCount = cart?.summary?.itemsCount?.toString() ?? "0";
-        final deliveryFee = cart?.summary?.deliveryFee?.toString() ?? "0";
-        final discountAmount = ((cart?.summary?.discountAmount ?? 0).toDouble())
-            .toStringAsFixed(2);
+        final subtotal = formatPrice(cart?.summary?.subtotal ?? 0);
+        final total = formatPrice(cart?.summary?.totalAmount ?? 0);
+        final itemsCount = cart?.summary?.itemsCount ?? 0;
+        final deliveryFee = cart?.summary?.deliveryFee ?? 0;
+        final discountAmount = formatPrice(cart?.summary?.discountAmount ?? 0);
 
         return SingleChildScrollView(
           child: Column(
@@ -113,9 +111,7 @@ class ConfirmStep extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            ((item.totalPrice ?? 0).toDouble()).toStringAsFixed(
-                              2,
-                            ),
+                            formatPrice((item.totalPrice ?? 0).toDouble()),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,

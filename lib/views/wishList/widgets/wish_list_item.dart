@@ -77,7 +77,10 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        "\$ ${formatPrice(item.pricePerUnit ?? 0)}",
+                        formatPriceWithSymbol(
+                          item.pricePerUnit ?? 0,
+                          symbol: '\$ ',
+                        ),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,

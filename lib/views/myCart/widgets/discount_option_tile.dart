@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
 class DiscountOptionTile extends StatelessWidget {
@@ -72,7 +73,7 @@ class DiscountOptionTile extends StatelessWidget {
 
   String _format(double value) {
     final sign = value < 0 ? '-' : '';
-    final abs = value.abs().toStringAsFixed(2);
+    final abs = formatPrice(value.abs());
     return '$sign\$$abs';
   }
 }

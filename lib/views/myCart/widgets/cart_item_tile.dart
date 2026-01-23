@@ -53,11 +53,11 @@ class _CartItemTileState extends State<CartItemTile> {
     return category;
   }
 
-  String? get _colorDegreeValue => widget.item.colorFamily?.colorDegree;
+  String? get _colorDegreeValue => widget.item.packaging?.color?.degree;
   bool get _hasColor => (_colorDegreeValue?.trim().isNotEmpty ?? false);
   Color get _colorDegree => parseColorDegree(_colorDegreeValue);
 
-  double get _unitPrice => widget.item.unitPrice ?? 0.0;
+  double get _unitPrice => (widget.item.unitPrice ?? 0).toDouble();
   int get _quantity => widget.item.quantityPerUnit ?? 1;
 
   @override
@@ -168,7 +168,7 @@ class _CartItemTileState extends State<CartItemTile> {
                 ),
               ),
               SizedBox(height: 20),
-              ColorDot(color: _colorDegree, selected: false),
+              if (_hasColor) ColorDot(color: _colorDegree, selected: false),
             ],
           ),
         ],

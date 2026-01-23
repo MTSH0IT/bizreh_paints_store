@@ -15,9 +15,9 @@ class CartModel {
   double? latitude;
   String? cityName;
   dynamic driverId;
-  double? totalAmount;
-  double? discountAmount;
-  double? finalAmount;
+  int? totalAmount;
+  int? discountAmount;
+  int? finalAmount;
   String? status;
   String? paymentStatus;
   DateTime? createdAt;
@@ -69,9 +69,9 @@ class CartModel {
     latitude: (json['latitude'] as num?)?.toDouble(),
     cityName: json['city_name'] as String?,
     driverId: json['driver_id'] as dynamic,
-    totalAmount: (json['total_amount'] as num?)?.toDouble(),
-    discountAmount: (json['discount_amount'] as num?)?.toDouble(),
-    finalAmount: (json['final_amount'] as num?)?.toDouble(),
+    totalAmount: json['total_amount'] as int?,
+    discountAmount: json['discount_amount'] as int?,
+    finalAmount: json['final_amount'] as int?,
     status: json['status'] as String?,
     paymentStatus: json['payment_status'] as String?,
     createdAt: json['created_at'] == null

@@ -4,7 +4,7 @@ class Product {
   String? arTitle;
   String? description;
   String? arDescription;
-  dynamic image;
+  String? image;
   int? subCategoryId;
   int? brandId;
   int? isActive;
@@ -32,7 +32,7 @@ class Product {
     arTitle: json['ar_title'] as String?,
     description: json['description'] as String?,
     arDescription: json['ar_description'] as String?,
-    image: json['image'] as dynamic,
+    image: json['image'] as String?,
     subCategoryId: json['sub_category_id'] as int?,
     brandId: json['brand_id'] as int?,
     isActive: json['is_active'] as int?,

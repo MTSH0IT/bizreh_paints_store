@@ -14,13 +14,14 @@ class ConfirmStep extends StatelessWidget {
       child: Obx(() {
         final address = orderController.selectedAddress.value;
         final cart = orderController.cartController.cart.value;
-        final subtotal = cart?.summary?.subtotal?.toStringAsFixed(2) ?? "0.00";
-        final total = cart?.summary?.totalAmount?.toStringAsFixed(2) ?? "0.00";
+        final subtotal = ((cart?.summary?.subtotal ?? 0).toDouble())
+            .toStringAsFixed(2);
+        final total = ((cart?.summary?.totalAmount ?? 0).toDouble())
+            .toStringAsFixed(2);
         final itemsCount = cart?.summary?.itemsCount?.toString() ?? "0";
         final deliveryFee = cart?.summary?.deliveryFee?.toString() ?? "0";
-        final discountAmount =
-            cart?.summary?.discountAmount?.toStringAsFixed(2) ?? "0.00";
-        final paymentMethod = orderController.paymentMethod.value;
+        final discountAmount = ((cart?.summary?.discountAmount ?? 0).toDouble())
+            .toStringAsFixed(2);
 
         return SingleChildScrollView(
           child: Column(
@@ -30,22 +31,6 @@ class ConfirmStep extends StatelessWidget {
                 'Confirm Order',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 16),
-
-              // Contact info
-              Text(
-                'Phone number',
-                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                orderController.phoneNumber.value,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-
               const SizedBox(height: 16),
 
               // Address
@@ -104,10 +89,10 @@ class ConfirmStep extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                              if (item.colorFamily?.colorDegree != null) ...[
+                              if (item.packaging?.color?.degree != null) ...[
                                 const SizedBox(height: 2),
                                 Text(
-                                  'Color: ${item.colorFamily!.colorDegree!}',
+                                  'Color: ${item.packaging!.color!.degree!}',
                                   style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.grey[600],
@@ -128,7 +113,9 @@ class ConfirmStep extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            item.totalPrice?.toStringAsFixed(2) ?? "0.00",
+                            ((item.totalPrice ?? 0).toDouble()).toStringAsFixed(
+                              2,
+                            ),
                             style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.w500,
@@ -178,22 +165,6 @@ class ConfirmStep extends StatelessWidget {
                 'Total: $total',
                 style: const TextStyle(
                   fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-
-              const SizedBox(height: 16),
-
-              // Payment method
-              Text(
-                'Payment method',
-                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
-              ),
-              const SizedBox(height: 4),
-              Text(
-                paymentMethod.capitalizeFirst ?? paymentMethod,
-                style: const TextStyle(
-                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                 ),
               ),

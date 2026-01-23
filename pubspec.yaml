@@ -43,6 +43,7 @@ dependencies:
   cached_network_image: ^3.4.1
   dio: ^5.9.0
   progress_tracker: ^0.0.16
+  awesome_snackbar_content: ^0.1.8
 
 dev_dependencies:
   flutter_test:

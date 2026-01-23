@@ -16,10 +16,10 @@ class CartSummarySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final subtotal = summary?.subtotal ?? 0;
-    final discount = summary?.discountAmount ?? 0;
-    final delivery = (summary?.deliveryFee ?? 0).toDouble();
-    final total = summary?.totalAmount ?? 0;
+    final subtotal = (summary?.subtotal ?? 0).toDouble();
+    final discount = (summary?.discountAmount ?? 0).toDouble();
+    // final delivery = (summary?.deliveryFee ?? 0).toDouble();
+    final total = (summary?.totalAmount ?? 0).toDouble();
     final itemsCount = summary?.itemsCount ?? summary?.totalItems;
 
     return Container(
@@ -41,7 +41,7 @@ class CartSummarySection extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             PriceRow(label: 'Subtotal', amount: subtotal),
-            PriceRow(label: 'Delivery Fee', amount: delivery),
+            //PriceRow(label: 'Delivery Fee', amount: delivery),
             PriceRow(label: 'Discount', amount: -discount),
             const Divider(),
             PriceRow(

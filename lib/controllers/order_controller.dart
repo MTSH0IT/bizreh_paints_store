@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/order_history_model.dart';
@@ -110,42 +108,22 @@ class OrderController extends GetxController {
   }
 
   Future<void> submitOrder() async {
-    // if (cartController.isEmpty()) {
-    //   showMassage('السلة فارغة', false);
-    //   return;
-    // }
-    // if (phoneNumber.value.isEmpty) {
-    //   showMassage('ادخل رقم الهاتف', false);
-    //   return;
-    // }
-    // if (selectedAddress.value == null) {
-    //   showMassage('اختر عنوان التوصيل', false);
-    //   return;
-    // }
+    final orderId = cartController.cart.value?.id;
+    final addressId = selectedAddress.value?.id;
 
-    final items =
-        cartController.cart.value?.items ??
-        []
-            .map(
-              (item) => {
-                'option_packaging_id': item.optionPackagingId,
-                'quantity_per_unit': item.quantityPerUnit,
-              },
-            )
-            .toList();
-    log(selectedAddress.value!.id.toString());
-
-    final body = {
-      'items': items,
-      'delivery_address': selectedAddress.value!.id,
-      'phone_number': phoneNumber.value,
-      'payment_method': paymentMethod.value,
-    };
+    if (orderId == null || orderId <= 0) {
+      showMassage('تعذر ارسال الطلب: رقم الطلب غير متوفر', false);
+      return;
+    }
+    if (addressId == null || addressId <= 0) {
+      showMassage('اختر عنوان التوصيل', false);
+      return;
+    }
 
     try {
       isSubmitting.value = true;
-      await _orderServices.createOrder(body: body);
-      //cartController.clearCart();
+      await _orderServices.createOrder(orderId: orderId, addressId: addressId);
+      cartController.cart.value = null;
       Get.back();
       showMassage('تم ارسال الطلب بنجاح', true);
     } catch (e) {

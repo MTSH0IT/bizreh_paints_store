@@ -11,11 +11,14 @@ import 'package:dio/dio.dart';
 class OrderServices {
   final DioClient _dioClient = DioClient();
 
-  Future<void> createOrder({required Map<String, dynamic> body}) async {
+  Future<void> createOrder({
+    required int orderId,
+    required int addressId,
+  }) async {
     try {
-      final response = await _dioClient.post(
-        ApiEndpoint.createOrder,
-        data: body,
+      final response = await _dioClient.patch(
+        ApiEndpoint.pendOrder(orderId),
+        data: {'address_id': addressId},
       );
       final apiResponse = ApiResponse.fromJson(response.data, null);
       if (apiResponse.success) {

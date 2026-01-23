@@ -177,8 +177,12 @@ class CartServices {
         (json) => CartModel.fromJson(json),
       );
 
-      if (apiResponse.success && apiResponse.data != null) {
-        return apiResponse.data as CartModel;
+      if (apiResponse.success) {
+        if (apiResponse.data != null) {
+          return apiResponse.data as CartModel;
+        } else {
+          return CartModel();
+        }
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }

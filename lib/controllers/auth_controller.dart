@@ -89,11 +89,6 @@ class AuthController extends GetxController {
       await _storage.setString(StorageKey.password, loginPassword);
       Get.offAll(() => MainView());
       clearCtrl();
-      Get.snackbar(
-        'مرحبًا',
-        'تم تسجيل الدخول بنجاح',
-        snackPosition: SnackPosition.TOP,
-      );
     } on AppException catch (e) {
       generalError.value = e.message;
       log("auth controller AppException sign in : ${generalError.value}");
@@ -141,11 +136,6 @@ class AuthController extends GetxController {
       );
       await _persistAuth(res);
       Get.back(); // or navigate to home
-      Get.snackbar(
-        'مرحبًا',
-        'تم إنشاء الحساب وتسجيل الدخول',
-        snackPosition: SnackPosition.TOP,
-      );
     } on AppException catch (e) {
       generalError.value = e.message;
       log("auth controller AppException sign up : ${generalError.value}");

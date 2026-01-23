@@ -4,11 +4,10 @@ Color getStatusColor(String statusLabel) {
   switch (statusLabel) {
     case 'Delivered':
       return const Color(0xFF16A34A);
-    case 'Shipped':
-      return const Color(0xFFF59E0B);
-    case 'Processing':
     case 'pending':
       return const Color(0xFF2563EB);
+    case 'assined_to_driver':
+      return const Color(0xFFF59E0B);
     case 'canceled':
       return const Color(0xFFD81D10);
     default:

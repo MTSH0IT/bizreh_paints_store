@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
 class ColorDot extends StatelessWidget {
-  const ColorDot({super.key, required this.color, required this.selected});
+  const ColorDot({
+    super.key,
+    required this.color,
+    required this.selected,
+    this.width = 30,
+    this.height = 30,
+  });
 
   final Color color;
   final bool selected;
+  final double width;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +23,8 @@ class ColorDot extends StatelessWidget {
         : Colors.black;
 
     return Container(
-      width: 30,
-      height: 30,
+      width: width,
+      height: height,
       padding: const EdgeInsets.all(2),
       alignment: Alignment.center,
       decoration: BoxDecoration(

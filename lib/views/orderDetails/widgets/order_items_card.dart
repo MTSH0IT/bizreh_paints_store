@@ -1,6 +1,8 @@
 import 'package:bizreh_paints_store/models/order_model/item.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:bizreh_paints_store/utils/func/color_degree.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemsCard extends StatelessWidget {
@@ -51,23 +53,40 @@ class _ItemOrder extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = item.product?.title ?? '';
     final quantity = item.quantityPerUnit ?? 0;
-    final unitPrice = (item.unitPrice ?? 0).toDouble();
     final price = (item.totalPrice ?? 0).toDouble();
     final optionName = item.productOption?.optionName ?? "";
     final packagingTitle = item.packaging?.title ?? "";
+    final colorDegree = item.color?.degree;
+    final hasColor = colorDegree?.trim().isNotEmpty ?? false;
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Row(
         children: [
-          Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey[200],
-            ),
-            child: const Icon(Icons.shopping_bag_outlined, size: 28),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.grey[200],
+                ),
+                child: const Icon(Icons.shopping_bag_outlined, size: 28),
+              ),
+              if (hasColor)
+                Positioned(
+                  bottom: 2,
+                  right: 2,
+                  child: ColorDot(
+                    width: 20,
+                    height: 20,
+                    color: parseColorDegree(colorDegree),
+                    selected: false,
+                  ),
+                ),
+            ],
           ),
           const SizedBox(width: 12),
           Expanded(

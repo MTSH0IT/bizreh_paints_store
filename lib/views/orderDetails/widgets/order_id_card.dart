@@ -30,7 +30,7 @@ class OrderIdCard extends StatelessWidget {
                   'Order #$orderNo',
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: 16,
+                    fontSize: 14,
                   ),
                 ),
                 Row(

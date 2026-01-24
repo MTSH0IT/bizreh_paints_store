@@ -1,5 +1,5 @@
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
-import 'package:bizreh_paints_store/models/wishlist_model.dart';
+import 'package:bizreh_paints_store/models/wishlist_model/wishlist_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +22,15 @@ class WishListItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cont = Get.find<WishListController>();
+
+    final image = item.productOption?.mainImage ?? item.product?.image ?? "";
+    final title = item.product?.title ?? "";
+    final optionName = item.productOption?.optionName ?? "";
+    final packagingTitle = item.optionPackaging?.packaging?.title ?? "";
+    final pricePerUnit = item.optionPackaging?.pricePerUnit ?? 0;
+    final colorDegree = item.optionPackaging?.color?.degree;
+    final colorName = item.optionPackaging?.color?.name ?? "";
+
     return Card(
       color: Colors.white,
       elevation: 1,
@@ -38,7 +47,7 @@ class WishListItemCard extends StatelessWidget {
                   child: SizedBox(
                     width: 80,
                     height: 80,
-                    child: ImageNetwork(image: item.mainImage ?? ""),
+                    child: ImageNetwork(image: image),
                   ),
                 ),
                 const SizedBox(width: 12),
@@ -47,7 +56,7 @@ class WishListItemCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        item.title ?? "",
+                        title,
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
@@ -57,7 +66,18 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        item.optionName ?? "",
+                        optionName,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.black54,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+
+                      const SizedBox(height: 8),
+                      Text(
+                        packagingTitle,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.black54,
@@ -67,20 +87,7 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        item.packagintTitle ?? "",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.black54,
-                        ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        formatPriceWithSymbol(
-                          item.pricePerUnit ?? 0,
-                          symbol: '\$ ',
-                        ),
+                        formatPriceWithSymbol(pricePerUnit, symbol: '\$ '),
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w800,
@@ -114,7 +121,7 @@ class WishListItemCard extends StatelessWidget {
                   child: Obx(() {
                     final isRemoving =
                         cont.isAddRemoveLoading.value &&
-                        cont.removingId.value == item.id;
+                        cont.removingId.value == item.wishlistId;
                     return TextButton(
                       onPressed: isRemoving ? null : onRemove,
                       style: TextButton.styleFrom(

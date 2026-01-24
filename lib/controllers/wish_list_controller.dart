@@ -2,8 +2,7 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/product_model/product_model.dart';
-import 'package:bizreh_paints_store/models/wishlist_model.dart';
+import 'package:bizreh_paints_store/models/wishlist_model/wishlist_model.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
@@ -71,20 +70,12 @@ class WishListController extends GetxController {
     }
   }
 
-  Future<void> toggle(ProductModel product) async {
-    if (isFavorite(product.id!)) {
-      await removeItem(product.id!);
-    } else {
-      await addToWishList(product.id!);
-    }
-  }
-
   Future<void> removeItem(int id) async {
     isAddRemoveLoading.value = true;
     removingId.value = id;
     try {
       await wishListServices.removeWishlistItem(wishlistId: id);
-      items.removeWhere((e) => e.id == id);
+      items.removeWhere((e) => e.optionPackagingId == id);
       isAddRemoveLoading.value = false;
     } on AppException catch (e) {
       log("wish list controller AppException : ${e.message}");
@@ -96,7 +87,7 @@ class WishListController extends GetxController {
   }
 
   bool isFavorite(int id) {
-    return items.any((item) => item.id == id);
+    return items.any((item) => item.optionPackagingId == id);
   }
 
   void addWishlistItemToCart(WishlistModel wishlistItem) {
@@ -106,6 +97,5 @@ class WishListController extends GetxController {
       //colorFamilyId: wishlistItem.colorFamilyId!,
       quantity: 1,
     );
-    showMassage("تمت إضافة المنتج إلى السلة", true);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
-import 'package:bizreh_paints_store/models/wishlist_model.dart';
+//import 'package:bizreh_paints_store/models/wishlist_model.dart';
 
 class CartItemModel {
   final int optionId;
@@ -94,18 +94,18 @@ class CartItemModel {
     );
   }
 
-  factory CartItemModel.fromWishlist(WishlistModel item) {
-    return CartItemModel(
-      optionId: item.productOptionId ?? 0,
-      packagingId: item.optionPackagingId ?? 0,
-      unitPrice: item.pricePerUnit ?? 0,
-      title: item.title ?? '',
-      image: item.mainImage ?? '',
-      optionName: item.optionName ?? '',
-      packagingTitle: item.packagintTitle ?? '',
-      quantity: 1,
-    );
-  }
+  // factory CartItemModel.fromWishlist(WishlistModel item) {
+  //   return CartItemModel(
+  //     optionId: item.productOptionId ?? 0,
+  //     packagingId: item.optionPackagingId ?? 0,
+  //     unitPrice: item.pricePerUnit ?? 0,
+  //     title: item.title ?? '',
+  //     image: item.mainImage ?? '',
+  //     optionName: item.optionName ?? '',
+  //     packagingTitle: item.packagintTitle ?? '',
+  //     quantity: 1,
+  //   );
+  // }
 
   Map<String, dynamic> toJson() {
     return {

@@ -44,6 +44,7 @@ dependencies:
   dio: ^5.9.0
   progress_tracker: ^0.0.16
   awesome_snackbar_content: ^0.1.8
+  top_snackbar_flutter: ^3.3.0
 
 dev_dependencies:
   flutter_test:

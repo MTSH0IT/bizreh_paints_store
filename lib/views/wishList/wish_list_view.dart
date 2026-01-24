@@ -54,7 +54,7 @@ class WishList extends StatelessWidget {
                   ctrl.addWishlistItemToCart(item);
                 },
                 onRemove: () {
-                  ctrl.removeItem(item.id!);
+                  ctrl.removeItem(item.optionPackagingId!);
                 },
               ),
             );

@@ -1,3 +1,4 @@
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
@@ -25,56 +26,71 @@ class _PersonalInformationState extends State<PersonalInformation> {
         backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                Obx(
-                  () => LabeledTextField(
-                    label: 'First Name',
-                    hint: 'Enter your first name',
-                    controller: ctrl.firstNameCtrl,
-                    errorText: ctrl.firstNameError.value,
-                  ),
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 8,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 16),
+                    Obx(
+                      () => LabeledTextField(
+                        label: 'First Name',
+                        hint: 'Enter your first name',
+                        controller: ctrl.firstNameCtrl,
+                        errorText: ctrl.firstNameError.value,
+                      ),
+                    ),
+                    Obx(
+                      () => LabeledTextField(
+                        label: 'Last Name',
+                        hint: 'Enter your last name',
+                        controller: ctrl.lastNameCtrl,
+                        errorText: ctrl.lastNameError.value,
+                      ),
+                    ),
+                    // Obx(
+                    //   () => LabeledTextField(
+                    //     label: 'Email',
+                    //     hint: 'Enter your email',
+                    //     controller: ctrl.emailCtrl,
+                    //     keyboardType: TextInputType.emailAddress,
+                    //     errorText: ctrl.emailError.value,
+                    //   ),
+                    // ),
+                    Obx(
+                      () => LabeledTextField(
+                        label: 'Phone Number',
+                        hint: 'Enter your phone number',
+                        controller: ctrl.phoneCtrl,
+                        keyboardType: TextInputType.phone,
+                        errorText: ctrl.phoneError.value,
+                      ),
+                    ),
+                    SizedBox(height: 24),
+                    MainButton(
+                      title: 'Save Changes',
+                      onPressed: () => ctrl.changeInfo(),
+                    ),
+                    SizedBox(height: 16),
+                  ],
                 ),
-                Obx(
-                  () => LabeledTextField(
-                    label: 'Last Name',
-                    hint: 'Enter your last name',
-                    controller: ctrl.lastNameCtrl,
-                    errorText: ctrl.lastNameError.value,
-                  ),
-                ),
-                // Obx(
-                //   () => LabeledTextField(
-                //     label: 'Email',
-                //     hint: 'Enter your email',
-                //     controller: ctrl.emailCtrl,
-                //     keyboardType: TextInputType.emailAddress,
-                //     errorText: ctrl.emailError.value,
-                //   ),
-                // ),
-                Obx(
-                  () => LabeledTextField(
-                    label: 'Phone Number',
-                    hint: 'Enter your phone number',
-                    controller: ctrl.phoneCtrl,
-                    keyboardType: TextInputType.phone,
-                    errorText: ctrl.phoneError.value,
-                  ),
-                ),
-                SizedBox(height: 24),
-                MainButton(
-                  title: 'Save Changes',
-                  onPressed: () => ctrl.changeInfo(),
-                ),
-                SizedBox(height: 16),
-              ],
+              ),
             ),
-          ),
+            Obx(
+              () => ctrl.isLoding.value
+                  ? Container(
+                      color: Colors.black26,
+                      child: const Center(child: BuildProgressIndicator()),
+                    )
+                  : const SizedBox.shrink(),
+            ),
+          ],
         ),
       ),
     );

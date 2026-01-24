@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 
 class WishListItemCard extends StatelessWidget {
   final WishlistModel item;
@@ -29,7 +31,6 @@ class WishListItemCard extends StatelessWidget {
     final packagingTitle = item.optionPackaging?.packaging?.title ?? "";
     final pricePerUnit = item.optionPackaging?.pricePerUnit ?? 0;
     final colorDegree = item.optionPackaging?.color?.degree;
-    final colorName = item.optionPackaging?.color?.name ?? "";
 
     return Card(
       color: Colors.white,
@@ -42,13 +43,28 @@ class WishListItemCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: SizedBox(
-                    width: 80,
-                    height: 80,
-                    child: ImageNetwork(image: image),
-                  ),
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: SizedBox(
+                        width: 80,
+                        height: 80,
+                        child: ImageNetwork(image: image),
+                      ),
+                    ),
+                    if (colorDegree != null)
+                      Positioned(
+                        top: 4,
+                        right: 4,
+                        child: ColorDot(
+                          color: parseColorDegree(colorDegree),
+                          selected: false,
+                          width: 14,
+                          height: 14,
+                        ),
+                      ),
+                  ],
                 ),
                 const SizedBox(width: 12),
                 Expanded(
@@ -74,7 +90,6 @@ class WishListItemCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-
                       const SizedBox(height: 8),
                       Text(
                         packagingTitle,

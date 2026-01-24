@@ -38,7 +38,6 @@ dependencies:
   flutter_map: ^8.2.2
   geolocator: ^14.0.2
   get: ^4.7.2
-  hive_flutter: ^1.1.0
   shared_preferences: ^2.5.3
   cached_network_image: ^3.4.1
   dio: ^5.9.0

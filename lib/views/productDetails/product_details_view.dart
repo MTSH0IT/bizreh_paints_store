@@ -64,7 +64,6 @@ class ProductDetailsView extends StatelessWidget {
                                   product: product,
                                   controller: controller,
                                 ),
-
                                 const SizedBox(height: 20),
                                 ProductDescriptionSection(product: product),
                               ],

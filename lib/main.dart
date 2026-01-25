@@ -46,7 +46,6 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
       initialBinding: AppBindings(),
-      navigatorKey: Get.key,
       home: const SplashView(),
     );
   }

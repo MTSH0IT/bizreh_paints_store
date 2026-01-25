@@ -62,7 +62,7 @@ class ProductPackagingSection extends StatelessWidget {
 
       final grouped = <String, List<PackagingOption>>{};
       for (final pkg in packagingList) {
-        final key = (pkg.packagingTitle ?? pkg.arPackagingTitle ?? '').trim();
+        final key = (pkg.packagingTitle ?? '').trim();
         if (key.isEmpty) continue;
         grouped.putIfAbsent(key, () => <PackagingOption>[]).add(pkg);
       }
@@ -80,11 +80,7 @@ class ProductPackagingSection extends StatelessWidget {
 
       String? selectedGroupKey;
       if (selectedPackagingModel != null) {
-        selectedGroupKey =
-            (selectedPackagingModel.packagingTitle ??
-                    selectedPackagingModel.arPackagingTitle ??
-                    '')
-                .trim();
+        selectedGroupKey = (selectedPackagingModel.packagingTitle ?? '').trim();
       }
 
       return Column(

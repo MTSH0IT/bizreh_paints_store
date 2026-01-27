@@ -3,8 +3,15 @@ import 'package:bizreh_paints_store/utils/consts/colors.dart';
 
 class PointsBalanceCard extends StatelessWidget {
   final int balance;
+  final int totalEarned;
+  final int totalSpent;
 
-  const PointsBalanceCard({super.key, required this.balance});
+  const PointsBalanceCard({
+    super.key,
+    required this.balance,
+    required this.totalEarned,
+    required this.totalSpent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +45,29 @@ class PointsBalanceCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Earned: $totalEarned',
+                style: const TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                'Spent: $totalSpent',
+                style: const TextStyle(
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
         ],
       ),
     );

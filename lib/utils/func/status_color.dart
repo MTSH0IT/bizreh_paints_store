@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 Color getStatusColor(String statusLabel) {
   switch (statusLabel) {
-    case 'Delivered':
+    case 'deleverd':
       return const Color(0xFF16A34A);
     case 'pending':
       return const Color(0xFF2563EB);

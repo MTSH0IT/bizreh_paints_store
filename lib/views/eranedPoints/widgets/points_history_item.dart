@@ -1,20 +1,20 @@
+import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:flutter/material.dart';
+import 'package:bizreh_paints_store/models/points_history_model.dart';
 
 class PointsHistoryItem extends StatelessWidget {
-  final String title;
-  final String date;
-  final int points; // positive for earned, negative for spent
+  final PointsHistoryModel item;
 
-  const PointsHistoryItem({
-    super.key,
-    required this.title,
-    required this.date,
-    required this.points,
-  });
+  const PointsHistoryItem({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
-    final isPositive = points >= 0;
+    final title = item.giftTitle ?? "";
+    final reason = item.reason ?? "";
+    final date = formatDate(item.createdAt);
+
+    final points = item.points ?? 0;
+    final isPositive = item.pointsType != 'spent';
     final color = isPositive
         ? const Color(0xFF16A34A)
         : const Color(0xFFDC2626);
@@ -41,9 +41,7 @@ class PointsHistoryItem extends StatelessWidget {
             width: 28,
             height: 28,
             decoration: BoxDecoration(
-              color: isPositive
-                  ? color.withValues(alpha: 0.05)
-                  : color.withValues(alpha: 0.05),
+              color: color.withValues(alpha: 0.05),
               shape: BoxShape.circle,
             ),
             child: Icon(
@@ -66,6 +64,14 @@ class PointsHistoryItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
+                  reason,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 6),
+                Text(
                   date,
                   style: const TextStyle(color: Colors.black54, fontSize: 12),
                 ),
@@ -73,7 +79,7 @@ class PointsHistoryItem extends StatelessWidget {
             ),
           ),
           Text(
-            '$sign${points.abs()}',
+            '$sign $points',
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w700,

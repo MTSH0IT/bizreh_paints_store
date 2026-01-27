@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:bizreh_paints_store/controllers/points_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'widgets/points_balance_card.dart';
 import 'widgets/points_history_item.dart';
 
@@ -7,19 +10,7 @@ class EranedPointsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final history = [
-      {
-        'title': 'Purchase from "Living Room" collection',
-        'date': '10/20/2025',
-        'points': 500,
-      },
-      {
-        'title': 'Discount on "Azure Blue" paint',
-        'date': '10/18/2025',
-        'points': -250,
-      },
-      {'title': 'Welcome Bonus', 'date': '10/16/2025', 'points': 1000},
-    ];
+    final ctrl = Get.find<PointsController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -28,40 +19,53 @@ class EranedPointsView extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.transparent,
       ),
-      body: Column(
-        children: [
-          const SizedBox(height: 12),
-          const PointsBalanceCard(balance: 1250),
-          const SizedBox(height: 12),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            child: Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Text(
-                'POINTS HISTORY',
-                style: TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w700,
+      body: Obx(() {
+        final isLoadingPoints = ctrl.isLoadingPoints.value;
+        final isLoadingHistory = ctrl.isLoadingHistory.value;
+
+        final points = ctrl.points.value;
+
+        if (isLoadingPoints && points == null) {
+          return const BuildProgressIndicator();
+        }
+
+        return Column(
+          children: [
+            const SizedBox(height: 12),
+            PointsBalanceCard(
+              balance: points?.balance ?? 0,
+              totalEarned: points?.totalEarned ?? 0,
+              totalSpent: points?.totalSpent ?? 0,
+            ),
+            const SizedBox(height: 12),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'POINTS HISTORY',
+                  style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: history.length,
-              itemBuilder: (context, index) {
-                final item = history[index];
-                return PointsHistoryItem(
-                  title: item['title'] as String,
-                  date: item['date'] as String,
-                  points: item['points'] as int,
-                );
-              },
+            Expanded(
+              child: isLoadingHistory && ctrl.history.isEmpty
+                  ? const BuildProgressIndicator()
+                  : ListView.builder(
+                      itemCount: ctrl.history.length,
+                      itemBuilder: (context, index) {
+                        final item = ctrl.history[index];
+                        return PointsHistoryItem(item: item);
+                      },
+                    ),
             ),
-          ),
-          const SizedBox(height: 24),
-        ],
-      ),
+            const SizedBox(height: 24),
+          ],
+        );
+      }),
     );
   }
 }

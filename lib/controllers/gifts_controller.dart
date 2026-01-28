@@ -1,0 +1,106 @@
+import 'dart:developer';
+
+import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
+import 'package:bizreh_paints_store/models/available_gifts_model.dart';
+import 'package:bizreh_paints_store/models/gifts_model.dart';
+import 'package:bizreh_paints_store/models/user_gifts_model.dart';
+import 'package:bizreh_paints_store/services/gifts_servise.dart';
+import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:get/get.dart';
+
+class GiftsController extends GetxController {
+  final GiftsServise _giftsServise = GiftsServise();
+
+  final RxList<GiftsModel> gifts = <GiftsModel>[].obs;
+  final RxList<UserGiftsModel> myGifts = <UserGiftsModel>[].obs;
+  final RxList<AvailableGiftsModel> availableGifts =
+      <AvailableGiftsModel>[].obs;
+  final RxInt availablePoints = 0.obs;
+
+  final RxBool isLoadingGifts = false.obs;
+  final RxBool isLoadingMyGifts = false.obs;
+  final RxBool isLoadingAvailable = false.obs;
+  final RxInt redeemingGiftId = 0.obs;
+
+  final RxInt tabIndex = 0.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadAll();
+  }
+
+  Future<void> loadAll() async {
+    await Future.wait([loadAvailable(), loadMyGifts(), loadGifts()]);
+  }
+
+  Future<void> loadGifts() async {
+    isLoadingGifts.value = true;
+    try {
+      final result = await _giftsServise.getAllGifts();
+      gifts.assignAll(result);
+    } on AppException catch (e) {
+      log("gifts controller AppException get gifts : ${e.message}");
+      showMassage(e.message, false);
+    } catch (e) {
+      log("gifts controller catch get gifts : ${e.toString()}");
+      showMassage("حدث خطأ حاول مرة اخرى", false);
+    } finally {
+      isLoadingGifts.value = false;
+    }
+  }
+
+  Future<void> loadMyGifts() async {
+    isLoadingMyGifts.value = true;
+    try {
+      final result = await _giftsServise.getMyGifts();
+      myGifts.assignAll(result);
+    } on AppException catch (e) {
+      log("gifts controller AppException get my gifts : ${e.message}");
+      showMassage(e.message, false);
+    } catch (e) {
+      log("gifts controller catch get my gifts : ${e.toString()}");
+      showMassage("حدث خطأ حاول مرة اخرى", false);
+    } finally {
+      isLoadingMyGifts.value = false;
+    }
+  }
+
+  Future<void> loadAvailable() async {
+    isLoadingAvailable.value = true;
+    try {
+      final result = await _giftsServise.getAvailableGifts();
+      availablePoints.value = result.availablePoints ?? 0;
+      availableGifts.assignAll(result.gifts);
+    } on AppException catch (e) {
+      log("gifts controller AppException get available : ${e.message}");
+      showMassage(e.message, false);
+    } catch (e) {
+      log("gifts controller catch get available : ${e.toString()}");
+      showMassage("حدث خطأ حاول مرة اخرى", false);
+    } finally {
+      isLoadingAvailable.value = false;
+    }
+  }
+
+  Future<void> redeemGift(int giftId) async {
+    redeemingGiftId.value = giftId;
+    try {
+      await _giftsServise.redeemGift(giftId: giftId);
+      showMassage("تم طلب استبدال الهدية", true);
+      await Future.wait([loadAvailable(), loadMyGifts()]);
+    } on AppException catch (e) {
+      log("gifts controller AppException redeem : ${e.message}");
+      showMassage(e.message, false);
+    } catch (e) {
+      log("gifts controller catch redeem : ${e.toString()}");
+      showMassage("حدث خطأ حاول مرة اخرى", false);
+    } finally {
+      redeemingGiftId.value = 0;
+    }
+  }
+
+  void setTab(int index) {
+    tabIndex.value = index;
+  }
+}

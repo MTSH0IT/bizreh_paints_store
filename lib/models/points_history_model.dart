@@ -7,7 +7,7 @@ class PointsHistoryModel {
   DateTime? createdAt;
   int? orderId;
   int? userGiftId;
-  int? orderNumber;
+  String? orderNumber;
   String? giftTitle;
 
   PointsHistoryModel({
@@ -40,7 +40,7 @@ class PointsHistoryModel {
           : DateTime.parse(json['created_at'] as String),
       orderId: json['order_id'] as int?,
       userGiftId: json['user_gift_id'] as int?,
-      orderNumber: json['order_number'] as int?,
+      orderNumber: json['order_number'] as String?,
       giftTitle: json['gift_title'] as String?,
     );
   }

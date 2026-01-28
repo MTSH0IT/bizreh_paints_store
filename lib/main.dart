@@ -13,6 +13,7 @@ import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
 import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
 import 'package:bizreh_paints_store/controllers/points_controller.dart';
+import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,6 +28,7 @@ class AppBindings extends Bindings {
     Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
     Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
     Get.lazyPut<PointsController>(() => PointsController(), fenix: true);
+    Get.lazyPut<GiftsController>(() => GiftsController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
     Get.lazyPut<PersonalController>(() => PersonalController(), fenix: true);

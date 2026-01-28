@@ -7,7 +7,7 @@ class GiftsModel {
   int? isActive;
   DateTime? createdAt;
   int? totalRedemptions;
-  dynamic availableQuantity;
+  //dynamic availableQuantity;
   bool? isAvailable;
 
   GiftsModel({
@@ -19,13 +19,13 @@ class GiftsModel {
     this.isActive,
     this.createdAt,
     this.totalRedemptions,
-    this.availableQuantity,
+    //this.availableQuantity,
     this.isAvailable,
   });
 
   @override
   String toString() {
-    return 'GiftsModel(id: $id, points: $points, title: $title, arTitle: $arTitle, image: $image, isActive: $isActive, createdAt: $createdAt, totalRedemptions: $totalRedemptions, availableQuantity: $availableQuantity, isAvailable: $isAvailable)';
+    return 'GiftsModel(id: $id, points: $points, title: $title, arTitle: $arTitle, image: $image, isActive: $isActive, createdAt: $createdAt, totalRedemptions: $totalRedemptions, isAvailable: $isAvailable)';
   }
 
   factory GiftsModel.fromJson(Map<String, dynamic> json) => GiftsModel(
@@ -39,7 +39,7 @@ class GiftsModel {
         ? null
         : DateTime.parse(json['created_at'] as String),
     totalRedemptions: json['total_redemptions'] as int?,
-    availableQuantity: json['available_quantity'] as dynamic,
+    //availableQuantity: json['available_quantity'] as dynamic,
     isAvailable: json['is_available'] as bool?,
   );
 
@@ -52,7 +52,7 @@ class GiftsModel {
     'is_active': isActive,
     'created_at': createdAt?.toIso8601String(),
     'total_redemptions': totalRedemptions,
-    'available_quantity': availableQuantity,
+    //'available_quantity': availableQuantity,
     'is_available': isAvailable,
   };
 }

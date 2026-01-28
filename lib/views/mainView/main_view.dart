@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/views/home/home_view.dart';
 import 'package:bizreh_paints_store/views/myCart/my_cart_view.dart';
 import 'package:bizreh_paints_store/views/profile/profile_view.dart';
 import 'package:bizreh_paints_store/views/search/search.dart';
+import 'package:bizreh_paints_store/views/gifts/gifts_view.dart';
 
 class MainView extends StatelessWidget {
   const MainView({super.key});
@@ -21,6 +22,7 @@ class MainView extends StatelessWidget {
             index: controller.selectedIndex.value,
             children: [
               HomeView(),
+              GiftsView(),
               Search(),
               WishList(),
               MyCartView(),
@@ -38,6 +40,10 @@ class MainView extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Icon(Icons.home_outlined),
               label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.card_giftcard),
+              label: 'Gifts',
             ),
             BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
             BottomNavigationBarItem(

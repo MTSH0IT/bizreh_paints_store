@@ -9,10 +9,7 @@ import 'my_gift_item.dart';
 class MyGiftsTab extends StatelessWidget {
   final GiftsController ctrl;
 
-  const MyGiftsTab({
-    super.key,
-    required this.ctrl,
-  });
+  const MyGiftsTab({super.key, required this.ctrl});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +19,16 @@ class MyGiftsTab extends StatelessWidget {
       }
 
       if (ctrl.myGifts.isEmpty) {
-        return const GiftsEmptyState(
-          title: 'No gifts yet',
-          subtitle: 'Your redeemed gifts will appear here.',
+        return Center(
+          child: GiftsEmptyState(
+            title: 'No gifts yet',
+            subtitle: 'Your redeemed gifts will appear here.',
+          ),
         );
       }
 
       return ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         itemCount: ctrl.myGifts.length,
         itemBuilder: (context, index) {
           final item = ctrl.myGifts[index];

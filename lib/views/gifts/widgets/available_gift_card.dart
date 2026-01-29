@@ -21,9 +21,6 @@ class AvailableGiftCard extends StatelessWidget {
     final points = gift.points ?? 0;
     final image = gift.image ?? '';
 
-    final canRedeem =
-        (gift.userCanRedeem ?? false) && (gift.isAvailable ?? false);
-
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(12),
@@ -82,26 +79,26 @@ class AvailableGiftCard extends StatelessWidget {
                             horizontal: 10,
                             vertical: 6,
                           ),
-                          decoration: BoxDecoration(
-                            color: canRedeem
-                                ? const Color(
-                                    0xFF16A34A,
-                                  ).withValues(alpha: 0.12)
-                                : const Color(
-                                    0xFFDC2626,
-                                  ).withValues(alpha: 0.10),
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                          child: Text(
-                            canRedeem ? 'Redeemable' : 'Not redeemable',
-                            style: TextStyle(
-                              color: canRedeem
-                                  ? const Color(0xFF16A34A)
-                                  : const Color(0xFFDC2626),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 12,
-                            ),
-                          ),
+                          // decoration: BoxDecoration(
+                          //   color: canRedeem
+                          //       ? const Color(
+                          //           0xFF16A34A,
+                          //         ).withValues(alpha: 0.12)
+                          //       : const Color(
+                          //           0xFFDC2626,
+                          //         ).withValues(alpha: 0.10),
+                          //   borderRadius: BorderRadius.circular(999),
+                          // ),
+                          // child: Text(
+                          //   canRedeem ? 'Redeemable' : 'Not redeemable',
+                          //   style: TextStyle(
+                          //     color: canRedeem
+                          //         ? const Color(0xFF16A34A)
+                          //         : const Color(0xFFDC2626),
+                          //     fontWeight: FontWeight.w800,
+                          //     fontSize: 12,
+                          //   ),
+                          // ),
                         ),
                       ],
                     ),
@@ -115,7 +112,7 @@ class AvailableGiftCard extends StatelessWidget {
             width: double.infinity,
             height: 40,
             child: ElevatedButton(
-              onPressed: (canRedeem && !isRedeeming) ? onRedeem : null,
+              onPressed: isRedeeming ? null : onRedeem,
               style: ElevatedButton.styleFrom(
                 backgroundColor: primaryColor,
                 foregroundColor: Colors.white,

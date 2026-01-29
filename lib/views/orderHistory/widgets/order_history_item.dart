@@ -80,7 +80,7 @@ class OrderHistoryItem extends StatelessWidget {
                 width: 10,
                 height: 10,
                 decoration: BoxDecoration(
-                  color: getStatusColor(statusLabel),
+                  color: getOrderStatusColor(statusLabel),
                   shape: BoxShape.circle,
                 ),
               ),
@@ -89,7 +89,7 @@ class OrderHistoryItem extends StatelessWidget {
                 child: Text(
                   statusLabel,
                   style: TextStyle(
-                    color: getStatusColor(statusLabel),
+                    color: getOrderStatusColor(statusLabel),
                     fontWeight: FontWeight.w600,
                   ),
                 ),

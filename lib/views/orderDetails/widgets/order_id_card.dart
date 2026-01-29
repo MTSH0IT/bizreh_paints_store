@@ -39,7 +39,7 @@ class OrderIdCard extends StatelessWidget {
                       width: 10,
                       height: 10,
                       decoration: BoxDecoration(
-                        color: getStatusColor(statusLabel),
+                        color: getOrderStatusColor(statusLabel),
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -48,7 +48,7 @@ class OrderIdCard extends StatelessWidget {
                     Text(
                       statusLabel,
                       style: TextStyle(
-                        color: getStatusColor(statusLabel),
+                        color: getOrderStatusColor(statusLabel),
                         fontWeight: FontWeight.w600,
                       ),
                     ),

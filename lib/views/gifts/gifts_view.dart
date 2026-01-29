@@ -7,6 +7,7 @@ import 'widgets/available_points_card.dart';
 import 'widgets/gifts_tab_switch.dart';
 import 'widgets/available_gifts_tab.dart';
 import 'widgets/my_gifts_tab.dart';
+import 'widgets/all_gifts_section.dart';
 
 class GiftsView extends StatelessWidget {
   const GiftsView({super.key});
@@ -28,15 +29,15 @@ class GiftsView extends StatelessWidget {
                 onChanged: ctrl.setTab,
               ),
             ),
-            const SizedBox(height: 12),
+
+            AllGiftsSection(ctrl: ctrl),
+
             Expanded(
               child: Obx(() {
                 final tabIndex = ctrl.tabIndex.value;
-
                 if (tabIndex == 0) {
                   return AvailableGiftsTab(ctrl: ctrl);
                 }
-
                 return MyGiftsTab(ctrl: ctrl);
               }),
             ),

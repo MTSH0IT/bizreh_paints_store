@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
+import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +17,7 @@ class MyGiftItem extends StatelessWidget {
     final image = item.giftImage ?? '';
     final status = (item.status ?? '').trim();
 
-    final statusColor = status == 'delivered'
-        ? const Color(0xFF16A34A)
-        : status == 'pending'
-        ? const Color(0xFF2563EB)
-        : const Color(0xFFDC2626);
+    final statusColor = getGiftStatusColor(status);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -56,7 +53,7 @@ class MyGiftItem extends StatelessWidget {
                     Expanded(
                       child: Text(
                         title,
-                        maxLines: 2,
+                        maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 16,
@@ -72,7 +69,7 @@ class MyGiftItem extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: statusColor.withValues(alpha: 0.12),
-                        borderRadius: BorderRadius.circular(999),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         status,

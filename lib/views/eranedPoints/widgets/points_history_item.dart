@@ -18,7 +18,7 @@ class PointsHistoryItem extends StatelessWidget {
     final color = isPositive
         ? const Color(0xFF16A34A)
         : const Color(0xFFDC2626);
-    final sign = isPositive ? '+' : '-';
+    //final sign = isPositive ? '+' : '-';
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -80,7 +80,7 @@ class PointsHistoryItem extends StatelessWidget {
             ),
           ),
           Text(
-            '$sign $points',
+            '$points',
             style: TextStyle(
               color: color,
               fontWeight: FontWeight.w700,

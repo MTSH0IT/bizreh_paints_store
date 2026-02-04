@@ -7,6 +7,7 @@ class LabeledTextField extends StatelessWidget {
   final TextInputType keyboardType;
   final String? errorText;
   final bool obscureText;
+  final int? maxLines;
 
   const LabeledTextField({
     super.key,
@@ -16,6 +17,7 @@ class LabeledTextField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.errorText,
     this.obscureText = false,
+    this.maxLines = 1,
   });
 
   @override
@@ -34,6 +36,7 @@ class LabeledTextField extends StatelessWidget {
             controller: controller,
             keyboardType: keyboardType,
             obscureText: obscureText,
+            maxLines: maxLines,
             decoration: InputDecoration(
               hintText: hint,
               filled: true,
@@ -42,27 +45,25 @@ class LabeledTextField extends StatelessWidget {
                 horizontal: 16,
                 vertical: 16,
               ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
+              border: _buildOutlineInputBorder(),
+              enabledBorder: _buildOutlineInputBorder(
+                color: Colors.grey.withValues(alpha: 0.2),
               ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide(
-                  color: Colors.grey.withValues(alpha: 0.2),
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.blue),
-              ),
-              errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Colors.red),
-              ),
+              focusedBorder: _buildOutlineInputBorder(color: Colors.blue),
+              errorBorder: _buildOutlineInputBorder(color: Colors.red),
               errorText: errorText,
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  OutlineInputBorder _buildOutlineInputBorder({Color? color}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+      borderSide: BorderSide(
+        color: color ?? Colors.grey.withValues(alpha: 0.2),
       ),
     );
   }

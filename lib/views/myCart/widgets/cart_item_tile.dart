@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
@@ -15,12 +14,14 @@ class CartItemTile extends StatefulWidget {
     required this.item,
     required this.onIncrement,
     required this.onDecrement,
+    this.onDelete,
     this.onSetQuantity,
   });
 
   final Item item;
   final VoidCallback onIncrement;
   final VoidCallback onDecrement;
+  final VoidCallback? onDelete;
   final Function(int)? onSetQuantity;
 
   @override
@@ -68,21 +69,25 @@ class _CartItemTileState extends State<CartItemTile> {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.07),
-            blurRadius: 8,
+            color: Colors.black.withValues(alpha: 0.06),
+            blurRadius: 10,
             offset: const Offset(0, 2),
           ),
         ],
       ),
       padding: const EdgeInsets.all(12),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 80,
-            height: 80,
+            width: 70,
+            height: 70,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: ImageNetwork(image: _image),
+              child: DecoratedBox(
+                decoration: BoxDecoration(color: Colors.grey.shade100),
+                child: ImageNetwork(image: _image),
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -93,115 +98,160 @@ class _CartItemTileState extends State<CartItemTile> {
                 Text(
                   _title,
                   style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const SizedBox(height: 4),
-                if (_optionName != null)
-                  Text(
-                    _optionName!,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                if (_packagingTitle != null)
-                  Text(
-                    _packagingTitle!,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                if (_categoryTitle != null)
-                  Text(
-                    _categoryTitle!,
-                    style: TextStyle(fontSize: 13, color: Colors.grey.shade600),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
                 const SizedBox(height: 2),
-
+                if ((_categoryTitle?.trim().isNotEmpty ?? false))
+                  Text(_categoryTitle!),
+                const SizedBox(height: 2),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade50,
+                    borderRadius: BorderRadius.circular(9),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade700,
+                      ),
+                      child: Wrap(
+                        spacing: 10,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if ((_optionName?.trim().isNotEmpty ?? false))
+                            Text(_optionName!),
+                          if ((_packagingTitle?.trim().isNotEmpty ?? false))
+                            Text(_packagingTitle!),
+                          if (_hasColor)
+                            Padding(
+                              padding: const EdgeInsets.all(1),
+                              child: ColorDot(
+                                color: _colorDegree,
+                                selected: false,
+                                width: 20,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 2),
                 Text(
-                  'unitPrice: ${formatPriceWithSymbol(_unitPrice, symbol: '\$')}',
-                  style: const TextStyle(color: Colors.black87),
+                  formatPriceWithSymbol(_unitPrice, symbol: '\$'),
+                  style: const TextStyle(
+                    color: Color(0xFF2F6BFF),
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
               ],
             ),
           ),
-          Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade100,
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: Row(
-                  children: [
-                    _circleIcon(
-                      icon: Icons.remove,
-                      onTap: widget.onDecrement,
-                      repeatWhile: () => _quantity > 1,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 14),
-                      child: GestureDetector(
-                        onTap: _showQuantityDialog,
-                        child: Text(
-                          _quantity.toString(),
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w400,
-                          ),
-                        ),
+          const SizedBox(width: 10),
+          SizedBox(
+            height: 100,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                if (widget.onDelete != null)
+                  InkWell(
+                    customBorder: const CircleBorder(),
+                    onTap: () {
+                      HapticFeedback.lightImpact();
+                      widget.onDelete!();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Icon(
+                        Icons.delete_outline,
+                        size: 18,
+                        color: Colors.black54,
                       ),
                     ),
-                    _circleIcon(
-                      icon: Icons.add,
-                      onTap: widget.onIncrement,
-                      filled: true,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              if (_hasColor) ColorDot(color: _colorDegree, selected: false),
-            ],
+                  )
+                else
+                  const SizedBox(height: 30),
+                _quantityPill(),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _circleIcon({
+  Widget _quantityPill() {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFFF1F3F7),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      padding: const EdgeInsets.all(4),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _pillIcon(
+            icon: Icons.remove,
+            onTap: widget.onDecrement,
+            filled: false,
+            enabled: _quantity > 1,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: GestureDetector(
+              onTap: _showQuantityDialog,
+              child: Text(
+                _quantity.toString(),
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ),
+          _pillIcon(icon: Icons.add, onTap: widget.onIncrement, filled: true),
+        ],
+      ),
+    );
+  }
+
+  Widget _pillIcon({
     required IconData icon,
     required VoidCallback onTap,
     bool filled = false,
-    bool Function()? repeatWhile,
+    bool enabled = true,
   }) {
+    final bgColor = filled ? const Color(0xFF2F6BFF) : Colors.white;
+    final iconColor = filled ? Colors.white : Colors.black87;
     return InkWell(
       customBorder: const CircleBorder(),
-      splashColor: primaryColor.withValues(alpha: 0.15),
-      onTap: () {
-        HapticFeedback.lightImpact();
-        onTap();
-      },
-      child: SizedBox(
-        width: 28,
-        height: 28,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            color: filled ? primaryColor : Colors.white,
-            shape: BoxShape.circle,
-            border: Border.all(color: Colors.black12),
-          ),
-          child: Icon(
-            icon,
-            size: 16,
-            color: filled ? Colors.white : Colors.black87,
+      onTap: enabled
+          ? () {
+              HapticFeedback.lightImpact();
+              onTap();
+            }
+          : null,
+      child: Opacity(
+        opacity: enabled ? 1 : 0.35,
+        child: SizedBox(
+          width: 28,
+          height: 28,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: bgColor,
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.black12),
+            ),
+            child: Icon(icon, size: 16, color: iconColor),
           ),
         ),
       ),

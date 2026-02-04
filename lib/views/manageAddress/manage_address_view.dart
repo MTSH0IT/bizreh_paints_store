@@ -1,12 +1,12 @@
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/models/cities_model.dart';
-import 'widgets/labeled_text_field.dart';
 import 'widgets/city_dropdown.dart';
 import 'widgets/map_card.dart';
 import 'widgets/full_screen_map.dart';
@@ -89,6 +89,7 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                 ),
                 children: [
                   LabeledTextField(
+                    hint: 'Enter nickname',
                     label: 'Nickname',
                     controller: addressController.nicknameCtrl,
                   ),
@@ -109,10 +110,12 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                     },
                   ),
                   LabeledTextField(
+                    hint: 'Enter address line',
                     label: 'Address Line',
                     controller: addressController.addressLineCtrl,
                   ),
                   LabeledTextField(
+                    hint: 'Enter notes',
                     label: 'Notes',
                     controller: addressController.noteCtrl,
                     maxLines: 3,

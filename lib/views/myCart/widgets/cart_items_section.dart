@@ -47,25 +47,26 @@ class CartItemsSection extends StatelessWidget {
                         cartItemId: cartItemId,
                         quantity: 1,
                       );
-                    } else {
-                      Get.defaultDialog(
-                        title: 'Remove Item',
-                        middleText:
-                            'Are you sure you want to remove this item from the cart?',
-                        confirm: MainButton(
-                          title: 'Remove',
-                          onPressed: () {
-                            final cartItemId = item.id ?? 0;
-                            cartController.deleteCartItem(cartItemId);
-                            Get.back();
-                          },
-                        ),
-                        cancel: MainButton(
-                          title: 'Cancel',
-                          onPressed: () => Get.back(),
-                        ),
-                      );
                     }
+                  },
+                  onDelete: () {
+                    Get.defaultDialog(
+                      title: 'Remove Item',
+                      middleText:
+                          'Are you sure you want to remove this item from the cart?',
+                      confirm: MainButton(
+                        title: 'Remove',
+                        onPressed: () {
+                          final cartItemId = item.id ?? 0;
+                          cartController.deleteCartItem(cartItemId);
+                          Get.back();
+                        },
+                      ),
+                      cancel: MainButton(
+                        title: 'Cancel',
+                        onPressed: () => Get.back(),
+                      ),
+                    );
                   },
                   onSetQuantity: (newQty) {
                     final cartItemId = item.id ?? 0;

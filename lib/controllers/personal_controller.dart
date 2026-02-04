@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/services/user_services.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
 import 'package:bizreh_paints_store/utils/func/get_user.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:bizreh_paints_store/utils/func/input_validation.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 import 'package:flutter/material.dart';
@@ -83,44 +84,21 @@ class PersonalController extends GetxController {
   }
 
   bool _validateEmail() {
-    if (email.isEmpty) {
-      emailError.value = 'Email is required';
-      return false;
-    }
-
-    if (!GetUtils.isEmail(email)) {
-      emailError.value = 'Enter a valid email';
-      return false;
-    }
-    emailError.value = null;
-    return true;
+    final error = validateEmailAddress(email);
+    emailError.value = error;
+    return error == null;
   }
 
   bool _validatePhone() {
-    if (phone.isEmpty) {
-      phoneError.value = 'Phone is required';
-      return false;
-    }
-    final phoneRegex = RegExp(r'^\+?[0-9]{7,15}$');
-    if (!phoneRegex.hasMatch(phone)) {
-      phoneError.value = 'Enter a valid phone number';
-      return false;
-    }
-    phoneError.value = null;
-    return true;
+    final error = validatePhoneNumber(phone);
+    phoneError.value = error;
+    return error == null;
   }
 
   bool _validatePassword(String password, RxnString errorVariable) {
-    if (password.isEmpty) {
-      errorVariable.value = 'Password is required';
-      return false;
-    }
-    if (password.length < 6) {
-      errorVariable.value = "Password must be at least 6 characters long";
-      return false;
-    }
-    errorVariable.value = null;
-    return true;
+    final error = validatePasswordValue(password, minLength: 6);
+    errorVariable.value = error;
+    return error == null;
   }
 
   bool validateAll() {
@@ -199,10 +177,10 @@ class PersonalController extends GetxController {
       showMassage("تم حذف حساب المستخدم", true);
       signOut();
     } on AppException catch (e) {
-      log("personal controller AppException sign up : ${e.message}");
+      log("personal controller AppException Delete Account : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
-      log("personal controller catch sign up : ${e.toString()}");
+      log("personal controller catch Delete Account : ${e.toString()}");
       showMassage("حدث خطأ  حاول مرة اخرى", false);
     } finally {
       isLoding.value = false;

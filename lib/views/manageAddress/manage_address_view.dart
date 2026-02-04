@@ -76,15 +76,7 @@ class _ManageAddressViewState extends State<ManageAddressView> {
           final citiesOptions = addressController.cities
               .map((e) => e.title ?? '')
               .toList();
-          final selectedCityName = () {
-            final id = addressController.selectedCityId.value;
-            if (id == null) return null;
-            final c = addressController.cities.firstWhere(
-              (e) => e.id == id,
-              orElse: () => CitiesModel(),
-            );
-            return c.title ?? "";
-          }();
+          final selectedCityName = addressController.selectedCityName.value;
 
           final center = _currentCenter();
 
@@ -110,9 +102,10 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                         (c) => c.title == v,
                         orElse: () => CitiesModel(),
                       );
-                      if (matched.id != null) {
-                        addressController.selectedCityId.value = matched.id;
-                      }
+                      addressController.setSelectedCity(
+                        matched.id,
+                        matched.title,
+                      );
                     },
                   ),
                   LabeledTextField(

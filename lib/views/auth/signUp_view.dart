@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/utils/func/input_validation.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -54,10 +55,7 @@ class SignUpView extends StatelessWidget {
                         hint: 'Phone Number',
                         keyboardType: TextInputType.phone,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          }
-                          return null;
+                          return validatePhoneNumber(value);
                         },
                       ),
                       AuthTextField(
@@ -65,13 +63,11 @@ class SignUpView extends StatelessWidget {
                         hint: 'Email',
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          }
-                          if (!GetUtils.isEmail(value)) {
-                            return 'Please enter a valid email';
-                          }
-                          return null;
+                          return validateEmailAddress(
+                            value,
+                            requiredMessage: 'Please enter your email',
+                            invalidMessage: 'Please enter a valid email',
+                          );
                         },
                       ),
                       AuthTextField(
@@ -79,13 +75,13 @@ class SignUpView extends StatelessWidget {
                         hint: 'Password',
                         obscure: true,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
-                          }
-                          return null;
+                          return validatePasswordValue(
+                            value,
+                            minLength: 6,
+                            requiredMessage: 'Please enter your password',
+                            tooShortMessage:
+                                'Password must be at least 6 characters',
+                          );
                         },
                       ),
                       AuthTextField(
@@ -93,13 +89,12 @@ class SignUpView extends StatelessWidget {
                         hint: 'Confirm Password',
                         obscure: true,
                         validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
-                          }
-                          if (value != auth.passwordCtrl.text) {
-                            return 'Passwords do not match';
-                          }
-                          return null;
+                          return validateConfirmPassword(
+                            value,
+                            auth.passwordCtrl.text,
+                            requiredMessage: 'Please confirm your password',
+                            mismatchMessage: 'Passwords do not match',
+                          );
                         },
                       ),
 

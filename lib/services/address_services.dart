@@ -114,6 +114,7 @@ class AddressServices {
 
   Future<void> updateAddress({
     required int id,
+    required String nickName,
     required int cityId,
     required String addressLine,
     required String note,
@@ -124,6 +125,7 @@ class AddressServices {
       final response = await _dioClient.put(
         ApiEndpoint.updateAddress(id),
         data: {
+          'nickname': nickName,
           'city_id': cityId,
           'address_line': addressLine,
           'note': note,

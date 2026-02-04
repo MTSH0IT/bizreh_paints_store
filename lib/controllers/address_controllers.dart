@@ -27,6 +27,7 @@ class AddressController extends GetxController {
   final TextEditingController noteCtrl = TextEditingController();
 
   final RxnInt selectedCityId = RxnInt();
+  final RxnString selectedCityName = RxnString();
 
   final RxnDouble latitude = RxnDouble();
   final RxnDouble longitude = RxnDouble();
@@ -129,6 +130,7 @@ class AddressController extends GetxController {
     try {
       await _addressServices.updateAddress(
         id: id,
+        nickName: nickname,
         cityId: cityId!,
         addressLine: addressLine,
         note: note,
@@ -227,8 +229,14 @@ class AddressController extends GetxController {
     return true;
   }
 
+  void setSelectedCity(int? cityId, String? cityName) {
+    selectedCityId.value = cityId;
+    selectedCityName.value = cityName;
+  }
+
   void clearForm() {
     selectedCityId.value = null;
+    selectedCityName.value = null;
     nicknameCtrl.clear();
     addressLineCtrl.clear();
     noteCtrl.clear();
@@ -239,6 +247,9 @@ class AddressController extends GetxController {
 
   void fillFormFrom(AddressModel model) {
     selectedCityId.value = model.cityId;
+    // Find and set city name
+    final city = cities.firstWhereOrNull((c) => c.id == model.cityId);
+    selectedCityName.value = city?.title;
     nicknameCtrl.text = model.nickname ?? '';
     addressLineCtrl.text = model.addressLine ?? '';
     noteCtrl.text = model.note ?? '';

@@ -42,6 +42,9 @@ class LabeledTextField extends StatelessWidget {
                 horizontal: 16,
                 vertical: 16,
               ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: BorderSide(
@@ -51,6 +54,10 @@ class LabeledTextField extends StatelessWidget {
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),
                 borderSide: const BorderSide(color: Colors.blue),
+              ),
+              errorBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Colors.red),
               ),
               errorText: errorText,
             ),

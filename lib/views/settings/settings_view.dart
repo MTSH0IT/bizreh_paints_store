@@ -32,10 +32,10 @@ class SettingsView extends StatelessWidget {
                       Get.to(() => ChangePasswordView());
                     },
                   ),
-                  const SettingsTile(title: 'Contact Support'),
-                  const SettingsTile(title: 'Submit a Complaint'),
-                  const SettingsTile(title: 'Privacy Policy'),
-                  const SettingsTile(title: 'Terms of Service'),
+                  // const SettingsTile(title: 'Contact Support'),
+                  // const SettingsTile(title: 'Submit a Complaint'),
+                  // const SettingsTile(title: 'Privacy Policy'),
+                  // const SettingsTile(title: 'Terms of Service'),
                   SettingsTile(
                     title: 'Delete Account',
                     destructive: true,

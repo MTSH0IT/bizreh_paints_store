@@ -5,6 +5,9 @@ class ApiEndpoint {
   // Auth
   static const String login = "/user/profile/login";
   static const String signup = "/user/profile/signup";
+  static const String forgetPassword = "/user/profile/forget-password";
+  static const String resendVerification = "/user/profile/resend-verification";
+  static const String verifyAccount = "/user/profile/verify-account";
   //user
   static const String getProfile = "/user/profile/profile";
   static const String updateProfile = "/user/profile/profile";

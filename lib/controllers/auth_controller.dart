@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
+import 'package:bizreh_paints_store/views/auth/verification_view.dart';
 import 'package:bizreh_paints_store/views/mainView/main_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,6 +28,7 @@ class AuthController extends GetxController {
   final TextEditingController phoneCtrl = TextEditingController();
   final TextEditingController loginEmailCtrl = TextEditingController();
   final TextEditingController loginPasswordCtrl = TextEditingController();
+  final TextEditingController forgotPasswordEmailCtrl = TextEditingController();
 
   // Reactive state
   final RxBool isLoading = false.obs;
@@ -40,6 +43,7 @@ class AuthController extends GetxController {
   String get phone => phoneCtrl.text.trim();
   String get loginEmail => loginEmailCtrl.text.trim();
   String get loginPassword => loginPasswordCtrl.text.trim();
+  String get forgotPasswordEmail => forgotPasswordEmailCtrl.text.trim();
 
   @override
   void onClose() {
@@ -51,6 +55,7 @@ class AuthController extends GetxController {
     phoneCtrl.dispose();
     loginEmailCtrl.dispose();
     loginPasswordCtrl.dispose();
+    forgotPasswordEmailCtrl.dispose();
     super.onClose();
   }
 
@@ -63,6 +68,7 @@ class AuthController extends GetxController {
     phoneCtrl.dispose();
     loginEmailCtrl.dispose();
     loginPasswordCtrl.dispose();
+    forgotPasswordEmailCtrl.dispose();
     log("message👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌");
   }
 
@@ -75,6 +81,7 @@ class AuthController extends GetxController {
     phoneCtrl.clear();
     loginEmailCtrl.clear();
     loginPasswordCtrl.clear();
+    forgotPasswordEmailCtrl.clear();
   }
 
   Future<void> signIn() async {
@@ -127,15 +134,14 @@ class AuthController extends GetxController {
   Future<void> signUp() async {
     isLoading.value = true;
     try {
-      final AuthResponse res = await _authService.signup(
+      await _authService.signup(
         email: email,
         password: password,
         firstName: firstName,
         lastName: lastName,
         phone: phone,
       );
-      await _persistAuth(res);
-      Get.back(); // or navigate to home
+      Get.to(() => VerificationView());
     } on AppException catch (e) {
       generalError.value = e.message;
       log("auth controller AppException sign up : ${generalError.value}");
@@ -144,6 +150,70 @@ class AuthController extends GetxController {
       generalError.value = e.toString();
       log("auth controller catch sign up : ${generalError.value}");
       showMassage("حدث خطأ  حاول مرة اخرى", false);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> forgetPassword() async {
+    isLoading.value = true;
+    try {
+      final msg = await _authService.forgetPassword(email: forgotPasswordEmail);
+      showMassage(msg, true);
+    } on AppException catch (e) {
+      generalError.value = e.message;
+      log(
+        "auth controller AppException forget password : ${generalError.value}",
+      );
+      showMassage(e.message, false);
+    } catch (e) {
+      generalError.value = e.toString();
+      log("auth controller catch forget password : ${generalError.value}");
+      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> resendVerification() async {
+    isLoading.value = true;
+    try {
+      final msg = await _authService.resendVerification(email: email);
+      showMassage(msg, true);
+    } on AppException catch (e) {
+      generalError.value = e.message;
+      log(
+        "auth controller AppException resend verification : ${generalError.value}",
+      );
+      showMassage(e.message, false);
+    } catch (e) {
+      generalError.value = e.toString();
+      log("auth controller catch resend verification : ${generalError.value}");
+      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> verifyAccount({required String verificationCode}) async {
+    isLoading.value = true;
+    try {
+      final msg = await _authService.verifyAccount(
+        email: email,
+        verificationCode: verificationCode.trim(),
+      );
+      showMassage(msg, true);
+      Get.offAll(() => SignInView());
+    } on AppException catch (e) {
+      generalError.value = e.message;
+      log(
+        "auth controller AppException verify account : ${generalError.value}",
+      );
+      showMassage(e.message, false);
+    } catch (e) {
+      generalError.value = e.toString();
+      log("auth controller catch verify account : ${generalError.value}");
+      showMassage("حدث خطأ ما حاول مرة اخرى", false);
     } finally {
       isLoading.value = false;
     }

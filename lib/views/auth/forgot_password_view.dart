@@ -1,24 +1,37 @@
-import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
-import 'package:bizreh_paints_store/views/auth/signUp_view.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_field.dart';
-import 'package:bizreh_paints_store/views/auth/widgets/auth_text_link.dart';
-import 'package:bizreh_paints_store/views/auth/widgets/secondary_button.dart';
-import 'package:bizreh_paints_store/views/auth/forgot_password_view.dart';
 
-class SignInView extends StatelessWidget {
-  SignInView({super.key});
+class ForgotPasswordView extends StatelessWidget {
+  ForgotPasswordView({super.key});
 
-  final formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     final AuthController auth = Get.find<AuthController>();
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F9FC),
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFF7F9FC),
+        elevation: 0,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_rounded,
+            color: Colors.black87,
+          ),
+          onPressed: () => Get.back(),
+        ),
+        centerTitle: true,
+        title: const Text(
+          'Forgot Password',
+          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+        ),
+      ),
       body: Obx(
         () => Stack(
           fit: StackFit.expand,
@@ -26,16 +39,17 @@ class SignInView extends StatelessWidget {
             SafeArea(
               child: SingleChildScrollView(
                 child: Form(
-                  key: formKey,
+                  key: _formKey,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const AuthHeader(
-                        title: 'Welcome back',
-                        subtitle: 'Please enter your details to sign in.',
+                        title: 'Reset your password',
+                        subtitle:
+                            'Enter your email address and we will send you instructions.',
                       ),
                       AuthTextField(
-                        controller: auth.loginEmailCtrl,
+                        controller: auth.forgotPasswordEmailCtrl,
                         hint: 'Email address',
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
@@ -48,48 +62,23 @@ class SignInView extends StatelessWidget {
                           return null;
                         },
                       ),
-                      AuthTextField(
-                        controller: auth.loginPasswordCtrl,
-                        hint: 'Password',
-                        obscure: true,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
-                          }
-                          if (value.length < 6) {
-                            return 'Password must be at least 6 characters long';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 4),
-                      AuthTextLink(
-                        text: 'Forgot password?',
-                        onTap: () {
-                          Get.to(() => ForgotPasswordView());
-                        },
-                      ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 12),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: MainButton(
                           title: auth.isLoading.value
                               ? 'الرجاء الانتظار...'
-                              : 'Log In',
+                              : 'Send',
                           onPressed: auth.isLoading.value
                               ? null
-                              : () {
-                                  if (formKey.currentState!.validate()) {
-                                    auth.signIn();
+                              : () async {
+                                  if (!(_formKey.currentState?.validate() ??
+                                      false)) {
+                                    return;
                                   }
+                                  await auth.forgetPassword();
                                 },
                         ),
-                      ),
-                      SecondaryButton(
-                        title: 'New User Sign Up',
-                        onPressed: () {
-                          Get.to(() => SignUpView());
-                        },
                       ),
                       const SizedBox(height: 24),
                     ],

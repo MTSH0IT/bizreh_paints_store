@@ -63,8 +63,15 @@ class AddressController extends GetxController {
     isLoading.value = true;
     try {
       final res = await _addressServices.getAddresses();
+      // final filtered = res
+      //     .where(
+      //       (a) =>
+      //           (a.nickname?.trim().isNotEmpty ?? false) &&
+      //           (a.addressLine?.trim().isNotEmpty ?? false) &&
+      //           (a.cityId != null),
+      //     )
+      //     .toList();
       addresses.assignAll(res);
-      isLoading.value = false;
     } catch (e) {
       log("address controller loadAddresses error: ${e.toString()}");
       showMassage("فشل في جلب العناوين", false);

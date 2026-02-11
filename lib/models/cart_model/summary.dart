@@ -1,10 +1,10 @@
 class Summary {
-  int? subtotal;
-  int? discountAmount;
-  int? deliveryFee;
-  int? totalAmount;
-  int? totalItems;
-  int? itemsCount;
+  num? subtotal;
+  num? discountAmount;
+  num? deliveryFee;
+  num? totalAmount;
+  num? totalItems;
+  num? itemsCount;
 
   Summary({
     this.subtotal,
@@ -21,12 +21,12 @@ class Summary {
   }
 
   factory Summary.fromJson(Map<String, dynamic> json) => Summary(
-    subtotal: json['subtotal'] as int?,
-    discountAmount: json['discount_amount'] as int?,
-    deliveryFee: json['delivery_fee'] as int?,
-    totalAmount: json['total_amount'] as int?,
-    totalItems: json['total_items'] as int?,
-    itemsCount: json['items_count'] as int?,
+    subtotal: json['subtotal'] as num?,
+    discountAmount: json['discount_amount'] as num?,
+    deliveryFee: json['delivery_fee'] as num?,
+    totalAmount: json['total_amount'] as num?,
+    totalItems: json['total_items'] as num?,
+    itemsCount: json['items_count'] as num?,
   );
 
   Map<String, dynamic> toJson() => {

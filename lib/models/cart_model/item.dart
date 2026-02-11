@@ -10,15 +10,15 @@ class Item {
   int? optionPackagingId;
   int? quantityPerUnit;
   String? productSku;
-  int? unitPrice;
-  int? totalPrice;
+  num? unitPrice;
+  num? totalPrice;
   DateTime? createdAt;
   Product? product;
   Option? option;
   Packaging? packaging;
   Category? category;
   Brand? brand;
-  int? subtotal;
+  num? subtotal;
   dynamic availableStock;
 
   Item({
@@ -50,8 +50,8 @@ class Item {
     optionPackagingId: json['option_packaging_id'] as int?,
     quantityPerUnit: json['quantity_per_unit'] as int?,
     productSku: json['product_sku'] as String?,
-    unitPrice: json['unit_price'] as int?,
-    totalPrice: json['total_price'] as int?,
+    unitPrice: json['unit_price'] as num?,
+    totalPrice: json['total_price'] as num?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -70,7 +70,7 @@ class Item {
     brand: json['brand'] == null
         ? null
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
-    subtotal: json['subtotal'] as int?,
+    subtotal: json['subtotal'] as num?,
     availableStock: json['available_stock'] as dynamic,
   );
 

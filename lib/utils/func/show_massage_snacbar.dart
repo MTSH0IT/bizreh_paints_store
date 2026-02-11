@@ -35,7 +35,9 @@ void showMassage(String message, bool success) {
       borderRadius: 12,
       margin: const EdgeInsets.all(12),
       isDismissible: true,
-      duration: const Duration(seconds: 3),
+      duration: success
+          ? const Duration(seconds: 1)
+          : const Duration(seconds: 3),
       icon: Icon(
         success ? Icons.check_circle : Icons.error_outline,
         color: Colors.white,

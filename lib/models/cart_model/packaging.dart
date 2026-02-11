@@ -4,8 +4,8 @@ class Packaging {
   int? id;
   String? title;
   String? arTitle;
-  int? countPerUnit;
-  int? pricePerUnit;
+  num? countPerUnit;
+  num? pricePerUnit;
   int? stockQuantity;
   Color? color;
 
@@ -28,8 +28,8 @@ class Packaging {
     id: json['id'] as int?,
     title: json['title'] as String?,
     arTitle: json['ar_title'] as String?,
-    countPerUnit: json['count_per_unit'] as int?,
-    pricePerUnit: json['price_per_unit'] as int?,
+    countPerUnit: json['count_per_unit'] as num?,
+    pricePerUnit: json['price_per_unit'] as num?,
     stockQuantity: json['stock_quantity'] as int?,
     color: json['color'] == null
         ? null

@@ -4,7 +4,7 @@ import 'packaging.dart';
 class OptionPackaging {
   int? id;
   int? packagingId;
-  int? pricePerUnit;
+  num? pricePerUnit;
   int? stockQuantity;
   Color? color;
   Packaging? packaging;
@@ -27,7 +27,7 @@ class OptionPackaging {
     return OptionPackaging(
       id: json['id'] as int?,
       packagingId: json['packaging_id'] as int?,
-      pricePerUnit: json['price_per_unit'] as int?,
+      pricePerUnit: json['price_per_unit'] as num?,
       stockQuantity: json['stock_quantity'] as int?,
       color: json['color'] == null
           ? null

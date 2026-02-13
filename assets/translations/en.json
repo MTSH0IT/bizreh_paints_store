@@ -1,0 +1,217 @@
+{
+  "app_name": "Bizreh Paints",
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "change_password": "Change Password",
+    "delete_account": "Delete Account",
+    "logout": "Logout",
+    "choose_language": "Choose language",
+    "arabic": "Arabic",
+    "english": "English",
+    "logout_dialog": {
+      "title": "Logout",
+      "message": "Are you sure you want to logout?",
+      "confirm": "Logout",
+      "cancel": "Cancel"
+    }
+  },
+  "wishlist": {
+    "title": "Wishlist",
+    "clear_all": "Clear all",
+    "empty_snackbar": "No products in wishlist",
+    "empty": "No items in wishlist",
+    "move_to_cart": "Move to Cart",
+    "remove": "Remove"
+  },
+  "notifications": {
+    "title": "Notifications",
+    "title_with_count": "Notifications ({0})",
+    "empty": "No notifications right now"
+  },
+  "saved_address": {
+    "title": "Saved Addresses",
+    "empty": "No addresses found",
+    "delete": {
+      "title": "Delete Address",
+      "message": "Are you sure you want to delete {0}?"
+    }
+  },
+  "change_password": {
+    "subtitle": "Please enter your current and new password",
+    "current_password_label": "Current Password",
+    "current_password_hint": "Enter current password",
+    "new_password_label": "New Password",
+    "new_password_hint": "Enter new password",
+    "password_rule": "Password must be at least 6 characters long",
+    "updating": "Updating...",
+    "update_button": "Update Password"
+  },
+  "delete_account": {
+    "title": "Delete Account",
+    "warning_title": "Warning",
+    "warning_message": "Deleting your account is a final action. All your data will be permanently deleted.",
+    "subtitle": "Please enter your password to confirm",
+    "password_label": "Password",
+    "password_hint": "Enter password to confirm",
+    "deleting": "Deleting...",
+    "delete_button": "Delete Account",
+    "dialog": {
+      "title": "Delete Account",
+      "message": "Are you sure you want to delete your account? You will not be able to recover your data after this.",
+      "confirm": "Delete Account",
+      "cancel": "Cancel"
+    }
+  },
+  "cart": {
+    "title": "My Cart",
+    "empty": "Your cart is empty"
+  },
+  "products": {
+    "all": {
+      "title": "All Products"
+    },
+    "empty": "No products available"
+  },
+  "orders": {
+    "history": {
+      "title": "Order History",
+      "empty": "No previous orders"
+    },
+    "cancel": {
+      "title": "Cancel Order",
+      "reason_hint": "Cancellation reason",
+      "no_reason": "no reason"
+    }
+  },
+  "profile": {
+    "account": "Account",
+    "personal_info": "Personal Information",
+    "earned_points": "Earned Points",
+    "addresses": "Addresses",
+    "orders": "Orders",
+    "order_history": "Order History",
+    "wish_list": "Wish List",
+    "settings": "Settings",
+    "notifications": "Notifications",
+    "app_preferences": "App Preferences"
+  },
+  "search": {
+    "brand": "Brand",
+    "all_brands": "All Brands",
+    "category": "Category",
+    "all_categories": "All Categories",
+    "search": "Search",
+    "searching": "Searching...",
+    "results": "Results",
+    "clear_results": "clear results",
+    "no_results": "No results yet. Enter a query or choose filters then press Search."
+  },
+  "personal_info": {
+    "title": "Personal Information",
+    "first_name": "First Name",
+    "first_name_hint": "Enter your first name",
+    "last_name": "Last Name",
+    "last_name_hint": "Enter your last name",
+    "phone": "Phone Number",
+    "phone_hint": "Enter your phone number",
+    "save_changes": "Save Changes"
+  },
+  "order_init": {
+    "title": "Order Setup",
+    "select_address": "Please select a delivery address",
+    "submit_order": "Submit order",
+    "next": "Next",
+    "address": "Address",
+    "check": "Check",
+    "submitting": "Submitting order...",
+    "submit_disclaimer": "By pressing \"Submit order\", your order will be sent using the details above."
+  },
+  "order_details": {
+    "title": "Order Details",
+    "send_complaint": "Send complaint",
+    "complaint_title": "Send complaint",
+    "complaint_hint": "Write complaint here",
+    "send": "Send",
+    "cancel": "Cancel",
+    "no_data": "No order data available",
+    "reordering": "Reordering...",
+    "reorder": "Reorder",
+    "date_placed": "Date Placed",
+    "payment": "Payment"
+  },
+  "address": {
+    "edit": "Edit Address",
+    "add_new": "Add New Address",
+    "nickname": "Nickname",
+    "nickname_hint": "Enter nickname",
+    "city": "City",
+    "address_line": "Address Line",
+    "address_line_hint": "Enter address line",
+    "notes": "Notes",
+    "notes_hint": "Enter notes",
+    "please_wait": "Please wait...",
+    "update": "Update Address",
+    "save": "Save Address",
+    "default": "Default",
+    "nickname_default": "Nickname",
+    "city_default": "City",
+    "line_default": "Address Line",
+    "note_default": "Note"
+  },
+  "product_details": {
+    "add_to_cart": "Add to Cart"
+  },
+  "auth": {
+    "sign_in": {
+      "title": "Welcome back",
+      "subtitle": "Please enter your details to sign in.",
+      "button": "Log In",
+      "new_user": "New User Sign Up"
+    },
+    "sign_up": {
+      "title": "Create an account",
+      "button": "Create Account",
+      "have_account": "Already have an account? "
+    },
+    "forgot_password": {
+      "title": "Forgot Password",
+      "reset_title": "Reset your password",
+      "subtitle": "Enter your email address and we will send you instructions.",
+      "send_button": "Send"
+    },
+    "verification": {
+      "title": "Verification",
+      "enter_code": "Enter Your Code",
+      "subtitle": "We sent a 6-digit verification code to your email address.",
+      "no_code": "Didn't receive the code?",
+      "resend": "Resend Code",
+      "verify": "Verify"
+    },
+    "email": "Email address",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "phone": "Phone Number",
+    "please_wait": "Please wait...",
+    "email_required": "Please enter your email address",
+    "email_invalid": "Please enter a valid email address",
+    "password_required": "Please enter your password",
+    "password_short": "Password must be at least 6 characters long",
+    "confirm_password_required": "Please confirm your password",
+    "password_mismatch": "Passwords do not match",
+    "first_name_required": "Please enter your first name",
+    "last_name_required": "Please enter your last name"
+  },
+  "home": {
+    "top_brands": "Top Brands",
+    "categories": "Categories",
+    "featured_products": "Featured Products",
+    "no_products": "No products available"
+  }
+}

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OrderIdCard extends StatelessWidget {
   final OrderModel order;
@@ -60,13 +61,13 @@ class OrderIdCard extends StatelessWidget {
             const Divider(color: Colors.black26, thickness: 1),
             const SizedBox(height: 8),
             Text(
-              "Date Placed: $datePlaced",
+              "${"order_details.date_placed".tr()}: $datePlaced",
               style: const TextStyle(color: Colors.black54, fontSize: 14),
             ),
             if (paymentStatus != null && paymentStatus.trim().isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                "Payment: $paymentStatus",
+                "${"order_details.payment".tr()}: $paymentStatus",
                 style: const TextStyle(color: Colors.black54, fontSize: 14),
               ),
             ],

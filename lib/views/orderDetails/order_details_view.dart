@@ -7,8 +7,9 @@ import 'package:bizreh_paints_store/views/orderDetails/widgets/order_summary_car
 import 'package:bizreh_paints_store/views/orderDetails/widgets/shipping_details.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/text_input_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView({super.key});
@@ -19,7 +20,7 @@ class OrderDetailsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Order Details'),
+        title: Text('order_details.title'.tr()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -31,16 +32,16 @@ class OrderDetailsView extends StatelessWidget {
             }
             return IconButton(
               icon: const Icon(Icons.report_problem_outlined),
-              tooltip: 'إرسال شكوى',
+              tooltip: 'order_details.send_complaint'.tr(),
               onPressed: orderController.isSubmitting.value
                   ? null
                   : () {
                       showTextInputDialog(
-                        title: 'إرسال شكوى',
-                        hintText: 'اكتب الشكوى هنا',
+                        title: 'order_details.complaint_title'.tr(),
+                        hintText: 'order_details.complaint_hint'.tr(),
                         maxLines: 3,
-                        confirmText: 'إرسال',
-                        cancelText: 'إلغاء',
+                        confirmText: 'order_details.send'.tr(),
+                        cancelText: 'order_details.cancel'.tr(),
                         onConfirm: (controller) async {
                           final msg = controller.text.trim();
                           if (msg.isEmpty) {
@@ -75,7 +76,7 @@ class OrderDetailsView extends StatelessWidget {
 
           final order = orderController.selectedOrderDetails.value;
           if (order == null) {
-            return const Center(child: Text('لا توجد بيانات للطلب'));
+            return Center(child: Text('order_details.no_data'.tr()));
           }
 
           return ListView(
@@ -107,8 +108,8 @@ class OrderDetailsView extends StatelessWidget {
                             );
                           },
                     title: orderController.isSubmitting.value
-                        ? 'جاري إعادة الطلب...'
-                        : 'إعادة الطلب',
+                        ? 'order_details.reordering'.tr()
+                        : 'order_details.reorder'.tr(),
                   ),
                 ),
             ],

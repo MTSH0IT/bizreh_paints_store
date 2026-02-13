@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'widgets/wish_list_item.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
@@ -14,17 +15,17 @@ class WishList extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wishlist'),
+        title: Text('wishlist.title'.tr()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'حذف كل المفضلة',
+            tooltip: 'wishlist.clear_all'.tr(),
             onPressed: () {
               if (ctrl.items.isEmpty) {
-                showMassage("لا يوجد منتجات في مفضلة", false);
+                showMassage('wishlist.empty_snackbar'.tr(), false);
                 return;
               }
               ctrl.clearAll();
@@ -37,7 +38,7 @@ class WishList extends StatelessWidget {
           return const BuildProgressIndicator();
         }
         if (ctrl.items.isEmpty) {
-          return const Center(child: Text('No items in wishlist'));
+          return Center(child: Text('wishlist.empty'.tr()));
         }
         return ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 8),

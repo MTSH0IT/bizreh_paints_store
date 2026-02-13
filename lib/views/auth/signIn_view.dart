@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/auth/signUp_view.dart';
@@ -30,41 +31,41 @@ class SignInView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const AuthHeader(
-                        title: 'Welcome back',
-                        subtitle: 'Please enter your details to sign in.',
+                      AuthHeader(
+                        title: 'auth.sign_in.title'.tr(),
+                        subtitle: 'auth.sign_in.subtitle'.tr(),
                       ),
                       AuthTextField(
                         controller: auth.loginEmailCtrl,
-                        hint: 'Email address',
+                        hint: 'auth.email'.tr(),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email address';
+                            return 'auth.email_required'.tr();
                           }
                           if (!GetUtils.isEmail(value)) {
-                            return 'Please enter a valid email address';
+                            return 'auth.email_invalid'.tr();
                           }
                           return null;
                         },
                       ),
                       AuthTextField(
                         controller: auth.loginPasswordCtrl,
-                        hint: 'Password',
+                        hint: 'auth.password'.tr(),
                         obscure: true,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your password';
+                            return 'auth.password_required'.tr();
                           }
                           if (value.length < 6) {
-                            return 'Password must be at least 6 characters long';
+                            return 'auth.password_short'.tr();
                           }
                           return null;
                         },
                       ),
                       const SizedBox(height: 4),
                       AuthTextLink(
-                        text: 'Forgot password?',
+                        text: 'auth.forgot_password'.tr(),
                         onTap: () {
                           Get.to(() => ForgotPasswordView());
                         },
@@ -74,8 +75,8 @@ class SignInView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: MainButton(
                           title: auth.isLoading.value
-                              ? 'الرجاء الانتظار...'
-                              : 'Log In',
+                              ? 'auth.please_wait'.tr()
+                              : 'auth.sign_in.button'.tr(),
                           onPressed: auth.isLoading.value
                               ? null
                               : () {
@@ -86,7 +87,7 @@ class SignInView extends StatelessWidget {
                         ),
                       ),
                       SecondaryButton(
-                        title: 'New User Sign Up',
+                        title: 'auth.sign_in.new_user'.tr(),
                         onPressed: () {
                           Get.to(() => SignUpView());
                         },

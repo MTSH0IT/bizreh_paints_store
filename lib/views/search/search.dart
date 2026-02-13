@@ -1,11 +1,12 @@
 import 'package:bizreh_paints_store/controllers/filter_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:bizreh_paints_store/views/search/widgets/search_filter_dropdown.dart';
 import 'package:bizreh_paints_store/views/search/widgets/search_input.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class Search extends StatelessWidget {
   Search({super.key});
@@ -57,8 +58,8 @@ class Search extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SearchFilterDropdown(
-                              label: 'Brand',
-                              allLabel: 'All Brands',
+                              label: 'search.brand'.tr(),
+                              allLabel: 'search.all_brands'.tr(),
                               selectedId:
                                   _searchController.selectedBrandId.value,
                               isLoading:
@@ -72,8 +73,8 @@ class Search extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: SearchFilterDropdown(
-                              label: 'Category',
-                              allLabel: 'All Categories',
+                              label: 'search.category'.tr(),
+                              allLabel: 'search.all_categories'.tr(),
                               selectedId:
                                   _searchController.selectedSubCategoryId.value,
                               isLoading:
@@ -102,8 +103,8 @@ class Search extends StatelessWidget {
                                 icon: const Icon(Icons.search_rounded),
                                 label: Text(
                                   _searchController.isSearching.value
-                                      ? 'Searching...'
-                                      : 'Search',
+                                      ? 'search.searching'.tr()
+                                      : 'search.search'.tr(),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: primaryColor,
@@ -134,7 +135,7 @@ class Search extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${_searchController.results.length} Results',
+                      '${_searchController.results.length} ${'search.results'.tr()}',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -146,9 +147,9 @@ class Search extends StatelessWidget {
                           : () {
                               _searchController.clearFilters();
                             },
-                      child: const Text(
-                        'clear results',
-                        style: TextStyle(color: primaryColor),
+                      child: Text(
+                        'search.clear_results'.tr(),
+                        style: const TextStyle(color: primaryColor),
                       ),
                     ),
                   ],
@@ -179,7 +180,7 @@ class Search extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'No results yet. Enter a query or choose filters then press Search.',
+                            'search.no_results'.tr(),
                             style: TextStyle(color: Colors.grey.shade700),
                             textAlign: TextAlign.center,
                           ),

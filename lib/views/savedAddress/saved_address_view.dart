@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
@@ -34,9 +35,9 @@ class _SavedAddressViewState extends State<SavedAddressView> {
           onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
         ),
-        title: const Text(
-          'Saved Addresses',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        title: Text(
+          'address.saved.title'.tr(),
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         actions: [
@@ -56,7 +57,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             return const BuildProgressIndicator();
           }
           if (items.isEmpty) {
-            return const Center(child: Text('No addresses found'));
+            return Center(child: Text('address.saved.empty'.tr()));
           }
           return ListView.builder(
             padding: const EdgeInsets.all(16),
@@ -90,12 +91,14 @@ class _SavedAddressViewState extends State<SavedAddressView> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Delete Address'),
-        content: Text('Are you sure you want to delete ${address.nickname}?'),
+        title: Text('address.delete.title'.tr()),
+        content: Text(
+          'address.delete.message'.tr(args: [address.nickname ?? '']),
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
+            child: Text('common.cancel'.tr()),
           ),
           TextButton(
             onPressed: () {
@@ -104,7 +107,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
               }
               Navigator.pop(context);
             },
-            child: const Text('Delete'),
+            child: Text('common.delete'.tr()),
           ),
         ],
       ),

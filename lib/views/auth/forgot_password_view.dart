@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ForgotPasswordView extends StatelessWidget {
   ForgotPasswordView({super.key});
@@ -27,9 +28,12 @@ class ForgotPasswordView extends StatelessWidget {
           onPressed: () => Get.back(),
         ),
         centerTitle: true,
-        title: const Text(
-          'Forgot Password',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+        title: Text(
+          'auth.forgot_password.title'.tr(),
+          style: const TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: Obx(
@@ -43,21 +47,20 @@ class ForgotPasswordView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      const AuthHeader(
-                        title: 'Reset your password',
-                        subtitle:
-                            'Enter your email address and we will send you instructions.',
+                      AuthHeader(
+                        title: 'auth.forgot_password.reset_title'.tr(),
+                        subtitle: 'auth.forgot_password.subtitle'.tr(),
                       ),
                       AuthTextField(
                         controller: auth.forgotPasswordEmailCtrl,
-                        hint: 'Email address',
+                        hint: 'auth.email'.tr(),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter your email address';
+                            return 'auth.email_required'.tr();
                           }
                           if (!GetUtils.isEmail(value)) {
-                            return 'Please enter a valid email address';
+                            return 'auth.email_invalid'.tr();
                           }
                           return null;
                         },
@@ -67,8 +70,8 @@ class ForgotPasswordView extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: MainButton(
                           title: auth.isLoading.value
-                              ? 'الرجاء الانتظار...'
-                              : 'Send',
+                              ? 'auth.please_wait'.tr()
+                              : 'auth.forgot_password.send_button'.tr(),
                           onPressed: auth.isLoading.value
                               ? null
                               : () async {

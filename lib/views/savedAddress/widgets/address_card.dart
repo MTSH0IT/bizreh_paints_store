@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AddressCard extends StatelessWidget {
   final AddressModel address;
@@ -43,7 +44,7 @@ class AddressCard extends StatelessWidget {
                   Icon(Icons.location_on, color: primaryColor, size: 20),
                   const SizedBox(width: 8),
                   Text(
-                    address.nickname ?? "nickname",
+                    address.nickname ?? "address.nickname_default".tr(),
                     style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
@@ -62,7 +63,7 @@ class AddressCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        'Default',
+                        'address.default'.tr(),
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -104,7 +105,7 @@ class AddressCard extends StatelessWidget {
           const SizedBox(height: 12),
           // Full name
           Text(
-            address.cityName ?? "cityName",
+            address.cityName ?? "address.city_default".tr(),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -114,13 +115,13 @@ class AddressCard extends StatelessWidget {
           const SizedBox(height: 4),
           // Address
           Text(
-            address.addressLine ?? "addressLine",
+            address.addressLine ?? "address.line_default".tr(),
             style: const TextStyle(fontSize: 14, color: Colors.black87),
           ),
           const SizedBox(height: 8),
           // Notes
           Text(
-            'Notes: ${address.note ?? "note"}',
+            '${"address.notes".tr()}: ${address.note ?? "address.note_default".tr()}',
             style: TextStyle(fontSize: 12, color: primaryColor),
           ),
         ],

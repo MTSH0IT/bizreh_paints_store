@@ -1,0 +1,217 @@
+{
+  "app_name": "بزره للدهانات",
+  "common": {
+    "cancel": "إلغاء",
+    "delete": "حذف"
+  },
+  "settings": {
+    "title": "الإعدادات",
+    "language": "اللغة",
+    "change_password": "تغيير كلمة المرور",
+    "delete_account": "حذف الحساب",
+    "logout": "تسجيل الخروج",
+    "choose_language": "اختر اللغة",
+    "arabic": "العربية",
+    "english": "الإنجليزية",
+    "logout_dialog": {
+      "title": "تسجيل الخروج",
+      "message": "هل أنت متأكد من رغبتك في تسجيل الخروج؟",
+      "confirm": "تسجيل الخروج",
+      "cancel": "إلغاء"
+    }
+  },
+  "wishlist": {
+    "title": "المفضلة",
+    "clear_all": "حذف الكل",
+    "empty_snackbar": "لا توجد منتجات في المفضلة",
+    "empty": "لا توجد عناصر في المفضلة",
+    "move_to_cart": "نقل إلى السلة",
+    "remove": "إزالة"
+  },
+  "notifications": {
+    "title": "الإشعارات",
+    "title_with_count": "الإشعارات ({0})",
+    "empty": "لا توجد إشعارات حالياً"
+  },
+  "saved_address": {
+    "title": "العناوين المحفوظة",
+    "empty": "لا توجد عناوين محفوظة",
+    "delete": {
+      "title": "حذف العنوان",
+      "message": "هل أنت متأكد من حذف {0}؟"
+    }
+  },
+  "change_password": {
+    "subtitle": "يرجى إدخال كلمة المرور الحالية والجديدة",
+    "current_password_label": "كلمة المرور الحالية",
+    "current_password_hint": "أدخل كلمة المرور الحالية",
+    "new_password_label": "كلمة المرور الجديدة",
+    "new_password_hint": "أدخل كلمة المرور الجديدة",
+    "password_rule": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "updating": "جارٍ التحديث...",
+    "update_button": "تحديث كلمة المرور"
+  },
+  "delete_account": {
+    "title": "حذف الحساب",
+    "warning_title": "تحذير",
+    "warning_message": "حذف الحساب إجراء نهائي. سيتم حذف جميع بياناتك بشكل دائم.",
+    "subtitle": "يرجى إدخال كلمة المرور للتأكيد",
+    "password_label": "كلمة المرور",
+    "password_hint": "أدخل كلمة المرور للتأكيد",
+    "deleting": "جارٍ الحذف...",
+    "delete_button": "حذف الحساب",
+    "dialog": {
+      "title": "حذف الحساب",
+      "message": "هل أنت متأكد من حذف حسابك؟ لن تتمكن من استعادة بياناتك بعد ذلك.",
+      "confirm": "حذف الحساب",
+      "cancel": "إلغاء"
+    }
+  },
+  "cart": {
+    "title": "سلة المشتريات",
+    "empty": "سلة المشتريات فارغة"
+  },
+  "products": {
+    "all": {
+      "title": "كل المنتجات"
+    },
+    "empty": "لا توجد منتجات متاحة"
+  },
+  "orders": {
+    "history": {
+      "title": "سجل الطلبات",
+      "empty": "لا يوجد طلبات سابقة"
+    },
+    "cancel": {
+      "title": "إلغاء الطلب",
+      "reason_hint": "سبب الإلغاء",
+      "no_reason": "بدون سبب"
+    }
+  },
+  "profile": {
+    "account": "الحساب",
+    "personal_info": "المعلومات الشخصية",
+    "earned_points": "النقاط المكتسبة",
+    "addresses": "العناوين",
+    "orders": "الطلبات",
+    "order_history": "سجل الطلبات",
+    "wish_list": "المفضلة",
+    "settings": "الإعدادات",
+    "notifications": "الإشعارات",
+    "app_preferences": "تفضيلات التطبيق"
+  },
+  "search": {
+    "brand": "العلامة التجارية",
+    "all_brands": "كل العلامات التجارية",
+    "category": "التصنيف",
+    "all_categories": "كل التصنيفات",
+    "search": "بحث",
+    "searching": "جارٍ البحث...",
+    "results": "نتيجة",
+    "clear_results": "مسح النتائج",
+    "no_results": "لا توجد نتائج حتى الآن. أدخل كلمة بحث أو اختر الفلاتر ثم اضغط بحث."
+  },
+  "personal_info": {
+    "title": "المعلومات الشخصية",
+    "first_name": "الاسم الأول",
+    "first_name_hint": "أدخل اسمك الأول",
+    "last_name": "الاسم الأخير",
+    "last_name_hint": "أدخل اسمك الأخير",
+    "phone": "رقم الهاتف",
+    "phone_hint": "أدخل رقم هاتفك",
+    "save_changes": "حفظ التغييرات"
+  },
+  "order_init": {
+    "title": "إعداد الطلب",
+    "select_address": "يرجى اختيار عنوان التوصيل",
+    "submit_order": "تقديم الطلب",
+    "next": "التالي",
+    "address": "العنوان",
+    "check": "تأكيد",
+    "submitting": "جارٍ تقديم الطلب...",
+    "submit_disclaimer": "بالضغط على \"تقديم الطلب\"، سيتم إرسال طلبك باستخدام التفاصيل أعلاه."
+  },
+  "order_details": {
+    "title": "تفاصيل الطلب",
+    "send_complaint": "إرسال شكوى",
+    "complaint_title": "إرسال شكوى",
+    "complaint_hint": "اكتب الشكوى هنا",
+    "send": "إرسال",
+    "cancel": "إلغاء",
+    "no_data": "لا توجد بيانات للطلب",
+    "reordering": "جارٍ إعادة الطلب...",
+    "reorder": "إعادة الطلب",
+    "date_placed": "تاريخ الطلب",
+    "payment": "الدفع"
+  },
+  "address": {
+    "edit": "تعديل العنوان",
+    "add_new": "إضافة عنوان جديد",
+    "nickname": "الاسم المستعار",
+    "nickname_hint": "أدخل اسمًا مستعارًا",
+    "city": "المدينة",
+    "address_line": "عنوان السطر",
+    "address_line_hint": "أدخل عنوان السطر",
+    "notes": "ملاحظات",
+    "notes_hint": "أدخل ملاحظات",
+    "please_wait": "يرجى الانتظار...",
+    "update": "تحديث العنوان",
+    "save": "حفظ العنوان",
+    "default": "افتراضي",
+    "nickname_default": "الاسم المستعار",
+    "city_default": "المدينة",
+    "line_default": "عنوان السطر",
+    "note_default": "ملاحظة"
+  },
+  "product_details": {
+    "add_to_cart": "أضف إلى السلة"
+  },
+  "auth": {
+    "sign_in": {
+      "title": "مرحباً بعودتك",
+      "subtitle": "يرجى إدخال بياناتك لتسجيل الدخول.",
+      "button": "تسجيل الدخول",
+      "new_user": "مستخدم جديد سجل"
+    },
+    "sign_up": {
+      "title": "إنشاء حساب",
+      "button": "إنشاء حساب",
+      "have_account": "لديك حساب بالفعل؟ "
+    },
+    "forgot_password": {
+      "title": "نسيت كلمة المرور",
+      "reset_title": "إعادة تعيين كلمة المرور",
+      "subtitle": "أدخل عنوان بريدك الإلكتروني وسنرسل لك التعليمات.",
+      "send_button": "إرسال"
+    },
+    "verification": {
+      "title": "التحقق",
+      "enter_code": "أدخل الكود الخاص بك",
+      "subtitle": "أرسلنا كود تحقق مكون من 6 أرقام إلى عنوان بريدك الإلكتروني.",
+      "no_code": "لم تستلم الكود؟",
+      "resend": "إعادة إرسال الكود",
+      "verify": "تحقق"
+    },
+    "email": "عنوان البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "confirm_password": "تأكيد كلمة المرور",
+    "first_name": "الاسم الأول",
+    "last_name": "الاسم الأخير",
+    "phone": "رقم الهاتف",
+    "please_wait": "يرجى الانتظار...",
+    "email_required": "يرجى إدخال عنوان بريدك الإلكتروني",
+    "email_invalid": "يرجى إدخال عنوان بريد إلكتروني صحيح",
+    "password_required": "يرجى إدخال كلمة المرور",
+    "password_short": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+    "confirm_password_required": "يرجى تأكيد كلمة المرور",
+    "password_mismatch": "كلمات المرور غير متطابقة",
+    "first_name_required": "يرجى إدخال اسمك الأول",
+    "last_name_required": "يرجى إدخال اسمك الأخير"
+  },
+  "home": {
+    "top_brands": "أفضل العلامات التجارية",
+    "categories": "التصنيفات",
+    "featured_products": "منتجات مميزة",
+    "no_products": "لا توجد منتجات متاحة"
+  }
+}

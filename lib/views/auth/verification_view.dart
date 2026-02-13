@@ -5,7 +5,8 @@ import 'package:bizreh_paints_store/views/auth/widgets/otp_code_fields.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/verify_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 
 class VerificationView extends StatefulWidget {
   const VerificationView({super.key});
@@ -34,9 +35,12 @@ class _VerificationViewState extends State<VerificationView> {
           onPressed: () => Get.back(),
         ),
         centerTitle: true,
-        title: const Text(
-          'Verification',
-          style: TextStyle(color: Colors.black87, fontWeight: FontWeight.w600),
+        title: Text(
+          'auth.verification.title'.tr(),
+          style: const TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
       body: Obx(
@@ -47,23 +51,22 @@ class _VerificationViewState extends State<VerificationView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const AuthHeader(
-                    title: 'Enter Your Code',
-                    subtitle:
-                        'We sent a 6-digit verification code to your email address.',
+                  AuthHeader(
+                    title: 'auth.verification.enter_code'.tr(),
+                    subtitle: 'auth.verification.subtitle'.tr(),
                   ),
                   OtpCodeFields(onCompleted: (v) => setState(() => _code = v)),
                   const SizedBox(height: 12),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 8.0),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
-                      "Didn't receive the code?",
+                      'auth.verification.no_code'.tr(),
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.black54),
+                      style: const TextStyle(color: Colors.black54),
                     ),
                   ),
                   AuthTextLink(
-                    text: 'Resend Code',
+                    text: 'auth.verification.resend'.tr(),
                     alignment: MainAxisAlignment.center,
                     onTap: () async {
                       await auth.resendVerification();
@@ -71,7 +74,7 @@ class _VerificationViewState extends State<VerificationView> {
                   ),
                   const Spacer(),
                   VerifyButton(
-                    title: 'Verify',
+                    title: 'auth.verification.verify'.tr(),
                     onPressed: _code.length == 6
                         ? () async {
                             await auth.verifyAccount(verificationCode: _code);

@@ -4,7 +4,8 @@ import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart'
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
@@ -122,9 +123,9 @@ class WishListItemCard extends StatelessWidget {
                     style: TextButton.styleFrom(
                       foregroundColor: Colors.black87,
                     ),
-                    child: const Text(
-                      'Move to Cart',
-                      style: TextStyle(
+                    child: Text(
+                      'wishlist.move_to_cart'.tr(),
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -144,9 +145,9 @@ class WishListItemCard extends StatelessWidget {
                       ),
                       child: isRemoving
                           ? const BuildProgressIndicator()
-                          : const Text(
-                              'Remove',
-                              style: TextStyle(
+                          : Text(
+                              'wishlist.remove'.tr(),
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
                               ),

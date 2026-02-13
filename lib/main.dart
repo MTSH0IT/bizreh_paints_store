@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
@@ -17,8 +18,16 @@ import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
   await StorageService.init();
-  runApp(const MainApp());
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('ar')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: MainApp(),
+    ),
+  );
 }
 
 class AppBindings extends Bindings {
@@ -46,11 +55,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
-      initialBinding: AppBindings(),
-      home: const SplashView(),
+    return KeyedSubtree(
+      key: ValueKey(context.locale),
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+        initialBinding: AppBindings(),
+        home: const SplashView(),
+      ),
     );
   }
 }

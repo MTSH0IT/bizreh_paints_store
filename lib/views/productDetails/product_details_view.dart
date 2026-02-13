@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
@@ -24,13 +25,32 @@ class ProductDetailsView extends StatelessWidget {
     return Scaffold(
       body: Obx(() {
         final isMutating = cartController.isMutating.value;
+
+        final selectedOptionId = controller.selectedOption.value;
+        final fallbackProductImage = (product.image ?? '').trim();
+
+        String headerImage = fallbackProductImage;
+
+        if (selectedOptionId >= 0) {
+          final options = product.options ?? [];
+          for (final o in options) {
+            if (o.id == selectedOptionId) {
+              final optionImage = (o.mainImage ?? '').trim();
+              if (optionImage.isNotEmpty) {
+                headerImage = optionImage;
+              }
+              break;
+            }
+          }
+        }
+
         return Stack(
           children: [
             SafeArea(
               child: Column(
                 children: [
                   ProductDetailsHeader(
-                    image: product.image ?? "",
+                    image: headerImage,
                     controller: controller,
                     wishCtrl: wishCtrl,
                   ),
@@ -76,7 +96,7 @@ class ProductDetailsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: MainButton(
-                      title: "Add to Cart",
+                      title: 'product_details.add_to_cart'.tr(),
                       onPressed: isMutating
                           ? null
                           : () => controller.addToCart(),

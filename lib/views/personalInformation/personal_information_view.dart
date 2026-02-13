@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 
@@ -20,7 +21,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Personal Info'),
+        title: Text('personal_info.title'.tr()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -40,16 +41,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     const SizedBox(height: 16),
                     Obx(
                       () => LabeledTextField(
-                        label: 'First Name',
-                        hint: 'Enter your first name',
+                        label: 'personal_info.first_name'.tr(),
+                        hint: 'personal_info.first_name_hint'.tr(),
                         controller: ctrl.firstNameCtrl,
                         errorText: ctrl.firstNameError.value,
                       ),
                     ),
                     Obx(
                       () => LabeledTextField(
-                        label: 'Last Name',
-                        hint: 'Enter your last name',
+                        label: 'personal_info.last_name'.tr(),
+                        hint: 'personal_info.last_name_hint'.tr(),
                         controller: ctrl.lastNameCtrl,
                         errorText: ctrl.lastNameError.value,
                       ),
@@ -65,8 +66,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     // ),
                     Obx(
                       () => LabeledTextField(
-                        label: 'Phone Number',
-                        hint: 'Enter your phone number',
+                        label: 'personal_info.phone'.tr(),
+                        hint: 'personal_info.phone_hint'.tr(),
                         controller: ctrl.phoneCtrl,
                         keyboardType: TextInputType.phone,
                         errorText: ctrl.phoneError.value,
@@ -74,7 +75,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     ),
                     SizedBox(height: 24),
                     MainButton(
-                      title: 'Save Changes',
+                      title: 'personal_info.save_changes'.tr(),
                       onPressed: () => ctrl.changeInfo(),
                     ),
                     SizedBox(height: 16),

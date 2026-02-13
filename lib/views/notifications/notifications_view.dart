@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'widgets/notification_card.dart';
@@ -22,9 +23,11 @@ class NotificationsView extends StatelessWidget {
         title: Obx(() {
           final count = controller.unreadCount.value;
           if (count > 0) {
-            return Text('Notifications ($count)');
+            return Text(
+              'notifications.title_with_count'.tr(args: [count.toString()]),
+            );
           }
-          return const Text('Notifications');
+          return Text('notifications.title'.tr());
         }),
         actions: [
           Obx(() {
@@ -62,7 +65,7 @@ class NotificationsView extends StatelessWidget {
           }
 
           if (controller.notifications.isEmpty) {
-            return const Center(child: Text('لا توجد إشعارات حالياً'));
+            return Center(child: Text('notifications.empty'.tr()));
           }
 
           final list = controller.notifications;

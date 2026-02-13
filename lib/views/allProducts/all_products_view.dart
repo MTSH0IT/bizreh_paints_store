@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 
@@ -12,7 +13,7 @@ class AllProductsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Products'),
+        title: Text('products.all.title'.tr()),
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
@@ -23,7 +24,7 @@ class AllProductsView extends StatelessWidget {
           }
 
           if (contr.products.isEmpty) {
-            return const Center(child: Text('No products available'));
+            return Center(child: Text('products.empty'.tr()));
           }
           return Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 24),

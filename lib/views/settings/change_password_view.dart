@@ -1,8 +1,9 @@
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class ChangePasswordView extends StatelessWidget {
   ChangePasswordView({super.key});
@@ -14,9 +15,9 @@ class ChangePasswordView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(
-          'Change Password',
-          style: TextStyle(
+        title: Text(
+          'settings.change_password'.tr(),
+          style: const TextStyle(
             color: Colors.black87,
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -34,15 +35,15 @@ class ChangePasswordView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 16),
-              const Text(
-                'Please enter your current and new password',
-                style: TextStyle(fontSize: 16, color: Colors.black54),
+              Text(
+                'change_password.subtitle'.tr(),
+                style: const TextStyle(fontSize: 16, color: Colors.black54),
               ),
               const SizedBox(height: 24),
               Obx(
                 () => LabeledTextField(
-                  label: 'Current Password',
-                  hint: 'Enter current password',
+                  label: 'change_password.current_password_label'.tr(),
+                  hint: 'change_password.current_password_hint'.tr(),
                   controller: ctrl.currentPasswordCtrl,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -52,8 +53,8 @@ class ChangePasswordView extends StatelessWidget {
               const SizedBox(height: 16),
               Obx(
                 () => LabeledTextField(
-                  label: 'New Password',
-                  hint: 'Enter new password',
+                  label: 'change_password.new_password_label'.tr(),
+                  hint: 'change_password.new_password_hint'.tr(),
                   controller: ctrl.newPasswordCtrl,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -62,15 +63,15 @@ class ChangePasswordView extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                'Password must be at least 6 characters long',
+                'change_password.password_rule'.tr(),
                 style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
               const SizedBox(height: 32),
               Obx(
                 () => MainButton(
                   title: ctrl.isLoding.value
-                      ? 'Updating...'
-                      : 'Update Password',
+                      ? 'change_password.updating'.tr()
+                      : 'change_password.update_button'.tr(),
                   onPressed: ctrl.isLoding.value
                       ? null
                       : () async {

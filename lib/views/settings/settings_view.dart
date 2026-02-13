@@ -2,8 +2,9 @@ import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'package:bizreh_paints_store/views/settings/change_password_view.dart';
 import 'package:bizreh_paints_store/views/settings/delete_account_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'widgets/settings_tile.dart';
 
 class SettingsView extends StatelessWidget {
@@ -13,7 +14,7 @@ class SettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Settings'),
+        title: Text('settings.title'.tr()),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.transparent,
@@ -25,9 +26,46 @@ class SettingsView extends StatelessWidget {
             SingleChildScrollView(
               child: Column(
                 children: [
-                  const SettingsTile(title: 'Language'),
                   SettingsTile(
-                    title: 'Change Password',
+                    title: 'settings.language'.tr(),
+                    onTap: () async {
+                      final result = await showDialog<Locale>(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text('settings.choose_language'.tr()),
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text('settings.arabic'.tr()),
+                                  onTap: () {
+                                    Navigator.of(
+                                      context,
+                                    ).pop(const Locale('ar'));
+                                  },
+                                ),
+                                ListTile(
+                                  title: Text('settings.english'.tr()),
+                                  onTap: () {
+                                    Navigator.of(
+                                      context,
+                                    ).pop(const Locale('en'));
+                                  },
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+
+                      if (result != null) {
+                        await context.setLocale(result);
+                      }
+                    },
+                  ),
+                  SettingsTile(
+                    title: 'settings.change_password'.tr(),
                     onTap: () {
                       Get.to(() => ChangePasswordView());
                     },
@@ -37,23 +75,23 @@ class SettingsView extends StatelessWidget {
                   // const SettingsTile(title: 'Privacy Policy'),
                   // const SettingsTile(title: 'Terms of Service'),
                   SettingsTile(
-                    title: 'Delete Account',
+                    title: 'settings.delete_account'.tr(),
                     destructive: true,
                     onTap: () {
                       Get.to(() => DeleteAccountView());
                     },
                   ),
                   SettingsTile(
-                    title: 'Logout',
+                    title: 'settings.logout'.tr(),
                     destructive: true,
                     onTap: () {
                       showDialog(
                         context: context,
                         builder: (context) => ConfirmationDialog(
-                          title: 'تسجيل الخروج',
-                          message: 'هل أنت متأكد من رغبتك في تسجيل الخروج؟',
-                          confirmText: 'تسجيل الخروج',
-                          cancelText: 'إلغاء',
+                          title: 'settings.logout_dialog.title'.tr(),
+                          message: 'settings.logout_dialog.message'.tr(),
+                          confirmText: 'settings.logout_dialog.confirm'.tr(),
+                          cancelText: 'settings.logout_dialog.cancel'.tr(),
                           isDestructive: false,
                           onConfirm: () {
                             personalController.signOut();

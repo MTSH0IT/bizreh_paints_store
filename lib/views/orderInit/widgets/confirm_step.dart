@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 
@@ -167,7 +168,7 @@ class ConfirmStep extends StatelessWidget {
 
               const SizedBox(height: 24),
               Text(
-                'By pressing "Submit order", your order will be sent using the details above.',
+                'order_init.submit_disclaimer'.tr(),
                 style: TextStyle(fontSize: 13, color: Colors.grey[700]),
               ),
             ],

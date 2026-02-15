@@ -212,6 +212,27 @@
     "top_brands": "Top Brands",
     "categories": "Categories",
     "featured_products": "Featured Products",
-    "no_products": "No products available"
+    "no_products": "No products available",
+    "see_all": "See All"
+  },
+  "gifts": {
+    "title": "All Gifts",
+    "view_all": "View All",
+    "no_gifts_found": "No gifts found",
+    "try_again_later": "Try again later.",
+    "no_available_gifts": "No available gifts",
+    "available_points": "Available Points",
+    "points": "Points",
+    "redeem": "Redeem",
+    "available": "Available",
+    "not_available": "Not available",
+    "available_tab": "Available",
+    "my_gifts_tab": "My Gifts",
+    "no_gifts_yet": "No gifts yet",
+    "redeemed_gifts_appear_here": "Your redeemed gifts will appear here.",
+    "confirm_redemption": "Confirm Gift Redemption",
+    "confirm_redemption_message": "Are you sure you want to redeem \"{0}\" for {1} points?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
   }
 }

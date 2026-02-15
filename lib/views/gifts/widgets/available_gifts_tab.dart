@@ -1,8 +1,9 @@
 import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 import 'available_gift_card.dart';
 import 'gifts_empty_state.dart';
@@ -21,8 +22,8 @@ class AvailableGiftsTab extends StatelessWidget {
       if (ctrl.availableGifts.isEmpty) {
         return Center(
           child: GiftsEmptyState(
-            title: 'No available gifts',
-            subtitle: 'Try again later.',
+            title: 'gifts.no_available_gifts'.tr(),
+            subtitle: 'gifts.try_again_later'.tr(),
           ),
         );
       }
@@ -45,11 +46,13 @@ class AvailableGiftsTab extends StatelessWidget {
                     showDialog(
                       context: context,
                       builder: (context) => ConfirmationDialog(
-                        title: 'Confirm Gift Redemption',
-                        message:
-                            'Are you sure you want to redeem "$giftTitle" for $giftPoints points?',
-                        confirmText: 'Confirm',
-                        cancelText: 'Cancel',
+                        title: 'gifts.confirm_redemption'.tr(),
+                        message: 'gifts.confirm_redemption_message'
+                            .tr()
+                            .replaceAll('{0}', '"$giftTitle"')
+                            .replaceAll('{1}', '$giftPoints'),
+                        confirmText: 'gifts.confirm'.tr(),
+                        cancelText: 'gifts.cancel'.tr(),
                         onConfirm: () => ctrl.redeemGift(giftId),
                       ),
                     );

@@ -1,7 +1,8 @@
 import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 import 'widgets/gift_card.dart';
 import 'widgets/gifts_empty_state.dart';
@@ -15,7 +16,7 @@ class AllGiftsView extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('All Gifts'),
+        title: Text('gifts.title'.tr()),
         centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -26,9 +27,9 @@ class AllGiftsView extends StatelessWidget {
         }
 
         if (ctrl.gifts.isEmpty) {
-          return const GiftsEmptyState(
-            title: 'No gifts found',
-            subtitle: 'Try again later.',
+          return GiftsEmptyState(
+            title: 'gifts.no_gifts_found'.tr(),
+            subtitle: 'gifts.try_again_later'.tr(),
           );
         }
 

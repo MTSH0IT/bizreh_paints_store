@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AvailablePointsCard extends StatelessWidget {
@@ -48,9 +49,9 @@ class AvailablePointsCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Available Points',
-                  style: TextStyle(
+                Text(
+                  'gifts.available_points'.tr(),
+                  style: const TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w700,
                     fontSize: 13,

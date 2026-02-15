@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/available_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AvailableGiftCard extends StatelessWidget {
@@ -66,7 +67,7 @@ class AvailableGiftCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '$points Points',
+                          '$points ${'gifts.points'.tr()}',
                           style: const TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.w800,
@@ -130,9 +131,9 @@ class AvailableGiftCard extends StatelessWidget {
                         valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
                       ),
                     )
-                  : const Text(
-                      'Redeem',
-                      style: TextStyle(
+                  : Text(
+                      'gifts.redeem'.tr(),
+                      style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 14,
                       ),

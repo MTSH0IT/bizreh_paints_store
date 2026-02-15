@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class GiftCard extends StatelessWidget {
@@ -13,7 +14,7 @@ class GiftCard extends StatelessWidget {
     final title = gift.title ?? '';
     final points = gift.points ?? 0;
     final image = gift.image ?? '';
-    final isAvailable = gift.isAvailable ?? false;
+    //final isAvailable = gift.isAvailable ?? false;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -55,36 +56,38 @@ class GiftCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$points Points',
+                  '$points ${'gifts.points'.tr()}',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black54,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 8),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10,
-                    vertical: 6,
-                  ),
-                  decoration: BoxDecoration(
-                    color: isAvailable
-                        ? const Color(0xFF16A34A).withValues(alpha: 0.12)
-                        : const Color(0xFFDC2626).withValues(alpha: 0.10),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    isAvailable ? 'Available' : 'Not available',
-                    style: TextStyle(
-                      color: isAvailable
-                          ? const Color(0xFF16A34A)
-                          : const Color(0xFFDC2626),
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
+                // const SizedBox(height: 8),
+                // Container(
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 10,
+                //     vertical: 6,
+                //   ),
+                //   decoration: BoxDecoration(
+                //     color: isAvailable
+                //         ? const Color(0xFF16A34A).withValues(alpha: 0.12)
+                //         : const Color(0xFFDC2626).withValues(alpha: 0.10),
+                //     borderRadius: BorderRadius.circular(999),
+                //   ),
+                //   child: Text(
+                //     isAvailable
+                //         ? 'gifts.available'.tr()
+                //         : 'gifts.not_available'.tr(),
+                //     style: TextStyle(
+                //       color: isAvailable
+                //           ? const Color(0xFF16A34A)
+                //           : const Color(0xFFDC2626),
+                //       fontWeight: FontWeight.w700,
+                //       fontSize: 12,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),

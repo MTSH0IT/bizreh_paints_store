@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class GiftsTabSwitch extends StatelessWidget {
   final int index;
@@ -23,14 +24,14 @@ class GiftsTabSwitch extends StatelessWidget {
         children: [
           Expanded(
             child: _TabButton(
-              title: 'Available',
+              title: 'gifts.available_tab'.tr(),
               selected: index == 0,
               onTap: () => onChanged(0),
             ),
           ),
           Expanded(
             child: _TabButton(
-              title: 'My Gifts',
+              title: 'gifts.my_gifts_tab'.tr(),
               selected: index == 1,
               onTap: () => onChanged(1),
             ),

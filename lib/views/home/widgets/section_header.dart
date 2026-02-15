@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class SectionHeader extends StatelessWidget {
   const SectionHeader({super.key, required this.title, required this.onSeeAll});
@@ -21,7 +22,10 @@ class SectionHeader extends StatelessWidget {
 
           TextButton(
             onPressed: onSeeAll,
-            child: const Text('See All', style: TextStyle(color: primaryColor)),
+            child: Text(
+              'home.see_all'.tr(),
+              style: TextStyle(color: primaryColor),
+            ),
           ),
         ],
       ),

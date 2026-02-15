@@ -65,7 +65,7 @@ class SignInView extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       AuthTextLink(
-                        text: 'auth.forgot_password'.tr(),
+                        text: 'auth.forgot_password.title'.tr(),
                         onTap: () {
                           Get.to(() => ForgotPasswordView());
                         },

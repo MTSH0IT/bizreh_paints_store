@@ -212,6 +212,27 @@
     "top_brands": "أفضل العلامات التجارية",
     "categories": "التصنيفات",
     "featured_products": "منتجات مميزة",
-    "no_products": "لا توجد منتجات متاحة"
+    "no_products": "لا توجد منتجات متاحة",
+    "see_all": "عرض الكل"
+  },
+  "gifts": {
+    "title": "كل الهدايا",
+    "view_all": "عرض الكل",
+    "no_gifts_found": "لا توجد هدايا",
+    "try_again_later": "حاول مرة أخرى لاحقاً.",
+    "no_available_gifts": "لا توجد هدايا متاحة",
+    "available_points": "النقاط المتاحة",
+    "points": "نقطة",
+    "redeem": "استبدال",
+    "available": "متاح",
+    "not_available": "غير متاح",
+    "available_tab": "المتاحة",
+    "my_gifts_tab": "هداياي",
+    "no_gifts_yet": "لا توجد هدايا بعد",
+    "redeemed_gifts_appear_here": "ستظهر هداياك المستبدلة هنا.",
+    "confirm_redemption": "تأكيد استبدال الهدايا",
+    "confirm_redemption_message": "هل أنت متأكد من رغبتك في استبدال \"{0}\" مقابل {1} نقطة؟",
+    "confirm": "تأكيد",
+    "cancel": "إلغاء"
   }
 }

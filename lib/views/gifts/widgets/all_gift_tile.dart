@@ -1,15 +1,13 @@
 import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AllGiftTile extends StatelessWidget {
   final GiftsModel gift;
 
-  const AllGiftTile({
-    super.key,
-    required this.gift,
-  });
+  const AllGiftTile({super.key, required this.gift});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +45,7 @@ class AllGiftTile extends StatelessWidget {
             title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontWeight: FontWeight.w800,
-              fontSize: 14,
-            ),
+            style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 14),
           ),
           const SizedBox(height: 6),
           Container(
@@ -60,7 +55,7 @@ class AllGiftTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(999),
             ),
             child: Text(
-              '$points Points',
+              '$points ${'gifts.points'.tr()}',
               style: const TextStyle(
                 color: primaryColor,
                 fontWeight: FontWeight.w800,

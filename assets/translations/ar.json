@@ -69,7 +69,20 @@
   },
   "cart": {
     "title": "سلة المشتريات",
-    "empty": "سلة المشتريات فارغة"
+    "empty": "سلة المشتريات فارغة",
+    "set_new_quantity": "تعيين كمية جديدة",
+    "quantity": "الكمية",
+    "cancel": "إلغاء",
+    "ok": "موافق",
+    "valid_quantity_error": "يرجى إدخال رقم صحيح\nبين 1 و 999",
+    "remove_item": "إزالة المنتج",
+    "remove_item_confirm": "هل أنت متأكد من رغبتك في إزالة هذا المنتج من السلة؟",
+    "remove": "إزالة",
+    "subtotal": "المجموع",
+    "discount": "الخصم",
+    "total": "الإجمالي",
+    "items_count": "عدد المنتجات: {0}",
+    "place_order": "تقديم الطلب"
   },
   "products": {
     "all": {
@@ -129,7 +142,23 @@
     "address": "العنوان",
     "check": "تأكيد",
     "submitting": "جارٍ تقديم الطلب...",
-    "submit_disclaimer": "بالضغط على \"تقديم الطلب\"، سيتم إرسال طلبك باستخدام التفاصيل أعلاه."
+    "submit_disclaimer": "بالضغط على \"تقديم الطلب\"، سيتم إرسال طلبك باستخدام التفاصيل أعلاه.",
+    "no_saved_addresses": "لا توجد عناوين محفوظة، يرجى إضافة عنوان أولاً من صفحة العناوين",
+    "add_address": "إضافة عنوان",
+    "confirm_order": "تأكيد الطلب",
+    "delivery_address": "عنوان التوصيل",
+    "no_delivery_address_selected": "لم يتم تحديد عنوان للتوصيل",
+    "order_items": "عناصر الطلب",
+    "unknown_product": "منتج غير معروف",
+    "color": "اللون",
+    "qty": "الكمية",
+    "order_summary": "ملخص الطلب",
+    "items": "العناصر",
+    "subtotal": "المجموع",
+    "delivery_fee": "رسوم التوصيل",
+    "discount": "الخصم",
+    "total": "الإجمالي",
+    "no_items_in_cart": "لا توجد عناصر في السلة"
   },
   "order_details": {
     "title": "تفاصيل الطلب",

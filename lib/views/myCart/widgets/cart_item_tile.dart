@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -268,8 +269,8 @@ class _CartItemTileState extends State<CartItemTile> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text(
-                'Set new quantity',
+              title: Text(
+                'cart.set_new_quantity'.tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               content: Column(
@@ -280,7 +281,7 @@ class _CartItemTileState extends State<CartItemTile> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
-                      label: const Text('Quantity'),
+                      label: Text('cart.quantity'.tr()),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
@@ -296,7 +297,7 @@ class _CartItemTileState extends State<CartItemTile> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Cancel'),
+                      child: Text('cart.cancel'.tr()),
                     ),
                     TextButton(
                       onPressed: () {
@@ -305,12 +306,11 @@ class _CartItemTileState extends State<CartItemTile> {
                           Navigator.of(context).pop(q);
                         } else {
                           setState(() {
-                            errorText =
-                                'Please enter a valid number\\nbetween 1 and 999';
+                            errorText = 'cart.valid_quantity_error'.tr();
                           });
                         }
                       },
-                      child: const Text('OK'),
+                      child: Text('cart.ok'.tr()),
                     ),
                   ],
                 ),

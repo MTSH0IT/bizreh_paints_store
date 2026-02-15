@@ -1,7 +1,8 @@
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/manageAddress/manage_address_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
@@ -31,13 +32,13 @@ class AddressStep extends StatelessWidget {
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'لا توجد عناوين محفوظة، قم بإضافة عنوان أولاً من صفحة العناوين',
+            Text(
+              'order_init.no_saved_addresses'.tr(),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             MainButton(
-              title: 'Add Address',
+              title: 'order_init.add_address'.tr(),
               onPressed: () {
                 Get.to(() => ManageAddressView());
               },

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:bizreh_paints_store/utils/func/color_degree.dart';
+import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 
 class ConfirmStep extends StatelessWidget {
@@ -26,15 +28,15 @@ class ConfirmStep extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                'Confirm Order',
+              Text(
+                'order_init.confirm_order'.tr(),
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
 
               // Address
               Text(
-                'Delivery address',
+                'order_init.delivery_address'.tr(),
                 style: TextStyle(fontSize: 14, color: Colors.grey[700]),
               ),
               const SizedBox(height: 4),
@@ -47,15 +49,15 @@ class ConfirmStep extends StatelessWidget {
                   ),
                 )
               else
-                const Text('No delivery address selected'),
+                Text('order_init.no_delivery_address_selected'.tr()),
 
               const SizedBox(height: 16),
               const Divider(),
               const SizedBox(height: 8),
 
               // Cart items
-              const Text(
-                'Order Items',
+              Text(
+                'order_init.order_items'.tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
@@ -72,7 +74,8 @@ class ConfirmStep extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                item.product?.title ?? 'Unknown Product',
+                                item.product?.title ??
+                                    'order_init.unknown_product'.tr(),
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
@@ -90,12 +93,24 @@ class ConfirmStep extends StatelessWidget {
                               ],
                               if (item.packaging?.color?.degree != null) ...[
                                 const SizedBox(height: 2),
-                                Text(
-                                  'Color: ${item.packaging!.color!.degree!}',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey[600],
-                                  ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${'order_init.color'.tr()}: ${item.packaging!.color!.degree!}',
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.grey[600],
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    ColorDot(
+                                      color: parseColorDegree(
+                                        item.packaging!.color!.degree!,
+                                      ),
+                                      selected: false,
+                                      width: 16,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ],
@@ -104,7 +119,7 @@ class ConfirmStep extends StatelessWidget {
                         Expanded(
                           flex: 1,
                           child: Text(
-                            'Qty: ${item.quantityPerUnit}',
+                            '${'order_init.qty'.tr()}: ${item.quantityPerUnit}',
                             style: const TextStyle(fontSize: 12),
                             textAlign: TextAlign.center,
                           ),
@@ -125,8 +140,8 @@ class ConfirmStep extends StatelessWidget {
                   ),
                 ),
               ] else ...[
-                const Text(
-                  'No items in cart',
+                Text(
+                  'order_init.no_items_in_cart'.tr(),
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ],
@@ -136,30 +151,36 @@ class ConfirmStep extends StatelessWidget {
               const SizedBox(height: 8),
 
               // Order summary
-              const Text(
-                'Order summary',
+              Text(
+                'order_init.order_summary'.tr(),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               const SizedBox(height: 8),
-              Text('Items: $itemsCount', style: const TextStyle(fontSize: 14)),
-              const SizedBox(height: 4),
-              Text('Subtotal: $subtotal', style: const TextStyle(fontSize: 14)),
+              Text(
+                '${'order_init.items'.tr()}: $itemsCount',
+                style: const TextStyle(fontSize: 14),
+              ),
               const SizedBox(height: 4),
               Text(
-                'Delivery Fee: $deliveryFee',
+                '${'order_init.subtotal'.tr()}: $subtotal',
+                style: const TextStyle(fontSize: 14),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '${'order_init.delivery_fee'.tr()}: $deliveryFee',
                 style: const TextStyle(fontSize: 14),
               ),
               if (double.tryParse(discountAmount) != null &&
                   double.tryParse(discountAmount)! > 0) ...[
                 const SizedBox(height: 4),
                 Text(
-                  'Discount: -$discountAmount',
+                  '${'order_init.discount'.tr()}: -$discountAmount',
                   style: const TextStyle(fontSize: 14, color: Colors.green),
                 ),
               ],
               const SizedBox(height: 8),
               Text(
-                'Total: $total',
+                '${'order_init.total'.tr()}: $total',
                 style: const TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,

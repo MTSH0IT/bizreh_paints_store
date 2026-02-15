@@ -2,6 +2,7 @@ import 'package:bizreh_paints_store/models/cart_model/summary.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CartSummarySection extends StatelessWidget {
@@ -40,12 +41,12 @@ class CartSummarySection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            PriceRow(label: 'Subtotal', amount: subtotal),
+            PriceRow(label: 'cart.subtotal'.tr(), amount: subtotal),
             //PriceRow(label: 'Delivery Fee', amount: delivery),
-            PriceRow(label: 'Discount', amount: -discount),
+            PriceRow(label: 'cart.discount'.tr(), amount: -discount),
             const Divider(),
             PriceRow(
-              label: 'Total',
+              label: 'cart.total'.tr(),
               amount: total,
               emphasis: true,
               color: primaryColor,
@@ -54,12 +55,12 @@ class CartSummarySection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
-                  'Items Count: $itemsCount',
+                  'cart.items_count'.tr().replaceAll('{0}', '$itemsCount'),
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
                 ),
               ),
 
-            MainButton(title: 'Place Order', onPressed: onCheckout),
+            MainButton(title: 'cart.place_order'.tr(), onPressed: onCheckout),
           ],
         ),
       ),

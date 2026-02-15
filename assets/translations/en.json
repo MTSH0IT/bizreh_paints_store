@@ -69,7 +69,20 @@
   },
   "cart": {
     "title": "My Cart",
-    "empty": "Your cart is empty"
+    "empty": "Your cart is empty",
+    "set_new_quantity": "Set new quantity",
+    "quantity": "Quantity",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "valid_quantity_error": "Please enter a valid number\nbetween 1 and 999",
+    "remove_item": "Remove Item",
+    "remove_item_confirm": "Are you sure you want to remove this item from cart?",
+    "remove": "Remove",
+    "subtotal": "Subtotal",
+    "discount": "Discount",
+    "total": "Total",
+    "items_count": "Items Count: {0}",
+    "place_order": "Place Order"
   },
   "products": {
     "all": {
@@ -129,7 +142,23 @@
     "address": "Address",
     "check": "Check",
     "submitting": "Submitting order...",
-    "submit_disclaimer": "By pressing \"Submit order\", your order will be sent using the details above."
+    "submit_disclaimer": "By pressing \"Submit order\", your order will be sent using the details above.",
+    "no_saved_addresses": "No saved addresses, please add an address first from the addresses page",
+    "add_address": "Add Address",
+    "confirm_order": "Confirm Order",
+    "delivery_address": "Delivery address",
+    "no_delivery_address_selected": "No delivery address selected",
+    "order_items": "Order Items",
+    "unknown_product": "Unknown Product",
+    "color": "Color",
+    "qty": "Qty",
+    "order_summary": "Order summary",
+    "items": "Items",
+    "subtotal": "Subtotal",
+    "delivery_fee": "Delivery Fee",
+    "discount": "Discount",
+    "total": "Total",
+    "no_items_in_cart": "No items in cart"
   },
   "order_details": {
     "title": "Order Details",

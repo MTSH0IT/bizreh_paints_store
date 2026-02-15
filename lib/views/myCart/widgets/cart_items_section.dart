@@ -2,8 +2,9 @@ import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/cart_item_tile.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class CartItemsSection extends StatelessWidget {
   const CartItemsSection({
@@ -51,11 +52,10 @@ class CartItemsSection extends StatelessWidget {
                   },
                   onDelete: () {
                     Get.defaultDialog(
-                      title: 'Remove Item',
-                      middleText:
-                          'Are you sure you want to remove this item from the cart?',
+                      title: 'cart.remove_item'.tr(),
+                      middleText: 'cart.remove_item_confirm'.tr(),
                       confirm: MainButton(
-                        title: 'Remove',
+                        title: 'cart.remove'.tr(),
                         onPressed: () {
                           final cartItemId = item.id ?? 0;
                           cartController.deleteCartItem(cartItemId);
@@ -63,7 +63,7 @@ class CartItemsSection extends StatelessWidget {
                         },
                       ),
                       cancel: MainButton(
-                        title: 'Cancel',
+                        title: 'cart.cancel'.tr(),
                         onPressed: () => Get.back(),
                       ),
                     );

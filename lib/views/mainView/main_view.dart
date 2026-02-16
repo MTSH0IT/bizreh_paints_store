@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/views/home/home_view.dart';
@@ -36,27 +37,30 @@ class MainView extends StatelessWidget {
           currentIndex: controller.selectedIndex.value,
           type: BottomNavigationBarType.fixed,
           onTap: (i) => controller.selectedIndex.value = i,
-          items: const [
+          items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              label: 'Home',
+              icon: const Icon(Icons.home_outlined),
+              label: 'home.title'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.card_giftcard),
-              label: 'Gifts',
-            ),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite_border),
-              label: 'WishList',
+              icon: const Icon(Icons.card_giftcard),
+              label: 'gifts.title'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_outlined),
-              label: 'Cart',
+              icon: const Icon(Icons.search),
+              label: 'search.search'.tr(),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              label: 'Profile',
+              icon: const Icon(Icons.favorite_border),
+              label: 'wishlist.title'.tr(),
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.shopping_cart_outlined),
+              label: 'cart.title'.tr(),
+            ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.person_outline),
+              label: 'profile.account'.tr(),
             ),
           ],
         ),

@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class OrderItemsCard extends StatelessWidget {
@@ -21,9 +22,9 @@ class OrderItemsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Items Ordered',
-              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+            Text(
+              'order_details.items_ordered'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
             ),
             const SizedBox(height: 8),
             ListView.separated(
@@ -129,7 +130,7 @@ class _ItemOrder extends StatelessWidget {
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
                 Text(
-                  'Qty: $quantity',
+                  '${'order_details.qty'.tr()}: $quantity',
                   style: const TextStyle(color: Colors.black54, fontSize: 14),
                 ),
               ],

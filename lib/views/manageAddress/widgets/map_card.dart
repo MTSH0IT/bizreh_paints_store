@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'map_widget.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class MapCard extends StatelessWidget {
   const MapCard({super.key, required this.center});
@@ -12,10 +13,10 @@ class MapCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(left: 4, bottom: 8, top: 12),
           child: Text(
-            'Get Current Location',
+            'address_manage.get_current_location'.tr(),
             style: TextStyle(
               fontSize: 12,
               color: Colors.black54,
@@ -38,9 +39,9 @@ class MapCard extends StatelessWidget {
                     zoom: 13,
                   )
                 else
-                  const Center(
+                  Center(
                     child: Text(
-                      'Updating location...',
+                      'address_manage.updating_location'.tr(),
                       style: TextStyle(color: Colors.black54),
                     ),
                   ),

@@ -12,8 +12,8 @@ class Item {
   int? optionPackagingId;
   int? quantityPerUnit;
   String? productSku;
-  int? unitPrice;
-  int? totalPrice;
+  num? unitPrice;
+  num? totalPrice;
   DateTime? createdAt;
   Product? product;
   ProductOption? productOption;
@@ -54,8 +54,8 @@ class Item {
     optionPackagingId: json['option_packaging_id'] as int?,
     quantityPerUnit: json['quantity_per_unit'] as int?,
     productSku: json['product_sku'] as String?,
-    unitPrice: json['unit_price'] as int?,
-    totalPrice: json['total_price'] as int?,
+    unitPrice: json['unit_price'] as num?,
+    totalPrice: json['total_price'] as num?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),

@@ -47,10 +47,9 @@ class AvailableGiftsTab extends StatelessWidget {
                       context: context,
                       builder: (context) => ConfirmationDialog(
                         title: 'gifts.confirm_redemption'.tr(),
-                        message: 'gifts.confirm_redemption_message'
-                            .tr()
-                            .replaceAll('{0}', '"$giftTitle"')
-                            .replaceAll('{1}', '$giftPoints'),
+                        message: 'gifts.confirm_redemption_message'.tr(
+                          args: [giftTitle, '$giftPoints'],
+                        ),
                         confirmText: 'gifts.confirm'.tr(),
                         cancelText: 'gifts.cancel'.tr(),
                         onConfirm: () => ctrl.redeemGift(giftId),

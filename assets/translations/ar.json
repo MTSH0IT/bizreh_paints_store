@@ -93,7 +93,10 @@
   "orders": {
     "history": {
       "title": "سجل الطلبات",
-      "empty": "لا يوجد طلبات سابقة"
+      "empty": "لا يوجد طلبات سابقة",
+      "order_no": "طلب رقم {}",
+      "cancel": "إلغاء",
+      "view_details": "عرض التفاصيل"
     },
     "cancel": {
       "title": "إلغاء الطلب",
@@ -171,25 +174,31 @@
     "reordering": "جارٍ إعادة الطلب...",
     "reorder": "إعادة الطلب",
     "date_placed": "تاريخ الطلب",
-    "payment": "الدفع"
+    "payment": "الدفع",
+    "order_no": "طلب رقم {}",
+    "items_ordered": "العناصر المطلوبة",
+    "qty": "الكمية",
+    "order_summary": "ملخص الطلب",
+    "shipping_details": "تفاصيل الشحن",
+    "total": "الإجمالي"
   },
   "address": {
     "edit": "تعديل العنوان",
     "add_new": "إضافة عنوان جديد",
-    "nickname": "الاسم المستعار",
-    "nickname_hint": "أدخل اسمًا مستعارًا",
+    "nickname": "الاسم المميز",
+    "nickname_hint": "أدخل اسمًا مميزًا",
     "city": "المدينة",
-    "address_line": "عنوان السطر",
-    "address_line_hint": "أدخل عنوان السطر",
+    "address_line": "عنوان الشارع",
+    "address_line_hint": "أدخل عنوان الشارع",
     "notes": "ملاحظات",
     "notes_hint": "أدخل ملاحظات",
     "please_wait": "يرجى الانتظار...",
     "update": "تحديث العنوان",
     "save": "حفظ العنوان",
     "default": "افتراضي",
-    "nickname_default": "الاسم المستعار",
+    "nickname_default": "الاسم المميز",
     "city_default": "المدينة",
-    "line_default": "عنوان السطر",
+    "line_default": "عنوان الشارع",
     "note_default": "ملاحظة"
   },
   "product_details": {
@@ -238,6 +247,7 @@
     "last_name_required": "يرجى إدخال اسمك الأخير"
   },
   "home": {
+    "title": "الرئيسية",
     "top_brands": "أفضل العلامات التجارية",
     "categories": "التصنيفات",
     "featured_products": "منتجات مميزة",
@@ -245,7 +255,7 @@
     "see_all": "عرض الكل"
   },
   "gifts": {
-    "title": "كل الهدايا",
+    "title": "الهدايا",
     "view_all": "عرض الكل",
     "no_gifts_found": "لا توجد هدايا",
     "try_again_later": "حاول مرة أخرى لاحقاً.",
@@ -260,7 +270,7 @@
     "no_gifts_yet": "لا توجد هدايا بعد",
     "redeemed_gifts_appear_here": "ستظهر هداياك المستبدلة هنا.",
     "confirm_redemption": "تأكيد استبدال الهدايا",
-    "confirm_redemption_message": "هل أنت متأكد من رغبتك في استبدال \"{0}\" مقابل {1} نقطة؟",
+    "confirm_redemption_message": "هل أنت متأكد من رغبتك في استبدال \"{}\" مقابل {} نقطة؟",
     "confirm": "تأكيد",
     "cancel": "إلغاء"
   },
@@ -270,5 +280,13 @@
     "balance": "رصيد النقاط",
     "earned": "المكتسبة",
     "spent": "المستهلكة"
+  },
+  "address_manage": {
+    "select_city": "اختر المدينة",
+    "select_location": "اختر الموقع",
+    "confirm": "تأكيد",
+    "tap_to_select_location": "اضغط لاختيار الموقع",
+    "get_current_location": "الحصول على الموقع الحالي",
+    "updating_location": "جارٍ تحديث الموقع..."
   }
 }

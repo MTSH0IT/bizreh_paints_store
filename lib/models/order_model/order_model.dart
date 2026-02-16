@@ -11,7 +11,7 @@ class OrderModel {
   int? supplierId;
   int? addressId;
   int? driverId;
-  int? totalAmount;
+  num? totalAmount;
   String? status;
   String? paymentStatus;
   DateTime? createdAt;
@@ -51,7 +51,7 @@ class OrderModel {
     supplierId: json['supplier_id'] as int?,
     addressId: json['address_id'] as int?,
     driverId: json['driver_id'] as int?,
-    totalAmount: json['total_amount'] as int?,
+    totalAmount: json['total_amount'] as num?,
     status: json['status'] as String?,
     paymentStatus: json['payment_status'] as String?,
     createdAt: json['created_at'] == null

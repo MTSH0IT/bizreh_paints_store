@@ -1,6 +1,6 @@
 class OptionPackaging {
   int? id;
-  int? pricePerUnit;
+  num? pricePerUnit;
   int? packagingId;
   int? stockQuantity;
 
@@ -19,7 +19,7 @@ class OptionPackaging {
   factory OptionPackaging.fromJson(Map<String, dynamic> json) {
     return OptionPackaging(
       id: json['id'] as int?,
-      pricePerUnit: json['price_per_unit'] as int?,
+      pricePerUnit: json['price_per_unit'] as num?,
       packagingId: json['packaging_id'] as int?,
       stockQuantity: json['stock_quantity'] as int?,
     );

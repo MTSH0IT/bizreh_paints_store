@@ -28,7 +28,7 @@ class OrderIdCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Order #$orderNo',
+                  'order_details.order_no'.tr(args: [orderNo]),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,

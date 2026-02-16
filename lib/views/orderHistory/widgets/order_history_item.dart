@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OrderHistoryItem extends StatelessWidget {
   final String orderNo;
   final String date;
-  final double amount;
+  final num amount;
   final String statusLabel;
   final VoidCallback onAction;
   final VoidCallback? onCancel;
@@ -47,7 +48,7 @@ class OrderHistoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Order #$orderNo',
+                      'orders.history.order_no'.tr(args: [orderNo]),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
@@ -100,9 +101,9 @@ class OrderHistoryItem extends StatelessWidget {
                   style: TextButton.styleFrom(
                     foregroundColor: Colors.redAccent,
                   ),
-                  child: const Text(
-                    'Cancel',
-                    style: TextStyle(fontWeight: FontWeight.w600),
+                  child: Text(
+                    'orders.history.cancel'.tr(),
+                    style: const TextStyle(fontWeight: FontWeight.w600),
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -110,9 +111,9 @@ class OrderHistoryItem extends StatelessWidget {
               TextButton(
                 onPressed: onAction,
                 style: TextButton.styleFrom(foregroundColor: primaryColor),
-                child: const Text(
-                  'View Details',
-                  style: TextStyle(fontWeight: FontWeight.w600),
+                child: Text(
+                  'orders.history.view_details'.tr(),
+                  style: const TextStyle(fontWeight: FontWeight.w600),
                 ),
               ),
             ],

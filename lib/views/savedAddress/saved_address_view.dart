@@ -36,7 +36,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
         ),
         title: Text(
-          'address.saved.title'.tr(),
+          'saved_address.title'.tr(),
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
@@ -57,7 +57,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             return const BuildProgressIndicator();
           }
           if (items.isEmpty) {
-            return Center(child: Text('address.saved.empty'.tr()));
+            return Center(child: Text('saved_address.empty'.tr()));
           }
           return ListView.builder(
             padding: const EdgeInsets.all(16),
@@ -91,9 +91,9 @@ class _SavedAddressViewState extends State<SavedAddressView> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('address.delete.title'.tr()),
+        title: Text('saved_address.delete.title'.tr()),
         content: Text(
-          'address.delete.message'.tr(args: [address.nickname ?? '']),
+          'saved_address.delete.message'.tr(args: [address.nickname ?? '']),
         ),
         actions: [
           TextButton(

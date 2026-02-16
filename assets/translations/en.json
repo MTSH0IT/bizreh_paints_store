@@ -81,7 +81,7 @@
     "subtotal": "Subtotal",
     "discount": "Discount",
     "total": "Total",
-    "items_count": "Items Count: {0}",
+    "items_count": "Items Count: {}",
     "place_order": "Place Order"
   },
   "products": {
@@ -93,7 +93,10 @@
   "orders": {
     "history": {
       "title": "Order History",
-      "empty": "No previous orders"
+      "empty": "No previous orders",
+      "order_no": "Order #{}",
+      "cancel": "Cancel",
+      "view_details": "View Details"
     },
     "cancel": {
       "title": "Cancel Order",
@@ -171,7 +174,13 @@
     "reordering": "Reordering...",
     "reorder": "Reorder",
     "date_placed": "Date Placed",
-    "payment": "Payment"
+    "payment": "Payment",
+    "order_no": "Order #{}",
+    "items_ordered": "Items Ordered",
+    "qty": "Qty",
+    "order_summary": "Order Summary",
+    "shipping_details": "Shipping Details",
+    "total": "Total"
   },
   "address": {
     "edit": "Edit Address",
@@ -238,6 +247,7 @@
     "last_name_required": "Please enter your last name"
   },
   "home": {
+    "title": "home",
     "top_brands": "Top Brands",
     "categories": "Categories",
     "featured_products": "Featured Products",
@@ -245,7 +255,7 @@
     "see_all": "See All"
   },
   "gifts": {
-    "title": "All Gifts",
+    "title": "Gifts",
     "view_all": "View All",
     "no_gifts_found": "No gifts found",
     "try_again_later": "Try again later.",
@@ -260,7 +270,7 @@
     "no_gifts_yet": "No gifts yet",
     "redeemed_gifts_appear_here": "Your redeemed gifts will appear here.",
     "confirm_redemption": "Confirm Gift Redemption",
-    "confirm_redemption_message": "Are you sure you want to redeem \"{0}\" for {1} points?",
+    "confirm_redemption_message": "Are you sure you want to redeem \"{}\" for {} points?",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
@@ -270,5 +280,13 @@
     "balance": "Your Points Balance",
     "earned": "Earned",
     "spent": "Spent"
+  },
+  "address_manage": {
+    "select_city": "Select City",
+    "select_location": "Select Location",
+    "confirm": "Confirm",
+    "tap_to_select_location": "Tap to select location",
+    "get_current_location": "Get Current Location",
+    "updating_location": "Updating location..."
   }
 }

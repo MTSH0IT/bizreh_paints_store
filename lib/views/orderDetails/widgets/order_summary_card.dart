@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OrderSummaryCard extends StatelessWidget {
   const OrderSummaryCard({super.key, required this.order});
@@ -18,13 +19,13 @@ class OrderSummaryCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Order Summary',
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            Text(
+              'order_details.order_summary'.tr(),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
             _buildSummaryRow(
-              'total',
+              'order_details.total'.tr(),
               _formatCurrency(formatPrice(totalAmount)),
               isBold: true,
             ),

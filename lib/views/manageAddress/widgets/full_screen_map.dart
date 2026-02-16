@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
 import 'map_widget.dart';
 
 class FullScreenMap extends StatefulWidget {
@@ -24,7 +25,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select Location'),
+        title: Text('address_manage.select_location'.tr()),
         centerTitle: true,
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
@@ -37,7 +38,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
               icon: const Icon(Icons.check),
-              label: const Text('Confirm'),
+              label: Text('address_manage.confirm'.tr()),
             )
           : null,
       body: Stack(
@@ -71,8 +72,8 @@ class _FullScreenMapState extends State<FullScreenMap> {
                   ),
                 ],
               ),
-              child: const Text(
-                'Tap to select location',
+              child: Text(
+                'address_manage.tap_to_select_location'.tr(),
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),

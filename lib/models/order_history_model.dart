@@ -4,9 +4,9 @@ class OrderHistoryModel {
   int? userId;
   int? addressId;
   dynamic driverId;
-  double? totalAmount;
-  int? discountAmount;
-  double? finalAmount;
+  num? totalAmount;
+  num? discountAmount;
+  num? finalAmount;
   String? status;
   String? paymentStatus;
   DateTime? createdAt;
@@ -47,9 +47,9 @@ class OrderHistoryModel {
       userId: json['user_id'] as int?,
       addressId: json['address_id'] as int?,
       driverId: json['driver_id'] as dynamic,
-      totalAmount: (json['total_amount'] as num?)?.toDouble(),
-      discountAmount: json['discount_amount'] as int?,
-      finalAmount: (json['final_amount'] as num?)?.toDouble(),
+      totalAmount: json['total_amount'] as num?,
+      discountAmount: json['discount_amount'] as num?,
+      finalAmount: json['final_amount'] as num?,
       status: json['status'] as String?,
       paymentStatus: json['payment_status'] as String?,
       createdAt: json['created_at'] == null

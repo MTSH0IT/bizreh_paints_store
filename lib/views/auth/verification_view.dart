@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:ui' as ui;
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_link.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/otp_code_fields.dart';
@@ -55,7 +56,12 @@ class _VerificationViewState extends State<VerificationView> {
                     title: 'auth.verification.enter_code'.tr(),
                     subtitle: 'auth.verification.subtitle'.tr(),
                   ),
-                  OtpCodeFields(onCompleted: (v) => setState(() => _code = v)),
+                  Directionality(
+                    textDirection: ui.TextDirection.ltr,
+                    child: OtpCodeFields(
+                      onCompleted: (v) => setState(() => _code = v),
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),

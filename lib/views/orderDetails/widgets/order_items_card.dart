@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/models/order_model/item.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
@@ -52,11 +53,23 @@ class _ItemOrder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = item.product?.title ?? '';
+    final title = context.localizedValue(
+      en: item.product?.title,
+      ar: item.product?.arTitle,
+      fallback: '',
+    );
     final quantity = item.quantityPerUnit ?? 0;
     final price = (item.totalPrice ?? 0).toDouble();
-    final optionName = item.productOption?.optionName ?? "";
-    final packagingTitle = item.packaging?.title ?? "";
+    final optionName = context.localizedValue(
+      en: item.productOption?.optionName,
+      ar: item.productOption?.arOptionName,
+      fallback: '',
+    );
+    final packagingTitle = context.localizedValue(
+      en: item.packaging?.title,
+      ar: item.packaging?.arTitle,
+      fallback: '',
+    );
     final colorDegree = item.color?.degree;
     final hasColor = colorDegree?.trim().isNotEmpty ?? false;
 

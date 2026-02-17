@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/models/product_model/packaging_option.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
@@ -88,7 +89,11 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                               children: [
                                 if (v.color != null)
                                   Text(
-                                    v.color!.name ?? '',
+                                    context.localizedValue(
+                                      en: v.color!.name,
+                                      ar: v.color!.arName,
+                                      fallback: '',
+                                    ),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,

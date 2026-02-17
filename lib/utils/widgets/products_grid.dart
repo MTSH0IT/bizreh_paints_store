@@ -1,8 +1,9 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class ProductsGrid extends StatelessWidget {
   const ProductsGrid({
@@ -80,21 +81,33 @@ class _ProductCard extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                product.title ?? '',
+                context.localizedValue(
+                  en: product.title,
+                  ar: product.arTitle,
+                  fallback: '',
+                ),
                 style: const TextStyle(fontWeight: FontWeight.w600),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 4),
               Text(
-                product.brandName ?? '',
+                context.localizedValue(
+                  en: product.brandName,
+                  ar: product.arBrandName,
+                  fallback: '',
+                ),
                 style: const TextStyle(fontSize: 12, color: Colors.black54),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
               // const SizedBox(height: 8),
               Text(
-                product.subCategoryName ?? '',
+                context.localizedValue(
+                  en: product.subCategoryName,
+                  ar: product.arSubCategoryName,
+                  fallback: '',
+                ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
@@ -33,26 +34,6 @@ class _CartItemTileState extends State<CartItemTile> {
   String get _image {
     final optionImage = widget.item.option?.mainImage ?? "";
     return optionImage;
-  }
-
-  String get _title {
-    final product = widget.item.product?.title ?? "";
-    return product;
-  }
-
-  String? get _optionName {
-    final option = widget.item.option?.optionName ?? "";
-    return option;
-  }
-
-  String? get _packagingTitle {
-    final packaging = widget.item.packaging?.title ?? "";
-    return packaging;
-  }
-
-  String? get _categoryTitle {
-    final category = widget.item.category?.title ?? "";
-    return category;
   }
 
   String? get _colorDegreeValue => widget.item.packaging?.color?.degree;
@@ -97,7 +78,11 @@ class _CartItemTileState extends State<CartItemTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  _title,
+                  context.localizedValue(
+                    en: widget.item.product?.title,
+                    ar: widget.item.product?.arTitle,
+                    fallback: '',
+                  ),
                   style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
@@ -106,8 +91,15 @@ class _CartItemTileState extends State<CartItemTile> {
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 2),
-                if ((_categoryTitle?.trim().isNotEmpty ?? false))
-                  Text(_categoryTitle!),
+                if (((widget.item.category?.title ?? '').trim().isNotEmpty) ||
+                    ((widget.item.category?.arTitle ?? '').trim().isNotEmpty))
+                  Text(
+                    context.localizedValue(
+                      en: widget.item.category?.title,
+                      ar: widget.item.category?.arTitle,
+                      fallback: '',
+                    ),
+                  ),
                 const SizedBox(height: 2),
                 DecoratedBox(
                   decoration: BoxDecoration(
@@ -126,10 +118,32 @@ class _CartItemTileState extends State<CartItemTile> {
                         runSpacing: 4,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
-                          if ((_optionName?.trim().isNotEmpty ?? false))
-                            Text(_optionName!),
-                          if ((_packagingTitle?.trim().isNotEmpty ?? false))
-                            Text(_packagingTitle!),
+                          if (((widget.item.option?.optionName ?? '')
+                                  .trim()
+                                  .isNotEmpty) ||
+                              ((widget.item.option?.arOptionName ?? '')
+                                  .trim()
+                                  .isNotEmpty))
+                            Text(
+                              context.localizedValue(
+                                en: widget.item.option?.optionName,
+                                ar: widget.item.option?.arOptionName,
+                                fallback: '',
+                              ),
+                            ),
+                          if (((widget.item.packaging?.title ?? '')
+                                  .trim()
+                                  .isNotEmpty) ||
+                              ((widget.item.packaging?.arTitle ?? '')
+                                  .trim()
+                                  .isNotEmpty))
+                            Text(
+                              context.localizedValue(
+                                en: widget.item.packaging?.title,
+                                ar: widget.item.packaging?.arTitle,
+                                fallback: '',
+                              ),
+                            ),
                           if (_hasColor)
                             Padding(
                               padding: const EdgeInsets.all(1),

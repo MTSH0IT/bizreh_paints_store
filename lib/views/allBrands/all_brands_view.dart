@@ -1,7 +1,8 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/brand/brand_products_view.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 import '../../utils/widgets/see_all_card.dart';
@@ -42,7 +43,11 @@ class AllBrandsView extends StatelessWidget {
             itemBuilder: (context, index) {
               final item = items[index];
               return SeeAllCard(
-                name: item.title ?? '',
+                name: context.localizedValue(
+                  en: item.title,
+                  ar: item.arTitle,
+                  fallback: '',
+                ),
                 imageUrl: item.image ?? '',
                 onTap: () {
                   Get.to(() => BrandProductsView(brand: item));

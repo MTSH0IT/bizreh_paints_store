@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dar
 import 'package:bizreh_paints_store/models/category_tree/category.dart';
 import 'package:bizreh_paints_store/models/category_tree/sub_category.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class CatogorieDitailsView extends StatefulWidget {
   const CatogorieDitailsView({super.key, required this.superCategory});
@@ -22,16 +23,12 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late List<Category> _categories;
-  late List<String> _tabs;
 
   @override
   void initState() {
     super.initState();
     _categories = widget.superCategory.categories ?? [];
-    _tabs = _categories.isNotEmpty
-        ? _categories.map((c) => c.title ?? '').toList()
-        : [];
-    _tabController = TabController(length: _tabs.length, vsync: this);
+    _tabController = TabController(length: _categories.length, vsync: this);
   }
 
   @override
@@ -45,7 +42,13 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(widget.superCategory.title ?? 'Categories'),
+        title: Text(
+          context.localizedValue(
+            en: widget.superCategory.title,
+            ar: widget.superCategory.arTitle,
+            fallback: 'Categories',
+          ),
+        ),
         centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -60,7 +63,16 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
             ),
             indicatorColor: primaryColor,
             indicatorWeight: 2.0,
-            tabs: _tabs.map((t) => Tab(text: t)).toList(),
+            tabs: List.generate(
+              _categories.length,
+              (i) => Tab(
+                text: context.localizedValue(
+                  en: _categories[i].title,
+                  ar: _categories[i].arTitle,
+                  fallback: '',
+                ),
+              ),
+            ),
           ),
         ),
       ),
@@ -68,7 +80,7 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
         child: TabBarView(
           controller: _tabController,
           children: List.generate(
-            _tabs.length,
+            _categories.length,
             (index) => _SubCategoriesGrid(
               subCategories: _categories.isNotEmpty
                   ? (_categories[index].subCategories ?? const [])
@@ -102,7 +114,15 @@ class _SubCategoriesGrid extends StatelessWidget {
             Get.find<HomeController>().loadSubCategoryProducts(
               subCategory: sc.id,
             );
-            Get.to(() => _SubCategoryProducts(title: sc.title ?? 'Products'));
+            Get.to(
+              () => _SubCategoryProducts(
+                title: context.localizedValue(
+                  en: sc.title,
+                  ar: sc.arTitle,
+                  fallback: 'Products',
+                ),
+              ),
+            );
           },
           child: ListCategory(sc: sc),
         );
@@ -142,7 +162,11 @@ class ListCategory extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  sc.title ?? '',
+                  context.localizedValue(
+                    en: sc.title,
+                    ar: sc.arTitle,
+                    fallback: '',
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(fontWeight: FontWeight.w700),

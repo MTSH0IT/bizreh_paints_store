@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/models/wishlist_model/wishlist_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +28,21 @@ class WishListItemCard extends StatelessWidget {
     final cont = Get.find<WishListController>();
 
     final image = item.productOption?.mainImage ?? item.product?.image ?? "";
-    final title = item.product?.title ?? "";
-    final optionName = item.productOption?.optionName ?? "";
-    final packagingTitle = item.optionPackaging?.packaging?.title ?? "";
+    final title = context.localizedValue(
+      en: item.product?.title,
+      ar: item.product?.arTitle,
+      fallback: '',
+    );
+    final optionName = context.localizedValue(
+      en: item.productOption?.optionName,
+      ar: item.productOption?.arOptionName,
+      fallback: '',
+    );
+    final packagingTitle = context.localizedValue(
+      en: item.optionPackaging?.packaging?.title,
+      ar: item.optionPackaging?.packaging?.arTitle,
+      fallback: '',
+    );
     final pricePerUnit = item.optionPackaging?.pricePerUnit ?? 0;
     final colorDegree = item.optionPackaging?.color?.degree;
 

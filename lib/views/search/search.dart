@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/controllers/filter_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
@@ -66,7 +67,11 @@ class Search extends StatelessWidget {
                                   _searchController.isOptionsLoading.value,
                               options: _searchController.brands,
                               idOf: (b) => b.id,
-                              titleOf: (b) => b.title ?? '',
+                              titleOf: (b) => context.localizedValue(
+                                en: b.title,
+                                ar: b.arTitle,
+                                fallback: '',
+                              ),
                               onChanged: _searchController.setBrand,
                             ),
                           ),
@@ -81,7 +86,11 @@ class Search extends StatelessWidget {
                                   _searchController.isOptionsLoading.value,
                               options: _searchController.subCategories,
                               idOf: (c) => c.id,
-                              titleOf: (c) => c.title ?? '',
+                              titleOf: (c) => context.localizedValue(
+                                en: c.title,
+                                ar: c.arTitle,
+                                fallback: '',
+                              ),
                               onChanged: _searchController.setSubCategory,
                             ),
                           ),

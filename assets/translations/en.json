@@ -288,5 +288,9 @@
     "tap_to_select_location": "Tap to select location",
     "get_current_location": "Get Current Location",
     "updating_location": "Updating location..."
+  },
+  "brand": {
+    "products_title": "Brand Products",
+    "no_products": "No products"
   }
 }

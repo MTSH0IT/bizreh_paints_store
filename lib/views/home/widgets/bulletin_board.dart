@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/ads_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -82,7 +83,11 @@ class _BannerCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    banner.title ?? "",
+                    context.localizedValue(
+                      en: banner.title,
+                      ar: banner.arTitle,
+                      fallback: '',
+                    ),
                     style: const TextStyle(
                       fontWeight: FontWeight.w700,
                       fontSize: 15,

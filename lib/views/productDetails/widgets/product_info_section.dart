@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
 
 class ProductInfoSection extends StatelessWidget {
@@ -12,16 +13,20 @@ class ProductInfoSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          product.title ?? "",
+          context.localizedValue(
+            en: product.title,
+            ar: product.arTitle,
+            fallback: '',
+          ),
           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
         ),
         const SizedBox(height: 8),
         Text(
-          "Brand : ${product.brandName}",
+          "Brand : ${context.localizedValue(en: product.brandName, ar: product.arBrandName, fallback: '')}",
           style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
         ),
         Text(
-          "Category : ${product.subCategoryName}",
+          "Category : ${context.localizedValue(en: product.subCategoryName, ar: product.arSubCategoryName, fallback: '')}",
           style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
         ),
       ],

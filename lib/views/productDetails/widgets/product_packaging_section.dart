@@ -3,12 +3,13 @@ import 'package:bizreh_paints_store/models/product_model/option.dart';
 import 'package:bizreh_paints_store/models/product_model/packaging_option.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/packaging_variants_bottom_sheet.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class ProductPackagingSection extends StatelessWidget {
   const ProductPackagingSection({
@@ -62,7 +63,13 @@ class ProductPackagingSection extends StatelessWidget {
 
       final grouped = <String, List<PackagingOption>>{};
       for (final pkg in packagingList) {
-        final key = (pkg.packagingTitle ?? '').trim();
+        final key = context
+            .localizedValue(
+              en: pkg.packagingTitle,
+              ar: pkg.arPackagingTitle,
+              fallback: '',
+            )
+            .trim();
         if (key.isEmpty) continue;
         grouped.putIfAbsent(key, () => <PackagingOption>[]).add(pkg);
       }
@@ -80,7 +87,13 @@ class ProductPackagingSection extends StatelessWidget {
 
       String? selectedGroupKey;
       if (selectedPackagingModel != null) {
-        selectedGroupKey = (selectedPackagingModel.packagingTitle ?? '').trim();
+        selectedGroupKey = context
+            .localizedValue(
+              en: selectedPackagingModel.packagingTitle,
+              ar: selectedPackagingModel.arPackagingTitle,
+              fallback: '',
+            )
+            .trim();
       }
 
       return Column(
@@ -155,7 +168,11 @@ class ProductPackagingSection extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  selectedPackagingModel.color!.name ?? '',
+                  context.localizedValue(
+                    en: selectedPackagingModel.color!.name,
+                    ar: selectedPackagingModel.color!.arName,
+                    fallback: '',
+                  ),
                   style: const TextStyle(fontSize: 14),
                 ),
               ],

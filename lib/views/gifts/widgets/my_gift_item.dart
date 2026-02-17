@@ -1,7 +1,9 @@
 import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class MyGiftItem extends StatelessWidget {
@@ -11,7 +13,11 @@ class MyGiftItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = item.giftTitle ?? '';
+    final title = context.localizedValue(
+      en: item.giftTitle,
+      ar: item.giftArTitle,
+      fallback: '',
+    );
     final date = formatDate(item.createdAt);
     final points = item.giftPoints ?? 0;
     final image = item.giftImage ?? '';
@@ -93,7 +99,7 @@ class MyGiftItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$points Points',
+                  '$points ${'gifts.points'.tr()}',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black87,

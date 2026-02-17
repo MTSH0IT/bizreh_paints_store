@@ -1,9 +1,10 @@
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart'
     as option_widget;
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 
 class ProductOptionsSection extends StatelessWidget {
   const ProductOptionsSection({
@@ -39,7 +40,11 @@ class ProductOptionsSection extends StatelessWidget {
               final selected = option.id == controller.selectedOption.value;
 
               return option_widget.ProductOption(
-                title: option.optionName ?? '',
+                title: context.localizedValue(
+                  en: option.optionName,
+                  ar: option.arOptionName,
+                  fallback: '',
+                ),
                 selected: selected,
                 onTap: () => controller.selectOption(option.id!),
               );

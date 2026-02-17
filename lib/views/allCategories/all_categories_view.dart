@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/see_all_card.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -48,7 +49,11 @@ class AllCategoriesView extends StatelessWidget {
             itemBuilder: (context, index) {
               final category = controller.categoryTree[index];
               return SeeAllCard(
-                name: category.title ?? '',
+                name: context.localizedValue(
+                  en: category.title,
+                  ar: category.arTitle,
+                  fallback: '',
+                ),
                 imageUrl: category.image ?? '',
                 onTap: () {
                   Get.to(() => CatogorieDitailsView(superCategory: category));

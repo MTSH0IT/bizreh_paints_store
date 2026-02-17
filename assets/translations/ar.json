@@ -288,5 +288,9 @@
     "tap_to_select_location": "اضغط لاختيار الموقع",
     "get_current_location": "الحصول على الموقع الحالي",
     "updating_location": "جارٍ تحديث الموقع..."
+  },
+  "brand": {
+    "products_title": "منتجات العلامة التجارية",
+    "no_products": "لا توجد منتجات"
   }
 }

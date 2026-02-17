@@ -1,8 +1,9 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/catogorieDetails/catogorie_ditails_view.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dart';
 
@@ -71,7 +72,11 @@ class _CategorieItem extends StatelessWidget {
         SizedBox(
           width: 80,
           child: Text(
-            item.title ?? '',
+            context.localizedValue(
+              en: item.title,
+              ar: item.arTitle,
+              fallback: '',
+            ),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 12),

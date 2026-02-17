@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,11 @@ class AllGiftTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = gift.title ?? '';
+    final title = context.localizedValue(
+      en: gift.title,
+      ar: gift.arTitle,
+      fallback: '',
+    );
     final points = gift.points ?? 0;
     final image = gift.image ?? '';
 

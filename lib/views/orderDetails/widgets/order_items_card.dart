@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
+import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -81,23 +82,35 @@ class _ItemOrder extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Container(
-                width: 60,
-                height: 60,
+                width: 75,
+                height: 75,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
                   color: Colors.grey[200],
                 ),
-                child: const Icon(Icons.shopping_bag_outlined, size: 28),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: ImageNetwork(
+                    image: item.product?.image ?? "",
+                    icon: Icons.shopping_bag_outlined,
+                  ),
+                ),
               ),
               if (hasColor)
                 Positioned(
                   bottom: 2,
                   right: 2,
-                  child: ColorDot(
-                    width: 20,
-                    height: 20,
-                    color: parseColorDegree(colorDegree),
-                    selected: false,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 2),
+                    ),
+                    child: ColorDot(
+                      width: 20,
+                      height: 20,
+                      color: parseColorDegree(colorDegree),
+                      selected: false,
+                    ),
                   ),
                 ),
             ],

@@ -108,47 +108,54 @@ class _CartItemTileState extends State<CartItemTile> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
-                    child: Wrap(
-                      spacing: 10,
-                      runSpacing: 4,
-                      crossAxisAlignment: WrapCrossAlignment.center,
-                      children: [
-                        if (((widget.item.option?.optionName ?? '')
-                                .trim()
-                                .isNotEmpty) ||
-                            ((widget.item.option?.arOptionName ?? '')
-                                .trim()
-                                .isNotEmpty))
-                          Text(
-                            context.localizedValue(
-                              en: widget.item.option?.optionName,
-                              ar: widget.item.option?.arOptionName,
-                              fallback: '',
+                    child: DefaultTextStyle(
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.grey.shade700,
+                      ),
+                      child: Wrap(
+                        spacing: 10,
+                        runSpacing: 4,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          if (((widget.item.option?.optionName ?? '')
+                                  .trim()
+                                  .isNotEmpty) ||
+                              ((widget.item.option?.arOptionName ?? '')
+                                  .trim()
+                                  .isNotEmpty))
+                            Text(
+                              context.localizedValue(
+                                en: widget.item.option?.optionName,
+                                ar: widget.item.option?.arOptionName,
+                                fallback: '',
+                              ),
                             ),
-                          ),
-                        if (((widget.item.packaging?.title ?? '')
-                                .trim()
-                                .isNotEmpty) ||
-                            ((widget.item.packaging?.arTitle ?? '')
-                                .trim()
-                                .isNotEmpty))
-                          Text(
-                            context.localizedValue(
-                              en: widget.item.packaging?.title,
-                              ar: widget.item.packaging?.arTitle,
-                              fallback: '',
+                          if (((widget.item.packaging?.title ?? '')
+                                  .trim()
+                                  .isNotEmpty) ||
+                              ((widget.item.packaging?.arTitle ?? '')
+                                  .trim()
+                                  .isNotEmpty))
+                            Text(
+                              context.localizedValue(
+                                en: widget.item.packaging?.title,
+                                ar: widget.item.packaging?.arTitle,
+                                fallback: '',
+                              ),
                             ),
-                          ),
-                        if (_hasColor)
-                          Padding(
-                            padding: const EdgeInsets.all(1),
-                            child: ColorDot(
-                              color: _colorDegree,
-                              selected: false,
-                              width: 20,
+                          if (_hasColor)
+                            Padding(
+                              padding: const EdgeInsets.all(1),
+                              child: ColorDot(
+                                color: _colorDegree,
+                                selected: false,
+                                width: 20,
+                                height: 20,
+                              ),
                             ),
-                          ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

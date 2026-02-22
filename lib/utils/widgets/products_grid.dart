@@ -10,17 +10,17 @@ class ProductsGrid extends StatelessWidget {
     super.key,
     this.isNeverScrollable = true,
     required this.products,
-    this.scrollController,
+    // this.scrollController,
   });
   final bool isNeverScrollable;
   final List<ProductModel> products;
-  final ScrollController? scrollController;
+  //inal ScrollController? scrollController;
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: GridView.builder(
-        controller: scrollController,
+        // controller: scrollController,
         shrinkWrap: isNeverScrollable,
         physics: isNeverScrollable
             ? const NeverScrollableScrollPhysics()

@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 
-import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/services/brands_services.dart';
 import 'package:bizreh_paints_store/services/product_services.dart';
 import 'package:bizreh_paints_store/services/category_services.dart';
@@ -37,10 +36,6 @@ class HomeController extends GetxController {
   RxBool isBrandProductsLoading = false.obs;
   RxBool isCategoryTreeLoading = false.obs;
   RxBool isAdsLoading = false.obs;
-
-  Rxn<Pagination> brandProductsPagination = Rxn<Pagination>();
-  Rxn<Pagination> productsPagination = Rxn<Pagination>();
-  Rxn<Pagination> subCategoryProductsPagination = Rxn<Pagination>();
 
   final BrandsServices _brandsServices = BrandsServices();
   final ProductServices _productServices = ProductServices();
@@ -113,21 +108,12 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> loadProducts({
-    int page = 1,
-    int limit = 20,
-    bool append = false,
-  }) async {
+  Future<void> loadProducts() async {
     isLoading.value = true;
     try {
-      final api = await _productServices.getProducts(page: page, limit: limit);
+      final api = await _productServices.getProducts();
       final data = api.data ?? [];
-      productsPagination.value = api.pagination;
-      if (append) {
-        products.addAll(data);
-      } else {
-        products.assignAll(data);
-      }
+      products.assignAll(data);
     } on AppException catch (e) {
       log("home controller AppException products : ${e.message}");
     } catch (e) {
@@ -137,26 +123,12 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> loadSubCategoryProducts({
-    int page = 1,
-    int limit = 20,
-    bool append = false,
-    int? subCategory = 1,
-  }) async {
+  Future<void> loadSubCategoryProducts({int? subCategory = 1}) async {
     isSubCategoryProductsLoading.value = true;
     try {
-      final api = await _productServices.getProducts(
-        page: page,
-        limit: limit,
-        subCategory: subCategory,
-      );
+      final api = await _productServices.getProducts(subCategory: subCategory);
       final data = api.data ?? [];
-      subCategoryProductsPagination.value = api.pagination;
-      if (append) {
-        subCategoryProducts.addAll(data);
-      } else {
-        subCategoryProducts.assignAll(data);
-      }
+      subCategoryProducts.assignAll(data);
     } on AppException catch (e) {
       log("home controller AppException products : ${e.message}");
     } catch (e) {
@@ -214,26 +186,12 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> loadBrandProducts({
-    required int brandId,
-    int page = 1,
-    int limit = 20,
-    bool append = false,
-  }) async {
+  Future<void> loadBrandProducts({required int brandId}) async {
     isBrandProductsLoading.value = true;
     try {
-      final api = await _brandsServices.getBrandProducts(
-        brandId: brandId,
-        page: page,
-        limit: limit,
-      );
+      final api = await _brandsServices.getBrandProducts(brandId: brandId);
       final data = api.data ?? <ProductModel>[];
-      brandProductsPagination.value = api.pagination;
-      if (append) {
-        brandProducts.addAll(data);
-      } else {
-        brandProducts.assignAll(data);
-      }
+      brandProducts.assignAll(data);
     } on AppException catch (e) {
       log("home controller AppException brand products : ${e.message}");
     } catch (e) {

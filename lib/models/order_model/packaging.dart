@@ -5,11 +5,6 @@ class Packaging {
 
   Packaging({this.id, this.title, this.arTitle});
 
-  @override
-  String toString() {
-    return 'Packaging(id: $id, title: $title, arTitle: $arTitle)';
-  }
-
   factory Packaging.fromJson(Map<String, dynamic> json) => Packaging(
     id: json['id'] as int?,
     title: json['title'] as String?,

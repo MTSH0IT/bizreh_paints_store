@@ -21,11 +21,6 @@ class Product {
     this.isActive,
   });
 
-  @override
-  String toString() {
-    return 'Product(id: $id, title: $title, arTitle: $arTitle, description: $description, arDescription: $arDescription, image: $image, subCategoryId: $subCategoryId, brandId: $brandId, isActive: $isActive)';
-  }
-
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json['id'] as int?,
     title: json['title'] as String?,

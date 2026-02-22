@@ -11,18 +11,15 @@ class ProductServices {
   final DioClient _dioClient = DioClient();
 
   Future<ApiResponse<List<ProductModel>>> getProducts({
-    int page = 1,
-    int limit = 20,
     int? subCategory,
   }) async {
     try {
+      final queryParameters = <String, dynamic>{};
+      if (subCategory != null) queryParameters['sub_category'] = subCategory;
+
       final response = await _dioClient.get(
         ApiEndpoint.getProducts,
-        queryParameters: {
-          'page': page,
-          'limit': limit,
-          'sub_category': subCategory,
-        },
+        queryParameters: queryParameters,
       );
 
       final apiResponse = ApiResponse<List<ProductModel>>.fromJson(

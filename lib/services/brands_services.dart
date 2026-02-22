@@ -77,14 +77,9 @@ class BrandsServices {
 
   Future<ApiResponse<List<ProductModel>>> getBrandProducts({
     required int brandId,
-    int page = 1,
-    int limit = 20,
   }) async {
     try {
-      final response = await _dioClient.get(
-        ApiEndpoint.brandProducts(brandId),
-        queryParameters: {'page': page, 'limit': limit},
-      );
+      final response = await _dioClient.get(ApiEndpoint.brandProducts(brandId));
 
       final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
         response.data,

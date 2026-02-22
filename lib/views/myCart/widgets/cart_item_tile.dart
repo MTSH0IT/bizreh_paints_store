@@ -40,7 +40,13 @@ class _CartItemTileState extends State<CartItemTile> {
   bool get _hasColor => (_colorDegreeValue?.trim().isNotEmpty ?? false);
   Color get _colorDegree => parseColorDegree(_colorDegreeValue);
 
-  double get _unitPrice => (widget.item.unitPrice ?? 0).toDouble();
+  num get _unitPrice => widget.item.unitPrice ?? 0;
+  num get _totalPrice => widget.item.totalPrice ?? 0;
+  double get _discountAmount {
+    final raw = widget.item.discountAmount;
+    return double.tryParse(raw ?? '0') ?? 0;
+  }
+
   int get _quantity => widget.item.quantityPerUnit ?? 1;
 
   @override
@@ -108,65 +114,68 @@ class _CartItemTileState extends State<CartItemTile> {
                   ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 6),
-                    child: DefaultTextStyle(
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey.shade700,
-                      ),
-                      child: Wrap(
-                        spacing: 10,
-                        runSpacing: 4,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          if (((widget.item.option?.optionName ?? '')
-                                  .trim()
-                                  .isNotEmpty) ||
-                              ((widget.item.option?.arOptionName ?? '')
-                                  .trim()
-                                  .isNotEmpty))
-                            Text(
-                              context.localizedValue(
-                                en: widget.item.option?.optionName,
-                                ar: widget.item.option?.arOptionName,
-                                fallback: '',
-                              ),
+                    child: Wrap(
+                      spacing: 10,
+                      runSpacing: 4,
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      children: [
+                        if (((widget.item.option?.optionName ?? '')
+                                .trim()
+                                .isNotEmpty) ||
+                            ((widget.item.option?.arOptionName ?? '')
+                                .trim()
+                                .isNotEmpty))
+                          Text(
+                            context.localizedValue(
+                              en: widget.item.option?.optionName,
+                              ar: widget.item.option?.arOptionName,
+                              fallback: '',
                             ),
-                          if (((widget.item.packaging?.title ?? '')
-                                  .trim()
-                                  .isNotEmpty) ||
-                              ((widget.item.packaging?.arTitle ?? '')
-                                  .trim()
-                                  .isNotEmpty))
-                            Text(
-                              context.localizedValue(
-                                en: widget.item.packaging?.title,
-                                ar: widget.item.packaging?.arTitle,
-                                fallback: '',
-                              ),
+                          ),
+                        if (((widget.item.packaging?.title ?? '')
+                                .trim()
+                                .isNotEmpty) ||
+                            ((widget.item.packaging?.arTitle ?? '')
+                                .trim()
+                                .isNotEmpty))
+                          Text(
+                            context.localizedValue(
+                              en: widget.item.packaging?.title,
+                              ar: widget.item.packaging?.arTitle,
+                              fallback: '',
                             ),
-                          if (_hasColor)
-                            Padding(
-                              padding: const EdgeInsets.all(1),
-                              child: ColorDot(
-                                color: _colorDegree,
-                                selected: false,
-                                width: 20,
-                                height: 20,
-                              ),
+                          ),
+                        if (_hasColor)
+                          Padding(
+                            padding: const EdgeInsets.all(1),
+                            child: ColorDot(
+                              color: _colorDegree,
+                              selected: false,
+                              width: 20,
+                              height: 20,
                             ),
-                        ],
-                      ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
-                  formatPriceWithSymbol(_unitPrice, symbol: '\$'),
+                  formatPriceWithSymbol(_totalPrice, symbol: '\$'),
                   style: const TextStyle(
                     color: Color(0xFF2F6BFF),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
+                if (_discountAmount > 0)
+                  Text(
+                    '- ${formatPriceWithSymbol(_discountAmount, symbol: '\$')}',
+                    style: const TextStyle(
+                      fontSize: 11,
+                      color: Colors.redAccent,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
               ],
             ),
           ),

@@ -54,11 +54,11 @@ class OrderHistory extends StatelessWidget {
           itemBuilder: (context, index) {
             final o = orders[index];
             final date = formatDate(o.createdAt);
-            final amount = o.totalAmount ?? 0.0;
+            final amount = o.financialSummary?.total ?? 0.0;
             final status = o.status ?? '';
 
             return OrderHistoryItem(
-              orderNo: o.orderNumber ?? o.id?.toString() ?? '',
+              orderNo: o.orderNumber ?? '',
               date: date,
               amount: amount,
               statusLabel: status,

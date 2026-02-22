@@ -15,9 +15,6 @@ class CartModel {
   double? latitude;
   String? cityName;
   dynamic driverId;
-  num? totalAmount;
-  num? discountAmount;
-  num? finalAmount;
   String? status;
   String? paymentStatus;
   DateTime? createdAt;
@@ -39,9 +36,6 @@ class CartModel {
     this.latitude,
     this.cityName,
     this.driverId,
-    this.totalAmount,
-    this.discountAmount,
-    this.finalAmount,
     this.status,
     this.paymentStatus,
     this.createdAt,
@@ -49,11 +43,6 @@ class CartModel {
     this.items,
     this.summary,
   });
-
-  @override
-  String toString() {
-    return 'CartModel(id: $id, orderNumber: $orderNumber, userId: $userId, userName: $userName, userEmail: $userEmail, userPhone: $userPhone, addressId: $addressId, addressLine: $addressLine, addressNote: $addressNote, longitude: $longitude, latitude: $latitude, cityName: $cityName, driverId: $driverId, totalAmount: $totalAmount, discountAmount: $discountAmount, finalAmount: $finalAmount, status: $status, paymentStatus: $paymentStatus, createdAt: $createdAt, updatedAt: $updatedAt, items: $items, summary: $summary)';
-  }
 
   factory CartModel.fromJson(Map<String, dynamic> json) => CartModel(
     id: json['id'] as int?,
@@ -69,10 +58,6 @@ class CartModel {
     latitude: (json['latitude'] as num?)?.toDouble(),
     cityName: json['city_name'] as String?,
     driverId: json['driver_id'] as dynamic,
-    totalAmount: json['total_amount'] as num?,
-    discountAmount: json['discount_amount'] as num?,
-    finalAmount: json['final_amount'] as num?,
-    status: json['status'] as String?,
     paymentStatus: json['payment_status'] as String?,
     createdAt: json['created_at'] == null
         ? null
@@ -102,9 +87,6 @@ class CartModel {
     'latitude': latitude,
     'city_name': cityName,
     'driver_id': driverId,
-    'total_amount': totalAmount,
-    'discount_amount': discountAmount,
-    'final_amount': finalAmount,
     'status': status,
     'payment_status': paymentStatus,
     'created_at': createdAt?.toIso8601String(),

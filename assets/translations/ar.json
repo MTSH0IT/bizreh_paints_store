@@ -178,6 +178,13 @@
     "order_no": "طلب رقم {}",
     "items_ordered": "العناصر المطلوبة",
     "qty": "الكمية",
+    "unit_price": "سعر الوحدة",
+    "discount": "الخصم",
+    "final_price": "السعر النهائي",
+    "sub_total": "المجموع الفرعي",
+    "total_discount": "إجمالي الخصم",
+    "option": "الخيار",
+    "packaging": "التغليف",
     "order_summary": "ملخص الطلب",
     "shipping_details": "تفاصيل الشحن",
     "total": "الإجمالي"

@@ -17,47 +17,12 @@ class BrandProductsView extends StatefulWidget {
 
 class _BrandProductsViewState extends State<BrandProductsView> {
   final HomeController controller = Get.find<HomeController>();
-  final ScrollController _scroll = ScrollController();
-
-  int _page = 1;
-  final int _limit = 20;
-  bool _isLoadingMore = false;
 
   @override
   void initState() {
     super.initState();
     controller.brandProducts.clear();
-    controller.loadBrandProducts(
-      brandId: widget.brand.id ?? 0,
-      page: _page,
-      limit: _limit,
-    );
-
-    _scroll.addListener(() async {
-      if (_scroll.position.pixels >= _scroll.position.maxScrollExtent - 120) {
-        final hasMore =
-            controller.brandProductsPagination.value?.hasMore ?? false;
-        if (!_isLoadingMore &&
-            hasMore &&
-            !controller.isBrandProductsLoading.value) {
-          _isLoadingMore = true;
-          _page += 1;
-          await controller.loadBrandProducts(
-            brandId: widget.brand.id ?? 0,
-            page: _page,
-            limit: _limit,
-            append: true,
-          );
-          _isLoadingMore = false;
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scroll.dispose();
-    super.dispose();
+    controller.loadBrandProducts(brandId: widget.brand.id ?? 0);
   }
 
   @override
@@ -86,11 +51,7 @@ class _BrandProductsViewState extends State<BrandProductsView> {
           if (items.isEmpty) {
             return Center(child: Text('brand.no_products'.tr()));
           }
-          return ProductsGrid(
-            products: items,
-            scrollController: _scroll,
-            isNeverScrollable: false,
-          );
+          return ProductsGrid(products: items, isNeverScrollable: false);
         }),
       ),
     );

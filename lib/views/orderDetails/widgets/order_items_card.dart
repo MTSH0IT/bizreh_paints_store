@@ -52,6 +52,12 @@ class _ItemOrder extends StatelessWidget {
 
   final Item item;
 
+  double _toDouble(dynamic value) {
+    if (value == null) return 0;
+    if (value is num) return value.toDouble();
+    return double.tryParse(value.toString()) ?? 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final title = context.localizedValue(
@@ -60,7 +66,11 @@ class _ItemOrder extends StatelessWidget {
       fallback: '',
     );
     final quantity = item.quantityPerUnit ?? 0;
-    final price = (item.totalPrice ?? 0).toDouble();
+    final totalPrice = _toDouble(item.totalPrice);
+    final unitPrice = _toDouble(item.unitPrice);
+    final discountAmount = _toDouble(item.discountAmount);
+    final finalItemPrice = _toDouble(item.finalItemPrice);
+    final discountName = (item.appliedDiscountName ?? '').trim();
     final optionName = context.localizedValue(
       en: item.productOption?.optionName,
       ar: item.productOption?.arOptionName,
@@ -134,30 +144,95 @@ class _ItemOrder extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      formatPriceWithSymbol(price, symbol: '\$'),
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
-                    ),
+                    // const SizedBox(width: 8),
+                    // Text(
+                    //   formatPriceWithSymbol(totalPrice, symbol: '\$'),
+                    //   style: const TextStyle(
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 16,
+                    //   ),
+                    // ),
                   ],
                 ),
                 const SizedBox(height: 4),
                 if (optionName.trim().isNotEmpty)
                   Text(
-                    optionName,
+                    '${'order_details.option'.tr()}: $optionName',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
                 if (packagingTitle.trim().isNotEmpty)
                   Text(
-                    packagingTitle,
+                    '${'order_details.packaging'.tr()}: $packagingTitle',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
                 Text(
                   '${'order_details.qty'.tr()}: $quantity',
                   style: const TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                const SizedBox(height: 6),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'order_details.unit_price'.tr(),
+                      style: const TextStyle(
+                        color: Colors.black54,
+                        fontSize: 13,
+                      ),
+                    ),
+                    Text(
+                      formatPriceWithSymbol(totalPrice, symbol: '\$'),
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ],
+                ),
+                if (discountAmount > 0) ...[
+                  const SizedBox(height: 4),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          discountName.isEmpty
+                              ? 'order_details.discount'.tr()
+                              : '${'order_details.discount'.tr()}: $discountName',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            color: Colors.black54,
+                            fontSize: 13,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '- ${formatPriceWithSymbol(discountAmount, symbol: '\$')}',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.redAccent,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: 4),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'order_details.final_price'.tr(),
+                      style: const TextStyle(
+                        color: Colors.black54,
+                        fontSize: 13,
+                      ),
+                    ),
+                    Text(
+                      formatPriceWithSymbol(finalItemPrice, symbol: '\$'),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -21,7 +21,8 @@ class CartSummarySection extends StatelessWidget {
     final discount = (summary?.discountAmount ?? 0).toDouble();
     // final delivery = (summary?.deliveryFee ?? 0).toDouble();
     final total = (summary?.totalAmount ?? 0).toDouble();
-    final itemsCount = summary?.itemsCount ?? summary?.totalItems;
+    final itemsCount = summary?.itemsCount;
+    final totalItems = summary?.totalItems;
 
     return Container(
       decoration: BoxDecoration(
@@ -55,7 +56,8 @@ class CartSummarySection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
-                  'cart.items_count'.tr().replaceAll('{0}', '$itemsCount'),
+                  'cart.items_count'.tr(args: ['$totalItems']),
+
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
                 ),
               ),

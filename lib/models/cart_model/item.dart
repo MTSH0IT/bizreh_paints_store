@@ -12,6 +12,9 @@ class Item {
   String? productSku;
   num? unitPrice;
   num? totalPrice;
+  String? discountAmount;
+  String? finalItemPrice;
+  String? appliedDiscountName;
   DateTime? createdAt;
   Product? product;
   Option? option;
@@ -29,6 +32,9 @@ class Item {
     this.productSku,
     this.unitPrice,
     this.totalPrice,
+    this.discountAmount,
+    this.finalItemPrice,
+    this.appliedDiscountName,
     this.createdAt,
     this.product,
     this.option,
@@ -39,11 +45,6 @@ class Item {
     this.availableStock,
   });
 
-  @override
-  String toString() {
-    return 'Item(id: $id, orderId: $orderId, optionPackagingId: $optionPackagingId, quantityPerUnit: $quantityPerUnit, productSku: $productSku, unitPrice: $unitPrice, totalPrice: $totalPrice, createdAt: $createdAt, product: $product, option: $option, packaging: $packaging, category: $category, brand: $brand, subtotal: $subtotal, availableStock: $availableStock)';
-  }
-
   factory Item.fromJson(Map<String, dynamic> json) => Item(
     id: json['id'] as int?,
     orderId: json['order_id'] as int?,
@@ -52,6 +53,9 @@ class Item {
     productSku: json['product_sku'] as String?,
     unitPrice: json['unit_price'] as num?,
     totalPrice: json['total_price'] as num?,
+    discountAmount: json['discount_amount'] as String?,
+    finalItemPrice: json['final_item_price'] as String?,
+    appliedDiscountName: json['applied_discount_name'] as String?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -82,6 +86,9 @@ class Item {
     'product_sku': productSku,
     'unit_price': unitPrice,
     'total_price': totalPrice,
+    'discount_amount': discountAmount,
+    'final_item_price': finalItemPrice,
+    'applied_discount_name': appliedDiscountName,
     'created_at': createdAt?.toIso8601String(),
     'product': product?.toJson(),
     'option': option?.toJson(),

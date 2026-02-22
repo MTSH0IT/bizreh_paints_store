@@ -14,6 +14,9 @@ class Item {
   String? productSku;
   num? unitPrice;
   num? totalPrice;
+  String? discountAmount;
+  String? finalItemPrice;
+  String? appliedDiscountName;
   DateTime? createdAt;
   Product? product;
   ProductOption? productOption;
@@ -22,7 +25,6 @@ class Item {
   Color? color;
   Category? category;
   Brand? brand;
-  int? totalQuantity;
 
   Item({
     this.orderItemId,
@@ -32,6 +34,9 @@ class Item {
     this.productSku,
     this.unitPrice,
     this.totalPrice,
+    this.discountAmount,
+    this.finalItemPrice,
+    this.appliedDiscountName,
     this.createdAt,
     this.product,
     this.productOption,
@@ -40,13 +45,7 @@ class Item {
     this.color,
     this.category,
     this.brand,
-    this.totalQuantity,
   });
-
-  @override
-  String toString() {
-    return 'Item(orderItemId: $orderItemId, orderId: $orderId, optionPackagingId: $optionPackagingId, quantityPerUnit: $quantityPerUnit, productSku: $productSku, unitPrice: $unitPrice, totalPrice: $totalPrice, createdAt: $createdAt, product: $product, productOption: $productOption, optionPackaging: $optionPackaging, packaging: $packaging, color: $color, category: $category, brand: $brand, totalQuantity: $totalQuantity)';
-  }
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
     orderItemId: json['order_item_id'] as int?,
@@ -56,6 +55,9 @@ class Item {
     productSku: json['product_sku'] as String?,
     unitPrice: json['unit_price'] as num?,
     totalPrice: json['total_price'] as num?,
+    discountAmount: json['discount_amount'] as String?,
+    finalItemPrice: json['final_item_price'] as String?,
+    appliedDiscountName: json['applied_discount_name'] as String?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -84,7 +86,6 @@ class Item {
     brand: json['brand'] == null
         ? null
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
-    totalQuantity: json['total_quantity'] as int?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -95,6 +96,9 @@ class Item {
     'product_sku': productSku,
     'unit_price': unitPrice,
     'total_price': totalPrice,
+    'discount_amount': discountAmount,
+    'final_item_price': finalItemPrice,
+    'applied_discount_name': appliedDiscountName,
     'created_at': createdAt?.toIso8601String(),
     'product': product?.toJson(),
     'product_option': productOption?.toJson(),
@@ -103,6 +107,5 @@ class Item {
     'color': color?.toJson(),
     'category': category?.toJson(),
     'brand': brand?.toJson(),
-    'total_quantity': totalQuantity,
   };
 }

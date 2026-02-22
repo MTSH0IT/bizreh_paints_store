@@ -20,7 +20,7 @@ class ConfirmStep extends StatelessWidget {
         final cart = orderController.cartController.cart.value;
         final subtotal = formatPrice(cart?.summary?.subtotal ?? 0);
         final total = formatPrice(cart?.summary?.totalAmount ?? 0);
-        final itemsCount = cart?.summary?.itemsCount ?? 0;
+        final itemsCount = cart?.summary?.totalItems ?? 0;
         final deliveryFee = cart?.summary?.deliveryFee ?? 0;
         final discountAmount = formatPrice(cart?.summary?.discountAmount ?? 0);
 
@@ -126,13 +126,49 @@ class ConfirmStep extends StatelessWidget {
                         ),
                         Expanded(
                           flex: 1,
-                          child: Text(
-                            formatPrice((item.totalPrice ?? 0).toDouble()),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            textAlign: TextAlign.right,
+                          child: Builder(
+                            builder: (context) {
+                              final totalPrice = (item.totalPrice ?? 0)
+                                  .toDouble();
+
+                              final discount =
+                                  double.tryParse(item.discountAmount ?? '0') ??
+                                  0;
+                              final finalPrice =
+                                  double.tryParse(item.finalItemPrice ?? '') ??
+                                  0;
+                              final hasDiscount = discount > 0;
+                              final hasFinal = finalPrice > 0;
+
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    formatPrice(totalPrice),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                    textAlign: TextAlign.right,
+                                  ),
+                                  if (hasDiscount)
+                                    Text(
+                                      '- ${formatPrice(discount)}',
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.green,
+                                      ),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                  if (hasFinal)
+                                    Text(
+                                      formatPrice(finalPrice),
+                                      style: const TextStyle(fontSize: 11),
+                                      textAlign: TextAlign.right,
+                                    ),
+                                ],
+                              );
+                            },
                           ),
                         ),
                       ],

@@ -178,6 +178,13 @@
     "order_no": "Order #{}",
     "items_ordered": "Items Ordered",
     "qty": "Qty",
+    "unit_price": "Unit price",
+    "discount": "Discount",
+    "final_price": "Final price",
+    "sub_total": "Subtotal",
+    "total_discount": "Total discount",
+    "option": "Option",
+    "packaging": "Packaging",
     "order_summary": "Order Summary",
     "shipping_details": "Shipping Details",
     "total": "Total"

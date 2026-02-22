@@ -10,7 +10,10 @@ class OrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final totalAmount = (order.totalAmount ?? 0).toDouble();
+    final summary = order.financialSummary;
+    final subTotal = summary?.subTotal;
+    final totalDiscount = summary?.totalDiscount;
+    final total = summary?.total;
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       color: Colors.white,
@@ -24,9 +27,21 @@ class OrderSummaryCard extends StatelessWidget {
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
+            if (summary != null) ...[
+              _buildSummaryRow(
+                'order_details.sub_total'.tr(),
+                formatPriceWithSymbol(subTotal, symbol: '\$'),
+              ),
+              const SizedBox(height: 8),
+              _buildSummaryRow(
+                'order_details.total_discount'.tr(),
+                '- ${formatPriceWithSymbol(totalDiscount, symbol: '\$')}',
+              ),
+              const SizedBox(height: 8),
+            ],
             _buildSummaryRow(
               'order_details.total'.tr(),
-              _formatCurrency(formatPrice(totalAmount)),
+              formatPriceWithSymbol(total, symbol: '\$'),
               isBold: true,
             ),
           ],
@@ -57,9 +72,5 @@ class OrderSummaryCard extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _formatCurrency(String amount) {
-    return '\$$amount';
   }
 }

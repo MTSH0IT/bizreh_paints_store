@@ -11,11 +11,6 @@ class OptionPackaging {
     this.stockQuantity,
   });
 
-  @override
-  String toString() {
-    return 'OptionPackaging(id: $id, pricePerUnit: $pricePerUnit, packagingId: $packagingId, stockQuantity: $stockQuantity)';
-  }
-
   factory OptionPackaging.fromJson(Map<String, dynamic> json) {
     return OptionPackaging(
       id: json['id'] as int?,

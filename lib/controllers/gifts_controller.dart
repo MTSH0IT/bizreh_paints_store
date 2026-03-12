@@ -22,6 +22,10 @@ class GiftsController extends GetxController {
   final RxBool isLoadingAvailable = false.obs;
   final RxInt redeemingGiftId = 0.obs;
 
+  final Rxn<GiftsModel> selectedGift = Rxn<GiftsModel>();
+  final RxBool isLoadingSelectedGift = false.obs;
+  final RxString selectedGiftError = ''.obs;
+
   final RxInt tabIndex = 0.obs;
 
   @override
@@ -102,5 +106,24 @@ class GiftsController extends GetxController {
 
   void setTab(int index) {
     tabIndex.value = index;
+  }
+
+  Future<void> loadGiftById(int giftId) async {
+    isLoadingSelectedGift.value = true;
+    selectedGiftError.value = '';
+    try {
+      final gift = await _giftsServise.getGiftById(giftId: giftId);
+      selectedGift.value = gift;
+    } on AppException catch (e) {
+      log("gifts controller AppException get by id : ${e.message}");
+      selectedGiftError.value = e.message;
+      showMassage(e.message, false);
+    } catch (e) {
+      log("gifts controller catch get by id : ${e.toString()}");
+      selectedGiftError.value = e.toString();
+      showMassage("حدث خطأ حاول مرة اخرى", false);
+    } finally {
+      isLoadingSelectedGift.value = false;
+    }
   }
 }

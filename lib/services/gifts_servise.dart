@@ -12,6 +12,35 @@ import 'package:dio/dio.dart';
 class GiftsServise {
   final DioClient _dioClient = DioClient();
 
+  Future<GiftsModel> getGiftById({required int giftId}) async {
+    try {
+      final response = await _dioClient.get(ApiEndpoint.getGiftById(giftId));
+      final apiResponse = ApiResponse.fromJson(
+        response.data,
+        (json) => GiftsModel.fromJson(json as Map<String, dynamic>),
+      );
+
+      if (apiResponse.success && apiResponse.data != null) {
+        log("gifts service get by id : ${apiResponse.message}");
+        return apiResponse.data!;
+      }
+      throw Exception(apiResponse.message ?? 'Something went wrong');
+    } on DioException catch (e) {
+      final err = e.error;
+      if (err is AppException) {
+        log(
+          "gifts service AppException get by id : ${err.message}${err.statusCode}",
+        );
+        throw err;
+      }
+      log("gifts service DioException get by id : ${e.message}");
+      throw Exception(e.message);
+    } catch (e) {
+      log("gifts service catch get by id : ${e.toString()}");
+      throw Exception(e.toString());
+    }
+  }
+
   Future<List<GiftsModel>> getAllGifts() async {
     try {
       final response = await _dioClient.get(ApiEndpoint.getAllGifts);

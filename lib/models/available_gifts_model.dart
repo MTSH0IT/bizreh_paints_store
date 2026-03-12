@@ -6,10 +6,8 @@ class AvailableGiftsModel {
   String? image;
   int? isActive;
   DateTime? createdAt;
-  int? totalRedemptions;
-  String? userRedemptions;
+  int? userRedemptions;
   bool? userCanRedeem;
-  bool? isAvailable;
 
   AvailableGiftsModel({
     this.id,
@@ -19,10 +17,8 @@ class AvailableGiftsModel {
     this.image,
     this.isActive,
     this.createdAt,
-    this.totalRedemptions,
     this.userRedemptions,
     this.userCanRedeem,
-    this.isAvailable,
   });
 
   factory AvailableGiftsModel.fromJson(Map<String, dynamic> json) {
@@ -36,10 +32,8 @@ class AvailableGiftsModel {
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
-      totalRedemptions: json['total_redemptions'] as int?,
-      userRedemptions: json['user_redemptions'] as String?,
+      userRedemptions: json['user_redemptions'] as int?,
       userCanRedeem: json['user_can_redeem'] as bool?,
-      isAvailable: json['is_available'] as bool?,
     );
   }
 
@@ -51,10 +45,8 @@ class AvailableGiftsModel {
     'image': image,
     'is_active': isActive,
     'created_at': createdAt?.toIso8601String(),
-    'total_redemptions': totalRedemptions,
     'user_redemptions': userRedemptions,
     'user_can_redeem': userCanRedeem,
-    'is_available': isAvailable,
   };
 }
 

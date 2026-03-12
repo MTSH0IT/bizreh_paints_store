@@ -1,6 +1,5 @@
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
-import 'package:bizreh_paints_store/models/order_history_model/order_history_model.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/services/order_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
@@ -16,7 +15,7 @@ class OrderController extends GetxController {
   var isSubmitting = false.obs;
 
   // order history state
-  var orders = <OrderHistoryModel>[].obs;
+  var orders = <OrderModel>[].obs;
   var isHistoryLoading = false.obs;
   var historyError = ''.obs;
 
@@ -65,11 +64,7 @@ class OrderController extends GetxController {
       isSubmitting.value = true;
       await _orderServices.cancelOrder(id, reason);
 
-      final index = orders.indexWhere((o) => o.id == id);
-      if (index != -1) {
-        orders[index].status = 'canceled';
-        orders.refresh();
-      }
+      await loadOrderHistory();
 
       showMassage('تم الغاء الطلب بنجاح', true);
     } catch (e) {

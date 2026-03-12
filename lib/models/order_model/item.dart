@@ -1,33 +1,47 @@
-import 'brand.dart';
-import 'category.dart';
 import 'color.dart';
-import 'option_packaging.dart';
-import 'packaging.dart';
-import 'product.dart';
-import 'product_option.dart';
+import 'discount.dart';
 
 class Item {
-  int? orderItemId;
+  int? id;
   int? orderId;
   int? optionPackagingId;
   int? quantityPerUnit;
   String? productSku;
-  num? unitPrice;
-  num? totalPrice;
-  String? discountAmount;
-  String? finalItemPrice;
+  int? unitPrice;
+  int? totalPrice;
+  int? discountAmount;
+  int? finalItemPrice;
   String? appliedDiscountName;
+  int? pointsEarned;
   DateTime? createdAt;
-  Product? product;
-  ProductOption? productOption;
-  OptionPackaging? optionPackaging;
-  Packaging? packaging;
+  int? productId;
+  String? title;
+  String? arTitle;
+  String? description;
+  String? arDescription;
+  String? image;
+  int? subCategoryId;
+  int? brandId;
+  int? isActive;
+  int? productOptionId;
+  String? optionName;
+  String? arOptionName;
+  String? optionSku;
+  String? mainImage;
+  int? stockQuantity;
+  int? packagingId;
+  String? packagingTitle;
+  String? packagingArTitle;
   Color? color;
-  Category? category;
-  Brand? brand;
+  int? categoryId;
+  String? categoryTitle;
+  String? categoryArTitle;
+  String? brandTitle;
+  String? brandArTitle;
+  Discount? discount;
 
   Item({
-    this.orderItemId,
+    this.id,
     this.orderId,
     this.optionPackagingId,
     this.quantityPerUnit,
@@ -37,59 +51,83 @@ class Item {
     this.discountAmount,
     this.finalItemPrice,
     this.appliedDiscountName,
+    this.pointsEarned,
     this.createdAt,
-    this.product,
-    this.productOption,
-    this.optionPackaging,
-    this.packaging,
+    this.productId,
+    this.title,
+    this.arTitle,
+    this.description,
+    this.arDescription,
+    this.image,
+    this.subCategoryId,
+    this.brandId,
+    this.isActive,
+    this.productOptionId,
+    this.optionName,
+    this.arOptionName,
+    this.optionSku,
+    this.mainImage,
+    this.stockQuantity,
+    this.packagingId,
+    this.packagingTitle,
+    this.packagingArTitle,
     this.color,
-    this.category,
-    this.brand,
+    this.categoryId,
+    this.categoryTitle,
+    this.categoryArTitle,
+    this.brandTitle,
+    this.brandArTitle,
+    this.discount,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
-    orderItemId: json['order_item_id'] as int?,
+    id: json['id'] as int?,
     orderId: json['order_id'] as int?,
     optionPackagingId: json['option_packaging_id'] as int?,
     quantityPerUnit: json['quantity_per_unit'] as int?,
     productSku: json['product_sku'] as String?,
-    unitPrice: json['unit_price'] as num?,
-    totalPrice: json['total_price'] as num?,
-    discountAmount: json['discount_amount'] as String?,
-    finalItemPrice: json['final_item_price'] as String?,
+    unitPrice: json['unit_price'] as int?,
+    totalPrice: json['total_price'] as int?,
+    discountAmount: json['discount_amount'] as int?,
+    finalItemPrice: json['final_item_price'] as int?,
     appliedDiscountName: json['applied_discount_name'] as String?,
+    pointsEarned: json['points_earned'] as int?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
-    product: json['product'] == null
-        ? null
-        : Product.fromJson(json['product'] as Map<String, dynamic>),
-    productOption: json['product_option'] == null
-        ? null
-        : ProductOption.fromJson(
-            json['product_option'] as Map<String, dynamic>,
-          ),
-    optionPackaging: json['option_packaging'] == null
-        ? null
-        : OptionPackaging.fromJson(
-            json['option_packaging'] as Map<String, dynamic>,
-          ),
-    packaging: json['packaging'] == null
-        ? null
-        : Packaging.fromJson(json['packaging'] as Map<String, dynamic>),
+    productId: json['product_id'] as int?,
+    title: json['title'] as String?,
+    arTitle: json['ar_title'] as String?,
+    description: json['description'] as String?,
+    arDescription: json['ar_description'] as String?,
+    image: json['image'] as String?,
+    subCategoryId: json['sub_category_id'] as int?,
+    brandId: json['brand_id'] as int?,
+    isActive: json['is_active'] as int?,
+    productOptionId: json['product_option_id'] as int?,
+    optionName: json['option_name'] as String?,
+    arOptionName: json['ar_option_name'] as String?,
+    optionSku: json['option_sku'] as String?,
+    mainImage: json['main_image'] as String?,
+    stockQuantity: json['stock_quantity'] as int?,
+    packagingId: json['packaging_id'] as int?,
+    packagingTitle: json['packaging_title'] as String?,
+    packagingArTitle: json['packaging_ar_title'] as String?,
     color: json['color'] == null
         ? null
         : Color.fromJson(json['color'] as Map<String, dynamic>),
-    category: json['category'] == null
+    categoryId: json['category_id'] as int?,
+    categoryTitle: json['category_title'] as String?,
+    categoryArTitle: json['category_ar_title'] as String?,
+    brandTitle: json['brand_title'] as String?,
+    brandArTitle: json['brand_ar_title'] as String?,
+    discount: json['discount'] == null
         ? null
-        : Category.fromJson(json['category'] as Map<String, dynamic>),
-    brand: json['brand'] == null
-        ? null
-        : Brand.fromJson(json['brand'] as Map<String, dynamic>),
+        : Discount.fromJson(json['discount'] as Map<String, dynamic>),
   );
 
   Map<String, dynamic> toJson() => {
-    'order_item_id': orderItemId,
+    'id': id,
     'order_id': orderId,
     'option_packaging_id': optionPackagingId,
     'quantity_per_unit': quantityPerUnit,
@@ -99,13 +137,32 @@ class Item {
     'discount_amount': discountAmount,
     'final_item_price': finalItemPrice,
     'applied_discount_name': appliedDiscountName,
+    'points_earned': pointsEarned,
     'created_at': createdAt?.toIso8601String(),
-    'product': product?.toJson(),
-    'product_option': productOption?.toJson(),
-    'option_packaging': optionPackaging?.toJson(),
-    'packaging': packaging?.toJson(),
+    'product_id': productId,
+    'title': title,
+    'ar_title': arTitle,
+    'description': description,
+    'ar_description': arDescription,
+    'image': image,
+    'sub_category_id': subCategoryId,
+    'brand_id': brandId,
+    'is_active': isActive,
+    'product_option_id': productOptionId,
+    'option_name': optionName,
+    'ar_option_name': arOptionName,
+    'option_sku': optionSku,
+    'main_image': mainImage,
+    'stock_quantity': stockQuantity,
+    'packaging_id': packagingId,
+    'packaging_title': packagingTitle,
+    'packaging_ar_title': packagingArTitle,
     'color': color?.toJson(),
-    'category': category?.toJson(),
-    'brand': brand?.toJson(),
+    'category_id': categoryId,
+    'category_title': categoryTitle,
+    'category_ar_title': categoryArTitle,
+    'brand_title': brandTitle,
+    'brand_ar_title': brandArTitle,
+    'discount': discount?.toJson(),
   };
 }

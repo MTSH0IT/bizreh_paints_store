@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/order_history_model/order_history_model.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
@@ -42,14 +41,13 @@ class OrderServices {
     }
   }
 
-  Future<ApiResponse<List<OrderHistoryModel>>> getOrderHistory() async {
+  Future<ApiResponse<List<OrderModel>>> getOrderHistory() async {
     try {
       final response = await _dioClient.get(ApiEndpoint.getOrder);
 
-      final apiResponse = ApiResponse<List<OrderHistoryModel>>.fromJson(
+      final apiResponse = ApiResponse<List<OrderModel>>.fromJson(
         response.data,
-        (json) =>
-            (json as List).map((e) => OrderHistoryModel.fromJson(e)).toList(),
+        (json) => (json as List).map((e) => OrderModel.fromJson(e)).toList(),
       );
       if (apiResponse.success) {
         return apiResponse;

@@ -66,13 +66,14 @@ class ApiEndpoint {
   static const String getPointsRules = "/user/points";
 
   //points
-  static const String getUserPoints = "/user/gift/points";
-  static const String getPointsHistory = "/user/gift/points/history";
+  static const String getUserPoints = "/user/points/balance";
+  static const String getPointsHistory = "/user/points/history";
 
   //gifts
   static const String getAllGifts = "/user/gift";
   static const String getMyGifts = "/user/gift/my-gifts";
   static const String getAvailableGifts = "/user/gift/available";
+  static String getGiftById(int id) => "/user/gift/$id";
   static const String redeemGift = "/user/gift/redeem";
 
   //cart

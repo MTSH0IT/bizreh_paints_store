@@ -152,9 +152,7 @@ class _DiscountOfferCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    isActive
-                        ? 'rewards.active'.tr()
-                        : 'rewards.inactive'.tr(),
+                    isActive ? 'rewards.active'.tr() : 'rewards.inactive'.tr(),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -171,9 +169,7 @@ class _DiscountOfferCard extends StatelessWidget {
               children: [
                 _ChipText(
                   label: 'rewards.amount'.tr(),
-                  value: amountType == 'percentage'
-                      ? '$amount%'
-                      : '\$$amount',
+                  value: amountType == 'percentage' ? '$amount%' : '\$$amount',
                 ),
                 if (minPurchase.isNotEmpty)
                   _ChipText(
@@ -181,15 +177,9 @@ class _DiscountOfferCard extends StatelessWidget {
                     value: '\$$minPurchase',
                   ),
                 if (minQty > 0)
-                  _ChipText(
-                    label: 'rewards.min_qty'.tr(),
-                    value: '$minQty',
-                  ),
+                  _ChipText(label: 'rewards.min_qty'.tr(), value: '$minQty'),
                 if (expiration.isNotEmpty)
-                  _ChipText(
-                    label: 'rewards.expires'.tr(),
-                    value: expiration,
-                  ),
+                  _ChipText(label: 'rewards.expires'.tr(), value: expiration),
               ],
             ),
             const SizedBox(height: 10),
@@ -202,10 +192,7 @@ class _DiscountOfferCard extends StatelessWidget {
                   ),
                 if (brandsCount > 0) ...[
                   const SizedBox(width: 10),
-                  _MetaCount(
-                    label: 'rewards.brands'.tr(),
-                    count: brandsCount,
-                  ),
+                  _MetaCount(label: 'rewards.brands'.tr(), count: brandsCount),
                 ],
                 if (categoriesCount > 0) ...[
                   const SizedBox(width: 10),
@@ -326,9 +313,7 @@ class _PointsRuleCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    isActive
-                        ? 'rewards.active'.tr()
-                        : 'rewards.inactive'.tr(),
+                    isActive ? 'rewards.active'.tr() : 'rewards.inactive'.tr(),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -348,10 +333,7 @@ class _PointsRuleCard extends StatelessWidget {
                   value: '$pointsPerUnit',
                 ),
                 if (minQty > 0)
-                  _ChipText(
-                    label: 'rewards.min_qty'.tr(),
-                    value: '$minQty',
-                  ),
+                  _ChipText(label: 'rewards.min_qty'.tr(), value: '$minQty'),
                 if (start.isNotEmpty)
                   _ChipText(label: 'rewards.start'.tr(), value: start),
                 if (end.isNotEmpty)

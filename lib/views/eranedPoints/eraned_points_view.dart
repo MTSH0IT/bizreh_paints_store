@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/points_controller.dart';
+import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/views/gifts/gift_details_view.dart';
+import 'package:bizreh_paints_store/views/orderDetails/order_details_view.dart';
 import 'widgets/points_balance_card.dart';
 import 'widgets/points_history_item.dart';
 
@@ -12,6 +16,8 @@ class EranedPointsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.find<PointsController>();
+    final orderCtrl = Get.find<OrderController>();
+    final giftsCtrl = Get.find<GiftsController>();
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +65,25 @@ class EranedPointsView extends StatelessWidget {
                       itemCount: ctrl.history.length,
                       itemBuilder: (context, index) {
                         final item = ctrl.history[index];
-                        return PointsHistoryItem(item: item);
+                        final orderId = item.orderId ?? 0;
+                        final giftId = item.userGiftId ?? 0;
+
+                        return PointsHistoryItem(
+                          item: item,
+                          onTap: (orderId > 0 || giftId > 0)
+                              ? () {
+                                  if (orderId > 0) {
+                                    orderCtrl.loadOrderDetails(orderId);
+                                    Get.to(() => const OrderDetailsView());
+                                    return;
+                                  }
+                                  if (giftId > 0) {
+                                    giftsCtrl.loadGiftById(giftId);
+                                    Get.to(() => const GiftDetailsView());
+                                  }
+                                }
+                              : null,
+                        );
                       },
                     ),
             ),

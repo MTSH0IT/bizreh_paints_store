@@ -2,7 +2,7 @@ class Discount {
   int? id;
   String? title;
   String? arTitle;
-  num? amount;
+  int? amount;
   String? amountType;
 
   Discount({this.id, this.title, this.arTitle, this.amount, this.amountType});
@@ -11,7 +11,7 @@ class Discount {
     id: json['id'] as int?,
     title: json['title'] as String?,
     arTitle: json['ar_title'] as String?,
-    amount: json['amount'] as num?,
+    amount: json['amount'] as int?,
     amountType: json['amount_type'] as String?,
   );
 

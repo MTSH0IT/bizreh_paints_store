@@ -1,15 +1,15 @@
 class FinancialSummary {
-  num? subTotal;
-  num? totalDiscount;
-  num? total;
+  int? subTotal;
+  int? totalDiscount;
+  int? total;
 
   FinancialSummary({this.subTotal, this.totalDiscount, this.total});
 
   factory FinancialSummary.fromJson(Map<String, dynamic> json) {
     return FinancialSummary(
-      subTotal: json['sub_total'] as num?,
-      totalDiscount: json['total_discount'] as num?,
-      total: json['total'] as num?,
+      subTotal: json['sub_total'] as int?,
+      totalDiscount: json['total_discount'] as int?,
+      total: json['total'] as int?,
     );
   }
 

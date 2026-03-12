@@ -1,9 +1,24 @@
 class UserPointsModel {
+  int? userId;
   int? totalEarned;
   int? totalSpent;
   int? balance;
+  int? totalTransactions;
 
-  UserPointsModel({this.totalEarned, this.totalSpent, this.balance});
+  UserPointsModel({
+    this.userId,
+    this.totalEarned,
+    this.totalSpent,
+    this.balance,
+    this.totalTransactions,
+  });
+
+  static int? _toInt(dynamic value) {
+    if (value == null) return null;
+    if (value is int) return value;
+    if (value is num) return value.toInt();
+    return int.tryParse(value.toString());
+  }
 
   @override
   String toString() {
@@ -12,15 +27,19 @@ class UserPointsModel {
 
   factory UserPointsModel.fromJson(Map<String, dynamic> json) {
     return UserPointsModel(
-      totalEarned: json['total_earned'] as int?,
-      totalSpent: json['total_spent'] as int?,
-      balance: json['balance'] as int?,
+      userId: _toInt(json['user_id']),
+      totalEarned: _toInt(json['total_points_earned'] ?? json['total_earned']),
+      totalSpent: _toInt(json['total_points_used'] ?? json['total_spent']),
+      balance: _toInt(json['available_points'] ?? json['balance']),
+      totalTransactions: _toInt(json['total_transactions']),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'total_earned': totalEarned,
-    'total_spent': totalSpent,
-    'balance': balance,
+    'user_id': userId,
+    'total_points_earned': totalEarned,
+    'total_points_used': totalSpent,
+    'available_points': balance,
+    'total_transactions': totalTransactions,
   };
 }

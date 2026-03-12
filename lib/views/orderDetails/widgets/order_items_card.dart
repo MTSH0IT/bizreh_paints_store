@@ -61,8 +61,8 @@ class _ItemOrder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final title = context.localizedValue(
-      en: item.product?.title,
-      ar: item.product?.arTitle,
+      en: item.title,
+      ar: item.arTitle,
       fallback: '',
     );
     final quantity = item.quantityPerUnit ?? 0;
@@ -72,13 +72,13 @@ class _ItemOrder extends StatelessWidget {
     final finalItemPrice = _toDouble(item.finalItemPrice);
     final discountName = (item.appliedDiscountName ?? '').trim();
     final optionName = context.localizedValue(
-      en: item.productOption?.optionName,
-      ar: item.productOption?.arOptionName,
+      en: item.optionName,
+      ar: item.arOptionName,
       fallback: '',
     );
     final packagingTitle = context.localizedValue(
-      en: item.packaging?.title,
-      ar: item.packaging?.arTitle,
+      en: item.packagingTitle,
+      ar: item.packagingArTitle,
       fallback: '',
     );
     final colorDegree = item.color?.degree;
@@ -101,7 +101,7 @@ class _ItemOrder extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: ImageNetwork(
-                    image: item.product?.image ?? "",
+                    image: item.image ?? "",
                     icon: Icons.shopping_bag_outlined,
                   ),
                 ),

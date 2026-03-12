@@ -4,14 +4,26 @@ import 'package:bizreh_paints_store/models/points_history_model.dart';
 
 class PointsHistoryItem extends StatelessWidget {
   final PointsHistoryModel item;
+  final VoidCallback? onTap;
 
-  const PointsHistoryItem({super.key, required this.item});
+  const PointsHistoryItem({super.key, required this.item, this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    final title = item.giftTitle ?? "";
-    final reason = item.reason ?? "";
+    final referenceType = (item.referenceType ?? '').trim();
     final date = formatDate(item.createdAt);
+
+    String title = referenceType;
+    if (title.isEmpty) {
+      title = '---';
+    }
+
+    String subtitle = '';
+    if ((item.orderId ?? 0) > 0) {
+      subtitle = 'Order #${item.orderId}';
+    } else if ((item.userGiftId ?? 0) > 0) {
+      subtitle = 'Gift #${item.userGiftId}';
+    }
 
     final points = item.points ?? 0;
     final isPositive = item.pointsType != 'spent';
@@ -20,7 +32,7 @@ class PointsHistoryItem extends StatelessWidget {
         : const Color(0xFFDC2626);
     //final sign = isPositive ? '+' : '-';
 
-    return Container(
+    final content = Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -55,22 +67,24 @@ class PointsHistoryItem extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (title.isNotEmpty)
-                  Text(
-                    title,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 15,
-                    ),
-                  ),
-                const SizedBox(height: 6),
                 Text(
-                  reason,
+                  title,
                   style: const TextStyle(
-                    fontWeight: FontWeight.w400,
+                    fontWeight: FontWeight.w600,
                     fontSize: 15,
                   ),
                 ),
+                if (subtitle.isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    subtitle,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 13,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ],
                 const SizedBox(height: 6),
                 Text(
                   date,
@@ -79,6 +93,7 @@ class PointsHistoryItem extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(width: 8),
           Text(
             '$points',
             style: TextStyle(
@@ -87,8 +102,19 @@ class PointsHistoryItem extends StatelessWidget {
               fontSize: 16,
             ),
           ),
+          if (onTap != null) ...[
+            const SizedBox(width: 6),
+            const Icon(Icons.chevron_right, color: Colors.black38),
+          ],
         ],
       ),
+    );
+
+    if (onTap == null) return content;
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: content,
     );
   }
 }

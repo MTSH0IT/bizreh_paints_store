@@ -15,7 +15,7 @@ class PointsServices {
     try {
       final response = await _dioClient.get(ApiEndpoint.getUserPoints);
       final apiResponse = ApiResponse.fromJson(response.data, (json) {
-        final points = (json['points'] as Map<String, dynamic>?) ?? {};
+        final points = (json as Map<String, dynamic>?) ?? {};
         return UserPointsModel.fromJson(points);
       });
 
@@ -45,7 +45,7 @@ class PointsServices {
     try {
       final response = await _dioClient.get(ApiEndpoint.getPointsHistory);
       final apiResponse = ApiResponse.fromJson(response.data, (json) {
-        final list = (json['history'] as List?) ?? [];
+        final list = (json as List?) ?? [];
         return list
             .map((e) => PointsHistoryModel.fromJson(e as Map<String, dynamic>))
             .toList();

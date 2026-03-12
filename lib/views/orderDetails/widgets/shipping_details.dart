@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class ShippingDetails extends StatelessWidget {
@@ -9,11 +10,15 @@ class ShippingDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userName = order.user?.name ?? '';
-    final userPhone = order.user?.phone ?? '';
-    final cityName = order.address?.cityName ?? '';
-    final addressLine = order.address?.addressLine ?? '';
-    final note = order.address?.note ?? '';
+    final userName = order.userName ?? '';
+    final userPhone = order.userPhone ?? '';
+    final cityName = context.localizedValue(
+      en: order.cityName,
+      ar: order.arCityName,
+      fallback: '',
+    );
+    final addressLine = order.addressLine ?? '';
+    final note = order.addressNote ?? '';
     // final driverPhone = order.driver?.phone ?? "";
     // final supplierPhone = order.supplier?.phone;
 

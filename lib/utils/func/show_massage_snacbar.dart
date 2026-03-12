@@ -24,7 +24,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void showMassage(String message, bool success) {
+void showMassage(String message, bool success) async {
+  await Future.delayed(const Duration(milliseconds: 500));
   Get.showSnackbar(
     GetSnackBar(
       title: success ? 'نجاح' : 'خطأ',

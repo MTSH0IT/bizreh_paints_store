@@ -14,8 +14,8 @@ class ShippingDetails extends StatelessWidget {
     final cityName = order.address?.cityName ?? '';
     final addressLine = order.address?.addressLine ?? '';
     final note = order.address?.note ?? '';
-    final driverPhone = order.driver?.phone;
-    final supplierPhone = order.supplier?.phone;
+    // final driverPhone = order.driver?.phone ?? "";
+    // final supplierPhone = order.supplier?.phone;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -50,12 +50,12 @@ class ShippingDetails extends StatelessWidget {
               _buildDetailRow(Icons.note, note),
               const SizedBox(height: 12),
             ],
-            if (driverPhone != null && driverPhone.trim().isNotEmpty) ...[
-              _buildDetailRow(Icons.local_shipping_outlined, driverPhone),
-              const SizedBox(height: 12),
-            ],
-            if (supplierPhone != null && supplierPhone.trim().isNotEmpty)
-              _buildDetailRow(Icons.store_outlined, supplierPhone),
+            // if (driverPhone != null && driverPhone.trim().isNotEmpty) ...[
+            //   _buildDetailRow(Icons.local_shipping_outlined, driverPhone),
+            //   const SizedBox(height: 12),
+            // ],
+            // if (supplierPhone != null && supplierPhone.trim().isNotEmpty)
+            //   _buildDetailRow(Icons.store_outlined, supplierPhone),
           ],
         ),
       ),

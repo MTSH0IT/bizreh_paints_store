@@ -6,6 +6,7 @@ class ProfileListItem extends StatelessWidget {
   final String title;
   final String? trailingText;
   final VoidCallback? onTap;
+  final bool destructive;
 
   const ProfileListItem({
     super.key,
@@ -13,6 +14,7 @@ class ProfileListItem extends StatelessWidget {
     required this.title,
     this.trailingText,
     this.onTap,
+    this.destructive = false,
   });
 
   @override
@@ -28,7 +30,10 @@ class ProfileListItem extends StatelessWidget {
         ),
         child: Icon(icon),
       ),
-      title: Text(title, style: TextStyle(color: Colors.black)),
+      title: Text(
+        title,
+        style: TextStyle(color: destructive ? Colors.red : Colors.black),
+      ),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [

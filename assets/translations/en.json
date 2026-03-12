@@ -178,7 +178,7 @@
     "order_no": "Order #{}",
     "items_ordered": "Items Ordered",
     "qty": "Qty",
-    "unit_price": "Unit price",
+    "unit_price": "total price",
     "discount": "Discount",
     "final_price": "Final price",
     "sub_total": "Subtotal",

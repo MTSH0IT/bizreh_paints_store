@@ -1,5 +1,4 @@
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
-import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'package:bizreh_paints_store/views/settings/change_password_view.dart';
 import 'package:bizreh_paints_store/views/settings/delete_account_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -79,25 +78,6 @@ class SettingsView extends StatelessWidget {
                     destructive: true,
                     onTap: () {
                       Get.to(() => DeleteAccountView());
-                    },
-                  ),
-                  SettingsTile(
-                    title: 'settings.logout'.tr(),
-                    destructive: true,
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) => ConfirmationDialog(
-                          title: 'settings.logout_dialog.title'.tr(),
-                          message: 'settings.logout_dialog.message'.tr(),
-                          confirmText: 'settings.logout_dialog.confirm'.tr(),
-                          cancelText: 'settings.logout_dialog.cancel'.tr(),
-                          isDestructive: false,
-                          onConfirm: () {
-                            personalController.signOut();
-                          },
-                        ),
-                      );
                     },
                   ),
                 ],

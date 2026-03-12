@@ -9,6 +9,8 @@ import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
 import 'package:bizreh_paints_store/views/notifications/notifications_view.dart';
 import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
+import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'widgets/profile_list_item.dart';
 import 'widgets/section_title.dart';
 
@@ -111,6 +113,26 @@ class ProfileView extends StatelessWidget {
                       title: 'profile.app_preferences'.tr(),
                       onTap: () {
                         Get.to(() => SettingsView());
+                      },
+                    ),
+                    ProfileListItem(
+                      icon: Icons.logout_outlined,
+                      title: 'settings.logout'.tr(),
+                      destructive: true,
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => ConfirmationDialog(
+                            title: 'settings.logout_dialog.title'.tr(),
+                            message: 'settings.logout_dialog.message'.tr(),
+                            confirmText: 'settings.logout_dialog.confirm'.tr(),
+                            cancelText: 'settings.logout_dialog.cancel'.tr(),
+                            isDestructive: false,
+                            onConfirm: () {
+                              Get.find<PersonalController>().signOut();
+                            },
+                          ),
+                        );
                       },
                     ),
                   ],

@@ -20,7 +20,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
 
   @override
   void initState() {
-    addressController.loadDefaultAddress();
+    // addressController.loadDefaultAddress();
     addressController.loadCities();
     super.initState();
   }
@@ -64,15 +64,15 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             itemCount: items.length,
             itemBuilder: (context, index) {
               final address = items[index];
-              final isDefault =
-                  address.id == addressController.defaultAddress.value?.id;
+              // final isDefault =
+              //     address.id == addressController.defaultAddress.value?.id;
 
               return GestureDetector(
                 onTap: () {
-                  addressController.setDefault(address.id!);
+                  // addressController.setDefault(address.id!);
                 },
                 child: AddressCard(
-                  isDefaultAddress: isDefault,
+                  // isDefaultAddress: isDefault,
                   address: address,
                   onEdit: () {
                     Get.to(() => ManageAddressView(address: address));

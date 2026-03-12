@@ -19,7 +19,7 @@ class AddressController extends GetxController {
   final RxList<AddressModel> addresses = <AddressModel>[].obs;
   final RxList<AddressModel> addressesActive = <AddressModel>[].obs;
   final RxList<CitiesModel> cities = <CitiesModel>[].obs;
-  final Rxn<AddressModel> defaultAddress = Rxn<AddressModel>();
+  // final Rxn<AddressModel> defaultAddress = Rxn<AddressModel>();
 
   // Form controllers
   final TextEditingController nicknameCtrl = TextEditingController();
@@ -94,18 +94,18 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> loadDefaultAddress() async {
-    isLoading.value = true;
-    try {
-      final res = await _addressServices.getDefaultAddress();
-      defaultAddress.value = res;
-      isLoading.value = false;
-    } catch (e) {
-      log("address controller loadDefaultAddress error: ${e.toString()}");
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  // Future<void> loadDefaultAddress() async {
+  //   isLoading.value = true;
+  //   try {
+  //     final res = await _addressServices.getDefaultAddress();
+  //     defaultAddress.value = res;
+  //     isLoading.value = false;
+  //   } catch (e) {
+  //     log("address controller loadDefaultAddress error: ${e.toString()}");
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   // CRUD
   Future<void> createAddress() async {
@@ -122,6 +122,7 @@ class AddressController extends GetxController {
       );
       await loadAddresses();
       showMassage("تمت إضافة العنوان بنجاح", true);
+      Get.back();
       isSubmitting.value = false;
     } catch (e) {
       log("address controller createAddress error: ${e.toString()}");
@@ -160,21 +161,21 @@ class AddressController extends GetxController {
     try {
       await _addressServices.deleteAddress(id: id);
       // تحديث محلي لقائمة العناوين بدون إعادة تحميل من السيرفر
-      AddressModel? removed;
-      for (final a in addresses) {
-        if (a.id == id) {
-          removed = a;
-          break;
-        }
-      }
+      // AddressModel? removed;
+      // for (final a in addresses) {
+      //   if (a.id == id) {
+      //     removed = a;
+      //     break;
+      //   }
+      // }
 
       addresses.removeWhere((e) => e.id == id);
       addresses.refresh();
 
       // إذا كان العنوان المحذوف هو الافتراضي، أفرغ القيمة الافتراضية
-      if (removed != null && defaultAddress.value?.id == removed.id) {
-        defaultAddress.value = null;
-      }
+      // if (removed != null && defaultAddress.value?.id == removed.id) {
+      //   defaultAddress.value = null;
+      // }
 
       showMassage("تم حذف العنوان", true);
       isSubmitting.value = false;
@@ -186,33 +187,33 @@ class AddressController extends GetxController {
     }
   }
 
-  Future<void> setDefault(int id) async {
-    isSubmitting.value = true;
-    try {
-      await _addressServices.setDefaultAddress(id: id);
-      // تحديث محلي للعنوان الافتراضي من القائمة الحالية بدون طلب جديد
-      AddressModel? newDefault;
-      for (final a in addresses) {
-        if (a.id == id) {
-          newDefault = a;
-          break;
-        }
-      }
+  // Future<void> setDefault(int id) async {
+  //   isSubmitting.value = true;
+  //   try {
+  //     await _addressServices.setDefaultAddress(id: id);
+  //     // تحديث محلي للعنوان الافتراضي من القائمة الحالية بدون طلب جديد
+  //     AddressModel? newDefault;
+  //     for (final a in addresses) {
+  //       if (a.id == id) {
+  //         newDefault = a;
+  //         break;
+  //       }
+  //     }
 
-      if (newDefault != null) {
-        defaultAddress.value = newDefault;
-        addresses.refresh();
-      }
+  //     if (newDefault != null) {
+  //       defaultAddress.value = newDefault;
+  //       addresses.refresh();
+  //     }
 
-      showMassage("تم تعيين العنوان الافتراضي", true);
-      isSubmitting.value = false;
-    } catch (e) {
-      log("address controller setDefault error: ${e.toString()}");
-      showMassage("تعذر تعيين العنوان الافتراضي", false);
-    } finally {
-      isSubmitting.value = false;
-    }
-  }
+  //     showMassage("تم تعيين العنوان الافتراضي", true);
+  //     isSubmitting.value = false;
+  //   } catch (e) {
+  //     log("address controller setDefault error: ${e.toString()}");
+  //     showMassage("تعذر تعيين العنوان الافتراضي", false);
+  //   } finally {
+  //     isSubmitting.value = false;
+  //   }
+  // }
 
   // Helpers
   bool _validateFields() {

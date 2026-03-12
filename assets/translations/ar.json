@@ -299,5 +299,28 @@
   "brand": {
     "products_title": "منتجات العلامة التجارية",
     "no_products": "لا توجد منتجات"
+  },
+  "rewards": {
+    "title": "العروض والنقاط",
+    "home_hint": "اطّلع على الخصومات وقواعد جمع النقاط",
+    "refresh": "تحديث",
+    "discounts_tab": "الخصومات",
+    "points_tab": "قواعد النقاط",
+    "no_discounts": "لا توجد عروض خصم حالياً",
+    "no_points_rules": "لا توجد قواعد نقاط حالياً",
+    "active": "فعّال",
+    "inactive": "غير فعّال",
+    "amount": "القيمة",
+    "min_purchase": "الحد الأدنى للشراء",
+    "min_qty": "الحد الأدنى للكمية",
+    "expires": "ينتهي",
+    "products": "المنتجات",
+    "brands": "العلامات",
+    "categories": "التصنيفات",
+    "points_per_unit": "نقاط لكل وحدة",
+    "start": "يبدأ",
+    "end": "ينتهي",
+    "brand": "العلامة",
+    "packaging": "التغليف"
   }
 }

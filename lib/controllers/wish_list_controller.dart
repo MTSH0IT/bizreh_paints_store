@@ -13,6 +13,7 @@ class WishListController extends GetxController {
   final RxBool isGetLoading = false.obs;
   final RxBool isAddRemoveLoading = false.obs;
   final RxInt removingId = (-1).obs;
+  final RxInt movingToCartId = (-1).obs;
 
   @override
   void onInit() {
@@ -90,12 +91,19 @@ class WishListController extends GetxController {
     return items.any((item) => item.optionPackagingId == id);
   }
 
-  void addWishlistItemToCart(WishlistModel wishlistItem) {
-    final cartController = Get.find<CartController>();
-    cartController.addToCart(
-      optionPackagingId: wishlistItem.optionPackagingId!,
-      //colorFamilyId: wishlistItem.colorFamilyId!,
-      quantity: 1,
-    );
+  Future<void> addWishlistItemToCart(WishlistModel wishlistItem) async {
+    movingToCartId.value = wishlistItem.optionPackagingId!;
+    try {
+      final cartController = Get.find<CartController>();
+      await cartController.addToCart(
+        optionPackagingId: wishlistItem.optionPackagingId!,
+        //colorFamilyId: wishlistItem.colorFamilyId!,
+        quantity: 1,
+      );
+    } catch (e) {
+      // Error already handled in CartController
+    } finally {
+      movingToCartId.value = -1;
+    }
   }
 }

@@ -13,6 +13,7 @@ import 'package:bizreh_paints_store/views/home/widgets/categories.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:bizreh_paints_store/views/home/widgets/section_header.dart';
 import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
+import 'package:bizreh_paints_store/views/home/widgets/rewards_entry_card.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -35,6 +36,8 @@ class HomeView extends StatelessWidget {
             children: [
               const SizedBox(height: 8),
               BulletinBoard(),
+              const SizedBox(height: 12),
+              const RewardsEntryCard(),
               const SizedBox(height: 16),
               SectionHeader(
                 title: 'home.top_brands'.tr(),

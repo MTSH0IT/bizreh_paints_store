@@ -299,5 +299,28 @@
   "brand": {
     "products_title": "Brand Products",
     "no_products": "No products"
+  },
+  "rewards": {
+    "title": "Offers & Rewards",
+    "home_hint": "View discounts and points rules",
+    "refresh": "Refresh",
+    "discounts_tab": "Discounts",
+    "points_tab": "Points rules",
+    "no_discounts": "No discount offers right now",
+    "no_points_rules": "No points rules right now",
+    "active": "Active",
+    "inactive": "Inactive",
+    "amount": "Amount",
+    "min_purchase": "Min purchase",
+    "min_qty": "Min qty",
+    "expires": "Expires",
+    "products": "Products",
+    "brands": "Brands",
+    "categories": "Categories",
+    "points_per_unit": "Points per unit",
+    "start": "Start",
+    "end": "End",
+    "brand": "Brand",
+    "packaging": "Packaging"
   }
 }

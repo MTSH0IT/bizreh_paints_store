@@ -51,8 +51,8 @@ class WishList extends StatelessWidget {
               },
               child: WishListItemCard(
                 item: item,
-                onMoveToCart: () {
-                  ctrl.addWishlistItemToCart(item);
+                onMoveToCart: () async {
+                  await ctrl.addWishlistItemToCart(item);
                 },
                 onRemove: () {
                   ctrl.removeItem(item.optionPackagingId!);

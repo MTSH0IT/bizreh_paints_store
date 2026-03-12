@@ -131,19 +131,25 @@ class WishListItemCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: TextButton(
-                    onPressed: onMoveToCart,
-                    style: TextButton.styleFrom(
-                      foregroundColor: Colors.black87,
-                    ),
-                    child: Text(
-                      'wishlist.move_to_cart'.tr(),
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
+                  child: Obx(() {
+                    final isMoving =
+                        cont.movingToCartId.value == item.optionPackagingId;
+                    return TextButton(
+                      onPressed: isMoving ? null : onMoveToCart,
+                      style: TextButton.styleFrom(
+                        foregroundColor: Colors.black87,
                       ),
-                    ),
-                  ),
+                      child: isMoving
+                          ? const BuildProgressIndicator()
+                          : Text(
+                              'wishlist.move_to_cart'.tr(),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    );
+                  }),
                 ),
                 Text("|", style: TextStyle(color: Colors.grey)),
                 Expanded(

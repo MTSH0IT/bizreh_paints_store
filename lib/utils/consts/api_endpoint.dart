@@ -59,6 +59,12 @@ class ApiEndpoint {
   //ads
   static const String getAds = "/user/ads/ads";
 
+  //discounts
+  static const String getDiscountOffers = "/user/discount";
+
+  //points rules
+  static const String getPointsRules = "/user/points";
+
   //points
   static const String getUserPoints = "/user/gift/points";
   static const String getPointsHistory = "/user/gift/points/history";

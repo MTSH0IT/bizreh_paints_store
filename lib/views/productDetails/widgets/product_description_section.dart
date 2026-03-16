@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ProductDescriptionSection extends StatelessWidget {
@@ -13,7 +14,7 @@ class ProductDescriptionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'description :',
+          '${tr('product_details.description')} :',
           style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
         ),
         SizedBox(height: 4),

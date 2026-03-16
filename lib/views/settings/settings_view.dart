@@ -1,4 +1,5 @@
-import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/views/settings/change_password_view.dart';
 import 'package:bizreh_paints_store/views/settings/delete_account_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -12,12 +13,7 @@ class SettingsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('settings.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: const CommonAppBar(titleKey: 'settings.title'),
       body: SafeArea(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8),
@@ -26,18 +22,18 @@ class SettingsView extends StatelessWidget {
               child: Column(
                 children: [
                   SettingsTile(
-                    title: 'settings.language'.tr(),
+                    title: tr('settings.language'),
                     onTap: () async {
                       final result = await showDialog<Locale>(
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('settings.choose_language'.tr()),
+                            title: Text(tr('settings.choose_language')),
                             content: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text('settings.arabic'.tr()),
+                                  title: Text(tr('settings.arabic')),
                                   onTap: () {
                                     Navigator.of(
                                       context,
@@ -45,7 +41,7 @@ class SettingsView extends StatelessWidget {
                                   },
                                 ),
                                 ListTile(
-                                  title: Text('settings.english'.tr()),
+                                  title: Text(tr('settings.english')),
                                   onTap: () {
                                     Navigator.of(
                                       context,
@@ -64,7 +60,7 @@ class SettingsView extends StatelessWidget {
                     },
                   ),
                   SettingsTile(
-                    title: 'settings.change_password'.tr(),
+                    title: tr('settings.change_password'),
                     onTap: () {
                       Get.to(() => ChangePasswordView());
                     },
@@ -74,7 +70,7 @@ class SettingsView extends StatelessWidget {
                   // const SettingsTile(title: 'Privacy Policy'),
                   // const SettingsTile(title: 'Terms of Service'),
                   SettingsTile(
-                    title: 'settings.delete_account'.tr(),
+                    title: tr('settings.delete_account'),
                     destructive: true,
                     onTap: () {
                       Get.to(() => DeleteAccountView());

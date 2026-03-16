@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/controllers/order_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class ProfileView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 8),
-              SectionTitle(title: 'profile.account'.tr()),
+              SectionTitle(title: tr('profile.account')),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 elevation: 0,
@@ -39,14 +39,14 @@ class ProfileView extends StatelessWidget {
                   children: [
                     ProfileListItem(
                       icon: Icons.person_outline_rounded,
-                      title: 'profile.personal_info'.tr(),
+                      title: tr('profile.personal_info'),
                       onTap: () {
                         Get.to(() => PersonalInformation());
                       },
                     ),
                     ProfileListItem(
                       icon: Icons.star_outline_rounded,
-                      title: 'profile.earned_points'.tr(),
+                      title: tr('profile.earned_points'),
                       //trailingText: '1,250',
                       onTap: () {
                         Get.to(() => const EranedPointsView());
@@ -54,7 +54,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     ProfileListItem(
                       icon: Icons.location_on_outlined,
-                      title: 'profile.addresses'.tr(),
+                      title: tr('profile.addresses'),
                       onTap: () {
                         Get.to(() => const SavedAddressView());
                       },
@@ -63,7 +63,7 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
 
-              SectionTitle(title: 'profile.orders'.tr()),
+              SectionTitle(title: tr('profile.orders')),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 elevation: 0,
@@ -75,7 +75,7 @@ class ProfileView extends StatelessWidget {
                   children: [
                     ProfileListItem(
                       icon: Icons.local_shipping_outlined,
-                      title: 'profile.order_history'.tr(),
+                      title: tr('profile.order_history'),
                       onTap: () {
                         Get.find<OrderController>().loadOrderHistory();
                         Get.to(() => const OrderHistory());
@@ -83,14 +83,14 @@ class ProfileView extends StatelessWidget {
                     ),
                     ProfileListItem(
                       icon: Icons.local_offer_outlined,
-                      title: 'rewards.title'.tr(),
+                      title: tr('rewards.title'),
                       onTap: () {
                         Get.to(() => const RewardsView());
                       },
                     ),
                     ProfileListItem(
                       icon: Icons.favorite_border_rounded,
-                      title: 'profile.wish_list'.tr(),
+                      title: tr('profile.wish_list'),
                       onTap: () {
                         Get.to(() => WishList());
                       },
@@ -99,7 +99,7 @@ class ProfileView extends StatelessWidget {
                 ),
               ),
 
-              SectionTitle(title: 'profile.settings'.tr()),
+              SectionTitle(title: tr('profile.settings')),
               Card(
                 margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
                 elevation: 0,
@@ -111,30 +111,30 @@ class ProfileView extends StatelessWidget {
                   children: [
                     ProfileListItem(
                       icon: Icons.notifications_none_rounded,
-                      title: 'profile.notifications'.tr(),
+                      title: tr('profile.notifications'),
                       onTap: () {
                         Get.to(() => NotificationsView());
                       },
                     ),
                     ProfileListItem(
                       icon: Icons.settings_outlined,
-                      title: 'profile.app_preferences'.tr(),
+                      title: tr('profile.app_preferences'),
                       onTap: () {
                         Get.to(() => SettingsView());
                       },
                     ),
                     ProfileListItem(
                       icon: Icons.logout_outlined,
-                      title: 'settings.logout'.tr(),
+                      title: tr('settings.logout'),
                       destructive: true,
                       onTap: () {
                         showDialog(
                           context: context,
                           builder: (context) => ConfirmationDialog(
-                            title: 'settings.logout_dialog.title'.tr(),
-                            message: 'settings.logout_dialog.message'.tr(),
-                            confirmText: 'settings.logout_dialog.confirm'.tr(),
-                            cancelText: 'settings.logout_dialog.cancel'.tr(),
+                            title: tr('settings.logout_dialog.title'),
+                            message: tr('settings.logout_dialog.message'),
+                            confirmText: tr('settings.logout_dialog.confirm'),
+                            cancelText: tr('settings.logout_dialog.cancel'),
                             isDestructive: false,
                             onConfirm: () {
                               Get.find<PersonalController>().signOut();

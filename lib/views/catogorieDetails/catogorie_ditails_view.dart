@@ -2,6 +2,7 @@ import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dart';
@@ -40,8 +41,9 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CommonAppBar(
         backgroundColor: Colors.white,
+
         title: Text(
           context.localizedValue(
             en: widget.superCategory.title,
@@ -49,7 +51,6 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
             fallback: 'Categories',
           ),
         ),
-        centerTitle: true,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(50),
           child: TabBar(
@@ -206,7 +207,7 @@ class _SubCategoryProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CommonAppBar(
         title: Text(title),
         centerTitle: true,
         backgroundColor: Colors.transparent,

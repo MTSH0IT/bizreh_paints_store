@@ -1,5 +1,6 @@
-import 'package:bizreh_paints_store/utils/consts/colors.dart';
+﻿import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -39,7 +40,7 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
   void _next() {
     if (_currentPage == 0) {
       if (orderController.selectedAddress.value == null) {
-        showMassage('order_init.select_address'.tr(), false);
+        showMassage(tr('order_init.select_address'), false);
         return;
       }
       _goToPage(1);
@@ -66,26 +67,23 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
   }
 
   String get _buttonTitle {
-    if (_currentPage == 1) return 'order_init.submit_order'.tr();
-    return 'order_init.next'.tr();
+    if (_currentPage == 1) return tr('order_init.submit_order');
+    return tr('order_init.next');
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[100],
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: CommonAppBar(
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
           onPressed: _back,
         ),
         title: Text(
-          'order_init.title'.tr(),
+          tr('order_init.title'),
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
       ),
       body: SafeArea(
         child: Column(
@@ -96,8 +94,8 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
               key: ValueKey(_currentPage),
               currentIndex: _currentPage,
               statusList: [
-                Status(name: "order_init.address".tr(), icon: null),
-                Status(name: "order_init.check".tr(), icon: null),
+                Status(name: tr('order_init.address'), icon: null),
+                Status(name: tr('order_init.check'), icon: null),
               ],
               activeColor: primaryColor,
               height: 80,
@@ -144,7 +142,7 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
                 ),
                 child: MainButton(
                   title: orderController.isSubmitting.value
-                      ? 'order_init.submitting'.tr()
+                      ? tr('order_init.submitting')
                       : _buttonTitle,
                   onPressed: orderController.isSubmitting.value ? null : _next,
                 ),

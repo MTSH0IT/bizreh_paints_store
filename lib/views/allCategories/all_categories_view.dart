@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/see_all_card.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -15,16 +16,7 @@ class AllCategoriesView extends StatelessWidget {
     final HomeController controller = Get.find();
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title: const Text(
-          'All Categories',
-          style: TextStyle(color: Colors.black),
-        ),
-
-        //actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
-      ),
+      appBar: const CommonAppBar(title: Text('All Categories')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {

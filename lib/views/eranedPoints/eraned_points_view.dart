@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/controllers/points_controller.dart';
 import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/views/gifts/gift_details_view.dart';
 import 'package:bizreh_paints_store/views/orderDetails/order_details_view.dart';
@@ -20,12 +21,7 @@ class EranedPointsView extends StatelessWidget {
     final giftsCtrl = Get.find<GiftsController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('points.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: const CommonAppBar(titleKey: 'points.title'),
       body: Obx(() {
         final isLoadingPoints = ctrl.isLoadingPoints.value;
         final isLoadingHistory = ctrl.isLoadingHistory.value;
@@ -50,7 +46,7 @@ class EranedPointsView extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'points.history'.tr(),
+                  tr('points.history'),
                   style: const TextStyle(
                     color: Colors.black54,
                     fontWeight: FontWeight.w700,

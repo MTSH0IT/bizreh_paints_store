@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'map_widget.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,7 +16,7 @@ class MapCard extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(left: 4, bottom: 8, top: 12),
           child: Text(
-            'address_manage.get_current_location'.tr(),
+            tr('address_manage.get_current_location'),
             style: TextStyle(
               fontSize: 12,
               color: Colors.black54,
@@ -41,7 +41,7 @@ class MapCard extends StatelessWidget {
                 else
                   Center(
                     child: Text(
-                      'address_manage.updating_location'.tr(),
+                      tr('address_manage.updating_location'),
                       style: TextStyle(color: Colors.black54),
                     ),
                   ),

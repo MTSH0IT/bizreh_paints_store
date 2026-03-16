@@ -69,6 +69,7 @@
   },
   "cart": {
     "title": "My Cart",
+    "sub_title":"Cart",
     "empty": "Your cart is empty",
     "set_new_quantity": "Set new quantity",
     "quantity": "Quantity",
@@ -209,7 +210,16 @@
     "note_default": "Note"
   },
   "product_details": {
-    "add_to_cart": "Add to Cart"
+    "title": "Product Details",
+    "add_to_cart": "Add to Cart",
+    "options": "Options:",
+    "packaging": "Packaging:",
+    "price": "Price:",
+    "stock": "Stock:",
+    "brand": "Brand:",
+    "category": "Category:",
+    "coming_soon": "Coming Soon",
+    "description": "Description:"
   },
   "auth": {
     "sign_in": {

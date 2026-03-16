@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+﻿import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
@@ -79,7 +79,7 @@ class ProductDetailsView extends StatelessWidget {
                                   product: product,
                                   controller: controller,
                                 ),
-                                const SizedBox(height: 24),
+                                const SizedBox(height: 16),
                                 ProductPackagingSection(
                                   product: product,
                                   controller: controller,
@@ -96,7 +96,7 @@ class ProductDetailsView extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: MainButton(
-                      title: 'product_details.add_to_cart'.tr(),
+                      title: tr('product_details.add_to_cart'),
                       onPressed: isMutating
                           ? null
                           : () => controller.addToCart(),

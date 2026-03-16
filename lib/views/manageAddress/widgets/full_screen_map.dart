@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
 import 'map_widget.dart';
@@ -24,9 +25,8 @@ class _FullScreenMapState extends State<FullScreenMap> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('address_manage.select_location'.tr()),
-        centerTitle: true,
+      appBar: const CommonAppBar(
+        titleKey: 'address_manage.select_location',
         backgroundColor: primaryColor,
         foregroundColor: Colors.white,
       ),
@@ -38,7 +38,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
               backgroundColor: primaryColor,
               foregroundColor: Colors.white,
               icon: const Icon(Icons.check),
-              label: Text('address_manage.confirm'.tr()),
+              label: Text(tr('address_manage.confirm')),
             )
           : null,
       body: Stack(
@@ -54,7 +54,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
             height: MediaQuery.of(context).size.height,
             zoom: 15,
           ),
-          // تعليمات للمستخدم
+          // ØªØ¹Ù„ÙŠÙ…Ø§Øª Ù„Ù„Ù…Ø³ØªØ®Ø¯Ù…
           Positioned(
             top: 20,
             left: 20,
@@ -73,7 +73,7 @@ class _FullScreenMapState extends State<FullScreenMap> {
                 ],
               ),
               child: Text(
-                'address_manage.tap_to_select_location'.tr(),
+                tr('address_manage.tap_to_select_location'),
                 style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
                 textAlign: TextAlign.center,
               ),

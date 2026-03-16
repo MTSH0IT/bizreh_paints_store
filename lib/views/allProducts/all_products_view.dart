@@ -1,9 +1,10 @@
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 
 class AllProductsView extends StatelessWidget {
   AllProductsView({super.key});
@@ -12,11 +13,7 @@ class AllProductsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('products.all.title'.tr()),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: const CommonAppBar(titleKey: 'products.all.title'),
       body: SafeArea(
         child: Obx(() {
           if (contr.isLoading.value) {
@@ -24,7 +21,7 @@ class AllProductsView extends StatelessWidget {
           }
 
           if (contr.products.isEmpty) {
-            return Center(child: Text('products.empty'.tr()));
+            return Center(child: Text(tr('products.empty')));
           }
           return Padding(
             padding: const EdgeInsets.only(top: 8, bottom: 24),

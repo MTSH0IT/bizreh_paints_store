@@ -1,7 +1,8 @@
-import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -14,12 +15,7 @@ class GiftDetailsView extends StatelessWidget {
     final ctrl = Get.find<GiftsController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('gifts.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: const CommonAppBar(titleKey: 'gifts.title'),
       body: SafeArea(
         child: Obx(() {
           if (ctrl.isLoadingSelectedGift.value) {
@@ -40,7 +36,7 @@ class GiftDetailsView extends StatelessWidget {
 
           final gift = ctrl.selectedGift.value;
           if (gift == null) {
-            return Center(child: Text('order_details.no_data'.tr()));
+            return Center(child: Text(tr('order_details.no_data')));
           }
 
           final title = context.localizedValue(
@@ -69,7 +65,7 @@ class GiftDetailsView extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '${gift.points ?? 0} ${'gifts.points'.tr()}',
+                '${gift.points ?? 0} ${tr('gifts.points')}',
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,

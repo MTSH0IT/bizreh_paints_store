@@ -1,6 +1,7 @@
-import 'package:bizreh_paints_store/models/address_model.dart';
+﻿import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -64,13 +65,10 @@ class _ManageAddressViewState extends State<ManageAddressView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: CommonAppBar(
         title: Text(
-          widget.address != null ? 'address.edit'.tr() : 'address.add_new'.tr(),
+          widget.address != null ? tr('address.edit') : tr('address.add_new'),
         ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
       ),
       body: SafeArea(
         child: Obx(() {
@@ -90,13 +88,13 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                 ),
                 children: [
                   LabeledTextField(
-                    hint: 'address.nickname_hint'.tr(),
-                    label: 'address.nickname'.tr(),
+                    hint: tr('address.nickname_hint'),
+                    label: tr('address.nickname'),
                     controller: addressController.nicknameCtrl,
                   ),
 
                   CityDropdown(
-                    label: 'address.city'.tr(),
+                    label: tr('address.city'),
                     value: selectedCityName,
                     options: citiesOptions.isEmpty ? const [''] : citiesOptions,
                     onChanged: (v) {
@@ -111,13 +109,13 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                     },
                   ),
                   LabeledTextField(
-                    hint: 'address.address_line_hint'.tr(),
-                    label: 'address.address_line'.tr(),
+                    hint: tr('address.address_line_hint'),
+                    label: tr('address.address_line'),
                     controller: addressController.addressLineCtrl,
                   ),
                   LabeledTextField(
-                    hint: 'address.notes_hint'.tr(),
-                    label: 'address.notes'.tr(),
+                    hint: tr('address.notes_hint'),
+                    label: tr('address.notes'),
                     controller: addressController.noteCtrl,
                     maxLines: 3,
                   ),
@@ -144,10 +142,10 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                         ? null
                         : _saveAddress,
                     title: addressController.isSubmitting.value
-                        ? 'address.please_wait'.tr()
+                        ? tr('address.please_wait')
                         : (widget.address != null
-                              ? 'address.update'.tr()
-                              : 'address.save'.tr()),
+                              ? tr('address.update')
+                              : tr('address.save')),
                   ),
                 ],
               ),

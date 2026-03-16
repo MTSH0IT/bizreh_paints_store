@@ -1,8 +1,9 @@
-import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
@@ -15,19 +16,16 @@ class DeleteAccountView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
+      appBar: CommonAppBar(
         title: Text(
-          'delete_account.title'.tr(),
+          tr('delete_account.title'),
           style: const TextStyle(
             color: Colors.black87,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: const IconThemeData(color: Colors.black87),
+        foregroundColor: Colors.black87,
       ),
       body: SafeArea(
         child: SingleChildScrollView(
@@ -56,7 +54,7 @@ class DeleteAccountView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'delete_account.warning_title'.tr(),
+                            tr('delete_account.warning_title'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
@@ -65,7 +63,7 @@ class DeleteAccountView extends StatelessWidget {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'delete_account.warning_message'.tr(),
+                            tr('delete_account.warning_message'),
                             style: TextStyle(
                               fontSize: 14,
                               color: Colors.red[900],
@@ -79,7 +77,7 @@ class DeleteAccountView extends StatelessWidget {
               ),
               const SizedBox(height: 32),
               Text(
-                'delete_account.subtitle'.tr(),
+                tr('delete_account.subtitle'),
                 style: const TextStyle(
                   fontSize: 16,
                   color: Colors.black87,
@@ -89,8 +87,8 @@ class DeleteAccountView extends StatelessWidget {
               const SizedBox(height: 24),
               Obx(
                 () => LabeledTextField(
-                  label: 'delete_account.password_label'.tr(),
-                  hint: 'delete_account.password_hint'.tr(),
+                  label: tr('delete_account.password_label'),
+                  hint: tr('delete_account.password_hint'),
                   controller: ctrl.passwordCtrl,
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
@@ -101,18 +99,18 @@ class DeleteAccountView extends StatelessWidget {
               Obx(
                 () => MainButton(
                   title: ctrl.isLoding.value
-                      ? 'delete_account.deleting'.tr()
-                      : 'delete_account.delete_button'.tr(),
+                      ? tr('delete_account.deleting')
+                      : tr('delete_account.delete_button'),
                   onPressed: ctrl.isLoding.value
                       ? null
                       : () {
                           showDialog(
                             context: context,
                             builder: (context) => ConfirmationDialog(
-                              title: 'delete_account.dialog.title'.tr(),
-                              message: 'delete_account.dialog.message'.tr(),
-                              confirmText: 'delete_account.dialog.confirm'.tr(),
-                              cancelText: 'delete_account.dialog.cancel'.tr(),
+                              title: tr('delete_account.dialog.title'),
+                              message: tr('delete_account.dialog.message'),
+                              confirmText: tr('delete_account.dialog.confirm'),
+                              cancelText: tr('delete_account.dialog.cancel'),
                               isDestructive: true,
                               onConfirm: () async {
                                 await ctrl.deleteAccount();

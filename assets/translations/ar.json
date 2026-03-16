@@ -69,6 +69,7 @@
   },
   "cart": {
     "title": "سلة المشتريات",
+    "sub_title":"السلة",
     "empty": "سلة المشتريات فارغة",
     "set_new_quantity": "تعيين كمية جديدة",
     "quantity": "الكمية",
@@ -81,7 +82,7 @@
     "subtotal": "المجموع",
     "discount": "الخصم",
     "total": "الإجمالي",
-    "items_count": "عدد المنتجات: {0}",
+    "items_count": "عدد المنتجات: {}",
     "place_order": "تقديم الطلب"
   },
   "products": {
@@ -209,7 +210,16 @@
     "note_default": "ملاحظة"
   },
   "product_details": {
-    "add_to_cart": "أضف إلى السلة"
+    "title": "تفاصيل المنتج",
+    "add_to_cart": "أضف إلى السلة",
+    "options": "الخيارات",
+    "packaging": "التغليف",
+    "price": "السعر",
+    "stock": "المخزون",
+    "brand": "العلامة التجارية",
+    "category": "التصنيف",
+    "coming_soon": "قادم قريباً",
+    "description": "الوصف"
   },
   "auth": {
     "sign_in": {

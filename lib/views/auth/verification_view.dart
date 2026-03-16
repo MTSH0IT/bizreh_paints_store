@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_link.dart';
@@ -8,6 +8,7 @@ import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart'
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 
 class VerificationView extends StatefulWidget {
   const VerificationView({super.key});
@@ -24,10 +25,7 @@ class _VerificationViewState extends State<VerificationView> {
     final AuthController auth = Get.find<AuthController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F9FC),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFF7F9FC),
-        elevation: 0,
+      appBar: CommonAppBar(
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new_rounded,
@@ -35,9 +33,8 @@ class _VerificationViewState extends State<VerificationView> {
           ),
           onPressed: () => Get.back(),
         ),
-        centerTitle: true,
         title: Text(
-          'auth.verification.title'.tr(),
+          tr('auth.verification.title'),
           style: const TextStyle(
             color: Colors.black87,
             fontWeight: FontWeight.w600,
@@ -53,8 +50,8 @@ class _VerificationViewState extends State<VerificationView> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   AuthHeader(
-                    title: 'auth.verification.enter_code'.tr(),
-                    subtitle: 'auth.verification.subtitle'.tr(),
+                    title: tr('auth.verification.enter_code'),
+                    subtitle: tr('auth.verification.subtitle'),
                   ),
                   Directionality(
                     textDirection: ui.TextDirection.ltr,
@@ -66,13 +63,13 @@ class _VerificationViewState extends State<VerificationView> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
                     child: Text(
-                      'auth.verification.no_code'.tr(),
+                      tr('auth.verification.no_code'),
                       textAlign: TextAlign.center,
                       style: const TextStyle(color: Colors.black54),
                     ),
                   ),
                   AuthTextLink(
-                    text: 'auth.verification.resend'.tr(),
+                    text: tr('auth.verification.resend'),
                     alignment: MainAxisAlignment.center,
                     onTap: () async {
                       await auth.resendVerification();
@@ -80,7 +77,7 @@ class _VerificationViewState extends State<VerificationView> {
                   ),
                   const Spacer(),
                   VerifyButton(
-                    title: 'auth.verification.verify'.tr(),
+                    title: tr('auth.verification.verify'),
                     onPressed: _code.length == 6
                         ? () async {
                             await auth.verifyAccount(verificationCode: _code);

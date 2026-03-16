@@ -1,8 +1,9 @@
-import 'package:bizreh_paints_store/controllers/home_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -28,14 +29,12 @@ class _BrandProductsViewState extends State<BrandProductsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
+      appBar: CommonAppBar(
         title: Text(
           context.localizedValue(
             en: widget.brand.title,
             ar: widget.brand.arTitle,
-            fallback: 'brand.products_title'.tr(),
+            fallback: tr('brand.products_title'),
           ),
           style: const TextStyle(color: Colors.black),
         ),
@@ -49,7 +48,7 @@ class _BrandProductsViewState extends State<BrandProductsView> {
           }
           final List<ProductModel> items = controller.brandProducts;
           if (items.isEmpty) {
-            return Center(child: Text('brand.no_products'.tr()));
+            return Center(child: Text(tr('brand.no_products')));
           }
           return ProductsGrid(products: items, isNeverScrollable: false);
         }),

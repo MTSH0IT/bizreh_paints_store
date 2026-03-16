@@ -1,4 +1,5 @@
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -14,18 +15,15 @@ class WishList extends StatelessWidget {
     final ctrl = Get.find<WishListController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('wishlist.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+      appBar: CommonAppBar(
+        titleKey: 'wishlist.title',
         actions: [
           IconButton(
             icon: const Icon(Icons.delete_outline),
-            tooltip: 'wishlist.clear_all'.tr(),
+            tooltip: tr('wishlist.clear_all'),
             onPressed: () {
               if (ctrl.items.isEmpty) {
-                showMassage('wishlist.empty_snackbar'.tr(), false);
+                showMassage(tr('wishlist.empty_snackbar'), false);
                 return;
               }
               ctrl.clearAll();
@@ -38,7 +36,7 @@ class WishList extends StatelessWidget {
           return const BuildProgressIndicator();
         }
         if (ctrl.items.isEmpty) {
-          return Center(child: Text('wishlist.empty'.tr()));
+          return Center(child: Text(tr('wishlist.empty')));
         }
         return ListView.builder(
           padding: const EdgeInsets.symmetric(vertical: 8),

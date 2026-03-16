@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -28,7 +28,7 @@ class PointsBalanceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'points.balance'.tr(),
+            tr('points.balance'),
             style: const TextStyle(
               color: primaryColor,
               fontWeight: FontWeight.w600,
@@ -50,7 +50,7 @@ class PointsBalanceCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                '${'points.earned'.tr()}: $totalEarned',
+                '${tr('points.earned')}: $totalEarned',
                 style: const TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.w600,
@@ -59,7 +59,7 @@ class PointsBalanceCard extends StatelessWidget {
               ),
               const SizedBox(width: 16),
               Text(
-                '${'points.spent'.tr()}: $totalSpent',
+                '${tr('points.spent')}: $totalSpent',
                 style: const TextStyle(
                   color: Colors.black54,
                   fontWeight: FontWeight.w600,

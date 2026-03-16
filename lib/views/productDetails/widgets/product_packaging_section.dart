@@ -8,6 +8,7 @@ import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/packaging_variants_bottom_sheet.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
@@ -25,16 +26,12 @@ class ProductPackagingSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final options = product.options ?? [];
     if (options.isEmpty) {
-      return const Padding(
+      return Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: Center(
           child: Text(
-            'قادم قريباً',
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.grey,
-            ),
+            tr('product_details.coming_soon'),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
           ),
         ),
       );
@@ -100,7 +97,7 @@ class ProductPackagingSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Packaging :',
+            tr('product_details.packaging'),
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
           ),
           const SizedBox(height: 12),
@@ -145,7 +142,7 @@ class ProductPackagingSection extends StatelessWidget {
           const SizedBox(height: 8),
           if (selectedPackagingModel != null)
             Text(
-              'Price: ${formatPrice(selectedPackagingModel.pricePerUnit ?? 0)}',
+              '${tr('product_details.price')} : ${formatPrice(selectedPackagingModel.pricePerUnit ?? 0)}',
               style: const TextStyle(
                 fontSize: 16,
                 //fontWeight: FontWeight.w700,
@@ -154,7 +151,7 @@ class ProductPackagingSection extends StatelessWidget {
             ),
           if (selectedPackagingModel != null)
             Text(
-              'Stock: ${selectedPackagingModel.stockQuantity ?? 0}',
+              '${tr('product_details.stock')} : ${selectedPackagingModel.stockQuantity ?? 0}',
               style: const TextStyle(fontSize: 14, color: Colors.black),
             ),
           const SizedBox(height: 8),

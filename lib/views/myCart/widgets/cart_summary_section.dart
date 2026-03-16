@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/cart_model/summary.dart';
+﻿import 'package:bizreh_paints_store/models/cart_model/summary.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
@@ -42,12 +42,12 @@ class CartSummarySection extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            PriceRow(label: 'cart.subtotal'.tr(), amount: subtotal),
+            PriceRow(label: tr('cart.subtotal'), amount: subtotal),
             //PriceRow(label: 'Delivery Fee', amount: delivery),
-            PriceRow(label: 'cart.discount'.tr(), amount: -discount),
+            PriceRow(label: tr('cart.discount'), amount: -discount),
             const Divider(),
             PriceRow(
-              label: 'cart.total'.tr(),
+              label: tr('cart.total'),
               amount: total,
               emphasis: true,
               color: primaryColor,
@@ -56,13 +56,13 @@ class CartSummarySection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
-                  'cart.items_count'.tr(args: ['$totalItems']),
+                  tr('cart.items_count',args: ['$totalItems']),
 
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
                 ),
               ),
 
-            MainButton(title: 'cart.place_order'.tr(), onPressed: onCheckout),
+            MainButton(title: tr('cart.place_order'), onPressed: onCheckout),
           ],
         ),
       ),

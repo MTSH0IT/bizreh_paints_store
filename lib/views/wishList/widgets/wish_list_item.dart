@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/models/wishlist_model/wishlist_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -142,7 +142,7 @@ class WishListItemCard extends StatelessWidget {
                       child: isMoving
                           ? const BuildProgressIndicator()
                           : Text(
-                              'wishlist.move_to_cart'.tr(),
+                              tr('wishlist.move_to_cart'),
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,
@@ -165,7 +165,7 @@ class WishListItemCard extends StatelessWidget {
                       child: isRemoving
                           ? const BuildProgressIndicator()
                           : Text(
-                              'wishlist.remove'.tr(),
+                              tr('wishlist.remove'),
                               style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w600,

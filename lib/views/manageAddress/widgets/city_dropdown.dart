@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -41,7 +41,7 @@ class CityDropdown extends StatelessWidget {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               value: value,
-              hint: Text('address_manage.select_city'.tr()),
+              hint: Text(tr('address_manage.select_city')),
               isExpanded: true,
               items: options
                   .map(

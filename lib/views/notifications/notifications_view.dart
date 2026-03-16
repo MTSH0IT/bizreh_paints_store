@@ -1,4 +1,5 @@
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -16,18 +17,15 @@ class NotificationsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
+      appBar: CommonAppBar(
         title: Obx(() {
           final count = controller.unreadCount.value;
           if (count > 0) {
             return Text(
-              'notifications.title_with_count'.tr(args: [count.toString()]),
+              tr('notifications.title_with_count', args: [count.toString()]),
             );
           }
-          return Text('notifications.title'.tr());
+          return Text(tr('notifications.title'));
         }),
         actions: [
           Obx(() {
@@ -65,7 +63,7 @@ class NotificationsView extends StatelessWidget {
           }
 
           if (controller.notifications.isEmpty) {
-            return Center(child: Text('notifications.empty'.tr()));
+            return Center(child: Text(tr('notifications.empty')));
           }
 
           final list = controller.notifications;

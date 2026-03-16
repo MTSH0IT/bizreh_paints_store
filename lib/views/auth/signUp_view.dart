@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/utils/func/input_validation.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
@@ -30,30 +30,30 @@ class SignUpView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      AuthHeader(title: 'auth.sign_up.title'.tr()),
+                      AuthHeader(title: tr('auth.sign_up.title')),
                       AuthTextField(
                         controller: auth.firstNameCtrl,
-                        hint: 'auth.first_name'.tr(),
+                        hint: tr('auth.first_name'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'auth.first_name_required'.tr();
+                            return tr('auth.first_name_required');
                           }
                           return null;
                         },
                       ),
                       AuthTextField(
                         controller: auth.lastNameCtrl,
-                        hint: 'auth.last_name'.tr(),
+                        hint: tr('auth.last_name'),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'auth.last_name_required'.tr();
+                            return tr('auth.last_name_required');
                           }
                           return null;
                         },
                       ),
                       AuthTextField(
                         controller: auth.phoneCtrl,
-                        hint: 'auth.phone'.tr(),
+                        hint: tr('auth.phone'),
                         keyboardType: TextInputType.phone,
                         validator: (value) {
                           return validatePhoneNumber(value);
@@ -61,40 +61,41 @@ class SignUpView extends StatelessWidget {
                       ),
                       AuthTextField(
                         controller: auth.emailCtrl,
-                        hint: 'auth.email'.tr(),
+                        hint: tr('auth.email'),
                         keyboardType: TextInputType.emailAddress,
                         validator: (value) {
                           return validateEmailAddress(
                             value,
-                            requiredMessage: 'auth.email_required'.tr(),
-                            invalidMessage: 'auth.email_invalid'.tr(),
+                            requiredMessage: tr('auth.email_required'),
+                            invalidMessage: tr('auth.email_invalid'),
                           );
                         },
                       ),
                       AuthTextField(
                         controller: auth.passwordCtrl,
-                        hint: 'auth.password'.tr(),
+                        hint: tr('auth.password'),
                         obscure: true,
                         validator: (value) {
                           return validatePasswordValue(
                             value,
                             minLength: 6,
-                            requiredMessage: 'auth.password_required'.tr(),
-                            tooShortMessage: 'auth.password_short'.tr(),
+                            requiredMessage: tr('auth.password_required'),
+                            tooShortMessage: tr('auth.password_short'),
                           );
                         },
                       ),
                       AuthTextField(
                         controller: auth.confirmCtrl,
-                        hint: 'auth.confirm_password'.tr(),
+                        hint: tr('auth.confirm_password'),
                         obscure: true,
                         validator: (value) {
                           return validateConfirmPassword(
                             value,
                             auth.passwordCtrl.text,
-                            requiredMessage: 'auth.confirm_password_required'
-                                .tr(),
-                            mismatchMessage: 'auth.password_mismatch'.tr(),
+                            requiredMessage: tr(
+                              'auth.confirm_password_required',
+                            ),
+                            mismatchMessage: tr('auth.password_mismatch'),
                           );
                         },
                       ),
@@ -107,8 +108,8 @@ class SignUpView extends StatelessWidget {
                         ),
                         child: MainButton(
                           title: auth.isLoading.value
-                              ? 'auth.please_wait'.tr()
-                              : 'auth.sign_up.button'.tr(),
+                              ? tr('auth.please_wait')
+                              : tr('auth.sign_up.button'),
                           onPressed: auth.isLoading.value
                               ? null
                               : () async {
@@ -125,13 +126,13 @@ class SignUpView extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text('auth.sign_up.have_account'.tr()),
+                            Text(tr('auth.sign_up.have_account')),
                             GestureDetector(
                               onTap: () {
                                 Get.back();
                               },
                               child: Text(
-                                'auth.sign_in.button'.tr(),
+                                tr('auth.sign_in.button'),
                                 style: const TextStyle(
                                   color: Colors.blue,
                                   fontWeight: FontWeight.w600,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -23,24 +23,24 @@ class OrderSummaryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'order_details.order_summary'.tr(),
+              tr('order_details.order_summary'),
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
             ),
             const SizedBox(height: 16),
             if (summary != null) ...[
               _buildSummaryRow(
-                'order_details.sub_total'.tr(),
+                tr('order_details.sub_total'),
                 formatPriceWithSymbol(subTotal, symbol: '\$'),
               ),
               const SizedBox(height: 8),
               _buildSummaryRow(
-                'order_details.total_discount'.tr(),
+                tr('order_details.total_discount'),
                 '- ${formatPriceWithSymbol(totalDiscount, symbol: '\$')}',
               ),
               const SizedBox(height: 8),
             ],
             _buildSummaryRow(
-              'order_details.total'.tr(),
+              tr('order_details.total'),
               formatPriceWithSymbol(total, symbol: '\$'),
               isBold: true,
             ),

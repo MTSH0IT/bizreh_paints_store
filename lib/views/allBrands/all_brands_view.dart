@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/brand/brand_products_view.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
@@ -14,13 +15,7 @@ class AllBrandsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final HomeController controller = Get.find<HomeController>();
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        title: const Text('All Brands', style: TextStyle(color: Colors.black)),
-
-        //actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {})],
-      ),
+      appBar: const CommonAppBar(title: Text('All Brands')),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Obx(() {

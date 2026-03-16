@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/gifts_model.dart';
+﻿import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
@@ -61,7 +61,7 @@ class GiftCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$points ${'gifts.points'.tr()}',
+                  '$points ${tr('gifts.points')}',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black54,
@@ -82,8 +82,8 @@ class GiftCard extends StatelessWidget {
                 //   ),
                 //   child: Text(
                 //     isAvailable
-                //         ? 'gifts.available'.tr()
-                //         : 'gifts.not_available'.tr(),
+                //         ? tr('gifts.available')
+                //         : tr('gifts.not_available'),
                 //     style: TextStyle(
                 //       color: isAvailable
                 //           ? const Color(0xFF16A34A)

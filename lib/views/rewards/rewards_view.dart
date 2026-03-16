@@ -1,10 +1,11 @@
-import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
 import 'package:bizreh_paints_store/models/discont_model/discont_model.dart';
 import 'package:bizreh_paints_store/models/point_rule_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
@@ -25,22 +26,19 @@ class RewardsView extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('rewards.title'.tr()),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
+        appBar: CommonAppBar(
+          titleKey: 'rewards.title',
           actions: [
             IconButton(
               onPressed: () => ctrl.loadAll(),
               icon: const Icon(Icons.refresh),
-              tooltip: 'rewards.refresh'.tr(),
+              tooltip: tr('rewards.refresh'),
             ),
           ],
           bottom: TabBar(
             tabs: [
-              Tab(text: 'rewards.discounts_tab'.tr()),
-              Tab(text: 'rewards.points_tab'.tr()),
+              Tab(text: tr('rewards.discounts_tab')),
+              Tab(text: tr('rewards.points_tab')),
             ],
           ),
         ),
@@ -81,7 +79,7 @@ class _DiscountsTab extends StatelessWidget {
       }
 
       if (offers.isEmpty) {
-        return Center(child: Text('rewards.no_discounts'.tr()));
+        return Center(child: Text(tr('rewards.no_discounts')));
       }
 
       return ListView.separated(
@@ -152,7 +150,7 @@ class _DiscountOfferCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    isActive ? 'rewards.active'.tr() : 'rewards.inactive'.tr(),
+                    isActive ? tr('rewards.active') : tr('rewards.inactive'),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -168,18 +166,18 @@ class _DiscountOfferCard extends StatelessWidget {
               runSpacing: 8,
               children: [
                 _ChipText(
-                  label: 'rewards.amount'.tr(),
+                  label: tr('rewards.amount'),
                   value: amountType == 'percentage' ? '$amount%' : '\$$amount',
                 ),
                 if (minPurchase.isNotEmpty)
                   _ChipText(
-                    label: 'rewards.min_purchase'.tr(),
+                    label: tr('rewards.min_purchase'),
                     value: '\$$minPurchase',
                   ),
                 if (minQty > 0)
-                  _ChipText(label: 'rewards.min_qty'.tr(), value: '$minQty'),
+                  _ChipText(label: tr('rewards.min_qty'), value: '$minQty'),
                 if (expiration.isNotEmpty)
-                  _ChipText(label: 'rewards.expires'.tr(), value: expiration),
+                  _ChipText(label: tr('rewards.expires'), value: expiration),
               ],
             ),
             const SizedBox(height: 10),
@@ -187,17 +185,17 @@ class _DiscountOfferCard extends StatelessWidget {
               children: [
                 if (productsCount > 0)
                   _MetaCount(
-                    label: 'rewards.products'.tr(),
+                    label: tr('rewards.products'),
                     count: productsCount,
                   ),
                 if (brandsCount > 0) ...[
                   const SizedBox(width: 10),
-                  _MetaCount(label: 'rewards.brands'.tr(), count: brandsCount),
+                  _MetaCount(label: tr('rewards.brands'), count: brandsCount),
                 ],
                 if (categoriesCount > 0) ...[
                   const SizedBox(width: 10),
                   _MetaCount(
-                    label: 'rewards.categories'.tr(),
+                    label: tr('rewards.categories'),
                     count: categoriesCount,
                   ),
                 ],
@@ -236,7 +234,7 @@ class _PointsRulesTab extends StatelessWidget {
       }
 
       if (rules.isEmpty) {
-        return Center(child: Text('rewards.no_points_rules'.tr()));
+        return Center(child: Text(tr('rewards.no_points_rules')));
       }
 
       return ListView.separated(
@@ -313,7 +311,7 @@ class _PointsRuleCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(999),
                   ),
                   child: Text(
-                    isActive ? 'rewards.active'.tr() : 'rewards.inactive'.tr(),
+                    isActive ? tr('rewards.active') : tr('rewards.inactive'),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w600,
@@ -329,26 +327,26 @@ class _PointsRuleCard extends StatelessWidget {
               runSpacing: 8,
               children: [
                 _ChipText(
-                  label: 'rewards.points_per_unit'.tr(),
+                  label: tr('rewards.points_per_unit'),
                   value: '$pointsPerUnit',
                 ),
                 if (minQty > 0)
-                  _ChipText(label: 'rewards.min_qty'.tr(), value: '$minQty'),
+                  _ChipText(label: tr('rewards.min_qty'), value: '$minQty'),
                 if (start.isNotEmpty)
-                  _ChipText(label: 'rewards.start'.tr(), value: start),
+                  _ChipText(label: tr('rewards.start'), value: start),
                 if (end.isNotEmpty)
-                  _ChipText(label: 'rewards.end'.tr(), value: end),
+                  _ChipText(label: tr('rewards.end'), value: end),
               ],
             ),
             const SizedBox(height: 10),
             if (brandTitle.isNotEmpty)
               Text(
-                '${'rewards.brand'.tr()}: $brandTitle',
+                '${tr('rewards.brand')}: $brandTitle',
                 style: const TextStyle(color: Colors.black54, fontSize: 13),
               ),
             if (packagingTitle.isNotEmpty)
               Text(
-                '${'rewards.packaging'.tr()}: $packagingTitle',
+                '${tr('rewards.packaging')}: $packagingTitle',
                 style: const TextStyle(color: Colors.black54, fontSize: 13),
               ),
           ],

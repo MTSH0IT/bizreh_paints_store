@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/user_gifts_model.dart';
+﻿import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
@@ -99,7 +99,7 @@ class MyGiftItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Text(
-                  '$points ${'gifts.points'.tr()}',
+                  '$points ${tr('gifts.points')}',
                   style: const TextStyle(
                     fontSize: 13,
                     color: Colors.black87,

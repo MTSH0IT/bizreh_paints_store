@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 class GiftsTabSwitch extends StatelessWidget {
@@ -24,14 +24,14 @@ class GiftsTabSwitch extends StatelessWidget {
         children: [
           Expanded(
             child: _TabButton(
-              title: 'gifts.available_tab'.tr(),
+              title: tr('gifts.available_tab'),
               selected: index == 0,
               onTap: () => onChanged(0),
             ),
           ),
           Expanded(
             child: _TabButton(
-              title: 'gifts.my_gifts_tab'.tr(),
+              title: tr('gifts.my_gifts_tab'),
               selected: index == 1,
               onTap: () => onChanged(1),
             ),

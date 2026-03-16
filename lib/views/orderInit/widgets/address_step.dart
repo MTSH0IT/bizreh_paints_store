@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/manageAddress/manage_address_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -33,12 +33,12 @@ class AddressStep extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'order_init.no_saved_addresses'.tr(),
+              tr('order_init.no_saved_addresses'),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 16),
             MainButton(
-              title: 'order_init.add_address'.tr(),
+              title: tr('order_init.add_address'),
               onPressed: () {
                 Get.to(() => ManageAddressView());
               },

@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/available_gifts_model.dart';
+﻿import 'package:bizreh_paints_store/models/available_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
@@ -72,7 +72,7 @@ class AvailableGiftCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '$points ${'gifts.points'.tr()}',
+                          '$points ${tr('gifts.points')}',
                           style: const TextStyle(
                             color: primaryColor,
                             fontWeight: FontWeight.w800,
@@ -137,7 +137,7 @@ class AvailableGiftCard extends StatelessWidget {
                       ),
                     )
                   : Text(
-                      'gifts.redeem'.tr(),
+                      tr('gifts.redeem'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w800,
                         fontSize: 14,

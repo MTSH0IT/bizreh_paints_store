@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/views/rewards/rewards_view.dart';
+﻿import 'package:bizreh_paints_store/views/rewards/rewards_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -39,7 +39,7 @@ class RewardsEntryCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'rewards.title'.tr(),
+                      tr('rewards.title'),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 14,
@@ -47,7 +47,7 @@ class RewardsEntryCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 2),
                     Text(
-                      'rewards.home_hint'.tr(),
+                      tr('rewards.home_hint'),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 12,

@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -28,7 +28,7 @@ class OrderIdCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'order_details.order_no'.tr(args: [orderNo]),
+                  tr('order_details.order_no', args: [orderNo]),
                   style: const TextStyle(
                     fontWeight: FontWeight.w700,
                     fontSize: 14,
@@ -61,13 +61,13 @@ class OrderIdCard extends StatelessWidget {
             const Divider(color: Colors.black26, thickness: 1),
             const SizedBox(height: 8),
             Text(
-              "${"order_details.date_placed".tr()}: $datePlaced",
+              "${tr('order_details.date_placed')}: $datePlaced",
               style: const TextStyle(color: Colors.black54, fontSize: 14),
             ),
             if (paymentStatus != null && paymentStatus.trim().isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                "${"order_details.payment".tr()}: $paymentStatus",
+                "${tr('order_details.payment')}: $paymentStatus",
                 style: const TextStyle(color: Colors.black54, fontSize: 14),
               ),
             ],

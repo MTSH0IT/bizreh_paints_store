@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class PackagingVariantsBottomSheet extends StatelessWidget {
@@ -100,11 +101,11 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                                     ),
                                   ),
                                 Text(
-                                  'Price: ${formatPrice(v.pricePerUnit ?? 0)}',
+                                  '${tr('product_details.price')}: ${formatPrice(v.pricePerUnit ?? 0)}',
                                   style: const TextStyle(fontSize: 13),
                                 ),
                                 Text(
-                                  'Stock: ${v.stockQuantity ?? 0}',
+                                  '${tr('product_details.stock')}: ${v.stockQuantity ?? 0}',
                                   style: const TextStyle(fontSize: 13),
                                 ),
                               ],

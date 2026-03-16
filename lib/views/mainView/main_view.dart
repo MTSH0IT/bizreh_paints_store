@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
+﻿import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
@@ -40,27 +40,27 @@ class MainView extends StatelessWidget {
           items: [
             BottomNavigationBarItem(
               icon: const Icon(Icons.home_outlined),
-              label: 'home.title'.tr(),
+              label: tr('home.title'),
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.card_giftcard),
-              label: 'gifts.title'.tr(),
+              label: tr('gifts.title'),
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.search),
-              label: 'search.search'.tr(),
+              label: tr('search.search'),
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.favorite_border),
-              label: 'wishlist.title'.tr(),
+              label: tr('wishlist.title'),
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.shopping_cart_outlined),
-              label: 'cart.title'.tr(),
+              label: tr('cart.sub_title'),
             ),
             BottomNavigationBarItem(
               icon: const Icon(Icons.person_outline),
-              label: 'profile.account'.tr(),
+              label: tr('profile.account'),
             ),
           ],
         ),

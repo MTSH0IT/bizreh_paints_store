@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -22,12 +23,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: Text('app_name'.tr()),
-        centerTitle: true,
-        elevation: 0,
-      ),
+      appBar: const CommonAppBar(titleKey: 'app_name'),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.only(bottom: 16),
@@ -40,7 +36,7 @@ class HomeView extends StatelessWidget {
               const RewardsEntryCard(),
               const SizedBox(height: 16),
               SectionHeader(
-                title: 'home.top_brands'.tr(),
+                title: tr('home.top_brands'),
                 onSeeAll: () {
                   controller.loadBrands();
                   Get.to(() => AllBrandsView());
@@ -50,7 +46,7 @@ class HomeView extends StatelessWidget {
               TopBrands(),
               const SizedBox(height: 16),
               SectionHeader(
-                title: 'home.categories'.tr(),
+                title: tr('home.categories'),
                 onSeeAll: () {
                   Get.to(() => const AllCategoriesView());
                 },
@@ -59,7 +55,7 @@ class HomeView extends StatelessWidget {
               Categories(),
               const SizedBox(height: 16),
               SectionHeader(
-                title: 'home.featured_products'.tr(),
+                title: tr('home.featured_products'),
                 onSeeAll: () {
                   controller.loadProducts();
                   Get.to(() => AllProductsView());
@@ -74,7 +70,7 @@ class HomeView extends StatelessWidget {
                 if (controller.topSellingProducts.isEmpty) {
                   return Padding(
                     padding: EdgeInsets.all(40.0),
-                    child: Center(child: Text('home.no_products'.tr())),
+                    child: Center(child: Text(tr('home.no_products'))),
                   );
                 }
                 return ProductsGrid(products: controller.topSellingProducts);

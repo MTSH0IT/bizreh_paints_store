@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/controllers/filter_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/filter_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
@@ -59,8 +59,8 @@ class Search extends StatelessWidget {
                         children: [
                           Expanded(
                             child: SearchFilterDropdown(
-                              label: 'search.brand'.tr(),
-                              allLabel: 'search.all_brands'.tr(),
+                              label: tr('search.brand'),
+                              allLabel: tr('search.all_brands'),
                               selectedId:
                                   _searchController.selectedBrandId.value,
                               isLoading:
@@ -78,8 +78,8 @@ class Search extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: SearchFilterDropdown(
-                              label: 'search.category'.tr(),
-                              allLabel: 'search.all_categories'.tr(),
+                              label: tr('search.category'),
+                              allLabel: tr('search.all_categories'),
                               selectedId:
                                   _searchController.selectedSubCategoryId.value,
                               isLoading:
@@ -112,8 +112,8 @@ class Search extends StatelessWidget {
                                 icon: const Icon(Icons.search_rounded),
                                 label: Text(
                                   _searchController.isSearching.value
-                                      ? 'search.searching'.tr()
-                                      : 'search.search'.tr(),
+                                      ? tr('search.searching')
+                                      : tr('search.search'),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: primaryColor,
@@ -144,7 +144,7 @@ class Search extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '${_searchController.results.length} ${'search.results'.tr()}',
+                      '${_searchController.results.length} ${tr('search.results')}',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
@@ -157,7 +157,7 @@ class Search extends StatelessWidget {
                               _searchController.clearFilters();
                             },
                       child: Text(
-                        'search.clear_results'.tr(),
+                        tr('search.clear_results'),
                         style: const TextStyle(color: primaryColor),
                       ),
                     ),
@@ -189,7 +189,7 @@ class Search extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'search.no_results'.tr(),
+                            tr('search.no_results'),
                             style: TextStyle(color: Colors.grey.shade700),
                             textAlign: TextAlign.center,
                           ),

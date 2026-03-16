@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/models/order_model/item.dart';
+﻿import 'package:bizreh_paints_store/models/order_model/item.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
@@ -25,7 +25,7 @@ class OrderItemsCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'order_details.items_ordered'.tr(),
+              tr('order_details.items_ordered'),
               style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
             ),
             const SizedBox(height: 8),
@@ -157,16 +157,16 @@ class _ItemOrder extends StatelessWidget {
                 const SizedBox(height: 4),
                 if (optionName.trim().isNotEmpty)
                   Text(
-                    '${'order_details.option'.tr()}: $optionName',
+                    '${tr('order_details.option')}: $optionName',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
                 if (packagingTitle.trim().isNotEmpty)
                   Text(
-                    '${'order_details.packaging'.tr()}: $packagingTitle',
+                    '${tr('order_details.packaging')}: $packagingTitle',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
                 Text(
-                  '${'order_details.qty'.tr()}: $quantity',
+                  '${tr('order_details.qty')}: $quantity',
                   style: const TextStyle(color: Colors.black54, fontSize: 14),
                 ),
                 const SizedBox(height: 6),
@@ -174,7 +174,7 @@ class _ItemOrder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'order_details.unit_price'.tr(),
+                      tr('order_details.unit_price'),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 13,
@@ -194,8 +194,8 @@ class _ItemOrder extends StatelessWidget {
                       Expanded(
                         child: Text(
                           discountName.isEmpty
-                              ? 'order_details.discount'.tr()
-                              : '${'order_details.discount'.tr()}: $discountName',
+                              ? tr('order_details.discount')
+                              : '${tr('order_details.discount')}: $discountName',
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
@@ -219,7 +219,7 @@ class _ItemOrder extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'order_details.final_price'.tr(),
+                      tr('order_details.final_price'),
                       style: const TextStyle(
                         color: Colors.black54,
                         fontSize: 13,

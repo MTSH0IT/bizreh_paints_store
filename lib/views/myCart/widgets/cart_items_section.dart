@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
+﻿import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/cart_item_tile.dart';
@@ -52,10 +52,10 @@ class CartItemsSection extends StatelessWidget {
                   },
                   onDelete: () {
                     Get.defaultDialog(
-                      title: 'cart.remove_item'.tr(),
-                      middleText: 'cart.remove_item_confirm'.tr(),
+                      title: tr('cart.remove_item'),
+                      middleText: tr('cart.remove_item_confirm'),
                       confirm: MainButton(
-                        title: 'cart.remove'.tr(),
+                        title: tr('cart.remove'),
                         onPressed: () {
                           final cartItemId = item.id ?? 0;
                           cartController.deleteCartItem(cartItemId);
@@ -63,7 +63,7 @@ class CartItemsSection extends StatelessWidget {
                         },
                       ),
                       cancel: MainButton(
-                        title: 'cart.cancel'.tr(),
+                        title: tr('cart.cancel'),
                         onPressed: () => Get.back(),
                       ),
                     );

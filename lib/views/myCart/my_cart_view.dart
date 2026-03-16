@@ -1,4 +1,5 @@
-import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
+﻿import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/cart_items_section.dart';
@@ -15,12 +16,7 @@ class MyCartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('cart.title'.tr()),
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-      ),
+      appBar: const CommonAppBar(titleKey: 'cart.title'),
       body: SafeArea(
         child: Obx(() {
           if (cartController.isLoading.value) {
@@ -30,7 +26,7 @@ class MyCartView extends StatelessWidget {
           final items = cart.items ?? const [];
 
           if (items.isEmpty) {
-            return Center(child: Text('cart.empty'.tr()));
+            return Center(child: Text(tr('cart.empty')));
           }
           return Stack(
             children: [

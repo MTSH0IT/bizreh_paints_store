@@ -1,4 +1,4 @@
-import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -18,7 +18,7 @@ class AllGiftsSection extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            'gifts.title'.tr(),
+            tr('gifts.title'),
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
           ),
           TextButton(
@@ -29,7 +29,7 @@ class AllGiftsSection extends StatelessWidget {
               Get.to(() => const AllGiftsView());
             },
             child: Text(
-              'gifts.view_all'.tr(),
+              tr('gifts.view_all'),
               style: TextStyle(fontWeight: FontWeight.w800),
             ),
           ),

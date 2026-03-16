@@ -1,4 +1,5 @@
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -28,18 +29,15 @@ class _SavedAddressViewState extends State<SavedAddressView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+      appBar: CommonAppBar(
         leading: IconButton(
           onPressed: () => Get.back(),
           icon: const Icon(Icons.arrow_back, color: Colors.black87),
         ),
         title: Text(
-          'saved_address.title'.tr(),
+          tr('saved_address.title'),
           style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
         ),
-        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
@@ -57,7 +55,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
             return const BuildProgressIndicator();
           }
           if (items.isEmpty) {
-            return Center(child: Text('saved_address.empty'.tr()));
+            return Center(child: Text(tr('saved_address.empty')));
           }
           return ListView.builder(
             padding: const EdgeInsets.all(16),
@@ -91,14 +89,14 @@ class _SavedAddressViewState extends State<SavedAddressView> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('saved_address.delete.title'.tr()),
+        title: Text(tr('saved_address.delete.title')),
         content: Text(
-          'saved_address.delete.message'.tr(args: [address.nickname ?? '']),
+          tr('saved_address.delete.message', args: [address.nickname ?? '']),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('common.cancel'.tr()),
+            child: Text(tr('common.cancel')),
           ),
           TextButton(
             onPressed: () {
@@ -107,7 +105,7 @@ class _SavedAddressViewState extends State<SavedAddressView> {
               }
               Navigator.pop(context);
             },
-            child: Text('common.delete'.tr()),
+            child: Text(tr('common.delete')),
           ),
         ],
       ),

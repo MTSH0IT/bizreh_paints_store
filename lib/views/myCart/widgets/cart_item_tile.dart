@@ -1,4 +1,4 @@
-import 'dart:async';
+﻿import 'dart:async';
 
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
@@ -294,7 +294,7 @@ class _CartItemTileState extends State<CartItemTile> {
           builder: (context, setState) {
             return AlertDialog(
               title: Text(
-                'cart.set_new_quantity'.tr(),
+                tr('cart.set_new_quantity'),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               content: Column(
@@ -305,7 +305,7 @@ class _CartItemTileState extends State<CartItemTile> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     decoration: InputDecoration(
-                      label: Text('cart.quantity'.tr()),
+                      label: Text(tr('cart.quantity')),
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                       ),
@@ -321,7 +321,7 @@ class _CartItemTileState extends State<CartItemTile> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),
-                      child: Text('cart.cancel'.tr()),
+                      child: Text(tr('cart.cancel')),
                     ),
                     TextButton(
                       onPressed: () {
@@ -330,11 +330,11 @@ class _CartItemTileState extends State<CartItemTile> {
                           Navigator.of(context).pop(q);
                         } else {
                           setState(() {
-                            errorText = 'cart.valid_quantity_error'.tr();
+                            errorText = tr('cart.valid_quantity_error');
                           });
                         }
                       },
-                      child: Text('cart.ok'.tr()),
+                      child: Text(tr('cart.ok')),
                     ),
                   ],
                 ),

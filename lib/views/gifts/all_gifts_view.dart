@@ -1,5 +1,6 @@
-import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -15,12 +16,7 @@ class AllGiftsView extends StatelessWidget {
     final ctrl = Get.find<GiftsController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('gifts.title'.tr()),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      appBar: const CommonAppBar(titleKey: 'gifts.title'),
       body: Obx(() {
         if (ctrl.isLoadingGifts.value && ctrl.gifts.isEmpty) {
           return const BuildProgressIndicator();
@@ -28,8 +24,8 @@ class AllGiftsView extends StatelessWidget {
 
         if (ctrl.gifts.isEmpty) {
           return GiftsEmptyState(
-            title: 'gifts.no_gifts_found'.tr(),
-            subtitle: 'gifts.try_again_later'.tr(),
+            title: tr('gifts.no_gifts_found'),
+            subtitle: tr('gifts.try_again_later'),
           );
         }
 

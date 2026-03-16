@@ -1,9 +1,10 @@
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 
 import '../../utils/widgets/labeled_text_field.dart';
 
@@ -20,12 +21,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('personal_info.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: const CommonAppBar(titleKey: 'personal_info.title'),
       body: SafeArea(
         child: Stack(
           children: [
@@ -41,16 +37,16 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     const SizedBox(height: 16),
                     Obx(
                       () => LabeledTextField(
-                        label: 'personal_info.first_name'.tr(),
-                        hint: 'personal_info.first_name_hint'.tr(),
+                        label: tr('personal_info.first_name'),
+                        hint: tr('personal_info.first_name_hint'),
                         controller: ctrl.firstNameCtrl,
                         errorText: ctrl.firstNameError.value,
                       ),
                     ),
                     Obx(
                       () => LabeledTextField(
-                        label: 'personal_info.last_name'.tr(),
-                        hint: 'personal_info.last_name_hint'.tr(),
+                        label: tr('personal_info.last_name'),
+                        hint: tr('personal_info.last_name_hint'),
                         controller: ctrl.lastNameCtrl,
                         errorText: ctrl.lastNameError.value,
                       ),
@@ -66,8 +62,8 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     // ),
                     Obx(
                       () => LabeledTextField(
-                        label: 'personal_info.phone'.tr(),
-                        hint: 'personal_info.phone_hint'.tr(),
+                        label: tr('personal_info.phone'),
+                        hint: tr('personal_info.phone_hint'),
                         controller: ctrl.phoneCtrl,
                         keyboardType: TextInputType.phone,
                         errorText: ctrl.phoneError.value,
@@ -75,7 +71,7 @@ class _PersonalInformationState extends State<PersonalInformation> {
                     ),
                     SizedBox(height: 24),
                     MainButton(
-                      title: 'personal_info.save_changes'.tr(),
+                      title: tr('personal_info.save_changes'),
                       onPressed: () => ctrl.changeInfo(),
                     ),
                     SizedBox(height: 16),

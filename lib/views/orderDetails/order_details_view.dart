@@ -1,5 +1,6 @@
-import 'package:bizreh_paints_store/controllers/order_controller.dart';
+﻿import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/orderDetails/widgets/order_id_card.dart';
 import 'package:bizreh_paints_store/views/orderDetails/widgets/order_items_card.dart';
@@ -19,11 +20,8 @@ class OrderDetailsView extends StatelessWidget {
     final orderController = Get.find<OrderController>();
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('order_details.title'.tr()),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
+      appBar: CommonAppBar(
+        titleKey: 'order_details.title',
         actions: [
           Obx(() {
             final order = orderController.selectedOrderDetails.value;
@@ -32,16 +30,16 @@ class OrderDetailsView extends StatelessWidget {
             }
             return IconButton(
               icon: const Icon(Icons.report_problem_outlined),
-              tooltip: 'order_details.send_complaint'.tr(),
+              tooltip: tr('order_details.send_complaint'),
               onPressed: orderController.isSubmitting.value
                   ? null
                   : () {
                       showTextInputDialog(
-                        title: 'order_details.complaint_title'.tr(),
-                        hintText: 'order_details.complaint_hint'.tr(),
+                        title: tr('order_details.complaint_title'),
+                        hintText: tr('order_details.complaint_hint'),
                         maxLines: 3,
-                        confirmText: 'order_details.send'.tr(),
-                        cancelText: 'order_details.cancel'.tr(),
+                        confirmText: tr('order_details.send'),
+                        cancelText: tr('order_details.cancel'),
                         onConfirm: (controller) async {
                           final msg = controller.text.trim();
                           if (msg.isEmpty) {
@@ -76,7 +74,7 @@ class OrderDetailsView extends StatelessWidget {
 
           final order = orderController.selectedOrderDetails.value;
           if (order == null) {
-            return Center(child: Text('order_details.no_data'.tr()));
+            return Center(child: Text(tr('order_details.no_data')));
           }
 
           return ListView(
@@ -108,8 +106,8 @@ class OrderDetailsView extends StatelessWidget {
                             );
                           },
                     title: orderController.isSubmitting.value
-                        ? 'order_details.reordering'.tr()
-                        : 'order_details.reorder'.tr(),
+                        ? tr('order_details.reordering')
+                        : tr('order_details.reorder'),
                   ),
                 ),
             ],

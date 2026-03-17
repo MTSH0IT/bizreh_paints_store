@@ -1,5 +1,5 @@
 ﻿import 'package:bizreh_paints_store/controllers/home_controller.dart';
-import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
+import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';

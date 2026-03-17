@@ -289,7 +289,11 @@
     "confirm_redemption": "Confirm Gift Redemption",
     "confirm_redemption_message": "Are you sure you want to redeem \"{}\" for {} points?",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "redeeming": "Redeeming...",
+    "redeemed": "Redeemed",
+    "created_date": "Created Date",
+    "total_redemptions": "Total Redemptions"
   },
   "points": {
     "title": "My Points",

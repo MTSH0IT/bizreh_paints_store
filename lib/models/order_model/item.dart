@@ -7,10 +7,10 @@ class Item {
   int? optionPackagingId;
   int? quantityPerUnit;
   String? productSku;
-  int? unitPrice;
-  int? totalPrice;
-  int? discountAmount;
-  int? finalItemPrice;
+  double? unitPrice;
+  double? totalPrice;
+  double? discountAmount;
+  double? finalItemPrice;
   String? appliedDiscountName;
   int? pointsEarned;
   DateTime? createdAt;
@@ -86,10 +86,10 @@ class Item {
     optionPackagingId: json['option_packaging_id'] as int?,
     quantityPerUnit: json['quantity_per_unit'] as int?,
     productSku: json['product_sku'] as String?,
-    unitPrice: json['unit_price'] as int?,
-    totalPrice: json['total_price'] as int?,
-    discountAmount: json['discount_amount'] as int?,
-    finalItemPrice: json['final_item_price'] as int?,
+    unitPrice: (json['unit_price'] as num?)?.toDouble(),
+    totalPrice: (json['total_price'] as num?)?.toDouble(),
+    discountAmount: (json['discount_amount'] as num?)?.toDouble(),
+    finalItemPrice: (json['final_item_price'] as num?)?.toDouble(),
     appliedDiscountName: json['applied_discount_name'] as String?,
     pointsEarned: json['points_earned'] as int?,
     createdAt: json['created_at'] == null

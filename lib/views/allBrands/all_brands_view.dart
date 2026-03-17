@@ -5,7 +5,7 @@ import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
-import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
+import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 import '../../utils/widgets/see_all_card.dart';
 
 class AllBrandsView extends StatelessWidget {

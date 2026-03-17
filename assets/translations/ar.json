@@ -289,7 +289,11 @@
     "confirm_redemption": "تأكيد استبدال الهدايا",
     "confirm_redemption_message": "هل أنت متأكد من رغبتك في استبدال \"{}\" مقابل {} نقطة؟",
     "confirm": "تأكيد",
-    "cancel": "إلغاء"
+    "cancel": "إلغاء",
+    "redeeming": "جارٍ الاستبدال...",
+    "redeemed": "تم الاستبدال",
+    "created_date": "تاريخ الإضافة",
+    "total_redemptions": "إجمالي الاستبدالات"
   },
   "points": {
     "title": "نقاطي",

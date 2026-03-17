@@ -6,7 +6,7 @@ class DiscontModel {
   int? id;
   String? title;
   String? arTitle;
-  int? amount;
+  double? amount;
   String? minPurchaseAmount;
   int? minQuantity;
   String? amountType;
@@ -43,7 +43,7 @@ class DiscontModel {
     id: json['id'] as int?,
     title: json['title'] as String?,
     arTitle: json['ar_title'] as String?,
-    amount: json['amount'] as int?,
+    amount: (json['amount'] as num?)?.toDouble(),
     minPurchaseAmount: json['min_purchase_amount'] as String?,
     minQuantity: json['min_quantity'] as int?,
     amountType: json['amount_type'] as String?,

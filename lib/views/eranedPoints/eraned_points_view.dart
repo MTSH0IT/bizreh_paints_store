@@ -75,7 +75,7 @@ class EranedPointsView extends StatelessWidget {
                                   }
                                   if (giftId > 0) {
                                     giftsCtrl.loadGiftById(giftId);
-                                    Get.to(() => const GiftDetailsView());
+                                    Get.to(() => GiftDetailsView());
                                   }
                                 }
                               : null,

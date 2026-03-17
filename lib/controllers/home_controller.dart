@@ -6,7 +6,7 @@ import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/services/ads_services.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:bizreh_paints_store/models/brands_featured_model/brands_featured_model.dart';
+import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 
 import 'package:bizreh_paints_store/services/brands_services.dart';
 import 'package:bizreh_paints_store/services/product_services.dart';

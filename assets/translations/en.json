@@ -317,6 +317,8 @@
   "rewards": {
     "title": "Offers & Rewards",
     "home_hint": "View discounts and points rules",
+    "point_hint": "Earn points with every purchase",
+    "discount_hint": "Exclusive discounts on selected products",
     "refresh": "Refresh",
     "discounts_tab": "Discounts",
     "points_tab": "Points rules",

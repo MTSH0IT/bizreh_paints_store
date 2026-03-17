@@ -33,7 +33,7 @@ class HomeView extends StatelessWidget {
               const SizedBox(height: 8),
               BulletinBoard(),
               const SizedBox(height: 12),
-              const RewardsEntryCard(),
+              RewardsEntryCard(),
               const SizedBox(height: 16),
               SectionHeader(
                 title: tr('home.top_brands'),

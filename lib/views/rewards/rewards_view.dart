@@ -53,6 +53,64 @@ class RewardsView extends StatelessWidget {
   }
 }
 
+class DiscountOffersView extends StatelessWidget {
+  const DiscountOffersView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = Get.find<RewardsController>();
+
+    if (ctrl.discountOffers.isEmpty &&
+        !ctrl.isLoadingDiscounts.value &&
+        ctrl.discountsError.value.trim().isEmpty) {
+      ctrl.loadDiscountOffers();
+    }
+
+    return Scaffold(
+      appBar: CommonAppBar(
+        title: Text(tr('rewards.discounts_tab')),
+        actions: [
+          IconButton(
+            onPressed: () => ctrl.loadDiscountOffers(),
+            icon: const Icon(Icons.refresh),
+            tooltip: tr('rewards.refresh'),
+          ),
+        ],
+      ),
+      body: _DiscountsTab(ctrl: ctrl),
+    );
+  }
+}
+
+class PointsRulesView extends StatelessWidget {
+  const PointsRulesView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final ctrl = Get.find<RewardsController>();
+
+    if (ctrl.pointsRules.isEmpty &&
+        !ctrl.isLoadingPointsRules.value &&
+        ctrl.pointsRulesError.value.trim().isEmpty) {
+      ctrl.loadPointsRules();
+    }
+
+    return Scaffold(
+      appBar: CommonAppBar(
+        title: Text(tr('rewards.points_tab')),
+        actions: [
+          IconButton(
+            onPressed: () => ctrl.loadPointsRules(),
+            icon: const Icon(Icons.refresh),
+            tooltip: tr('rewards.refresh'),
+          ),
+        ],
+      ),
+      body: _PointsRulesTab(ctrl: ctrl),
+    );
+  }
+}
+
 class _DiscountsTab extends StatelessWidget {
   const _DiscountsTab({required this.ctrl});
 

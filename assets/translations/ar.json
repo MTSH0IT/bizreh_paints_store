@@ -338,5 +338,21 @@
     "end": "ينتهي",
     "brand": "العلامة",
     "packaging": "التغليف"
+  },
+  "offers_cart": {
+    "title": "العروض",
+    "hint": "عروض خاصة يمكنك طلبها مباشرة",
+    "refresh": "تحديث",
+    "no_offers": "لا توجد عروض حالياً",
+    "active": "فعّال",
+    "price": "السعر",
+    "quantity": "الكمية",
+    "items_count": "عدد العناصر",
+    "purchase": "طلب العرض",
+    "purchasing": "جارٍ الطلب...",
+    "select_address": "اختر العنوان",
+    "enter_quantity": "أدخل الكمية",
+    "quantity_hint": "مثال: 1",
+    "confirm_purchase": "تأكيد الطلب"
   }
 }

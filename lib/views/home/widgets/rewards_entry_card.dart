@@ -1,5 +1,7 @@
 ﻿import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
+import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
 import 'package:bizreh_paints_store/views/rewards/rewards_view.dart';
+import 'package:bizreh_paints_store/views/offersCart/offers_cart_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -10,6 +12,7 @@ class RewardsEntryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ctrl = Get.find<RewardsController>();
+    final offersCtrl = Get.find<OffersCartController>();
 
     if (ctrl.discountOffers.isEmpty &&
         ctrl.pointsRules.isEmpty &&
@@ -20,11 +23,18 @@ class RewardsEntryCard extends StatelessWidget {
       ctrl.loadAll();
     }
 
+    if (offersCtrl.offers.isEmpty &&
+        !offersCtrl.isLoadingOffers.value &&
+        offersCtrl.offersError.value.trim().isEmpty) {
+      offersCtrl.loadOffers();
+    }
+
     return Obx(() {
       final showDiscounts = ctrl.discountOffers.isNotEmpty;
       final showPointsRules = ctrl.pointsRules.isNotEmpty;
+      final showOffersCart = offersCtrl.offers.isNotEmpty;
 
-      if (!showDiscounts && !showPointsRules) {
+      if (!showDiscounts && !showPointsRules && !showOffersCart) {
         return const SizedBox.shrink();
       }
 
@@ -46,6 +56,17 @@ class RewardsEntryCard extends StatelessWidget {
             title: tr('rewards.points_tab'),
             subtitle: tr('rewards.point_hint'),
             onTap: () => Get.to(() => const PointsRulesView()),
+          ),
+        );
+      }
+
+      if (showOffersCart) {
+        entries.add(
+          _EntryCard(
+            icon: Icons.shopping_cart_outlined,
+            title: tr('offers_cart.title'),
+            subtitle: tr('offers_cart.hint'),
+            onTap: () => Get.to(() => const OffersCartView()),
           ),
         );
       }

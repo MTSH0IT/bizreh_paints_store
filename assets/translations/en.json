@@ -338,5 +338,21 @@
     "end": "End",
     "brand": "Brand",
     "packaging": "Packaging"
+  },
+  "offers_cart": {
+    "title": "Offers",
+    "hint": "Special offers you can order directly",
+    "refresh": "Refresh",
+    "no_offers": "No offers right now",
+    "active": "Active",
+    "price": "Price",
+    "quantity": "Quantity",
+    "items_count": "Items",
+    "purchase": "Purchase",
+    "purchasing": "Purchasing...",
+    "select_address": "Select address",
+    "enter_quantity": "Enter quantity",
+    "quantity_hint": "e.g. 1",
+    "confirm_purchase": "Confirm purchase"
   }
 }

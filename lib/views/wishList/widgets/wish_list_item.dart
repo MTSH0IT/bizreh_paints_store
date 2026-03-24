@@ -43,6 +43,7 @@ class WishListItemCard extends StatelessWidget {
       ar: item.optionPackaging?.packaging?.arTitle,
       fallback: '',
     );
+    final sku = item.productOption?.optionSku ?? "";
     final pricePerUnit = item.optionPackaging?.pricePerUnit ?? 0;
     final colorDegree = item.optionPackaging?.color?.degree;
 
@@ -94,7 +95,6 @@ class WishListItemCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 4),
                       Text(
                         optionName,
                         style: const TextStyle(
@@ -104,7 +104,7 @@ class WishListItemCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
+                      if (sku.trim().isNotEmpty) Text(sku),
                       Text(
                         packagingTitle,
                         style: const TextStyle(
@@ -114,11 +114,10 @@ class WishListItemCard extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      const SizedBox(height: 8),
                       Text(
                         formatPriceWithSymbol(pricePerUnit, symbol: '\$ '),
                         style: const TextStyle(
-                          fontSize: 20,
+                          fontSize: 15,
                           fontWeight: FontWeight.w800,
                         ),
                       ),
@@ -127,7 +126,7 @@ class WishListItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 6),
             Row(
               children: [
                 Expanded(

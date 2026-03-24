@@ -145,6 +145,8 @@ class _CartItemTileState extends State<CartItemTile> {
                               fallback: '',
                             ),
                           ),
+                        if (widget.item.productSku != null)
+                          Text(widget.item.productSku!),
                         if (_hasColor)
                           Padding(
                             padding: const EdgeInsets.all(1),
@@ -230,15 +232,23 @@ class _CartItemTileState extends State<CartItemTile> {
             enabled: _quantity > 1,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 5),
             child: GestureDetector(
               onTap: _showQuantityDialog,
-              child: Text(
-                _quantity.toString(),
-                style: const TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
+              child: Container(
+                padding: const EdgeInsets.all(6),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(color: Colors.black12),
+                ),
+                child: Text(
+                  _quantity.toString(),
+                  style: const TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
                 ),
               ),
             ),

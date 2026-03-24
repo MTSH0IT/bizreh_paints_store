@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
@@ -48,7 +48,7 @@ class OrderHistoryItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      tr('orders.history.order_no',args: [orderNo]),
+                      tr('orders.history.order_no', args: [orderNo]),
                       style: const TextStyle(
                         fontWeight: FontWeight.w700,
                         fontSize: 16,

@@ -10,6 +10,7 @@ class ProductModel {
   int? subCategoryId;
   int? brandId;
   int? isActive;
+  int? position;
   DateTime? createdAt;
   String? brandName;
   String? arBrandName;
@@ -27,6 +28,7 @@ class ProductModel {
     this.subCategoryId,
     this.brandId,
     this.isActive,
+    this.position,
     this.createdAt,
     this.brandName,
     this.arBrandName,
@@ -34,11 +36,6 @@ class ProductModel {
     this.arSubCategoryName,
     this.options,
   });
-
-  @override
-  String toString() {
-    return 'ProductModel(id: $id, title: $title, arTitle: $arTitle, description: $description, arDescription: $arDescription, image: $image, subCategoryId: $subCategoryId, brandId: $brandId, isActive: $isActive, createdAt: $createdAt, brandName: $brandName, arBrandName: $arBrandName, subCategoryName: $subCategoryName, arSubCategoryName: $arSubCategoryName, options: $options)';
-  }
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
     id: json['id'] as int?,
@@ -50,6 +47,7 @@ class ProductModel {
     subCategoryId: json['sub_category_id'] as int?,
     brandId: json['brand_id'] as int?,
     isActive: json['is_active'] as int?,
+    position: json['position'] as int?,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),
@@ -72,6 +70,7 @@ class ProductModel {
     'sub_category_id': subCategoryId,
     'brand_id': brandId,
     'is_active': isActive,
+    'position': position,
     'created_at': createdAt?.toIso8601String(),
     'brand_name': brandName,
     'ar_brand_name': arBrandName,

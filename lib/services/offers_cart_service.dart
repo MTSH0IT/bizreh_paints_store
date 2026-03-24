@@ -18,9 +18,7 @@ class OffersCartService {
         (json) {
           final list = (json as List?) ?? [];
           return list
-              .map(
-                (e) => OffersCartModel.fromJson(e as Map<String, dynamic>),
-              )
+              .map((e) => OffersCartModel.fromJson(e as Map<String, dynamic>))
               .toList();
         },
       );
@@ -38,7 +36,9 @@ class OffersCartService {
         );
         throw err;
       }
-      log('offers cart service DioException get available offers : ${e.message}');
+      log(
+        'offers cart service DioException get available offers : ${e.message}',
+      );
       throw Exception(e.message);
     } catch (e) {
       log('offers cart service catch get available offers : ${e.toString()}');
@@ -54,10 +54,7 @@ class OffersCartService {
     try {
       final response = await _dioClient.post(
         ApiEndpoint.purchaseOffersCart(offerId),
-        data: {
-          'quantity': quantity,
-          'address_id': addressId,
-        },
+        data: {'quantity': quantity, 'address_id': addressId},
       );
 
       final apiResponse = ApiResponse.fromJson(response.data, null);

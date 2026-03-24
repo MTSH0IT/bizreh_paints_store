@@ -70,11 +70,9 @@ class CartItemsSection extends StatelessWidget {
                   },
                   onSetQuantity: (newQty) {
                     final cartItemId = item.id ?? 0;
-                    //final colorFamilyId = item.colorFamilyId ?? 0;
                     cartController.updateCartItem(
                       cartItemId: cartItemId,
                       quantity: newQty,
-                      //colorFamilyId: colorFamilyId,
                     );
                   },
                 ),

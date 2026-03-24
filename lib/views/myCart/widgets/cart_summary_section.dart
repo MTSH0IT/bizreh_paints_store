@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/models/cart_model/summary.dart';
+import 'package:bizreh_paints_store/models/cart_model/summary.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/views/myCart/widgets/price_row.dart';
@@ -56,7 +56,7 @@ class CartSummarySection extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 2.0),
                 child: Text(
-                  tr('cart.items_count',args: ['$totalItems']),
+                  tr('cart.items_count', args: ['$totalItems']),
 
                   style: TextStyle(fontSize: 14, color: Colors.grey.shade700),
                 ),

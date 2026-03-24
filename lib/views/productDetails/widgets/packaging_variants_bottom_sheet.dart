@@ -84,6 +84,7 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                                     ),
                                   ),
                           ),
+                          SizedBox(width: 6),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,6 +100,12 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                                       fontSize: 14,
                                       fontWeight: FontWeight.w600,
                                     ),
+                                  ),
+                                if (v.optionSku != null &&
+                                    v.optionSku!.isNotEmpty)
+                                  Text(
+                                    'SKU: ${v.optionSku}',
+                                    style: const TextStyle(fontSize: 13),
                                   ),
                                 Text(
                                   '${tr('product_details.price')}: ${formatPrice(v.pricePerUnit ?? 0)}',

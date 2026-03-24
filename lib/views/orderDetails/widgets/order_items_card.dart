@@ -81,6 +81,7 @@ class _ItemOrder extends StatelessWidget {
       ar: item.packagingArTitle,
       fallback: '',
     );
+    final sku = item.productSku ?? "";
     final colorDegree = item.color?.degree;
     final hasColor = colorDegree?.trim().isNotEmpty ?? false;
 
@@ -165,6 +166,7 @@ class _ItemOrder extends StatelessWidget {
                     '${tr('order_details.packaging')}: $packagingTitle',
                     style: const TextStyle(color: Colors.black54, fontSize: 13),
                   ),
+                if (sku.trim().isNotEmpty) Text("sku: $sku"),
                 Text(
                   '${tr('order_details.qty')}: $quantity',
                   style: const TextStyle(color: Colors.black54, fontSize: 14),

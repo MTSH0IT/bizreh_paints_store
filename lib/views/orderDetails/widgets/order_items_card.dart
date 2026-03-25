@@ -67,7 +67,7 @@ class _ItemOrder extends StatelessWidget {
     );
     final quantity = item.quantityPerUnit ?? 0;
     final totalPrice = _toDouble(item.totalPrice);
-    final unitPrice = _toDouble(item.unitPrice);
+    //final unitPrice = _toDouble(item.unitPrice);
     final discountAmount = _toDouble(item.discountAmount);
     final finalItemPrice = _toDouble(item.finalItemPrice);
     final discountName = (item.appliedDiscountName ?? '').trim();

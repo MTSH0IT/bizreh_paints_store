@@ -1,6 +1,7 @@
 //view
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:get/get.dart';
 
 import 'widgets/available_points_card.dart';
@@ -18,30 +19,44 @@ class GiftsView extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 12),
-            Obx(() => AvailablePointsCard(points: ctrl.availablePoints.value)),
-            const SizedBox(height: 12),
-            Obx(
-              () => GiftsTabSwitch(
-                index: ctrl.tabIndex.value,
-                onChanged: ctrl.setTab,
-              ),
+        child: AppRefreshWrapper(
+          onRefresh: ctrl.loadAll,
+          child: NestedScrollView(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics(),
             ),
-
-            AllGiftsSection(ctrl: ctrl),
-
-            Expanded(
-              child: Obx(() {
-                final tabIndex = ctrl.tabIndex.value;
-                if (tabIndex == 0) {
-                  return AvailableGiftsTab(ctrl: ctrl);
-                }
-                return MyGiftsTab(ctrl: ctrl);
-              }),
-            ),
-          ],
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      Obx(
+                        () => AvailablePointsCard(
+                          points: ctrl.availablePoints.value,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Obx(
+                        () => GiftsTabSwitch(
+                          index: ctrl.tabIndex.value,
+                          onChanged: ctrl.setTab,
+                        ),
+                      ),
+                      AllGiftsSection(ctrl: ctrl),
+                    ],
+                  ),
+                ),
+              ];
+            },
+            body: Obx(() {
+              final tabIndex = ctrl.tabIndex.value;
+              if (tabIndex == 0) {
+                return AvailableGiftsTab(ctrl: ctrl);
+              }
+              return MyGiftsTab(ctrl: ctrl);
+            }),
+          ),
         ),
       ),
     );

@@ -30,7 +30,7 @@
   },
   "notifications": {
     "title": "الإشعارات",
-    "title_with_count": "الإشعارات ({0})",
+    "title_with_count": "الإشعارات {}",
     "empty": "لا توجد إشعارات حالياً"
   },
   "saved_address": {

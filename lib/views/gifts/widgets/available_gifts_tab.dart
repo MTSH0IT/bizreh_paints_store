@@ -17,19 +17,30 @@ class AvailableGiftsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (ctrl.isLoadingAvailable.value && ctrl.availableGifts.isEmpty) {
-        return const BuildProgressIndicator();
+        return ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: const [SizedBox(height: 120), BuildProgressIndicator()],
+        );
       }
       if (ctrl.availableGifts.isEmpty) {
-        return Center(
-          child: GiftsEmptyState(
-            title: tr('gifts.no_available_gifts'),
-            subtitle: tr('gifts.try_again_later'),
-          ),
+        return ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            const SizedBox(height: 120),
+            Center(
+              child: GiftsEmptyState(
+                title: tr('gifts.no_available_gifts'),
+                subtitle: tr('gifts.try_again_later'),
+              ),
+            ),
+          ],
         );
       }
 
       return ListView.builder(
-        //physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         itemCount: ctrl.availableGifts.length,
         itemBuilder: (context, index) {
           final gift = ctrl.availableGifts[index];

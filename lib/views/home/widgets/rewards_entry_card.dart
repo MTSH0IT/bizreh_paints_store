@@ -7,20 +7,22 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
 class RewardsEntryCard extends StatelessWidget {
-  const RewardsEntryCard({super.key});
-
+  const RewardsEntryCard({
+    super.key,
+    required this.offersCtrl,
+    required this.rewardsCtrl,
+  });
+  final RewardsController rewardsCtrl;
+  final OffersCartController offersCtrl;
   @override
   Widget build(BuildContext context) {
-    final ctrl = Get.find<RewardsController>();
-    final offersCtrl = Get.find<OffersCartController>();
-
-    if (ctrl.discountOffers.isEmpty &&
-        ctrl.pointsRules.isEmpty &&
-        !ctrl.isLoadingDiscounts.value &&
-        !ctrl.isLoadingPointsRules.value &&
-        ctrl.discountsError.value.trim().isEmpty &&
-        ctrl.pointsRulesError.value.trim().isEmpty) {
-      ctrl.loadAll();
+    if (rewardsCtrl.discountOffers.isEmpty &&
+        rewardsCtrl.pointsRules.isEmpty &&
+        !rewardsCtrl.isLoadingDiscounts.value &&
+        !rewardsCtrl.isLoadingPointsRules.value &&
+        rewardsCtrl.discountsError.value.trim().isEmpty &&
+        rewardsCtrl.pointsRulesError.value.trim().isEmpty) {
+      rewardsCtrl.loadAll();
     }
 
     if (offersCtrl.offers.isEmpty &&
@@ -30,8 +32,8 @@ class RewardsEntryCard extends StatelessWidget {
     }
 
     return Obx(() {
-      final showDiscounts = ctrl.discountOffers.isNotEmpty;
-      final showPointsRules = ctrl.pointsRules.isNotEmpty;
+      final showDiscounts = rewardsCtrl.discountOffers.isNotEmpty;
+      final showPointsRules = rewardsCtrl.pointsRules.isNotEmpty;
       final showOffersCart = offersCtrl.offers.isNotEmpty;
 
       if (!showDiscounts && !showPointsRules && !showOffersCart) {

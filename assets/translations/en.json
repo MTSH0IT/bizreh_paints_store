@@ -30,7 +30,7 @@
   },
   "notifications": {
     "title": "Notifications",
-    "title_with_count": "Notifications ({0})",
+    "title_with_count": "Notifications {}",
     "empty": "No notifications right now"
   },
   "saved_address": {

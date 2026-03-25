@@ -22,19 +22,6 @@ class GiftDetailsView extends StatelessWidget {
           return const BuildProgressIndicator();
         }
 
-        if (ctrl.selectedGiftError.isNotEmpty) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                ctrl.selectedGiftError.value,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, color: Colors.red),
-              ),
-            ),
-          );
-        }
-
         final gift = ctrl.selectedGift.value;
         if (gift == null) {
           return Center(child: Text(tr('order_details.no_data')));

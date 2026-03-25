@@ -1,5 +1,6 @@
 ﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -35,29 +36,41 @@ class WishList extends StatelessWidget {
         if (ctrl.isGetLoading.value) {
           return const BuildProgressIndicator();
         }
-        if (ctrl.items.isEmpty) {
-          return Center(child: Text(tr('wishlist.empty')));
-        }
-        return ListView.builder(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          itemCount: ctrl.items.length,
-          itemBuilder: (context, index) {
-            final item = ctrl.items[index];
-            return GestureDetector(
-              onTap: () {
-                //  Get.to(() => ProductDetailsView(product: item));
-              },
-              child: WishListItemCard(
-                item: item,
-                onMoveToCart: () async {
-                  await ctrl.addWishlistItemToCart(item);
-                },
-                onRemove: () {
-                  ctrl.removeItem(item.optionPackagingId!);
-                },
-              ),
-            );
-          },
+
+        return AppRefreshWrapper(
+          onRefresh: ctrl.loadWishListProducts,
+          child: (ctrl.items.isEmpty)
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: 240,
+                      child: Center(child: Text(tr('wishlist.empty'))),
+                    ),
+                  ],
+                )
+              : ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  itemCount: ctrl.items.length,
+                  itemBuilder: (context, index) {
+                    final item = ctrl.items[index];
+                    return GestureDetector(
+                      onTap: () {
+                        //  Get.to(() => ProductDetailsView(product: item));
+                      },
+                      child: WishListItemCard(
+                        item: item,
+                        onMoveToCart: () async {
+                          await ctrl.addWishlistItemToCart(item);
+                        },
+                        onRemove: () {
+                          ctrl.removeItem(item.optionPackagingId!);
+                        },
+                      ),
+                    );
+                  },
+                ),
         );
       }),
     );

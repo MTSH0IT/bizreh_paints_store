@@ -40,7 +40,7 @@ class _CartItemTileState extends State<CartItemTile> {
   bool get _hasColor => (_colorDegreeValue?.trim().isNotEmpty ?? false);
   Color get _colorDegree => parseColorDegree(_colorDegreeValue);
 
-  num get _unitPrice => widget.item.unitPrice ?? 0;
+  //num get _unitPrice => widget.item.unitPrice ?? 0;
   num get _totalPrice => widget.item.totalPrice ?? 0;
   double get _discountAmount {
     final raw = widget.item.discountAmount;

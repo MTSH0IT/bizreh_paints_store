@@ -20,16 +20,24 @@ class MyGiftsTab extends StatelessWidget {
       }
 
       if (ctrl.myGifts.isEmpty) {
-        return Center(
-          child: GiftsEmptyState(
-            title: tr('gifts.no_gifts_yet'),
-            subtitle: tr('gifts.redeemed_gifts_appear_here'),
-          ),
+        return ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            const SizedBox(height: 120),
+            Center(
+              child: GiftsEmptyState(
+                title: tr('gifts.no_gifts_yet'),
+                subtitle: tr('gifts.redeemed_gifts_appear_here'),
+              ),
+            ),
+          ],
         );
       }
 
       return ListView.builder(
-        physics: const BouncingScrollPhysics(),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         itemCount: ctrl.myGifts.length,
         itemBuilder: (context, index) {
           final item = ctrl.myGifts[index];

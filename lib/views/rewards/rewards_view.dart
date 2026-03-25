@@ -4,6 +4,7 @@ import 'package:bizreh_paints_store/models/point_rule_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -28,13 +29,7 @@ class RewardsView extends StatelessWidget {
       child: Scaffold(
         appBar: CommonAppBar(
           titleKey: 'rewards.title',
-          actions: [
-            IconButton(
-              onPressed: () => ctrl.loadAll(),
-              icon: const Icon(Icons.refresh),
-              tooltip: tr('rewards.refresh'),
-            ),
-          ],
+
           bottom: TabBar(
             tabs: [
               Tab(text: tr('rewards.discounts_tab')),
@@ -67,16 +62,7 @@ class DiscountOffersView extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CommonAppBar(
-        title: Text(tr('rewards.discounts_tab')),
-        actions: [
-          IconButton(
-            onPressed: () => ctrl.loadDiscountOffers(),
-            icon: const Icon(Icons.refresh),
-            tooltip: tr('rewards.refresh'),
-          ),
-        ],
-      ),
+      appBar: CommonAppBar(title: Text(tr('rewards.discounts_tab'))),
       body: _DiscountsTab(ctrl: ctrl),
     );
   }
@@ -96,16 +82,7 @@ class PointsRulesView extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CommonAppBar(
-        title: Text(tr('rewards.points_tab')),
-        actions: [
-          IconButton(
-            onPressed: () => ctrl.loadPointsRules(),
-            icon: const Icon(Icons.refresh),
-            tooltip: tr('rewards.refresh'),
-          ),
-        ],
-      ),
+      appBar: CommonAppBar(title: Text(tr('rewards.points_tab'))),
       body: _PointsRulesTab(ctrl: ctrl),
     );
   }
@@ -118,35 +95,37 @@ class _DiscountsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final isLoading = ctrl.isLoadingDiscounts.value;
-      final err = ctrl.discountsError.value.trim();
-      final offers = ctrl.discountOffers;
+    return AppRefreshWrapper(
+      onRefresh: ctrl.loadDiscountOffers,
+      child: Obx(() {
+        final isLoading = ctrl.isLoadingDiscounts.value;
+        final offers = ctrl.discountOffers;
 
-      if (isLoading && offers.isEmpty) {
-        return const BuildProgressIndicator();
-      }
+        if (isLoading && offers.isEmpty) {
+          return const BuildProgressIndicator();
+        }
 
-      if (err.isNotEmpty && offers.isEmpty) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(err, textAlign: TextAlign.center),
-          ),
+        if (offers.isEmpty) {
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              SizedBox(
+                height: 240,
+                child: Center(child: Text(tr('rewards.no_discounts'))),
+              ),
+            ],
+          );
+        }
+
+        return ListView.separated(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(16),
+          itemCount: offers.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (_, i) => _DiscountOfferCard(offer: offers[i]),
         );
-      }
-
-      if (offers.isEmpty) {
-        return Center(child: Text(tr('rewards.no_discounts')));
-      }
-
-      return ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: offers.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 12),
-        itemBuilder: (_, i) => _DiscountOfferCard(offer: offers[i]),
-      );
-    });
+      }),
+    );
   }
 }
 
@@ -273,35 +252,37 @@ class _PointsRulesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final isLoading = ctrl.isLoadingPointsRules.value;
-      final err = ctrl.pointsRulesError.value.trim();
-      final rules = ctrl.pointsRules;
+    return AppRefreshWrapper(
+      onRefresh: ctrl.loadPointsRules,
+      child: Obx(() {
+        final isLoading = ctrl.isLoadingPointsRules.value;
+        final rules = ctrl.pointsRules;
 
-      if (isLoading && rules.isEmpty) {
-        return const BuildProgressIndicator();
-      }
+        if (isLoading && rules.isEmpty) {
+          return const BuildProgressIndicator();
+        }
 
-      if (err.isNotEmpty && rules.isEmpty) {
-        return Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(err, textAlign: TextAlign.center),
-          ),
+        if (rules.isEmpty) {
+          return ListView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            children: [
+              SizedBox(
+                height: 240,
+                child: Center(child: Text(tr('rewards.no_points_rules'))),
+              ),
+            ],
+          );
+        }
+
+        return ListView.separated(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: const EdgeInsets.all(16),
+          itemCount: rules.length,
+          separatorBuilder: (_, __) => const SizedBox(height: 12),
+          itemBuilder: (_, i) => _PointsRuleCard(rule: rules[i]),
         );
-      }
-
-      if (rules.isEmpty) {
-        return Center(child: Text(tr('rewards.no_points_rules')));
-      }
-
-      return ListView.separated(
-        padding: const EdgeInsets.all(16),
-        itemCount: rules.length,
-        separatorBuilder: (_, __) => const SizedBox(height: 12),
-        itemBuilder: (_, i) => _PointsRuleCard(rule: rules[i]),
-      );
-    });
+      }),
+    );
   }
 }
 

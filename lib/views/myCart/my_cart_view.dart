@@ -1,4 +1,6 @@
 ﻿import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,18 @@ class MyCartView extends StatelessWidget {
           final items = cart.items ?? const [];
 
           if (items.isEmpty) {
-            return Center(child: Text(tr('cart.empty')));
+            return AppRefreshWrapper(
+              onRefresh: cartController.getCart,
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  SizedBox(
+                    height: 240,
+                    child: Center(child: Text(tr('cart.empty'))),
+                  ),
+                ],
+              ),
+            );
           }
           return Stack(
             children: [
@@ -48,7 +61,7 @@ class MyCartView extends StatelessWidget {
                 Positioned.fill(
                   child: Container(
                     color: Colors.black.withValues(alpha: 0.15),
-                    child: const Center(child: CircularProgressIndicator()),
+                    child: const BuildProgressIndicator(),
                   ),
                 ),
             ],

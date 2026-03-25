@@ -1,5 +1,6 @@
 ﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -62,44 +63,57 @@ class NotificationsView extends StatelessWidget {
             return const BuildProgressIndicator();
           }
 
-          if (controller.notifications.isEmpty) {
-            return Center(child: Text(tr('notifications.empty')));
-          }
-
           final list = controller.notifications;
 
-          return ListView.separated(
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-            itemCount: list.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 12),
-            itemBuilder: (context, index) {
-              final notification = list[index];
-              return NotificationCard(
-                notification: notification,
-                onTap: () async {
-                  final id = notification.id;
-                  if (id != null && (notification.isRead ?? 0) != 1) {
-                    await controller.readNotification(id: id);
-                    notification.isRead = 1;
-                    controller.unreadCount.value--;
-                    controller.notifications.refresh();
-                  }
-
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: CardColor,
-                    shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20),
-                      ),
-                    ),
-                    builder: (context) =>
-                        NotificationDetailsSheet(notification: notification),
-                  );
-                },
-              );
+          return AppRefreshWrapper(
+            onRefresh: () async {
+              await Future.wait([
+                controller.getUnreadCount(),
+                controller.getNotifications(),
+              ]);
             },
+            child: controller.notifications.isEmpty
+                ? ListView(
+                    children: [
+                      SizedBox(height: 240),
+                      Text(tr('notifications.empty')),
+                    ],
+                  )
+                : ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                    itemCount: list.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (context, index) {
+                      final notification = list[index];
+                      return NotificationCard(
+                        notification: notification,
+                        onTap: () async {
+                          final id = notification.id;
+                          if (id != null && (notification.isRead ?? 0) != 1) {
+                            await controller.readNotification(id: id);
+                            notification.isRead = 1;
+                            controller.unreadCount.value--;
+                            controller.notifications.refresh();
+                          }
+
+                          showModalBottomSheet(
+                            context: context,
+                            isScrollControlled: true,
+                            backgroundColor: CardColor,
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(20),
+                              ),
+                            ),
+                            builder: (context) => NotificationDetailsSheet(
+                              notification: notification,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
           );
         }),
       ),

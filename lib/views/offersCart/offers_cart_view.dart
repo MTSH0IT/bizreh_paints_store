@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/models/offers_cart_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:bizreh_paints_store/views/manageAddress/manage_address_view.dart';
 import 'package:bizreh_paints_store/views/savedAddress/widgets/address_card.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -19,41 +20,41 @@ class OffersCartView extends StatelessWidget {
     final ctrl = Get.find<OffersCartController>();
 
     return Scaffold(
-      appBar: CommonAppBar(
-        title: Text(tr('offers_cart.title')),
-        actions: [
-          IconButton(
-            onPressed: () => ctrl.loadOffers(),
-            icon: const Icon(Icons.refresh),
-            tooltip: tr('offers_cart.refresh'),
-          ),
-        ],
-      ),
+      appBar: CommonAppBar(title: Text(tr('offers_cart.title'))),
       body: Obx(() {
         final isLoading = ctrl.isLoadingOffers.value;
-        final err = ctrl.offersError.value.trim();
         final offers = ctrl.offers;
 
         if (isLoading && offers.isEmpty) {
           return const BuildProgressIndicator();
         }
 
-        if (offers.isEmpty) {
-          return Center(child: Text(tr('offers_cart.no_offers')));
-        }
-
-        return ListView.separated(
-          padding: const EdgeInsets.all(16),
-          itemCount: offers.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (_, i) {
-            final offer = offers[i];
-            return _OfferCard(
-              offer: offer,
-              isPurchasing: ctrl.purchasingOfferId.value == offer.id,
-              onPurchase: () => _purchase(context, offer),
-            );
-          },
+        return AppRefreshWrapper(
+          onRefresh: ctrl.loadOffers,
+          child: offers.isEmpty
+              ? ListView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: [
+                    SizedBox(
+                      height: 240,
+                      child: Center(child: Text(tr('offers_cart.no_offers'))),
+                    ),
+                  ],
+                )
+              : ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.all(16),
+                  itemCount: offers.length,
+                  separatorBuilder: (_, __) => const SizedBox(height: 12),
+                  itemBuilder: (_, i) {
+                    final offer = offers[i];
+                    return _OfferCard(
+                      offer: offer,
+                      isPurchasing: ctrl.purchasingOfferId.value == offer.id,
+                      onPurchase: () => _purchase(context, offer),
+                    );
+                  },
+                ),
         );
       }),
     );

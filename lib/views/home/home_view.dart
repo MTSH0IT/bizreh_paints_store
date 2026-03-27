@@ -1,6 +1,5 @@
 import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
 import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
-import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';

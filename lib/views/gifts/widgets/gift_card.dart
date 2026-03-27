@@ -19,7 +19,6 @@ class GiftCard extends StatelessWidget {
     );
     final points = gift.points ?? 0;
     final image = gift.image ?? '';
-    //final isAvailable = gift.isAvailable ?? false;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -68,31 +67,6 @@ class GiftCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                // const SizedBox(height: 8),
-                // Container(
-                //   padding: const EdgeInsets.symmetric(
-                //     horizontal: 10,
-                //     vertical: 6,
-                //   ),
-                //   decoration: BoxDecoration(
-                //     color: isAvailable
-                //         ? const Color(0xFF16A34A).withValues(alpha: 0.12)
-                //         : const Color(0xFFDC2626).withValues(alpha: 0.10),
-                //     borderRadius: BorderRadius.circular(999),
-                //   ),
-                //   child: Text(
-                //     isAvailable
-                //         ? tr('gifts.available')
-                //         : tr('gifts.not_available'),
-                //     style: TextStyle(
-                //       color: isAvailable
-                //           ? const Color(0xFF16A34A)
-                //           : const Color(0xFFDC2626),
-                //       fontWeight: FontWeight.w700,
-                //       fontSize: 12,
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

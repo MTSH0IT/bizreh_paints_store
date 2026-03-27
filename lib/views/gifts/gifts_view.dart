@@ -19,44 +19,31 @@ class GiftsView extends StatelessWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: AppRefreshWrapper(
-          onRefresh: ctrl.loadAll,
-          child: NestedScrollView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            const SizedBox(height: 12),
+            Obx(() => AvailablePointsCard(points: ctrl.availablePoints.value)),
+            const SizedBox(height: 12),
+            Obx(
+              () => GiftsTabSwitch(
+                index: ctrl.tabIndex.value,
+                onChanged: ctrl.setTab,
+              ),
             ),
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 12),
-                      Obx(
-                        () => AvailablePointsCard(
-                          points: ctrl.availablePoints.value,
-                        ),
-                      ),
-                      const SizedBox(height: 12),
-                      Obx(
-                        () => GiftsTabSwitch(
-                          index: ctrl.tabIndex.value,
-                          onChanged: ctrl.setTab,
-                        ),
-                      ),
-                      AllGiftsSection(ctrl: ctrl),
-                    ],
-                  ),
-                ),
-              ];
-            },
-            body: Obx(() {
-              final tabIndex = ctrl.tabIndex.value;
-              if (tabIndex == 0) {
-                return AvailableGiftsTab(ctrl: ctrl);
-              }
-              return MyGiftsTab(ctrl: ctrl);
-            }),
-          ),
+            AllGiftsSection(ctrl: ctrl),
+            Expanded(
+              child: AppRefreshWrapper(
+                onRefresh: ctrl.loadAll,
+                child: Obx(() {
+                  final tabIndex = ctrl.tabIndex.value;
+                  if (tabIndex == 0) {
+                    return AvailableGiftsTab(ctrl: ctrl);
+                  }
+                  return MyGiftsTab(ctrl: ctrl);
+                }),
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -37,7 +37,6 @@ class GiftDetailsView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Hero Image with Gradient Overlay
               Stack(
                 children: [
                   ClipRRect(
@@ -134,7 +133,6 @@ class GiftDetailsView extends StatelessWidget {
                 ],
               ),
 
-              // Content Section
               Container(
                 margin: const EdgeInsets.all(20),
                 padding: const EdgeInsets.all(20),
@@ -152,7 +150,6 @@ class GiftDetailsView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Status Badge
                     Row(
                       children: [
                         Container(
@@ -209,7 +206,6 @@ class GiftDetailsView extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
 
-                    // Gift Details
                     _buildDetailRow(
                       context,
                       tr('gifts.title'),
@@ -243,7 +239,6 @@ class GiftDetailsView extends StatelessWidget {
                 ),
               ),
 
-              // Action Button
               if (gift.isAvailable == true && gift.id != null)
                 Container(
                   margin: const EdgeInsets.all(20),

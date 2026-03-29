@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
+import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,10 @@ class AppBindings extends Bindings {
       () => OffersCartController(),
       fenix: true,
     );
+    Get.lazyPut<CollectionControllers>(
+      () => CollectionControllers(),
+      fenix: true,
+    );
     Get.lazyPut<PointsController>(() => PointsController(), fenix: true);
     Get.lazyPut<GiftsController>(() => GiftsController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
@@ -66,7 +71,10 @@ class MainApp extends StatelessWidget {
       key: ValueKey(context.locale),
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(scaffoldBackgroundColor: backgroundColor),
+        theme: ThemeData(
+          scaffoldBackgroundColor: backgroundColor,
+          fontFamily: 'Cairo',
+        ),
         locale: context.locale,
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,

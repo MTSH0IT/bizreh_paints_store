@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
+import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
@@ -17,12 +18,14 @@ import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:bizreh_paints_store/views/home/widgets/section_header.dart';
 import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
 import 'package:bizreh_paints_store/views/home/widgets/rewards_entry_card.dart';
+import 'package:bizreh_paints_store/views/home/widgets/collections_section.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
   final controller = Get.find<HomeController>();
   final rewardsCtrl = Get.find<RewardsController>();
   final offersCtrl = Get.find<OffersCartController>();
+  final collectionCtrl = Get.find<CollectionControllers>();
 
   //final WishListController wishCtrl = Get.find<WishListController>();
   @override
@@ -39,6 +42,7 @@ class HomeView extends StatelessWidget {
               controller.loadFeaturedBrands(),
               rewardsCtrl.loadAll(),
               offersCtrl.loadOffers(),
+              collectionCtrl.getCollections(),
             ]);
           },
           child: SingleChildScrollView(
@@ -75,6 +79,14 @@ class HomeView extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Categories(),
+                const SizedBox(height: 16),
+                SectionHeader(
+                  title: tr('home.collection'),
+                  onSeeAll: () {
+                    Get.to(() => const AllCategoriesView());
+                  },
+                ),
+                const CollectionsSection(),
                 const SizedBox(height: 16),
                 SectionHeader(
                   title: tr('home.featured_products'),

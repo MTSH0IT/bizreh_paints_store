@@ -28,6 +28,9 @@ class ApiEndpoint {
   static String categoryById(int id) => "/user/category/categories/$id";
   static String subCategoryById(int id) => "/user/category/sub-categories/$id";
 
+  //Collection
+  static const String getCollection = "/user/collection";
+
   //wishlist
   static const String addWishlistItems = "/user/wishlist/items";
   static String removeWishlistItems(int id) => "/user/wishlist/items/$id";

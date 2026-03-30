@@ -63,7 +63,7 @@ class DiscountOffersView extends StatelessWidget {
 
     return Scaffold(
       appBar: CommonAppBar(title: Text(tr('rewards.discounts_tab'))),
-      body: _DiscountsTab(ctrl: ctrl),
+      body: SafeArea(child: _DiscountsTab(ctrl: ctrl)),
     );
   }
 }
@@ -83,7 +83,7 @@ class PointsRulesView extends StatelessWidget {
 
     return Scaffold(
       appBar: CommonAppBar(title: Text(tr('rewards.points_tab'))),
-      body: _PointsRulesTab(ctrl: ctrl),
+      body: SafeArea(child: _PointsRulesTab(ctrl: ctrl)),
     );
   }
 }

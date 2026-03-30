@@ -2,7 +2,8 @@
   "app_name": "Bizreh Paints",
   "common": {
     "cancel": "Cancel",
-    "delete": "Delete"
+    "delete": "Delete",
+    "back": "Back"
   },
   "settings": {
     "title": "Settings",
@@ -267,9 +268,16 @@
     "title": "home",
     "top_brands": "Top Brands",
     "categories": "Categories",
+    "collections": "Collections",
     "featured_products": "Featured Products",
     "no_products": "No products available",
     "see_all": "See All"
+  },
+  "collections": {
+    "categories_count": "{} categories",
+    "products_count": "{} products",
+    "categories_products_count": "{} categories | {} products",
+    "no_items": "No items"
   },
   "gifts": {
     "title": "Gifts",

@@ -1,6 +1,7 @@
 import 'package:bizreh_paints_store/models/collection_model/collection_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CollectionSubCollectionTile extends StatelessWidget {
@@ -64,6 +65,7 @@ class CollectionSubCollectionTile extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     _metaLine(
+                      context: context,
                       hasChildren: hasChildren,
                       hasProducts: hasProducts,
                       childrenCount: childrenCount,
@@ -101,23 +103,27 @@ class CollectionSubCollectionTile extends StatelessWidget {
   }
 
   String _metaLine({
+    required BuildContext context,
     required bool hasChildren,
     required bool hasProducts,
     required int childrenCount,
     required int productsCount,
   }) {
     if (hasChildren && hasProducts) {
-      return '$childrenCount categories | $productsCount products';
+      return tr(
+        'collections.categories_products_count',
+        args: [childrenCount.toString(), productsCount.toString()],
+      );
     }
 
     if (hasChildren) {
-      return '$childrenCount categories';
+      return tr('collections.categories_count', args: [childrenCount.toString()]);
     }
 
     if (hasProducts) {
-      return '$productsCount products';
+      return tr('collections.products_count', args: [productsCount.toString()]);
     }
 
-    return 'No items';
+    return tr('collections.no_items');
   }
 }

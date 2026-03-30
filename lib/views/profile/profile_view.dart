@@ -81,13 +81,13 @@ class ProfileView extends StatelessWidget {
                         Get.to(() => const OrderHistory());
                       },
                     ),
-                    ProfileListItem(
-                      icon: Icons.local_offer_outlined,
-                      title: tr('rewards.title'),
-                      onTap: () {
-                        Get.to(() => const RewardsView());
-                      },
-                    ),
+                    // ProfileListItem(
+                    //   icon: Icons.local_offer_outlined,
+                    //   title: tr('rewards.title'),
+                    //   onTap: () {
+                    //     Get.to(() => const RewardsView());
+                    //   },
+                    // ),
                     ProfileListItem(
                       icon: Icons.favorite_border_rounded,
                       title: tr('profile.wish_list'),

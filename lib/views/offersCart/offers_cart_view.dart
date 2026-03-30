@@ -41,19 +41,21 @@ class OffersCartView extends StatelessWidget {
                     ),
                   ],
                 )
-              : ListView.separated(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.all(16),
-                  itemCount: offers.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 12),
-                  itemBuilder: (_, i) {
-                    final offer = offers[i];
-                    return _OfferCard(
-                      offer: offer,
-                      isPurchasing: ctrl.purchasingOfferId.value == offer.id,
-                      onPurchase: () => _purchase(context, offer),
-                    );
-                  },
+              : SafeArea(
+                  child: ListView.separated(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.all(16),
+                    itemCount: offers.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 12),
+                    itemBuilder: (_, i) {
+                      final offer = offers[i];
+                      return _OfferCard(
+                        offer: offer,
+                        isPurchasing: ctrl.purchasingOfferId.value == offer.id,
+                        onPurchase: () => _purchase(context, offer),
+                      );
+                    },
+                  ),
                 ),
         );
       }),

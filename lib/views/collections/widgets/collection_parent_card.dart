@@ -22,12 +22,12 @@ class CollectionParentCard extends StatelessWidget {
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: isSelected
-            ? Colors.indigoAccent.withValues(alpha: 0.08)
+            ? Colors.indigoAccent.withValues(alpha: 0.03)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
           color: isSelected
-              ? Colors.indigoAccent.withValues(alpha: 0.45)
+              ? Colors.indigoAccent.withValues(alpha: 0.40)
               : Colors.black.withValues(alpha: 0.08),
           width: isSelected ? 1.4 : 1,
         ),
@@ -54,7 +54,7 @@ class CollectionParentCard extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
             overflow: TextOverflow.ellipsis,
-            maxLines: 1,
+            maxLines: 2,
             style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
           ),
         ],

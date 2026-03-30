@@ -1,8 +1,9 @@
-{
+﻿{
   "app_name": "بزره للدهانات",
   "common": {
     "cancel": "إلغاء",
-    "delete": "حذف"
+    "delete": "حذف",
+    "back": "رجوع"
   },
   "settings": {
     "title": "الإعدادات",
@@ -267,9 +268,16 @@
     "title": "الرئيسية",
     "top_brands": "أفضل العلامات التجارية",
     "categories": "التصنيفات",
+    "collections": "المجموعات",
     "featured_products": "منتجات مميزة",
     "no_products": "لا توجد منتجات متاحة",
     "see_all": "عرض الكل"
+  },
+  "collections": {
+    "categories_count": "{} تصنيفات",
+    "products_count": "{} منتجات",
+    "categories_products_count": "{} تصنيفات | {} منتجات",
+    "no_items": "لا توجد عناصر"
   },
   "gifts": {
     "title": "الهدايا",

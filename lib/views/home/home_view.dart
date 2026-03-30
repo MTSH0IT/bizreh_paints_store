@@ -12,6 +12,7 @@ import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/views/allBrands/all_brands_view.dart';
 import 'package:bizreh_paints_store/views/allCategories/all_categories_view.dart';
 import 'package:bizreh_paints_store/views/allProducts/all_products_view.dart';
+import 'package:bizreh_paints_store/views/collections/all_collections_view.dart';
 import 'package:bizreh_paints_store/views/home/widgets/bulletin_board.dart';
 import 'package:bizreh_paints_store/views/home/widgets/categories.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
@@ -80,6 +81,12 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: 8),
                 Categories(),
                 const SizedBox(height: 16),
+                SectionHeader(
+                  title: tr('home.collections'),
+                  onSeeAll: () {
+                    Get.to(() => const AllCollectionsView());
+                  },
+                ),
                 const CollectionsSection(),
                 const SizedBox(height: 16),
                 SectionHeader(

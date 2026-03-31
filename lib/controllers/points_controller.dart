@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/points_history_model.dart';
+import 'package:bizreh_paints_store/models/points_history_model/points_history_model.dart';
 import 'package:bizreh_paints_store/models/user_points_model.dart';
 import 'package:bizreh_paints_store/services/points_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';

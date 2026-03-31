@@ -61,19 +61,26 @@ class EranedPointsView extends StatelessWidget {
                       itemCount: ctrl.history.length,
                       itemBuilder: (context, index) {
                         final item = ctrl.history[index];
-                        final orderId = item.orderId ?? 0;
-                        final giftId = item.userGiftId ?? 0;
+                        final isSpent =
+                            (item.pointsType ?? '').toLowerCase() == 'spent';
+                        final isEarned = !isSpent;
+                        final orderId =
+                            item.orderDetails?.orderId ?? item.referenceId ?? 0;
+                        final giftId =
+                            item.giftDetails?.giftId ?? item.referenceId ?? 0;
+                        final hasOrderTarget = isEarned && orderId > 0;
+                        final hasGiftTarget = isSpent && giftId > 0;
 
                         return PointsHistoryItem(
                           item: item,
-                          onTap: (orderId > 0 || giftId > 0)
+                          onTap: (hasOrderTarget || hasGiftTarget)
                               ? () {
-                                  if (orderId > 0) {
+                                  if (hasOrderTarget) {
                                     orderCtrl.loadOrderDetails(orderId);
                                     Get.to(() => const OrderDetailsView());
                                     return;
                                   }
-                                  if (giftId > 0) {
+                                  if (hasGiftTarget) {
                                     giftsCtrl.loadGiftById(giftId);
                                     Get.to(() => GiftDetailsView());
                                   }

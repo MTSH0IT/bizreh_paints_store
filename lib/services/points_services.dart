@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/points_history_model.dart';
+import 'package:bizreh_paints_store/models/points_history_model/points_history_model.dart';
 import 'package:bizreh_paints_store/models/user_points_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
@@ -45,7 +45,7 @@ class PointsServices {
     try {
       final response = await _dioClient.get(ApiEndpoint.getPointsHistory);
       final apiResponse = ApiResponse.fromJson(response.data, (json) {
-        final list = (json as List?) ?? [];
+        final list = (json['history'] as List?) ?? [];
         return list
             .map((e) => PointsHistoryModel.fromJson(e as Map<String, dynamic>))
             .toList();

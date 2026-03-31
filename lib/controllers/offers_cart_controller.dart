@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
-import 'package:bizreh_paints_store/models/offers_cart_model.dart';
+import 'package:bizreh_paints_store/models/offers_cart_model/offers_cart_model.dart';
 import 'package:bizreh_paints_store/services/offers_cart_service.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';

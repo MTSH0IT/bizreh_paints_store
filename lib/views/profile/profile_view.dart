@@ -9,7 +9,6 @@ import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
 import 'package:bizreh_paints_store/views/notifications/notifications_view.dart';
 import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
-import 'package:bizreh_paints_store/views/rewards/rewards_view.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'widgets/profile_list_item.dart';

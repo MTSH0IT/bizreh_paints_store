@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:bizreh_paints_store/views/eranedPoints/eraned_points_view.dart';
 import 'package:bizreh_paints_store/views/personalInformation/personal_information_view.dart';
 import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
@@ -16,6 +17,8 @@ import 'widgets/section_title.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
+
+  static final Uri _websiteUri = Uri.parse('https://www.bizrehpaints.com/');
 
   @override
   Widget build(BuildContext context) {
@@ -115,11 +118,22 @@ class ProfileView extends StatelessWidget {
                         Get.to(() => NotificationsView());
                       },
                     ),
+
                     ProfileListItem(
                       icon: Icons.settings_outlined,
                       title: tr('profile.app_preferences'),
                       onTap: () {
                         Get.to(() => SettingsView());
+                      },
+                    ),
+                    ProfileListItem(
+                      icon: Icons.public_outlined,
+                      title: 'الموقع الرسمي',
+                      onTap: () async {
+                        await launchUrl(
+                          _websiteUri,
+                          mode: LaunchMode.externalApplication,
+                        );
                       },
                     ),
                     ProfileListItem(

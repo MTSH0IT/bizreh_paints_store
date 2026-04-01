@@ -25,17 +25,17 @@ class ProductDetailsController extends GetxController {
     log("${selectedColorId.value}");
   }
 
-  void addToCart() {
+  Future<void> addToCart({required int quantity}) async {
     if (selectedOption.value < 0 || selectedPackaging.value < 0) {
       showMassage("اختر النوع وطريقة التغليف", false);
       return;
     }
     final cartController = Get.find<CartController>();
 
-    cartController.addToCart(
+    await cartController.addToCart(
       optionPackagingId: selectedPackaging.value,
       colorFamilyId: selectedColorId.value < 0 ? 0 : selectedColorId.value,
-      quantity: 1,
+      quantity: quantity,
     );
   }
 }

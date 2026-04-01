@@ -7,6 +7,7 @@ import 'package:get/get.dart' hide Trans;
 import 'widgets/wish_list_item.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:bizreh_paints_store/utils/widgets/quantity_input_dialog.dart';
 
 class WishList extends StatelessWidget {
   const WishList({super.key});
@@ -62,7 +63,14 @@ class WishList extends StatelessWidget {
                       child: WishListItemCard(
                         item: item,
                         onMoveToCart: () async {
-                          await ctrl.addWishlistItemToCart(item);
+                          final quantity = await showQuantityInputDialog(
+                            context,
+                          );
+                          if (quantity == null) return;
+                          await ctrl.addWishlistItemToCart(
+                            item,
+                            quantity: quantity,
+                          );
                         },
                         onRemove: () {
                           ctrl.removeItem(item.optionPackagingId!);

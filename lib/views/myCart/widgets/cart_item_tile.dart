@@ -1,12 +1,10 @@
-﻿import 'dart:async';
-
 import 'package:bizreh_paints_store/models/cart_model/item.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
+import 'package:bizreh_paints_store/utils/widgets/quantity_input_dialog.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -295,64 +293,9 @@ class _CartItemTileState extends State<CartItemTile> {
 
   Future<void> _showQuantityDialog() async {
     if (widget.onSetQuantity == null) return;
-    final controller = TextEditingController(text: _quantity.toString());
-    String? errorText;
-    final result = await showDialog<int>(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: Text(
-                tr('cart.set_new_quantity'),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: controller,
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    decoration: InputDecoration(
-                      label: Text(tr('cart.quantity')),
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
-                      ),
-                      errorText: errorText,
-                      errorMaxLines: 2,
-                    ),
-                  ),
-                ],
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(tr('cart.cancel')),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        final q = int.tryParse(controller.text);
-                        if (q != null && q > 0 && q < 1000) {
-                          Navigator.of(context).pop(q);
-                        } else {
-                          setState(() {
-                            errorText = tr('cart.valid_quantity_error');
-                          });
-                        }
-                      },
-                      child: Text(tr('cart.ok')),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
-        );
-      },
+    final result = await showQuantityInputDialog(
+      context,
+      initialQuantity: _quantity,
     );
     if (result != null && result > 0) {
       widget.onSetQuantity!(result);

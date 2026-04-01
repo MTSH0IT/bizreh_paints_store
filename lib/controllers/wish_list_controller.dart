@@ -91,14 +91,17 @@ class WishListController extends GetxController {
     return items.any((item) => item.optionPackagingId == id);
   }
 
-  Future<void> addWishlistItemToCart(WishlistModel wishlistItem) async {
+  Future<void> addWishlistItemToCart(
+    WishlistModel wishlistItem, {
+    required int quantity,
+  }) async {
     movingToCartId.value = wishlistItem.optionPackagingId!;
     try {
       final cartController = Get.find<CartController>();
       await cartController.addToCart(
         optionPackagingId: wishlistItem.optionPackagingId!,
         //colorFamilyId: wishlistItem.colorFamilyId!,
-        quantity: 1,
+        quantity: quantity,
       );
     } catch (e) {
       // Error already handled in CartController

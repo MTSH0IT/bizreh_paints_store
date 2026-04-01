@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
+import 'package:bizreh_paints_store/utils/widgets/quantity_input_dialog.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_description_section.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_details_header.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_info_section.dart';
@@ -99,7 +100,13 @@ class ProductDetailsView extends StatelessWidget {
                       title: tr('product_details.add_to_cart'),
                       onPressed: isMutating
                           ? null
-                          : () => controller.addToCart(),
+                          : () async {
+                              final quantity = await showQuantityInputDialog(
+                                context,
+                              );
+                              if (quantity == null) return;
+                              await controller.addToCart(quantity: quantity);
+                            },
                     ),
                   ),
                 ],

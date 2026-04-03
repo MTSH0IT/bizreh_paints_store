@@ -128,7 +128,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     ProfileListItem(
                       icon: Icons.public_outlined,
-                      title: 'الموقع الرسمي',
+                      title: tr('profile.official_website'),
                       onTap: () async {
                         await launchUrl(
                           _websiteUri,

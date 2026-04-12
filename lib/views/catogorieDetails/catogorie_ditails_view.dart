@@ -20,72 +20,63 @@ class CatogorieDitailsView extends StatefulWidget {
   State<CatogorieDitailsView> createState() => _CatogorieDitailsViewState();
 }
 
-class _CatogorieDitailsViewState extends State<CatogorieDitailsView>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _CatogorieDitailsViewState extends State<CatogorieDitailsView> {
   late List<Category> _categories;
 
   @override
   void initState() {
     super.initState();
     _categories = widget.superCategory.categories ?? [];
-    _tabController = TabController(length: _categories.length, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CommonAppBar(
-        backgroundColor: Colors.white,
-
-        title: Text(
-          context.localizedValue(
-            en: widget.superCategory.title,
-            ar: widget.superCategory.arTitle,
-            fallback: 'Categories',
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(50),
-          child: TabBar(
-            controller: _tabController,
-            isScrollable: true,
-            labelColor: primaryColor,
-            unselectedLabelColor: Colors.grey[700],
-            labelStyle: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+    return DefaultTabController(
+      length: _categories.length,
+      child: Scaffold(
+        appBar: CommonAppBar(
+          backgroundColor: Colors.white,
+          title: Text(
+            context.localizedValue(
+              en: widget.superCategory.title,
+              ar: widget.superCategory.arTitle,
+              fallback: 'Categories',
             ),
-            indicatorColor: primaryColor,
-            indicatorWeight: 2.0,
-            tabs: List.generate(
-              _categories.length,
-              (i) => Tab(
-                text: context.localizedValue(
-                  en: _categories[i].title,
-                  ar: _categories[i].arTitle,
-                  fallback: '',
+          ),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(50),
+            child: TabBar(
+              isScrollable: true,
+              labelColor: primaryColor,
+              unselectedLabelColor: Colors.grey[700],
+              labelStyle: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+              indicatorColor: primaryColor,
+              indicatorWeight: 2.0,
+              tabs: List.generate(
+                _categories.length,
+                (i) => Tab(
+                  text: context.localizedValue(
+                    en: _categories[i].title,
+                    ar: _categories[i].arTitle,
+                    fallback: '',
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-      body: SafeArea(
-        child: TabBarView(
-          controller: _tabController,
-          children: List.generate(
-            _categories.length,
-            (index) => _SubCategoriesGrid(
-              subCategories: _categories.isNotEmpty
-                  ? (_categories[index].subCategories ?? const [])
-                  : const [],
+        body: SafeArea(
+          child: TabBarView(
+            children: List.generate(
+              _categories.length,
+              (index) => _SubCategoriesGrid(
+                subCategories: _categories.isNotEmpty
+                    ? (_categories[index].subCategories ?? const [])
+                    : const [],
+              ),
             ),
           ),
         ),

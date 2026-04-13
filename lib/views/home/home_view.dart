@@ -9,17 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
-import 'package:bizreh_paints_store/views/allBrands/all_brands_view.dart';
-import 'package:bizreh_paints_store/views/allCategories/all_categories_view.dart';
+import 'package:bizreh_paints_store/views/brand/all_brands_view_universal.dart';
+import 'package:bizreh_paints_store/views/catogorieDetails/all_categories_view_universal.dart';
 import 'package:bizreh_paints_store/views/allProducts/all_products_view.dart';
-import 'package:bizreh_paints_store/views/collections/all_collections_view.dart';
+import 'package:bizreh_paints_store/views/collections/all_collections_view_universal.dart';
+import 'package:bizreh_paints_store/views/collections/collections_section.dart';
 import 'package:bizreh_paints_store/views/home/widgets/bulletin_board.dart';
 import 'package:bizreh_paints_store/views/home/widgets/categories.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
 import 'package:bizreh_paints_store/views/home/widgets/section_header.dart';
 import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
 import 'package:bizreh_paints_store/views/home/widgets/rewards_entry_card.dart';
-import 'package:bizreh_paints_store/views/collections/collections_section.dart';
 
 class HomeView extends StatelessWidget {
   HomeView({super.key});
@@ -66,7 +66,7 @@ class HomeView extends StatelessWidget {
                   title: tr('home.top_brands'),
                   onSeeAll: () {
                     controller.loadBrands();
-                    Get.to(() => AllBrandsView());
+                    Get.to(() => const AllBrandsViewUniversal());
                   },
                 ),
                 const SizedBox(height: 8),
@@ -75,7 +75,7 @@ class HomeView extends StatelessWidget {
                 SectionHeader(
                   title: tr('home.categories'),
                   onSeeAll: () {
-                    Get.to(() => const AllCategoriesView());
+                    Get.to(() => const AllCategoriesViewUniversal());
                   },
                 ),
                 const SizedBox(height: 8),
@@ -84,7 +84,7 @@ class HomeView extends StatelessWidget {
                 SectionHeader(
                   title: tr('home.collections'),
                   onSeeAll: () {
-                    Get.to(() => const AllCollectionsView());
+                    Get.to(() => const AllCollectionsViewUniversal());
                   },
                 ),
                 const CollectionsSection(),

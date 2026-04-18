@@ -16,6 +16,7 @@ import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
 import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
 import 'package:bizreh_paints_store/controllers/points_controller.dart';
 import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
+import 'package:bizreh_paints_store/controllers/payments_controller.dart';
 import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
 import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
 
@@ -49,6 +50,7 @@ class AppBindings extends Bindings {
       fenix: true,
     );
     Get.lazyPut<PointsController>(() => PointsController(), fenix: true);
+    Get.lazyPut<PaymentsController>(() => PaymentsController(), fenix: true);
     Get.lazyPut<GiftsController>(() => GiftsController(), fenix: true);
     Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
     Get.lazyPut<AddressController>(() => AddressController(), fenix: true);

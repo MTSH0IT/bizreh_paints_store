@@ -1,5 +1,6 @@
 ﻿import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
+import 'package:bizreh_paints_store/views/payments/payments_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -52,6 +53,13 @@ class ProfileView extends StatelessWidget {
                       //trailingText: '1,250',
                       onTap: () {
                         Get.to(() => const EranedPointsView());
+                      },
+                    ),
+                    ProfileListItem(
+                      icon: Icons.payments_outlined,
+                      title: tr('profile.payments'),
+                      onTap: () {
+                        Get.to(() => const PaymentsView());
                       },
                     ),
                     ProfileListItem(

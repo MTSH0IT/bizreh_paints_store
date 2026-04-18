@@ -110,6 +110,7 @@
     "account": "Account",
     "personal_info": "Personal Information",
     "earned_points": "Earned Points",
+    "payments": "Payments",
     "addresses": "Addresses",
     "orders": "Orders",
     "order_history": "Order History",
@@ -331,6 +332,22 @@
     "open_gift": "Open Gift",
     "order_earning": "Points earned from order",
     "gift_redemption": "Points redeemed for gift"
+  },
+  "payments": {
+    "title": "My Payments",
+    "history": "Payments History",
+    "summary_title": "Total Payments",
+    "total_bonus": "Total Bonus",
+    "total_transactions": "Transactions",
+    "empty": "No payments yet",
+    "unknown_type": "Unknown Type",
+    "id": "ID",
+    "user_id": "User ID",
+    "notes": "Notes",
+    "customer_info": "Customer Info",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone"
   },
   "address_manage": {
     "select_city": "Select City",

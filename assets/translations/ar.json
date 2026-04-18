@@ -110,6 +110,7 @@
     "account": "الحساب",
     "personal_info": "المعلومات الشخصية",
     "earned_points": "النقاط المكتسبة",
+    "payments": "المدفوعات",
     "addresses": "العناوين",
     "orders": "الطلبات",
     "order_history": "سجل الطلبات",
@@ -331,6 +332,22 @@
     "open_gift": "فتح الهدية",
     "order_earning": "كسب نقاط من طلب",
     "gift_redemption": "صرف نقاط مقابل هدية"
+  },
+  "payments": {
+    "title": "مدفوعاتي",
+    "history": "سجل المدفوعات",
+    "summary_title": "إجمالي المدفوعات",
+    "total_bonus": "إجمالي البونص",
+    "total_transactions": "عدد العمليات",
+    "empty": "لا توجد مدفوعات حتى الآن",
+    "unknown_type": "نوع غير معروف",
+    "id": "المعرف",
+    "user_id": "معرف المستخدم",
+    "notes": "الملاحظات",
+    "customer_info": "بيانات العميل",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف"
   },
   "address_manage": {
     "select_city": "اختر المدينة",

@@ -99,4 +99,7 @@ class ApiEndpoint {
   static String cancelOrder(int id) => "/user/order/$id/cancel";
   static String reorder(int id) => "/user/order/$id/reorder";
   static String complaint(int id) => "/user/order/$id/complaint";
+
+  //payments
+  static const String getPayments = "/user/payment";
 }

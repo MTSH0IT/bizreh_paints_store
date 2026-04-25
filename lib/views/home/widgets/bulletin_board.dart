@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/models/ads_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ class BulletinBoard extends StatelessWidget {
         );
       }
       if (controller.ads.isEmpty) {
-        return const SizedBox(
-          height: 150,
-          child: Center(child: Text('No banners available')),
+        return SizedBox(
+          height: 120,
+          child: Center(child: Text('home.no_banners'.tr())),
         );
       }
 

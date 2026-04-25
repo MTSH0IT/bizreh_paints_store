@@ -1,4 +1,4 @@
-﻿{
+{
   "app_name": "بزره للدهانات",
   "common": {
     "cancel": "إلغاء",
@@ -70,7 +70,7 @@
   },
   "cart": {
     "title": "سلة المشتريات",
-    "sub_title":"السلة",
+    "sub_title": "السلة",
     "empty": "سلة المشتريات فارغة",
     "set_new_quantity": "تعيين كمية جديدة",
     "quantity": "الكمية",
@@ -269,10 +269,18 @@
   "home": {
     "title": "الرئيسية",
     "top_brands": "أفضل العلامات التجارية",
+    "brands": "العلامات التجارية",
     "categories": "التصنيفات",
     "collections": "المجموعات",
     "featured_products": "منتجات مميزة",
     "no_products": "لا توجد منتجات متاحة",
+    "no_brands": "لا توجد علامات تجارية مميزة",
+    "no_categories": "لا توجد تصنيفات",
+    "no_banners": "لا توجد إعلانات متاحة",
+    "no_collections": "لا توجد مجموعات متاحة",
+    "no_brands_found": "لم يتم العثور على علامات تجارية",
+    "no_categories_found": "لم يتم العثور على تصنيفات",
+    "no_collections_found": "لم يتم العثور على مجموعات",
     "see_all": "عرض الكل"
   },
   "collections": {

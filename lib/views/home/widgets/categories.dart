@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/catogorieDetails/catogorie_ditails_view.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
@@ -20,9 +21,9 @@ class Categories extends StatelessWidget {
       }
       final list = controller.categoryTree;
       if (list.isEmpty) {
-        return const SizedBox(
+        return SizedBox(
           height: 120,
-          child: Center(child: Text('No categories')),
+          child: Center(child: Text('home.no_categories'.tr())),
         );
       }
       return SizedBox(

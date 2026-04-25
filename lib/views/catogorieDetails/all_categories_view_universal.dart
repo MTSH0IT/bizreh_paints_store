@@ -22,7 +22,7 @@ class AllCategoriesViewUniversal extends StatelessWidget {
         isLoading:
             controller.isCategoryTreeLoading.value &&
             controller.categoryTree.isEmpty,
-        emptyMessage: 'No categories found',
+        emptyMessage: tr('home.no_categories_found'),
         itemBuilder: (context, category, index) {
           return SeeAllGridCard(
             name: context.localizedValue(

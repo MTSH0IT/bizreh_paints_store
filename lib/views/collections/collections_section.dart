@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/models/collection_model/collection_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
@@ -23,7 +24,10 @@ class CollectionsSection extends StatelessWidget {
           .toList(growable: false);
 
       if (parents.isEmpty) {
-        return const SizedBox.shrink();
+        return SizedBox(
+          height: 120,
+          child: Center(child: Text('home.no_collections'.tr())),
+        );
       }
 
       return SizedBox(

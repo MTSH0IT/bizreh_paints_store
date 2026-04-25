@@ -1,7 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 import 'package:bizreh_paints_store/views/brand/brand_products_view.dart';
@@ -20,7 +21,7 @@ class TopBrands extends StatelessWidget {
         }
         final List<BrandModel> items = controller.featuredBrands;
         if (items.isEmpty) {
-          return const Center(child: Text('No featured brands'));
+          return Center(child: Text('home.no_brands'.tr()));
         }
         return ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),

@@ -25,7 +25,7 @@ class AllCollectionsViewUniversal extends StatelessWidget {
         title: '${tr('home.collections')} (${parents.length})',
         items: parents,
         isLoading: controller.isLoading.value && controller.collections.isEmpty,
-        emptyMessage: 'No collections found',
+        emptyMessage: tr('home.no_collections_found'),
         onRefresh: controller.getCollections,
         itemBuilder: (context, collection, index) {
           return SeeAllGridCard(

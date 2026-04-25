@@ -21,7 +21,7 @@ class AllBrandsViewUniversal extends StatelessWidget {
         title: tr('home.brands'),
         items: controller.brands,
         isLoading: controller.isBrandsLoading.value,
-        emptyMessage: 'No brands found',
+        emptyMessage: tr('home.no_brands_found'),
         itemBuilder: (context, brand, index) {
           return SeeAllGridCard(
             name: context.localizedValue(

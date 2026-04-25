@@ -269,10 +269,18 @@
   "home": {
     "title": "home",
     "top_brands": "Top Brands",
+    "brands": "Brands",
     "categories": "Categories",
     "collections": "Collections",
     "featured_products": "Featured Products",
     "no_products": "No products available",
+    "no_brands": "No featured brands",
+    "no_categories": "No categories",
+    "no_banners": "No banners available",
+    "no_collections": "No collections available",
+    "no_brands_found": "No brands found",
+    "no_categories_found": "No categories found",
+    "no_collections_found": "No collections found",
     "see_all": "See All"
   },
   "collections": {

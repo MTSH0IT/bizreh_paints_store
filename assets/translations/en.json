@@ -39,7 +39,7 @@
     "empty": "No addresses found",
     "delete": {
       "title": "Delete Address",
-      "message": "Are you sure you want to delete {0}?"
+      "message": "Are you sure you want to delete {}?"
     }
   },
   "change_password": {
@@ -70,7 +70,7 @@
   },
   "cart": {
     "title": "My Cart",
-    "sub_title":"Cart",
+    "sub_title": "Cart",
     "empty": "Your cart is empty",
     "set_new_quantity": "Set new quantity",
     "quantity": "Quantity",

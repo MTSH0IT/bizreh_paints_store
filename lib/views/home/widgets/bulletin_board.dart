@@ -67,43 +67,103 @@ class _BannerCard extends StatelessWidget {
 
   const _BannerCard({required this.banner});
 
+  void _showAdDialog(BuildContext context) {
+    final description = context.localizedValue(
+      en: banner.description,
+      ar: banner.arDescription,
+      fallback: '',
+    );
+
+    if (description.trim().isEmpty) return;
+
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: Text(
+          context.localizedValue(
+            en: banner.title,
+            ar: banner.arTitle,
+            fallback: '',
+          ),
+          style: const TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 18,
+          ),
+        ),
+        content: Text(
+          description,
+          style: const TextStyle(
+            fontSize: 15,
+            color: Colors.black87,
+            height: 1.4,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Get.back(),
+            child: Text(
+              'cart.ok'.tr(),
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final hasDescription = context
+        .localizedValue(
+          en: banner.description,
+          ar: banner.arDescription,
+          fallback: '',
+        )
+        .trim()
+        .isNotEmpty;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            ImageNetwork(image: banner.image ?? ""),
-            Positioned(
-              left: 16,
-              top: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.localizedValue(
-                      en: banner.title,
-                      ar: banner.arTitle,
-                      fallback: '',
-                    ),
-                    style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      color: Colors.black87,
-                    ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            onTap: hasDescription ? () => _showAdDialog(context) : null,
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                ImageNetwork(image: banner.image ?? ""),
+                Positioned(
+                  left: 16,
+                  top: 16,
+                  right: 16,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        context.localizedValue(
+                          en: banner.title,
+                          ar: banner.arTitle,
+                          fallback: '',
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 15,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 4),
-                  // Text(
-                  //   banner.description ?? "",
-                  //   style: const TextStyle(color: Colors.black54),
-                  // ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

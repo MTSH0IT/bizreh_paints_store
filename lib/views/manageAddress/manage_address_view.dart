@@ -1,4 +1,5 @@
-﻿import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/labeled_text_field.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
 import 'package:bizreh_paints_store/controllers/address_controllers.dart';
-import 'package:bizreh_paints_store/models/cities_model.dart';
 import 'widgets/city_dropdown.dart';
 import 'widgets/map_card.dart';
 import 'widgets/full_screen_map.dart';
@@ -24,14 +24,10 @@ class ManageAddressView extends StatefulWidget {
 class _ManageAddressViewState extends State<ManageAddressView> {
   final AddressController addressController = Get.find<AddressController>();
 
-  Future<void> _ensureCitiesLoaded() async {
-    if (addressController.cities.isEmpty) {
-      await addressController.loadCities();
-    }
-  }
-
-  Future<void> _lodedata() async {
-    addressController.fillFormFrom(widget.address!);
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() => addressController.initForm(widget.address));
   }
 
   LatLng? _currentCenter() {
@@ -41,25 +37,12 @@ class _ManageAddressViewState extends State<ManageAddressView> {
     return LatLng(lat.toDouble(), lng.toDouble());
   }
 
-  Future<void> _saveAddress() async {
+  Future<void> _handleSave() async {
     if (widget.address != null) {
       await addressController.updateAddress(id: widget.address!.id!);
     } else {
       await addressController.createAddress();
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Future.microtask(() async {
-      await _ensureCitiesLoaded();
-      if (widget.address == null) {
-        addressController.getLocationAndFill();
-      } else {
-        await _lodedata();
-      }
-    });
   }
 
   @override
@@ -72,11 +55,9 @@ class _ManageAddressViewState extends State<ManageAddressView> {
       ),
       body: SafeArea(
         child: Obx(() {
-          final citiesOptions = addressController.cities
-              .map((e) => e.title ?? '')
-              .toList();
-          final selectedCityName = addressController.selectedCityName.value;
-
+          final citiesOptions = addressController.getLocalizedCities(context);
+          final selectedCityName = addressController
+              .getSelectedCityLocalizedName(context);
           final center = _currentCenter();
 
           return Stack(
@@ -92,21 +73,12 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                     label: tr('address.nickname'),
                     controller: addressController.nicknameCtrl,
                   ),
-
                   CityDropdown(
                     label: tr('address.city'),
                     value: selectedCityName,
                     options: citiesOptions.isEmpty ? const [''] : citiesOptions,
-                    onChanged: (v) {
-                      final matched = addressController.cities.firstWhere(
-                        (c) => c.title == v,
-                        orElse: () => CitiesModel(),
-                      );
-                      addressController.setSelectedCity(
-                        matched.id,
-                        matched.title,
-                      );
-                    },
+                    onChanged: (v) =>
+                        addressController.updateCityByLocalizedName(v, context),
                   ),
                   LabeledTextField(
                     hint: tr('address.address_line_hint'),
@@ -129,7 +101,6 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                       if (selectedLocation != null) {
                         addressController.latitude.value =
                             selectedLocation.latitude;
-
                         addressController.longitude.value =
                             selectedLocation.longitude;
                       }
@@ -140,7 +111,7 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                   MainButton(
                     onPressed: addressController.isSubmitting.value
                         ? null
-                        : _saveAddress,
+                        : _handleSave,
                     title: addressController.isSubmitting.value
                         ? tr('address.please_wait')
                         : (widget.address != null
@@ -150,10 +121,10 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                 ],
               ),
               if (addressController.isSubmitting.value)
-                Positioned.fill(
-                  child: Container(
+                const Positioned.fill(
+                  child: ColoredBox(
                     color: Colors.black38,
-                    child: const BuildProgressIndicator(),
+                    child: BuildProgressIndicator(),
                   ),
                 ),
             ],

@@ -1,4 +1,5 @@
-﻿import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:bizreh_paints_store/models/address_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -105,7 +106,8 @@ class AddressCard extends StatelessWidget {
           const SizedBox(height: 12),
           // Full name
           Text(
-            address.cityName ?? tr('address.city_default'),
+            context.localizedValue(
+                en: address.cityName, ar: address.arCityName),
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,

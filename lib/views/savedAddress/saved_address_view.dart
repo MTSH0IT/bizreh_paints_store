@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +51,8 @@ class _SavedAddressViewState extends State<SavedAddressView> {
       body: SafeArea(
         child: Obx(() {
           final List<AddressModel> items = addressController.addresses;
-          if (addressController.isLoading.value) {
-            return const BuildProgressIndicator();
+          if (addressController.isLoading.value && items.isEmpty) {
+            return BuildProgressIndicator();
           }
           if (items.isEmpty) {
             return Center(child: Text(tr('saved_address.empty')));

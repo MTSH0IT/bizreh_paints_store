@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/cities_model.dart';
+import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 
 class AddressController extends GetxController {
@@ -13,6 +14,7 @@ class AddressController extends GetxController {
 
   // Reactive state
   final RxBool isLoading = false.obs;
+  final RxBool isLoadingCities = false.obs;
   final RxBool isSubmitting = false.obs;
 
   // Data
@@ -81,16 +83,15 @@ class AddressController extends GetxController {
   }
 
   Future<void> loadCities() async {
-    isLoading.value = true;
+    isLoadingCities.value = true;
     try {
       final res = await _addressServices.getCities();
       cities.assignAll(res);
-      isLoading.value = false;
     } catch (e) {
       log("address controller loadCities error: ${e.toString()}");
       showMassage("فشل في جلب المدن", false);
     } finally {
-      isLoading.value = false;
+      isLoadingCities.value = false;
     }
   }
 
@@ -160,14 +161,6 @@ class AddressController extends GetxController {
     isSubmitting.value = true;
     try {
       await _addressServices.deleteAddress(id: id);
-      // تحديث محلي لقائمة العناوين بدون إعادة تحميل من السيرفر
-      // AddressModel? removed;
-      // for (final a in addresses) {
-      //   if (a.id == id) {
-      //     removed = a;
-      //     break;
-      //   }
-      // }
 
       addresses.removeWhere((e) => e.id == id);
       addresses.refresh();
@@ -199,12 +192,10 @@ class AddressController extends GetxController {
   //         break;
   //       }
   //     }
-
   //     if (newDefault != null) {
   //       defaultAddress.value = newDefault;
   //       addresses.refresh();
   //     }
-
   //     showMassage("تم تعيين العنوان الافتراضي", true);
   //     isSubmitting.value = false;
   //   } catch (e) {
@@ -242,6 +233,29 @@ class AddressController extends GetxController {
     selectedCityName.value = cityName;
   }
 
+  // New helper methods for UI
+  List<String> getLocalizedCities(BuildContext context) {
+    return cities
+        .map((e) => context.localizedValue(en: e.title, ar: e.arTitle))
+        .toList();
+  }
+
+  String? getSelectedCityLocalizedName(BuildContext context) {
+    final city = cities.firstWhereOrNull((c) => c.id == selectedCityId.value);
+    if (city == null) return null;
+    return context.localizedValue(en: city.title, ar: city.arTitle);
+  }
+
+  void updateCityByLocalizedName(String? name, BuildContext context) {
+    if (name == null) return;
+    final matched = cities.firstWhereOrNull(
+      (c) => context.localizedValue(en: c.title, ar: c.arTitle) == name,
+    );
+    if (matched != null) {
+      setSelectedCity(matched.id, matched.title);
+    }
+  }
+
   void clearForm() {
     selectedCityId.value = null;
     selectedCityName.value = null;
@@ -251,6 +265,17 @@ class AddressController extends GetxController {
     latitude.value = null;
     longitude.value = null;
     getLocationAndFill();
+  }
+
+  Future<void> initForm(AddressModel? model) async {
+    if (cities.isEmpty) {
+      await loadCities();
+    }
+    if (model == null) {
+      await getLocationAndFill();
+    } else {
+      fillFormFrom(model);
+    }
   }
 
   void fillFormFrom(AddressModel model) {

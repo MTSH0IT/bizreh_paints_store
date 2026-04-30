@@ -12,7 +12,7 @@ import 'package:get/get.dart' hide Trans;
 class Search extends StatelessWidget {
   Search({super.key});
 
-  final _searchController = Get.put(FilterController());
+  final _searchController = Get.find<FilterController>();
 
   @override
   Widget build(BuildContext context) {

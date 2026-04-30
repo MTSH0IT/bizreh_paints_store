@@ -9,7 +9,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class PointsServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  PointsServices({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<UserPointsModel> getUserPoints() async {
     try {

@@ -8,7 +8,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class AdsServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  AdsServices({required DioClient dioClient}) : _dioClient = dioClient;
   Future<List<AdsModel>> getAds() async {
     try {
       final response = await _dioClient.get(ApiEndpoint.getAds);

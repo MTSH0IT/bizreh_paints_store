@@ -9,7 +9,9 @@ import 'package:bizreh_paints_store/utils/consts/const_key.dart';
 import 'package:dio/dio.dart';
 
 class UserService {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  UserService({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<UserModel> getProfile() async {
     try {

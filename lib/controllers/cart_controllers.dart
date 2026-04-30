@@ -7,7 +7,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
-  final cartServices = CartServices();
+  final CartServices _cartServices;
+
+  CartController({required CartServices cartServices})
+    : _cartServices = cartServices;
 
   final RxBool isLoading = false.obs;
   final RxBool isMutating = false.obs;
@@ -22,7 +25,7 @@ class CartController extends GetxController {
   Future<void> getCart() async {
     isLoading.value = true;
     try {
-      final result = await cartServices.getCart();
+      final result = await _cartServices.getCart();
       cart.value = result;
     } on AppException catch (e) {
       log("cart controller AppException get cart : ${e.message}");
@@ -42,7 +45,7 @@ class CartController extends GetxController {
   }) async {
     isMutating.value = true;
     try {
-      await cartServices.addToCart(
+      await _cartServices.addToCart(
         optionPackagingId: optionPackagingId,
         colorFamilyId: colorFamilyId,
         quantity: quantity,
@@ -71,7 +74,7 @@ class CartController extends GetxController {
     }
     isMutating.value = true;
     try {
-      await cartServices.updateCart(
+      await _cartServices.updateCart(
         cartItemId: cartItemId,
         quantity: quantity,
         //colorFamilyId: colorFamilyId,
@@ -96,7 +99,7 @@ class CartController extends GetxController {
     }
     isMutating.value = true;
     try {
-      await cartServices.deleteCartItem(cartItemId: cartItemId);
+      await _cartServices.deleteCartItem(cartItemId: cartItemId);
       await getCart();
       showMassage("تم حذف العنصر من السلة", true);
     } on AppException catch (e) {
@@ -120,7 +123,7 @@ class CartController extends GetxController {
     }
     isMutating.value = true;
     try {
-      await cartServices.increaseCartItem(
+      await _cartServices.increaseCartItem(
         cartItemId: cartItemId,
         quantity: quantity,
       );
@@ -147,7 +150,7 @@ class CartController extends GetxController {
     }
     isMutating.value = true;
     try {
-      await cartServices.decreaseCartItem(
+      await _cartServices.decreaseCartItem(
         cartItemId: cartItemId,
         quantity: quantity,
       );

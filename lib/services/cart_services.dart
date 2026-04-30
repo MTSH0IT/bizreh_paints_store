@@ -8,7 +8,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class CartServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  CartServices({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<void> addToCart({
     required int optionPackagingId,

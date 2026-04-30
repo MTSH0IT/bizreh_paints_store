@@ -11,9 +11,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FilterController extends GetxController {
-  final BrandsServices _brandsServices = BrandsServices();
-  final CategoryServices _categoryServices = CategoryServices();
-  final FilterServices _filterServices = FilterServices();
+  final BrandsServices _brandsServices;
+  final CategoryServices _categoryServices;
+  final FilterServices _filterServices;
+
+  FilterController({
+    required BrandsServices brandsServices,
+    required CategoryServices categoryServices,
+    required FilterServices filterServices,
+  }) : _brandsServices = brandsServices,
+       _categoryServices = categoryServices,
+       _filterServices = filterServices;
 
   final TextEditingController queryController = TextEditingController();
 

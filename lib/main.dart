@@ -1,29 +1,17 @@
-import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
-import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/views/splash/splash_view.dart';
-import 'package:bizreh_paints_store/controllers/auth_controller.dart';
-import 'package:bizreh_paints_store/controllers/home_controller.dart';
-import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
-import 'package:bizreh_paints_store/controllers/order_controller.dart';
-import 'package:bizreh_paints_store/controllers/address_controllers.dart';
-import 'package:bizreh_paints_store/controllers/personal_controller.dart';
-import 'package:bizreh_paints_store/controllers/notifications_controllers.dart';
-import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
-import 'package:bizreh_paints_store/controllers/points_controller.dart';
-import 'package:bizreh_paints_store/controllers/gifts_controller.dart';
-import 'package:bizreh_paints_store/controllers/payments_controller.dart';
-import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
-import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
+import 'package:bizreh_paints_store/helper/di/service_locator.dart';
+import 'package:bizreh_paints_store/helper/bindings/app_bindings.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await StorageService.init();
+  await init();
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
@@ -32,36 +20,6 @@ void main() async {
       child: MainApp(),
     ),
   );
-}
-
-class AppBindings extends Bindings {
-  @override
-  void dependencies() {
-    Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
-    Get.lazyPut<HomeController>(() => HomeController(), fenix: true);
-    Get.lazyPut<WishListController>(() => WishListController(), fenix: true);
-    Get.lazyPut<RewardsController>(() => RewardsController(), fenix: true);
-    Get.lazyPut<OffersCartController>(
-      () => OffersCartController(),
-      fenix: true,
-    );
-    Get.lazyPut<CollectionControllers>(
-      () => CollectionControllers(),
-      fenix: true,
-    );
-    Get.lazyPut<PointsController>(() => PointsController(), fenix: true);
-    Get.lazyPut<PaymentsController>(() => PaymentsController(), fenix: true);
-    Get.lazyPut<GiftsController>(() => GiftsController(), fenix: true);
-    Get.lazyPut<OrderController>(() => OrderController(), fenix: true);
-    Get.lazyPut<AddressController>(() => AddressController(), fenix: true);
-    Get.lazyPut<PersonalController>(() => PersonalController(), fenix: true);
-    Get.lazyPut<CartController>(() => CartController(), fenix: true);
-    Get.lazyPut<NotificationsControllers>(
-      () => NotificationsControllers(),
-      fenix: true,
-    );
-    Get.lazyPut<MainViewController>(() => MainViewController(), fenix: true);
-  }
 }
 
 class MainApp extends StatelessWidget {

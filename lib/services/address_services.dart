@@ -9,7 +9,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class AddressServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  AddressServices({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<List<AddressModel>> getAddresses() async {
     try {

@@ -7,7 +7,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class CollectionServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  CollectionServices({required DioClient dioClient}) : _dioClient = dioClient;
   Future<List<CollectionModel>> getCollections() async {
     try {
       final response = await _dioClient.get(ApiEndpoint.getCollection);

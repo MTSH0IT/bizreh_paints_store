@@ -4,12 +4,15 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/available_gifts_model.dart';
 import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/models/user_gifts_model.dart';
-import 'package:bizreh_paints_store/services/gifts_servise.dart';
+import 'package:bizreh_paints_store/services/gifts_service.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class GiftsController extends GetxController {
-  final GiftsServise _giftsServise = GiftsServise();
+  final GiftsService _giftsService;
+
+  GiftsController({required GiftsService giftsServices})
+    : _giftsService = giftsServices;
 
   final RxList<GiftsModel> gifts = <GiftsModel>[].obs;
   final RxList<UserGiftsModel> myGifts = <UserGiftsModel>[].obs;
@@ -41,7 +44,7 @@ class GiftsController extends GetxController {
   Future<void> loadGifts() async {
     isLoadingGifts.value = true;
     try {
-      final result = await _giftsServise.getAllGifts();
+      final result = await _giftsService.getAllGifts();
       gifts.assignAll(result);
     } on AppException catch (e) {
       log("gifts controller AppException get gifts : ${e.message}");
@@ -57,7 +60,7 @@ class GiftsController extends GetxController {
   Future<void> loadMyGifts() async {
     isLoadingMyGifts.value = true;
     try {
-      final result = await _giftsServise.getMyGifts();
+      final result = await _giftsService.getMyGifts();
       myGifts.assignAll(result);
     } on AppException catch (e) {
       log("gifts controller AppException get my gifts : ${e.message}");
@@ -73,7 +76,7 @@ class GiftsController extends GetxController {
   Future<void> loadAvailable() async {
     isLoadingAvailable.value = true;
     try {
-      final result = await _giftsServise.getAvailableGifts();
+      final result = await _giftsService.getAvailableGifts();
       availablePoints.value = result.availablePoints ?? 0;
       availableGifts.assignAll(result.gifts);
     } on AppException catch (e) {
@@ -90,7 +93,7 @@ class GiftsController extends GetxController {
   Future<void> redeemGift(int giftId) async {
     redeemingGiftId.value = giftId;
     try {
-      await _giftsServise.redeemGift(giftId: giftId);
+      await _giftsService.redeemGift(giftId: giftId);
       showMassage("تم طلب استبدال الهدية", true);
       await Future.wait([loadAvailable(), loadMyGifts()]);
     } on AppException catch (e) {
@@ -112,7 +115,7 @@ class GiftsController extends GetxController {
     isLoadingSelectedGift.value = true;
     selectedGiftError.value = '';
     try {
-      final gift = await _giftsServise.getGiftById(giftId: giftId);
+      final gift = await _giftsService.getGiftById(giftId: giftId);
       selectedGift.value = gift;
     } on AppException catch (e) {
       log("gifts controller AppException get by id : ${e.message}");

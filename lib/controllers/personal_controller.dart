@@ -12,8 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PersonalController extends GetxController {
-  final UserService _userService = UserService();
-  final StorageService _storage = StorageService();
+  final UserService _userService;
+  final StorageService _storage;
+
+  PersonalController({
+    required UserService userService,
+    required StorageService storageService,
+  }) : _userService = userService,
+       _storage = storageService;
   final TextEditingController firstNameCtrl = TextEditingController();
   final TextEditingController lastNameCtrl = TextEditingController();
   final TextEditingController emailCtrl = TextEditingController();

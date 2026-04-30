@@ -5,6 +5,9 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class ProductDetailsController extends GetxController {
+  final CartController cartController;
+
+  ProductDetailsController({required this.cartController});
   var selectedOption = (-1).obs;
   var selectedPackaging = (-1).obs;
   var selectedColorId = (-1).obs;
@@ -30,7 +33,6 @@ class ProductDetailsController extends GetxController {
       showMassage("اختر النوع وطريقة التغليف", false);
       return;
     }
-    final cartController = Get.find<CartController>();
 
     await cartController.addToCart(
       optionPackagingId: selectedPackaging.value,

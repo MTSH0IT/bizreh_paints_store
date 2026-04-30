@@ -7,7 +7,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class OffersCartController extends GetxController {
-  final OffersCartService _service = OffersCartService();
+  final OffersCartService _service;
+
+  OffersCartController({required OffersCartService offersCartService})
+    : _service = offersCartService;
 
   final RxList<OffersCartModel> offers = <OffersCartModel>[].obs;
   final RxBool isLoadingOffers = false.obs;

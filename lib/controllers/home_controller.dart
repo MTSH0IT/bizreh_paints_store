@@ -37,10 +37,20 @@ class HomeController extends GetxController {
   RxBool isCategoryTreeLoading = false.obs;
   RxBool isAdsLoading = false.obs;
 
-  final BrandsServices _brandsServices = BrandsServices();
-  final ProductServices _productServices = ProductServices();
-  final CategoryServices _categoryServices = CategoryServices();
-  final AdsServices _adsServices = AdsServices();
+  final BrandsServices _brandsServices;
+  final ProductServices _productServices;
+  final CategoryServices _categoryServices;
+  final AdsServices _adsServices;
+
+  HomeController({
+    required BrandsServices brandsServices,
+    required ProductServices productServices,
+    required CategoryServices categoryServices,
+    required AdsServices adsServices,
+  }) : _brandsServices = brandsServices,
+       _productServices = productServices,
+       _categoryServices = categoryServices,
+       _adsServices = adsServices;
 
   // Category tree state
   RxList<CategoryTreeModle> categoryTree = <CategoryTreeModle>[].obs;

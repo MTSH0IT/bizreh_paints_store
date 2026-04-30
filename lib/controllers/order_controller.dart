@@ -6,8 +6,14 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class OrderController extends GetxController {
-  final CartController cartController = Get.find<CartController>();
-  final OrderServices _orderServices = OrderServices();
+  final OrderServices _orderServices;
+  final CartController cartController;
+
+  OrderController({
+    required OrderServices orderServices,
+    required CartController cartController,
+  }) : _orderServices = orderServices,
+       this.cartController = cartController;
 
   var phoneNumber = ''.obs;
   var selectedAddress = Rxn<AddressModel>();

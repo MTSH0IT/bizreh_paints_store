@@ -10,7 +10,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 
 class AddressController extends GetxController {
   // Services
-  final AddressServices _addressServices = AddressServices();
+  final AddressServices _addressServices;
+
+  AddressController({required AddressServices addressServices})
+    : _addressServices = addressServices;
 
   // Reactive state
   final RxBool isLoading = false.obs;

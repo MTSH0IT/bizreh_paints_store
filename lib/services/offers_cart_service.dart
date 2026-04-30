@@ -8,7 +8,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class OffersCartService {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  OffersCartService({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<List<OffersCartModel>> getAvailableOffers() async {
     try {

@@ -7,7 +7,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class PaymentsController extends GetxController {
-  final PaymentsServices _paymentsServices = PaymentsServices();
+  final PaymentsServices _paymentsServices;
+
+  PaymentsController({required PaymentsServices paymentsServices})
+    : _paymentsServices = paymentsServices;
 
   final Rxn<PaymentsModel> paymentsData = Rxn<PaymentsModel>();
   final RxBool isLoading = false.obs;

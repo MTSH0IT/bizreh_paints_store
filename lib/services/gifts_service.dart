@@ -9,8 +9,10 @@ import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
-class GiftsServise {
-  final DioClient _dioClient = DioClient();
+class GiftsService {
+  final DioClient _dioClient;
+
+  GiftsService({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<GiftsModel> getGiftById({required int giftId}) async {
     try {

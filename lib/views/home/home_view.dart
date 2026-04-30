@@ -27,8 +27,6 @@ class HomeView extends StatelessWidget {
   final rewardsCtrl = Get.find<RewardsController>();
   final offersCtrl = Get.find<OffersCartController>();
   final collectionCtrl = Get.find<CollectionControllers>();
-
-  //final WishListController wishCtrl = Get.find<WishListController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

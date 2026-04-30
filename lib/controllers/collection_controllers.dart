@@ -7,7 +7,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class CollectionControllers extends GetxController {
-  final CollectionServices _collectionServices = CollectionServices();
+  final CollectionServices _collectionServices;
+
+  CollectionControllers({required CollectionServices collectionServices})
+    : _collectionServices = collectionServices;
 
   final RxList<CollectionModel> collections = <CollectionModel>[].obs;
   final RxBool isLoading = false.obs;

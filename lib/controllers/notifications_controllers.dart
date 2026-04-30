@@ -6,7 +6,11 @@ import 'package:bizreh_paints_store/services/notifications_services.dart';
 import 'package:bizreh_paints_store/models/notification_model.dart';
 
 class NotificationsControllers extends GetxController {
-  final NotificationsServices _notificationsServices = NotificationsServices();
+  final NotificationsServices _notificationsServices;
+
+  NotificationsControllers({
+    required NotificationsServices notificationsServices,
+  }) : _notificationsServices = notificationsServices;
 
   RxList<NotificationModel> notifications = <NotificationModel>[].obs;
 

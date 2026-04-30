@@ -8,7 +8,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class PointsController extends GetxController {
-  final PointsServices _pointsServices = PointsServices();
+  final PointsServices _pointsServices;
+
+  PointsController({required PointsServices pointsServices})
+    : _pointsServices = pointsServices;
 
   final Rxn<UserPointsModel> points = Rxn<UserPointsModel>();
   final RxList<PointsHistoryModel> history = <PointsHistoryModel>[].obs;

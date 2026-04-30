@@ -11,11 +11,21 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
 import 'package:bizreh_paints_store/models/auth_response.dart';
+import 'package:bizreh_paints_store/helper/di/token_provider.dart';
 
 class AuthController extends GetxController {
   // Services
-  final AuthService _authService = AuthService();
-  final StorageService _storage = StorageService();
+  final AuthService _authService;
+  final StorageService _storage;
+  final ITokenProvider _tokenProvider;
+
+  AuthController({
+    required AuthService authService,
+    required StorageService storageService,
+    required ITokenProvider tokenProvider,
+  }) : _authService = authService,
+       _storage = storageService,
+       _tokenProvider = tokenProvider;
 
   static String? token;
 
@@ -222,6 +232,7 @@ class AuthController extends GetxController {
   Future<void> _persistAuth(AuthResponse res) async {
     log("persistAuth token:\n ${res.token}");
     token = res.token;
+    await _tokenProvider.setToken(res.token);
 
     log("persistAuth user:\n ${res.user.toString()}");
     await _storage.setJson(StorageKey.user, res.user.toJson());

@@ -8,7 +8,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class FilterServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  FilterServices({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<ApiResponse<List<ProductModel>>> searchProducts({
     int? brand,

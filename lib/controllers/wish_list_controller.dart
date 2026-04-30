@@ -8,7 +8,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class WishListController extends GetxController {
-  final wishListServices = WishListServices();
+  final WishListServices _wishListServices;
+
+  WishListController({required WishListServices wishListServices})
+    : _wishListServices = wishListServices;
   final RxList<WishlistModel> items = <WishlistModel>[].obs;
   final RxBool isGetLoading = false.obs;
   final RxBool isAddRemoveLoading = false.obs;
@@ -24,7 +27,7 @@ class WishListController extends GetxController {
   Future<void> loadWishListProducts() async {
     isGetLoading.value = true;
     try {
-      final list = await wishListServices.getWishlist();
+      final list = await _wishListServices.getWishlist();
       items.assignAll(list);
       isGetLoading.value = false;
     } on AppException catch (e) {
@@ -43,7 +46,7 @@ class WishListController extends GetxController {
     }
     isAddRemoveLoading.value = true;
     try {
-      await wishListServices.addWishlistItems(optionPackagingId: id);
+      await _wishListServices.addWishlistItems(optionPackagingId: id);
       await loadWishListProducts();
       isAddRemoveLoading.value = false;
     } on AppException catch (e) {
@@ -59,7 +62,7 @@ class WishListController extends GetxController {
     if (items.isEmpty) return;
     isAddRemoveLoading.value = true;
     try {
-      await wishListServices.clearWishlist();
+      await _wishListServices.clearWishlist();
       items.clear();
       showMassage("تم حذف كل العناصر من المفضلة", true);
     } on AppException catch (e) {
@@ -75,7 +78,7 @@ class WishListController extends GetxController {
     isAddRemoveLoading.value = true;
     removingId.value = id;
     try {
-      await wishListServices.removeWishlistItem(wishlistId: id);
+      await _wishListServices.removeWishlistItem(wishlistId: id);
       items.removeWhere((e) => e.optionPackagingId == id);
       isAddRemoveLoading.value = false;
     } on AppException catch (e) {

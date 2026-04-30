@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/models/product_model/product_model.dart';
+import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
@@ -17,7 +17,7 @@ class ProductDetailsView extends StatelessWidget {
   ProductDetailsView({super.key, required this.product});
 
   final ProductModel product;
-  final controller = Get.put(ProductDetailsController());
+  final controller = Get.find<ProductDetailsController>();
   final cartController = Get.find<CartController>();
   final wishCtrl = Get.find<WishListController>();
 

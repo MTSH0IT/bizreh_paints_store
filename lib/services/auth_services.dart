@@ -9,7 +9,9 @@ import 'package:dio/dio.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 
 class AuthService {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  AuthService({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<AuthResponse> signin({
     required String email,

@@ -2,6 +2,8 @@ import 'package:bizreh_paints_store/helper/dioApiService/interceptors/auth_inter
 import 'package:bizreh_paints_store/helper/dioApiService/interceptors/error_interceptor.dart';
 import 'package:bizreh_paints_store/helper/dioApiService/interceptors/logging_interceptor.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+import 'package:bizreh_paints_store/helper/di/service_locator.dart';
+import 'package:bizreh_paints_store/helper/di/token_provider.dart';
 import 'package:dio/dio.dart';
 
 /// Dio HTTP client wrapper
@@ -19,7 +21,7 @@ class DioClient {
 
     // Add interceptors
     _dio.interceptors.addAll([
-      AuthInterceptor(),
+      AuthInterceptor(tokenProvider: sl<ITokenProvider>()),
       ErrorInterceptor(),
       LoggingInterceptor(),
     ]);

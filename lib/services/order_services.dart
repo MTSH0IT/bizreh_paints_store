@@ -8,7 +8,9 @@ import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:dio/dio.dart';
 
 class OrderServices {
-  final DioClient _dioClient = DioClient();
+  final DioClient _dioClient;
+
+  OrderServices({required DioClient dioClient}) : _dioClient = dioClient;
 
   Future<void> createOrder({
     required int orderId,

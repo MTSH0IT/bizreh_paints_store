@@ -8,7 +8,10 @@ import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
 
 class RewardsController extends GetxController {
-  final RewardsServices _services = RewardsServices();
+  final RewardsServices _services;
+
+  RewardsController({required RewardsServices rewardsServices})
+    : _services = rewardsServices;
 
   final RxList<DiscontModel> discountOffers = <DiscontModel>[].obs;
   final RxList<PointRuleModel> pointsRules = <PointRuleModel>[].obs;

@@ -1,13 +1,12 @@
 import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
 import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
-
+import 'package:bizreh_paints_store/utils/widgets/app_skeletons.dart';
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/views/brand/all_brands_view_universal.dart';
 import 'package:bizreh_paints_store/views/catogorieDetails/all_categories_view_universal.dart';
@@ -97,7 +96,7 @@ class HomeView extends StatelessWidget {
                 const SizedBox(height: 8),
                 Obx(() {
                   if (controller.isTopSellingLoading.value) {
-                    return BuildProgressIndicator();
+                    return AppSkeletons.productsGrid();
                   }
 
                   if (controller.topSellingProducts.isEmpty) {

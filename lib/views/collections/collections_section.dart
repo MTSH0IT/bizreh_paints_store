@@ -1,11 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/controllers/collection_controllers.dart';
 import 'package:bizreh_paints_store/models/collection_model/collection_model.dart';
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/collections/widgets/collection_parent_card.dart';
 import 'package:bizreh_paints_store/views/collections/collection_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
+import 'package:bizreh_paints_store/utils/widgets/app_skeletons.dart';
 
 class CollectionsSection extends StatelessWidget {
   const CollectionsSection({super.key});
@@ -15,8 +15,8 @@ class CollectionsSection extends StatelessWidget {
     final ctrl = Get.find<CollectionControllers>();
 
     return Obx(() {
-      if (ctrl.isLoading.value && ctrl.collections.isEmpty) {
-        return const BuildProgressIndicator();
+      if (ctrl.isLoading.value) {
+        return AppSkeletons.collections();
       }
 
       final parents = ctrl.collections
@@ -31,7 +31,7 @@ class CollectionsSection extends StatelessWidget {
       }
 
       return SizedBox(
-        height: 134,
+        height: 140,
         child: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,

@@ -27,20 +27,17 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return KeyedSubtree(
-      key: ValueKey(context.locale),
-      child: GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          scaffoldBackgroundColor: backgroundColor,
-          fontFamily: 'Cairo',
-        ),
-        locale: context.locale,
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: context.localizationDelegates,
-        initialBinding: AppBindings(),
-        home: const SplashView(),
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        scaffoldBackgroundColor: backgroundColor,
+        fontFamily: 'Cairo',
       ),
+      locale: context.locale,
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
+      initialBinding: AppBindings(),
+      home: const SplashView(),
     );
   }
 }

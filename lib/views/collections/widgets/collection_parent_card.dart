@@ -18,7 +18,7 @@ class CollectionParentCard extends StatelessWidget {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
       curve: Curves.easeOut,
-      width: 102,
+      width: 100,
       padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: isSelected
@@ -46,16 +46,18 @@ class CollectionParentCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Text(
-            context.localizedValue(
-              en: item.title,
-              ar: item.arTitle,
-              fallback: '',
+          SizedBox(
+            width: 90,
+            child: Text(
+              context.localizedValue(
+                en: item.title,
+                ar: item.arTitle,
+                fallback: '',
+              ),
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 12),
             ),
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
           ),
         ],
       ),

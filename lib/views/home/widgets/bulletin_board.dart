@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_skeletons.dart';
 
 class BulletinBoard extends StatelessWidget {
   BulletinBoard({super.key});
@@ -14,10 +14,7 @@ class BulletinBoard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isAdsLoading.value) {
-        return const Padding(
-          padding: EdgeInsets.all(40.0),
-          child: BuildProgressIndicator(),
-        );
+        return AppSkeletons.bannerCard();
       }
       if (controller.ads.isEmpty) {
         return SizedBox(
@@ -35,7 +32,7 @@ class BulletinBoard extends StatelessWidget {
               itemCount: controller.ads.length,
               itemBuilder: (context, index) {
                 final AdsModel ads = controller.ads[index];
-                return _BannerCard(banner: ads);
+                return BannerCard(banner: ads);
               },
             ),
           ),
@@ -62,10 +59,10 @@ class BulletinBoard extends StatelessWidget {
   }
 }
 
-class _BannerCard extends StatelessWidget {
+class BannerCard extends StatelessWidget {
   final AdsModel banner;
 
-  const _BannerCard({required this.banner});
+  const BannerCard({required this.banner});
 
   void _showAdDialog(BuildContext context) {
     final description = context.localizedValue(
@@ -85,10 +82,7 @@ class _BannerCard extends StatelessWidget {
             ar: banner.arTitle,
             fallback: '',
           ),
-          style: const TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 18,
-          ),
+          style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
         ),
         content: Text(
           description,

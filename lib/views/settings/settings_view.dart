@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/controllers/personal_controller.dart';
+import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/views/settings/change_password_view.dart';
 import 'package:bizreh_paints_store/views/settings/delete_account_view.dart';
@@ -55,7 +55,9 @@ class SettingsView extends StatelessWidget {
                       );
 
                       if (result != null) {
+                        if (!context.mounted) return;
                         await context.setLocale(result);
+                        Get.updateLocale(result);
                       }
                     },
                   ),

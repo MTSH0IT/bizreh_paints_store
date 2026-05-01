@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/views/catogorieDetails/catogorie_ditails_view.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +6,7 @@ import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/home_controller.dart';
 import 'package:bizreh_paints_store/models/category_tree/category_tree_model.dart';
+import 'package:bizreh_paints_store/utils/widgets/app_skeletons.dart';
 
 class Categories extends StatelessWidget {
   const Categories({super.key});
@@ -17,7 +17,7 @@ class Categories extends StatelessWidget {
 
     return Obx(() {
       if (controller.isCategoryTreeLoading.value) {
-        return const SizedBox(height: 120, child: BuildProgressIndicator());
+        return AppSkeletons.categories();
       }
       final list = controller.categoryTree;
       if (list.isEmpty) {
@@ -37,7 +37,7 @@ class Categories extends StatelessWidget {
               onTap: () {
                 Get.to(() => CatogorieDitailsView(superCategory: item));
               },
-              child: _CategorieItem(item: item),
+              child: CategorieItem(item: item),
             );
           },
           separatorBuilder: (_, __) => const SizedBox(width: 16),
@@ -48,8 +48,8 @@ class Categories extends StatelessWidget {
   }
 }
 
-class _CategorieItem extends StatelessWidget {
-  const _CategorieItem({required this.item});
+class CategorieItem extends StatelessWidget {
+  const CategorieItem({required this.item});
 
   final CategoryTreeModle item;
 

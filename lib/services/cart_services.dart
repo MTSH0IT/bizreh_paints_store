@@ -1,16 +1,14 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class CartServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  CartServices({required DioClient dioClient}) : _dioClient = dioClient;
+  CartServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<void> addToCart({
     required int optionPackagingId,
@@ -18,7 +16,7 @@ class CartServices {
     required int quantity,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.addToCart,
         data: {
           'option_packaging_id': optionPackagingId,
@@ -27,7 +25,7 @@ class CartServices {
         },
       );
 
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
 
       if (apiResponse.success) {
         log("Cart service add item : ${apiResponse.message}");
@@ -35,16 +33,8 @@ class CartServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException add item : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException add item : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch add item : ${e.toString()}");
       throw Exception(e.toString());
@@ -58,26 +48,18 @@ class CartServices {
     //required int colorFamilyId,
   }) async {
     try {
-      final response = await _dioClient.put(
+      final response = await _apiClient.put(
         ApiEndpoint.updateCart(cartItemId),
         data: {'quantity': quantity},
       );
 
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
 
       if (!apiResponse.success) {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException update item : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException update item : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch update item : ${e.toString()}");
       throw Exception(e.toString());
@@ -87,24 +69,16 @@ class CartServices {
   /// Delete cart item (DELETE /user/cart/{id})
   Future<void> deleteCartItem({required int cartItemId}) async {
     try {
-      final response = await _dioClient.delete(
+      final response = await _apiClient.delete(
         ApiEndpoint.deleteCart(cartItemId),
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
 
       if (!apiResponse.success) {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException delete item : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException delete item : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch delete item : ${e.toString()}");
       throw Exception(e.toString());
@@ -117,24 +91,16 @@ class CartServices {
     required int? quantity,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.increaseCart(cartItemId),
         data: {'quantity': quantity},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (!apiResponse.success) {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException increase item : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException increase item : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch increase item : ${e.toString()}");
       throw Exception(e.toString());
@@ -147,24 +113,16 @@ class CartServices {
     required int? quantity,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.decreaseCart(cartItemId),
         data: {'quantity': quantity},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (!apiResponse.success) {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException decrease item : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException decrease item : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch decrease item : ${e.toString()}");
       throw Exception(e.toString());
@@ -173,9 +131,9 @@ class CartServices {
 
   Future<CartModel> getCart() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getCart);
+      final response = await _apiClient.get(ApiEndpoint.getCart);
       final apiResponse = ApiResponse<CartModel>.fromJson(
-        response.data,
+        response,
         (json) => CartModel.fromJson(json),
       );
 
@@ -188,16 +146,8 @@ class CartServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Cart service AppException get cart : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Cart service DioException get cart : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Cart service catch get cart : ${e.toString()}");
       throw Exception(e.toString());

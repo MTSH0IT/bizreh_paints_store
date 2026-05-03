@@ -1,24 +1,22 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/available_gifts_model.dart';
 import 'package:bizreh_paints_store/models/gifts_model.dart';
 import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class GiftsService {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  GiftsService({required DioClient dioClient}) : _dioClient = dioClient;
+  GiftsService({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<GiftsModel> getGiftById({required int giftId}) async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getGiftById(giftId));
+      final response = await _apiClient.get(ApiEndpoint.getGiftById(giftId));
       final apiResponse = ApiResponse.fromJson(
-        response.data,
+        response,
         (json) => GiftsModel.fromJson(json as Map<String, dynamic>),
       );
 
@@ -27,16 +25,8 @@ class GiftsService {
         return apiResponse.data!;
       }
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "gifts service AppException get by id : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("gifts service DioException get by id : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("gifts service catch get by id : ${e.toString()}");
       throw Exception(e.toString());
@@ -45,8 +35,8 @@ class GiftsService {
 
   Future<List<GiftsModel>> getAllGifts() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getAllGifts);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getAllGifts);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final list = (json as List?) ?? [];
         return list
             .map((e) => GiftsModel.fromJson(e as Map<String, dynamic>))
@@ -58,16 +48,8 @@ class GiftsService {
         return apiResponse.data!;
       }
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "gifts service AppException get all : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("gifts service DioException get all : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("gifts service catch get all : ${e.toString()}");
       throw Exception(e.toString());
@@ -76,8 +58,8 @@ class GiftsService {
 
   Future<List<UserGiftsModel>> getMyGifts() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getMyGifts);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getMyGifts);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final list = (json['gifts'] as List?) ?? [];
         return list
             .map((e) => UserGiftsModel.fromJson(e as Map<String, dynamic>))
@@ -89,16 +71,8 @@ class GiftsService {
         return apiResponse.data!;
       }
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "gifts service AppException get my : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("gifts service DioException get my : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("gifts service catch get my : ${e.toString()}");
       throw Exception(e.toString());
@@ -107,9 +81,9 @@ class GiftsService {
 
   Future<AvailableGiftsResponse> getAvailableGifts() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getAvailableGifts);
+      final response = await _apiClient.get(ApiEndpoint.getAvailableGifts);
       final apiResponse = ApiResponse.fromJson(
-        response.data,
+        response,
         (json) => AvailableGiftsResponse.fromJson(json as Map<String, dynamic>),
       );
 
@@ -118,16 +92,8 @@ class GiftsService {
         return apiResponse.data!;
       }
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "gifts service AppException get available : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("gifts service DioException get available : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("gifts service catch get available : ${e.toString()}");
       throw Exception(e.toString());
@@ -136,27 +102,19 @@ class GiftsService {
 
   Future<void> redeemGift({required int giftId}) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.redeemGift,
         data: {'gift_id': giftId},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
 
       if (apiResponse.success) {
         log("gifts service redeem : ${apiResponse.message}");
         return;
       }
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "gifts service AppException redeem : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("gifts service DioException redeem : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("gifts service catch redeem : ${e.toString()}");
       throw Exception(e.toString());

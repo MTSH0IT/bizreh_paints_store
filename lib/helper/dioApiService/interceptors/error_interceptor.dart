@@ -42,12 +42,9 @@ class ErrorInterceptor extends Interceptor {
         );
     }
 
-    return handler.reject(
-      DioException(
-        requestOptions: err.requestOptions,
+    return handler.next(
+      err.copyWith(
         error: exception,
-        type: err.type,
-        response: err.response,
       ),
     );
   }

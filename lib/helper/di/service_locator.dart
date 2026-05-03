@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/dio_client_adapter.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:bizreh_paints_store/services/auth_services.dart';
 import 'package:bizreh_paints_store/services/address_services.dart';
@@ -53,6 +55,7 @@ Future<void> init() async {
 void _initCoreServices() {
   // DioClient - HTTP client singleton
   sl.registerLazySingleton<DioClient>(() => DioClient());
+  sl.registerLazySingleton<IApiClient>(() => DioClientAdapter(sl<DioClient>()));
 
   // StorageService - Local storage singleton
   // Note: This assumes StorageService.init() is called before this registration
@@ -66,108 +69,108 @@ void _initCoreServices() {
 
 void _initAuthServices() {
   sl.registerLazySingleton<AuthService>(
-    () => AuthService(dioClient: sl<DioClient>()),
+    () => AuthService(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initAddressServices() {
   sl.registerLazySingleton<AddressServices>(
-    () => AddressServices(dioClient: sl<DioClient>()),
+    () => AddressServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initCartServices() {
   sl.registerLazySingleton<CartServices>(
-    () => CartServices(dioClient: sl<DioClient>()),
+    () => CartServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initProductServices() {
   sl.registerLazySingleton<ProductServices>(
-    () => ProductServices(dioClient: sl<DioClient>()),
+    () => ProductServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initWishlistServices() {
   sl.registerLazySingleton<WishListServices>(
-    () => WishListServices(dioClient: sl<DioClient>()),
+    () => WishListServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initOrderServices() {
   sl.registerLazySingleton<OrderServices>(
-    () => OrderServices(dioClient: sl<DioClient>()),
+    () => OrderServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initUserServices() {
   sl.registerLazySingleton<UserService>(
-    () => UserService(dioClient: sl<DioClient>()),
+    () => UserService(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initBrandServices() {
   sl.registerLazySingleton<BrandsServices>(
-    () => BrandsServices(dioClient: sl<DioClient>()),
+    () => BrandsServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initCategoryServices() {
   sl.registerLazySingleton<CategoryServices>(
-    () => CategoryServices(dioClient: sl<DioClient>()),
+    () => CategoryServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initCollectionServices() {
   sl.registerLazySingleton<CollectionServices>(
-    () => CollectionServices(dioClient: sl<DioClient>()),
+    () => CollectionServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initFilterServices() {
   sl.registerLazySingleton<FilterServices>(
-    () => FilterServices(dioClient: sl<DioClient>()),
+    () => FilterServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initGiftsServices() {
   sl.registerLazySingleton<GiftsService>(
-    () => GiftsService(dioClient: sl<DioClient>()),
+    () => GiftsService(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initNotificationsServices() {
   sl.registerLazySingleton<NotificationsServices>(
-    () => NotificationsServices(dioClient: sl<DioClient>()),
+    () => NotificationsServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initOffersCartServices() {
   sl.registerLazySingleton<OffersCartService>(
-    () => OffersCartService(dioClient: sl<DioClient>()),
+    () => OffersCartService(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initPaymentsServices() {
   sl.registerLazySingleton<PaymentsServices>(
-    () => PaymentsServices(dioClient: sl<DioClient>()),
+    () => PaymentsServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initPointsServices() {
   sl.registerLazySingleton<PointsServices>(
-    () => PointsServices(dioClient: sl<DioClient>()),
+    () => PointsServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initRewardsServices() {
   sl.registerLazySingleton<RewardsServices>(
-    () => RewardsServices(dioClient: sl<DioClient>()),
+    () => RewardsServices(apiClient: sl<IApiClient>()),
   );
 }
 
 void _initAdsServices() {
   sl.registerLazySingleton<AdsServices>(
-    () => AdsServices(dioClient: sl<DioClient>()),
+    () => AdsServices(apiClient: sl<IApiClient>()),
   );
 }

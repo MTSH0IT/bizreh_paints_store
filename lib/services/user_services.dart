@@ -1,23 +1,21 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/user_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
-import 'package:dio/dio.dart';
-
 class UserService {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  UserService({required DioClient dioClient}) : _dioClient = dioClient;
+  UserService({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<UserModel> getProfile() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getProfile);
+      final response = await _apiClient.get(ApiEndpoint.getProfile);
       final apiResponse = ApiResponse.fromJson(
-        response.data,
+        response,
         (json) => UserModel.fromJson(json[JsonKey.user]),
       );
       if (apiResponse.success && apiResponse.data != null) {
@@ -25,17 +23,8 @@ class UserService {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "user service AppException get profile : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("user service DioException get profile : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("user service catch get profile : ${e.toString()}");
       throw Exception(e.toString());
@@ -49,7 +38,7 @@ class UserService {
     required String email,
   }) async {
     try {
-      final response = await _dioClient.put(
+      final response = await _apiClient.put(
         ApiEndpoint.updateProfile,
         data: {
           JsonKey.firstName: firstName,
@@ -59,7 +48,7 @@ class UserService {
         },
       );
 
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
 
       if (apiResponse.success) {
         log("user service update profile : ${apiResponse.message}");
@@ -67,12 +56,8 @@ class UserService {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        throw err;
-      }
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -83,26 +68,22 @@ class UserService {
     required String newPassword,
   }) async {
     try {
-      final response = await _dioClient.patch(
+      final response = await _apiClient.patch(
         ApiEndpoint.changePassword,
         data: {
           JsonKey.currentPassword: currentPassword,
           JsonKey.newPassword: newPassword,
         },
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         log("user service change password : ${apiResponse.message}");
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        throw err;
-      }
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -110,23 +91,19 @@ class UserService {
 
   Future<void> deleteAccount({required String password}) async {
     try {
-      final response = await _dioClient.delete(
+      final response = await _apiClient.delete(
         ApiEndpoint.deleteAccount,
         data: {JsonKey.password: password},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         log("user service delete account : ${apiResponse.message}");
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        throw err;
-      }
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }

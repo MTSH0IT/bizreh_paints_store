@@ -1,29 +1,28 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/models/auth_response.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
-import 'package:dio/dio.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 
 class AuthService {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  AuthService({required DioClient dioClient}) : _dioClient = dioClient;
+  AuthService({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<AuthResponse> signin({
     required String email,
     required String password,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.login,
         data: {JsonKey.email: email, JsonKey.password: password},
       );
       final apiResponse = ApiResponse<AuthResponse>.fromJson(
-        response.data,
+        response,
         (json) => AuthResponse.fromJson(json),
       );
       if (apiResponse.success && apiResponse.data != null) {
@@ -31,17 +30,8 @@ class AuthService {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "auth service AppException sign in : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("auth service DioException sign in : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("auth service catch sign in : ${e.toString()}");
       throw Exception(e.toString());
@@ -56,7 +46,7 @@ class AuthService {
     required String phone,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.signup,
         data: {
           JsonKey.email: email,
@@ -66,23 +56,14 @@ class AuthService {
           JsonKey.phone: phone,
         },
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success && apiResponse.data != null) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "auth service AppException sign up : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("auth service DioException sign up : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("auth service catch sign up : ${e.toString()}");
       throw Exception(e.toString());
@@ -91,27 +72,18 @@ class AuthService {
 
   Future<String> forgetPassword({required String email}) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.forgetPassword,
         data: {JsonKey.email: email},
       );
-      final apiResponse = ApiResponse<dynamic>.fromJson(response.data, null);
+      final apiResponse = ApiResponse<dynamic>.fromJson(response, null);
       if (apiResponse.success) {
         return apiResponse.message ?? 'Success';
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "auth service AppException forget password : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("auth service DioException forget password : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("auth service catch forget password : ${e.toString()}");
       throw Exception(e.toString());
@@ -120,27 +92,18 @@ class AuthService {
 
   Future<String> resendVerification({required String email}) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.resendVerification,
         data: {JsonKey.email: email},
       );
-      final apiResponse = ApiResponse<dynamic>.fromJson(response.data, null);
+      final apiResponse = ApiResponse<dynamic>.fromJson(response, null);
       if (apiResponse.success) {
         return apiResponse.message ?? 'Success';
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "auth service AppException resend verification : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("auth service DioException resend verification : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("auth service catch resend verification : ${e.toString()}");
       throw Exception(e.toString());
@@ -152,27 +115,18 @@ class AuthService {
     required String verificationCode,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.verifyAccount,
         data: {JsonKey.email: email, 'verification_code': verificationCode},
       );
-      final apiResponse = ApiResponse<dynamic>.fromJson(response.data, null);
+      final apiResponse = ApiResponse<dynamic>.fromJson(response, null);
       if (apiResponse.success) {
         return apiResponse.message ?? 'Success';
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "auth service AppException verify account : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("auth service DioException verify account : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("auth service catch verify account : ${e.toString()}");
       throw Exception(e.toString());

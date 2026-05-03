@@ -1,16 +1,14 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class FilterServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  FilterServices({required DioClient dioClient}) : _dioClient = dioClient;
+  FilterServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<ApiResponse<List<ProductModel>>> searchProducts({
     int? brand,
@@ -20,7 +18,7 @@ class FilterServices {
     int limit = 20,
   }) async {
     try {
-      final response = await _dioClient.get(
+      final response = await _apiClient.get(
         ApiEndpoint.getProducts,
         queryParameters: {
           'brand': brand,
@@ -32,7 +30,7 @@ class FilterServices {
       );
 
       final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
-        response.data,
+        response,
         (json) {
           final List raw = (json['products'] as List?) ?? [];
           return raw
@@ -47,16 +45,8 @@ class FilterServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "filter service AppException search products : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("filter service DioException search products : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }

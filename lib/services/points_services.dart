@@ -1,22 +1,20 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/points_history_model/points_history_model.dart';
 import 'package:bizreh_paints_store/models/user_points_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class PointsServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  PointsServices({required DioClient dioClient}) : _dioClient = dioClient;
+  PointsServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<UserPointsModel> getUserPoints() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getUserPoints);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getUserPoints);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final points = (json as Map<String, dynamic>?) ?? {};
         return UserPointsModel.fromJson(points);
       });
@@ -27,16 +25,8 @@ class PointsServices {
       }
 
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "points service AppException get points : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("points service DioException get points : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("points service catch get points : ${e.toString()}");
       throw Exception(e.toString());
@@ -45,8 +35,8 @@ class PointsServices {
 
   Future<List<PointsHistoryModel>> getPointsHistory() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getPointsHistory);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getPointsHistory);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final list = (json['history'] as List?) ?? [];
         return list
             .map((e) => PointsHistoryModel.fromJson(e as Map<String, dynamic>))
@@ -59,16 +49,8 @@ class PointsServices {
       }
 
       throw Exception(apiResponse.message ?? 'Something went wrong');
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "points service AppException get history : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("points service DioException get history : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("points service catch get history : ${e.toString()}");
       throw Exception(e.toString());

@@ -1,23 +1,21 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class BrandsServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  BrandsServices({required DioClient dioClient}) : _dioClient = dioClient;
+  BrandsServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<List<BrandModel>> getFeaturedBrands() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.brandsFeatured);
+      final response = await _apiClient.get(ApiEndpoint.brandsFeatured);
 
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final List list = (json['brands'] as List?) ?? [];
         return list
             .map((e) => BrandModel.fromJson(e as Map<String, dynamic>))
@@ -29,16 +27,8 @@ class BrandsServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "brands service AppException featured brands : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("brands service DioException featured brands : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("brands service catch featured brands : ${e.toString()}");
       throw Exception(e.toString());
@@ -47,9 +37,9 @@ class BrandsServices {
 
   Future<List<BrandModel>> getBrands() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.brands);
+      final response = await _apiClient.get(ApiEndpoint.brands);
 
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final List list = (json['brands'] as List?) ?? [];
         return list
             .map((e) => BrandModel.fromJson(e as Map<String, dynamic>))
@@ -61,16 +51,8 @@ class BrandsServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "brands service AppException brands : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("brands service DioException brands : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("brands service catch brands : ${e.toString()}");
       throw Exception(e.toString());
@@ -81,10 +63,10 @@ class BrandsServices {
     required int brandId,
   }) async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.brandProducts(brandId));
+      final response = await _apiClient.get(ApiEndpoint.brandProducts(brandId));
 
       final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
-        response.data,
+        response,
         (json) {
           final List raw = (json['products'] as List?) ?? [];
           return raw
@@ -98,16 +80,8 @@ class BrandsServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "brands service AppException brand products : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("brands service DioException brand products : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("brands service catch brand products : ${e.toString()}");
       throw Exception(e.toString());

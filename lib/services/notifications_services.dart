@@ -1,23 +1,21 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/notification_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class NotificationsServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  NotificationsServices({required DioClient dioClient})
-    : _dioClient = dioClient;
+  NotificationsServices({required IApiClient apiClient})
+    : _apiClient = apiClient;
 
   Future<List<NotificationModel>> getNotification() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getNotifications);
+      final response = await _apiClient.get(ApiEndpoint.getNotifications);
       final apiResponse = ApiResponse<List<NotificationModel>>.fromJson(
-        response.data,
+        response,
         (json) {
           final notifications = json as List;
           return notifications
@@ -30,18 +28,8 @@ class NotificationsServices {
       } else {
         throw Exception(apiResponse.message);
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "notifications service AppException get notifications : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log(
-        "notifications service DioException get notifications : ${e.message}",
-      );
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -49,25 +37,15 @@ class NotificationsServices {
 
   Future<void> readNotification({required int id}) async {
     try {
-      final response = await _dioClient.patch(ApiEndpoint.readNotification(id));
-      final apiResponse = ApiResponse<void>.fromJson(response.data, null);
+      final response = await _apiClient.patch(ApiEndpoint.readNotification(id));
+      final apiResponse = ApiResponse<void>.fromJson(response, null);
       if (apiResponse.success) {
         log("notifications service read notification : ${apiResponse.message}");
       } else {
         throw Exception(apiResponse.message);
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "notifications service AppException read notification : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log(
-        "notifications service DioException read notification : ${e.message}",
-      );
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -75,8 +53,8 @@ class NotificationsServices {
 
   Future<void> readAllNotifications() async {
     try {
-      final response = await _dioClient.patch(ApiEndpoint.readAllNotifications);
-      final apiResponse = ApiResponse<void>.fromJson(response.data, null);
+      final response = await _apiClient.patch(ApiEndpoint.readAllNotifications);
+      final apiResponse = ApiResponse<void>.fromJson(response, null);
       if (apiResponse.success) {
         log(
           "notifications service read all notification : ${apiResponse.message}",
@@ -84,18 +62,8 @@ class NotificationsServices {
       } else {
         throw Exception(apiResponse.message);
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "notifications service AppException read all notification : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log(
-        "notifications service DioException read all notification : ${e.message}",
-      );
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }
@@ -103,8 +71,8 @@ class NotificationsServices {
 
   Future<int> getUnreadCount() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.unreadCount);
-      final apiResponse = ApiResponse<int>.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.unreadCount);
+      final apiResponse = ApiResponse<int>.fromJson(response, (json) {
         return json['unread_count'] as int;
       });
       if (apiResponse.success && apiResponse.data != null) {
@@ -113,16 +81,8 @@ class NotificationsServices {
       } else {
         throw Exception(apiResponse.message);
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "notifications service AppException get unread count : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("notifications service DioException get unread count : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       throw Exception(e.toString());
     }

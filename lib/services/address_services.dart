@@ -1,23 +1,21 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/cities_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class AddressServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  AddressServices({required DioClient dioClient}) : _dioClient = dioClient;
+  AddressServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<List<AddressModel>> getAddresses() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getAddresses);
+      final response = await _apiClient.get(ApiEndpoint.getAddresses);
       final apiResponse = ApiResponse<List<AddressModel>>.fromJson(
-        response.data,
+        response,
         (json) {
           final list = json['addresses'] as List? ?? [];
           return list.map((e) => AddressModel.fromJson(e)).toList();
@@ -28,17 +26,8 @@ class AddressServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException get addresses : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException get addresses : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch get addresses : ${e.toString()}");
       throw Exception(e.toString());
@@ -47,24 +36,15 @@ class AddressServices {
 
   Future<void> deleteAddress({required int id}) async {
     try {
-      final response = await _dioClient.delete(ApiEndpoint.deleteAddress(id));
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final response = await _apiClient.delete(ApiEndpoint.deleteAddress(id));
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException delete address : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException delete address : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch delete address : ${e.toString()}");
       throw Exception(e.toString());
@@ -80,7 +60,7 @@ class AddressServices {
     required double longitude,
   }) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.createAddress,
         data: {
           'nickname': nickName,
@@ -91,23 +71,14 @@ class AddressServices {
           'longitude': longitude,
         },
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException create address : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException create address : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch create address : ${e.toString()}");
       throw Exception(e.toString());
@@ -124,7 +95,7 @@ class AddressServices {
     required double longitude,
   }) async {
     try {
-      final response = await _dioClient.put(
+      final response = await _apiClient.put(
         ApiEndpoint.updateAddress(id),
         data: {
           'nickname': nickName,
@@ -135,23 +106,14 @@ class AddressServices {
           'longitude': longitude,
         },
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException update address : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException update address : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch update address : ${e.toString()}");
       throw Exception(e.toString());
@@ -160,26 +122,17 @@ class AddressServices {
 
   Future<void> setDefaultAddress({required int id}) async {
     try {
-      final response = await _dioClient.patch(
+      final response = await _apiClient.patch(
         ApiEndpoint.setDefaultAddress(id),
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException set default address : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException set default address : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch set default address : ${e.toString()}");
       throw Exception(e.toString());
@@ -188,8 +141,8 @@ class AddressServices {
 
   Future<AddressModel> getDefaultAddress() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getDefaultAddress);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getDefaultAddress);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         return AddressModel.fromJson(json['address']);
       });
       if (apiResponse.success && apiResponse.data != null) {
@@ -200,17 +153,8 @@ class AddressServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException get default address : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException get default address : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch get default address : ${e.toString()}");
       throw Exception(e.toString());
@@ -219,8 +163,8 @@ class AddressServices {
 
   Future<List<CitiesModel>> getCities() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getCities);
-      final apiResponse = ApiResponse.fromJson(response.data, (json) {
+      final response = await _apiClient.get(ApiEndpoint.getCities);
+      final apiResponse = ApiResponse.fromJson(response, (json) {
         final list = json['cities'] as List? ?? [];
         return list.map((e) => CitiesModel.fromJson(e)).toList();
       });
@@ -229,17 +173,8 @@ class AddressServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Address service AppException get cities : ${err.message}"
-          "${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Address service DioException get cities : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Address service catch get cities : ${e.toString()}");
       throw Exception(e.toString());

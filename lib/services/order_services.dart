@@ -1,42 +1,32 @@
 import 'dart:developer';
 
-import 'package:bizreh_paints_store/helper/dioApiService/dio_client.dart';
+import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
-import 'package:dio/dio.dart';
-
 class OrderServices {
-  final DioClient _dioClient;
+  final IApiClient _apiClient;
 
-  OrderServices({required DioClient dioClient}) : _dioClient = dioClient;
+  OrderServices({required IApiClient apiClient}) : _apiClient = apiClient;
 
   Future<void> createOrder({
     required int orderId,
     required int addressId,
   }) async {
     try {
-      final response = await _dioClient.patch(
+      final response = await _apiClient.patch(
         ApiEndpoint.pendOrder(orderId),
         data: {'address_id': addressId},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException create order : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException create order : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch create order : ${e.toString()}");
       throw Exception(e.toString());
@@ -45,10 +35,10 @@ class OrderServices {
 
   Future<ApiResponse<List<OrderModel>>> getOrderHistory() async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.getOrder);
+      final response = await _apiClient.get(ApiEndpoint.getOrder);
 
       final apiResponse = ApiResponse<List<OrderModel>>.fromJson(
-        response.data,
+        response,
         (json) => (json as List).map((e) => OrderModel.fromJson(e)).toList(),
       );
       if (apiResponse.success) {
@@ -56,16 +46,8 @@ class OrderServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException get order history : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException get order history : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch get order history : ${e.toString()}");
       throw Exception(e.toString());
@@ -74,10 +56,10 @@ class OrderServices {
 
   Future<OrderModel> getOrderDetails(int id) async {
     try {
-      final response = await _dioClient.get(ApiEndpoint.detailsOrder(id));
+      final response = await _apiClient.get(ApiEndpoint.detailsOrder(id));
 
       final apiResponse = ApiResponse<OrderModel>.fromJson(
-        response.data,
+        response,
         (json) => OrderModel.fromJson(json),
       );
       if (apiResponse.success && apiResponse.data != null) {
@@ -85,16 +67,8 @@ class OrderServices {
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException get order details : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException get order details : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch get order details : ${e.toString()}");
       throw Exception(e.toString());
@@ -103,26 +77,18 @@ class OrderServices {
 
   Future<void> cancelOrder(int id, String reason) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.cancelOrder(id),
         data: {"reason": reason},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException cancel order : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException cancel order : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch cancel order : ${e.toString()}");
       throw Exception(e.toString());
@@ -131,26 +97,18 @@ class OrderServices {
 
   Future<void> reorder(int id, Map<String, dynamic> body) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.reorder(id),
         data: body,
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException reorder : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException reorder : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch reorder : ${e.toString()}");
       throw Exception(e.toString());
@@ -159,26 +117,18 @@ class OrderServices {
 
   Future<void> complaint(int id, String message) async {
     try {
-      final response = await _dioClient.post(
+      final response = await _apiClient.post(
         ApiEndpoint.complaint(id),
         data: {"message": message},
       );
-      final apiResponse = ApiResponse.fromJson(response.data, null);
+      final apiResponse = ApiResponse.fromJson(response, null);
       if (apiResponse.success) {
         return;
       } else {
         throw Exception(apiResponse.message ?? 'Something went wrong');
       }
-    } on DioException catch (e) {
-      final err = e.error;
-      if (err is AppException) {
-        log(
-          "Order service AppException complaint : ${err.message}${err.statusCode}",
-        );
-        throw err;
-      }
-      log("Order service DioException complaint : ${e.message}");
-      throw Exception(e.message);
+    } on AppException {
+      rethrow;
     } catch (e) {
       log("Order service catch complaint : ${e.toString()}");
       throw Exception(e.toString());

@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
+import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
@@ -13,25 +13,28 @@ import 'package:bizreh_paints_store/views/gifts/gifts_view.dart';
 class MainView extends StatelessWidget {
   const MainView({super.key});
 
+  // Keep views as a static list so they aren't recreated on every build
+  static final List<Widget> _views = [
+    const HomeView(),
+    GiftsView(),
+    Search(),
+    WishList(),
+    const MyCartView(),
+    ProfileView(),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MainViewController>();
-    return Obx(
-      () => Scaffold(
-        body: SafeArea(
-          child: IndexedStack(
-            index: controller.selectedIndex.value,
-            children: [
-              HomeView(),
-              GiftsView(),
-              Search(),
-              WishList(),
-              MyCartView(),
-              ProfileView(),
-            ],
-          ),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+    return Scaffold(
+      body: SafeArea(
+        child: Obx(() => IndexedStack(
+              index: controller.selectedIndex.value,
+              children: _views,
+            )),
+      ),
+      bottomNavigationBar: Obx(
+        () => BottomNavigationBar(
           backgroundColor: Colors.white,
           selectedItemColor: primaryColor,
           currentIndex: controller.selectedIndex.value,

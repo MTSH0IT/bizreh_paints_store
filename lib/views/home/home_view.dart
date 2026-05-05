@@ -21,13 +21,15 @@ import 'package:bizreh_paints_store/views/home/widgets/top_brands.dart';
 import 'package:bizreh_paints_store/views/home/widgets/rewards_entry_card.dart';
 
 class HomeView extends StatelessWidget {
-  HomeView({super.key});
-  final controller = Get.find<HomeController>();
-  final rewardsCtrl = Get.find<RewardsController>();
-  final offersCtrl = Get.find<OffersCartController>();
-  final collectionCtrl = Get.find<CollectionControllers>();
+  const HomeView({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<HomeController>();
+    final rewardsCtrl = Get.find<RewardsController>();
+    final offersCtrl = Get.find<OffersCartController>();
+    final collectionCtrl = Get.find<CollectionControllers>();
+
     return Scaffold(
       appBar: const CommonAppBar(titleKey: 'app_name'),
       body: SafeArea(
@@ -52,12 +54,9 @@ class HomeView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 8),
-                BulletinBoard(),
+                const BulletinBoard(),
                 const SizedBox(height: 12),
-                RewardsEntryCard(
-                  offersCtrl: offersCtrl,
-                  rewardsCtrl: rewardsCtrl,
-                ),
+                const RewardsEntryCard(),
                 const SizedBox(height: 16),
                 SectionHeader(
                   title: tr('home.top_brands'),
@@ -67,7 +66,7 @@ class HomeView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 8),
-                TopBrands(),
+                const TopBrands(),
                 const SizedBox(height: 16),
                 SectionHeader(
                   title: tr('home.categories'),
@@ -76,7 +75,7 @@ class HomeView extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: 8),
-                Categories(),
+                const Categories(),
                 const SizedBox(height: 16),
                 SectionHeader(
                   title: tr('home.collections'),
@@ -101,7 +100,7 @@ class HomeView extends StatelessWidget {
 
                   if (controller.topSellingProducts.isEmpty) {
                     return Padding(
-                      padding: EdgeInsets.all(40.0),
+                      padding: const EdgeInsets.all(40.0),
                       child: Center(child: Text(tr('home.no_products'))),
                     );
                   }

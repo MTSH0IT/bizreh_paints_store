@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
+import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
 import 'package:bizreh_paints_store/controllers/offers_cart_controller.dart';
 import 'package:bizreh_paints_store/views/rewards/rewards_view.dart';
 import 'package:bizreh_paints_store/views/offersCart/offers_cart_view.dart';
@@ -7,15 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
 class RewardsEntryCard extends StatelessWidget {
-  const RewardsEntryCard({
-    super.key,
-    required this.offersCtrl,
-    required this.rewardsCtrl,
-  });
-  final RewardsController rewardsCtrl;
-  final OffersCartController offersCtrl;
+  const RewardsEntryCard({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final rewardsCtrl = Get.find<RewardsController>();
+    final offersCtrl = Get.find<OffersCartController>();
     if (rewardsCtrl.discountOffers.isEmpty &&
         rewardsCtrl.pointsRules.isEmpty &&
         !rewardsCtrl.isLoadingDiscounts.value &&

@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/controllers/filter_controller.dart';
+import 'package:bizreh_paints_store/controllers/filter_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
@@ -18,47 +18,44 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(() {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
-                child: SearchInput(
-                  controller: _searchController.queryController,
-                  onClear: () {
-                    _searchController.queryController.clear();
-                  },
-                  onSubmitted: (_) => _searchController.search(),
-                ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+              child: SearchInput(
+                controller: _searchController.queryController,
+                onClear: () {
+                  _searchController.queryController.clear();
+                },
+                onSubmitted: (_) => _searchController.search(),
               ),
+            ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    border: Border.all(color: Colors.grey.shade200),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withValues(alpha: 0.04),
-                        blurRadius: 18,
-                        offset: const Offset(0, 8),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SearchFilterDropdown(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: Colors.grey.shade200),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.04),
+                      blurRadius: 18,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Obx(
+                            () => SearchFilterDropdown(
                               label: tr('search.brand'),
                               allLabel: tr('search.all_brands'),
                               selectedId:
@@ -75,9 +72,11 @@ class Search extends StatelessWidget {
                               onChanged: _searchController.setBrand,
                             ),
                           ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: SearchFilterDropdown(
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Obx(
+                            () => SearchFilterDropdown(
                               label: tr('search.category'),
                               allLabel: tr('search.all_categories'),
                               selectedId:
@@ -94,15 +93,17 @@ class Search extends StatelessWidget {
                               onChanged: _searchController.setSubCategory,
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 46,
-                              child: ElevatedButton.icon(
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: SizedBox(
+                            height: 46,
+                            child: Obx(
+                              () => ElevatedButton.icon(
                                 onPressed: _searchController.isSearching.value
                                     ? null
                                     : () {
@@ -125,32 +126,39 @@ class Search extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      if (_searchController.isOptionsLoading.value)
-                        const Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: LinearProgressIndicator(minHeight: 2),
                         ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    Obx(
+                      () => _searchController.isOptionsLoading.value
+                          ? const Padding(
+                              padding: EdgeInsets.only(top: 10),
+                              child: LinearProgressIndicator(minHeight: 2),
+                            )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
                 ),
               ),
+            ),
 
-              // const SizedBox(height: 12),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
+            // const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Obx(
+                    () => Text(
                       '${_searchController.results.length} ${tr('search.results')}',
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
-                    TextButton(
+                  ),
+                  Obx(
+                    () => TextButton(
                       onPressed: _searchController.isSearching.value
                           ? null
                           : () {
@@ -161,52 +169,40 @@ class Search extends StatelessWidget {
                         style: const TextStyle(color: primaryColor),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
 
-              //const SizedBox(height: 8),
-              Expanded(
-                child: Builder(
-                  builder: (_) {
-                    final err = _searchController.errorMessage.value;
-                    if (err.isNotEmpty) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(err, textAlign: TextAlign.center),
-                        ),
-                      );
-                    }
+            //const SizedBox(height: 8),
+            Expanded(
+              child: Obx(() {
+                if (_searchController.isSearching.value &&
+                    _searchController.results.isEmpty) {
+                  return const BuildProgressIndicator();
+                }
 
-                    if (_searchController.isSearching.value &&
-                        _searchController.results.isEmpty) {
-                      return const BuildProgressIndicator();
-                    }
+                if (_searchController.results.isEmpty) {
+                  return Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        tr('search.no_results'),
+                        style: TextStyle(color: Colors.grey.shade700),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  );
+                }
 
-                    if (_searchController.results.isEmpty) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            tr('search.no_results'),
-                            style: TextStyle(color: Colors.grey.shade700),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      );
-                    }
-
-                    return ProductsGrid(
-                      products: _searchController.results,
-                      isNeverScrollable: false,
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        }),
+                return ProductsGrid(
+                  products: _searchController.results,
+                  isNeverScrollable: false,
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }

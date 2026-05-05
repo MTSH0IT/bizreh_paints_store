@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
+import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
@@ -11,12 +11,11 @@ import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/views/orderInit/order_init_flow_view.dart';
 
 class MyCartView extends StatelessWidget {
-  MyCartView({super.key});
-
-  final CartController cartController = Get.find<CartController>();
+  const MyCartView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final CartController cartController = Get.find<CartController>();
     return Scaffold(
       appBar: const CommonAppBar(titleKey: 'cart.title'),
       body: SafeArea(
@@ -57,13 +56,15 @@ class MyCartView extends StatelessWidget {
                   ),
                 ],
               ),
-              if (cartController.isMutating.value)
-                Positioned.fill(
-                  child: Container(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    child: const BuildProgressIndicator(),
-                  ),
-                ),
+              // Loading overlay reacts only to isMutating
+              Obx(() => cartController.isMutating.value
+                  ? Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withValues(alpha: 0.15),
+                        child: const BuildProgressIndicator(),
+                      ),
+                    )
+                  : const SizedBox.shrink()),
             ],
           );
         }),

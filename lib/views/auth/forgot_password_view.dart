@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/main_button.dart';
@@ -33,68 +33,68 @@ class ForgotPasswordView extends StatelessWidget {
           ),
         ),
       ),
-      body: Obx(
-        () => Stack(
-          fit: StackFit.expand,
-          children: [
-            SafeArea(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      AuthHeader(
-                        title: tr('auth.forgot_password.reset_title'),
-                        subtitle: tr('auth.forgot_password.subtitle'),
-                      ),
-                      AuthTextField(
-                        controller: auth.forgotPasswordEmailCtrl,
-                        hint: tr('auth.email'),
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return tr('auth.email_required');
-                          }
-                          if (!GetUtils.isEmail(value)) {
-                            return tr('auth.email_invalid');
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 12),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: MainButton(
-                          title: auth.isLoading.value
-                              ? tr('auth.please_wait')
-                              : tr('auth.forgot_password.send_button'),
-                          onPressed: auth.isLoading.value
-                              ? null
-                              : () async {
-                                  if (!(_formKey.currentState?.validate() ??
-                                      false)) {
-                                    return;
-                                  }
-                                  await auth.forgetPassword();
-                                },
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    AuthHeader(
+                      title: tr('auth.forgot_password.reset_title'),
+                      subtitle: tr('auth.forgot_password.subtitle'),
+                    ),
+                    AuthTextField(
+                      controller: auth.forgotPasswordEmailCtrl,
+                      hint: tr('auth.email'),
+                      keyboardType: TextInputType.emailAddress,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return tr('auth.email_required');
+                        }
+                        if (!GetUtils.isEmail(value)) {
+                          return tr('auth.email_invalid');
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Obx(() => MainButton(
+                            title: auth.isLoading.value
+                                ? tr('auth.please_wait')
+                                : tr('auth.forgot_password.send_button'),
+                            onPressed: auth.isLoading.value
+                                ? null
+                                : () async {
+                                    if (!(_formKey.currentState?.validate() ??
+                                        false)) {
+                                      return;
+                                    }
+                                    await auth.forgetPassword();
+                                  },
+                          )),
+                    ),
+                    const SizedBox(height: 24),
+                  ],
                 ),
               ),
             ),
-            if (auth.isLoading.value)
-              Positioned.fill(
-                child: Container(
-                  color: Colors.black38,
-                  child: const BuildProgressIndicator(),
-                ),
-              ),
-          ],
-        ),
+          ),
+          // Loading overlay — reacts only to isLoading
+          Obx(() => auth.isLoading.value
+              ? Positioned.fill(
+                  child: Container(
+                    color: Colors.black38,
+                    child: const BuildProgressIndicator(),
+                  ),
+                )
+              : const SizedBox.shrink()),
+        ],
       ),
     );
   }

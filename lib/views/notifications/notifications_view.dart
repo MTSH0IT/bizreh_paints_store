@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,13 +10,11 @@ import 'widgets/notification_card.dart';
 import 'widgets/notification_details_sheet.dart';
 
 class NotificationsView extends StatelessWidget {
-  NotificationsView({super.key});
-
-  final NotificationsControllers controller =
-      Get.find<NotificationsControllers>();
+  const NotificationsView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<NotificationsControllers>();
     return Scaffold(
       appBar: CommonAppBar(
         title: Obx(() {
@@ -74,9 +72,12 @@ class NotificationsView extends StatelessWidget {
             },
             child: controller.notifications.isEmpty
                 ? ListView(
+                    physics: const AlwaysScrollableScrollPhysics(),
                     children: [
-                      SizedBox(height: 240),
-                      Text(tr('notifications.empty')),
+                      SizedBox(
+                        height: 300,
+                        child: Center(child: Text(tr('notifications.empty'))),
+                      ),
                     ],
                   )
                 : ListView.separated(

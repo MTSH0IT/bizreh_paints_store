@@ -8,10 +8,11 @@ import 'package:bizreh_paints_store/utils/widgets/image_network.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_skeletons.dart';
 
 class BulletinBoard extends StatelessWidget {
-  BulletinBoard({super.key});
-  final HomeController controller = Get.find();
+  const BulletinBoard({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final HomeController controller = Get.find();
     return Obx(() {
       if (controller.isAdsLoading.value) {
         return AppSkeletons.bannerCard();
@@ -37,22 +38,24 @@ class BulletinBoard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(controller.ads.length, (i) {
-              final isActive = i == controller.currentBannerIndex.value;
-              return AnimatedContainer(
-                duration: const Duration(milliseconds: 250),
-                margin: const EdgeInsets.symmetric(horizontal: 3),
-                height: 6,
-                width: isActive ? 16 : 6,
-                decoration: BoxDecoration(
-                  color: isActive ? Colors.blueGrey : Colors.blueGrey.shade200,
-                  borderRadius: BorderRadius.circular(3),
-                ),
-              );
-            }),
-          ),
+          Obx(() {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(controller.ads.length, (i) {
+                final isActive = i == controller.currentBannerIndex.value;
+                return AnimatedContainer(
+                  duration: const Duration(milliseconds: 250),
+                  margin: const EdgeInsets.symmetric(horizontal: 3),
+                  height: 6,
+                  width: isActive ? 16 : 6,
+                  decoration: BoxDecoration(
+                    color: isActive ? Colors.blueGrey : Colors.blueGrey.shade200,
+                    borderRadius: BorderRadius.circular(3),
+                  ),
+                );
+              }),
+            );
+          }),
         ],
       );
     });

@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:bizreh_paints_store/views/auth/widgets/auth_header.dart';
 import 'package:bizreh_paints_store/views/auth/widgets/auth_text_link.dart';
@@ -41,61 +41,61 @@ class _VerificationViewState extends State<VerificationView> {
           ),
         ),
       ),
-      body: Obx(
-        () => Stack(
-          fit: StackFit.expand,
-          children: [
-            SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  AuthHeader(
-                    title: tr('auth.verification.enter_code'),
-                    subtitle: tr('auth.verification.subtitle'),
-                  ),
-                  Directionality(
-                    textDirection: ui.TextDirection.ltr,
-                    child: OtpCodeFields(
-                      onCompleted: (v) => setState(() => _code = v),
-                    ),
-                  ),
-                  const SizedBox(height: 12),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child: Text(
-                      tr('auth.verification.no_code'),
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(color: Colors.black54),
-                    ),
-                  ),
-                  AuthTextLink(
-                    text: tr('auth.verification.resend'),
-                    alignment: MainAxisAlignment.center,
-                    onTap: () async {
-                      await auth.resendVerification();
-                    },
-                  ),
-                  const Spacer(),
-                  VerifyButton(
-                    title: tr('auth.verification.verify'),
-                    onPressed: _code.length == 6
-                        ? () async {
-                            await auth.verifyAccount(verificationCode: _code);
-                          }
-                        : null,
-                  ),
-                ],
-              ),
-            ),
-            if (auth.isLoading.value)
-              Positioned.fill(
-                child: Container(
-                  color: Colors.black38,
-                  child: const BuildProgressIndicator(),
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          SafeArea(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                AuthHeader(
+                  title: tr('auth.verification.enter_code'),
+                  subtitle: tr('auth.verification.subtitle'),
                 ),
-              ),
-          ],
-        ),
+                Directionality(
+                  textDirection: ui.TextDirection.ltr,
+                  child: OtpCodeFields(
+                    onCompleted: (v) => setState(() => _code = v),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Text(
+                    tr('auth.verification.no_code'),
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(color: Colors.black54),
+                  ),
+                ),
+                AuthTextLink(
+                  text: tr('auth.verification.resend'),
+                  alignment: MainAxisAlignment.center,
+                  onTap: () async {
+                    await auth.resendVerification();
+                  },
+                ),
+                const Spacer(),
+                VerifyButton(
+                  title: tr('auth.verification.verify'),
+                  onPressed: _code.length == 6
+                      ? () async {
+                          await auth.verifyAccount(verificationCode: _code);
+                        }
+                      : null,
+                ),
+              ],
+            ),
+          ),
+          // Loading overlay — reacts only to isLoading
+          Obx(() => auth.isLoading.value
+              ? Positioned.fill(
+                  child: Container(
+                    color: Colors.black38,
+                    child: const BuildProgressIndicator(),
+                  ),
+                )
+              : const SizedBox.shrink()),
+        ],
       ),
     );
   }

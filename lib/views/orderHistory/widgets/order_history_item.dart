@@ -88,7 +88,7 @@ class OrderHistoryItem extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  statusLabel,
+                  tr('status.$statusLabel'),
                   style: TextStyle(
                     color: getOrderStatusColor(statusLabel),
                     fontWeight: FontWeight.w600,

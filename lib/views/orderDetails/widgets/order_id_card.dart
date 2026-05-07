@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -47,7 +47,7 @@ class OrderIdCard extends StatelessWidget {
                     const SizedBox(width: 8),
 
                     Text(
-                      statusLabel,
+                      tr('status.$statusLabel'),
                       style: TextStyle(
                         color: getOrderStatusColor(statusLabel),
                         fontWeight: FontWeight.w600,
@@ -67,7 +67,7 @@ class OrderIdCard extends StatelessWidget {
             if (paymentStatus != null && paymentStatus.trim().isNotEmpty) ...[
               const SizedBox(height: 8),
               Text(
-                "${tr('order_details.payment')}: $paymentStatus",
+                "${tr('order_details.payment')}: ${tr('status.$paymentStatus')}",
                 style: const TextStyle(color: Colors.black54, fontSize: 14),
               ),
             ],

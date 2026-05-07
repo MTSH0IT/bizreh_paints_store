@@ -2,8 +2,20 @@
   "app_name": "Bizreh Paints",
   "common": {
     "cancel": "Cancel",
+    "confirm": "Confirm",
     "delete": "Delete",
     "back": "Back"
+  },
+  "status": {
+    "delivered": "Delivered",
+    "pending": "Pending",
+    "assigned_to_driver": "Assigned to driver",
+    "failed": "Failed",
+    "cancelled": "Cancelled",
+    "redeemed": "Redeemed",
+    "expired": "Expired",
+    "paid": "Paid",
+    "unpaid": "Unpaid"
   },
   "settings": {
     "title": "Settings",

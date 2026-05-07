@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/models/user_gifts_model.dart';
+import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/utils/func/date_format.dart';
 import 'package:bizreh_paints_store/utils/func/status_color.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
@@ -78,7 +78,7 @@ class MyGiftItem extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
-                        status,
+                        tr('status.$status'),
                         style: TextStyle(
                           color: statusColor,
                           fontWeight: FontWeight.w700,

@@ -2,8 +2,20 @@
   "app_name": "بزره للدهانات",
   "common": {
     "cancel": "إلغاء",
+    "confirm": "تأكيد",
     "delete": "حذف",
     "back": "رجوع"
+  },
+  "status": {
+    "delivered": "تم التوصيل",
+    "pending": "قيد الانتظار",
+    "assigned_to_driver": "جاري التوصيل",
+    "failed": "فشل",
+    "cancelled": "ملغي",
+    "redeemed": "تم الاستبدال",
+    "expired": "منتهي",
+    "paid": "تم الدفع",
+    "unpaid": "غير مدفوع"
   },
   "settings": {
     "title": "الإعدادات",

@@ -180,6 +180,8 @@
     "no_items_in_cart": "لا توجد عناصر في السلة"
   },
   "order_details": {
+    "show_qr": "عرض QR الطلب",
+    "order_qr": "رمز QR للطلب",
     "title": "تفاصيل الطلب",
     "send_complaint": "إرسال شكوى",
     "complaint_title": "إرسال شكوى",

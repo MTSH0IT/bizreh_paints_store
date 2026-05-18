@@ -35,8 +35,11 @@ class DiscountsTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             children: [
               SizedBox(
-                height: 240,
-                child: Center(child: Text(tr('rewards.no_discounts'))),
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: RewardEmptyState(
+                  message: tr('rewards.no_discounts'),
+                  icon: Icons.local_offer_outlined,
+                ),
               ),
             ],
           );
@@ -85,21 +88,38 @@ class DiscountOfferCard extends StatelessWidget {
 
     return Card(
       color: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+      ),
+      margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const Icon(Icons.local_offer_outlined, size: 20),
-                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.local_offer_outlined,
+                    size: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     title,
                     style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -118,62 +138,86 @@ class DiscountOfferCard extends StatelessWidget {
                     isActive ? tr('rewards.active') : tr('rewards.inactive'),
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: isActive ? Colors.green : Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      color: isActive ? Colors.green : Colors.grey.shade600,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
             Wrap(
-              spacing: 10,
+              spacing: 8,
               runSpacing: 8,
               children: [
                 RewardChipText(
                   label: tr('rewards.amount'),
                   value: amountType == 'percentage' ? '$amount%' : '\$$amount',
+                  icon: Icons.payments_outlined,
                 ),
                 if (minPurchase.isNotEmpty)
                   RewardChipText(
                     label: tr('rewards.min_purchase'),
                     value: '\$$minPurchase',
+                    icon: Icons.shopping_cart_outlined,
                   ),
                 if (minQty > 0)
-                  RewardChipText(label: tr('rewards.min_qty'), value: '$minQty'),
+                  RewardChipText(
+                    label: tr('rewards.min_qty'),
+                    value: '$minQty',
+                    icon: Icons.inventory_2_outlined,
+                  ),
                 if (expiration.isNotEmpty)
-                  RewardChipText(label: tr('rewards.expires'), value: expiration),
+                  RewardChipText(
+                    label: tr('rewards.expires'),
+                    value: expiration,
+                    icon: Icons.timer_outlined,
+                  ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
+            const Divider(),
+            const SizedBox(height: 8),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                if (productsCount > 0)
-                  RewardMetaCount(
-                    label: tr('rewards.products'),
-                    count: productsCount,
+                Expanded(
+                  child: Wrap(
+                    spacing: 12,
+                    runSpacing: 8,
+                    children: [
+                      if (productsCount > 0)
+                        RewardMetaCount(
+                          label: tr('rewards.products'),
+                          count: productsCount,
+                          icon: Icons.inventory_2_outlined,
+                        ),
+                      if (brandsCount > 0)
+                        RewardMetaCount(
+                          label: tr('rewards.brands'),
+                          count: brandsCount,
+                          icon: Icons.business_outlined,
+                        ),
+                      if (categoriesCount > 0)
+                        RewardMetaCount(
+                          label: tr('rewards.categories'),
+                          count: categoriesCount,
+                          icon: Icons.category_outlined,
+                        ),
+                    ],
                   ),
-                if (brandsCount > 0) ...[
-                  const SizedBox(width: 10),
-                  RewardMetaCount(label: tr('rewards.brands'), count: brandsCount),
-                ],
-                if (categoriesCount > 0) ...[
-                  const SizedBox(width: 10),
-                  RewardMetaCount(
-                    label: tr('rewards.categories'),
-                    count: categoriesCount,
+                ),
+                OutlinedButton.icon(
+                  onPressed: () => Get.to(() => DiscountDetailsView(offer: offer)),
+                  icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+                  label: Text(tr('rewards.view_details')),
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(999),
+                    ),
                   ),
-                ],
+                ),
               ],
-            ),
-            const SizedBox(height: 12),
-            Align(
-              alignment: AlignmentDirectional.centerEnd,
-              child: OutlinedButton.icon(
-                onPressed: () => Get.to(() => DiscountDetailsView(offer: offer)),
-                icon: const Icon(Icons.visibility_outlined),
-                label: Text(tr('rewards.view_details')),
-              ),
             ),
           ],
         ),

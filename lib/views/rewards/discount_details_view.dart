@@ -8,12 +8,11 @@ import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/views/rewards/reward_shared_widgets.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
 
 class DiscountDetailsView extends StatelessWidget {
-  const DiscountDetailsView({
-    super.key,
-    required this.offer,
-  });
+  const DiscountDetailsView({super.key, required this.offer});
 
   final DiscontModel offer;
 
@@ -44,8 +43,15 @@ class DiscountDetailsView extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           children: [
             Card(
+              color: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+                side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+              ),
+              margin: EdgeInsets.zero,
               child: Padding(
-                padding: const EdgeInsets.all(14),
+                padding: const EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -94,26 +100,31 @@ class DiscountDetailsView extends StatelessWidget {
                           value: amountType == 'percentage'
                               ? '$amount%'
                               : '\$$amount',
+                          icon: Icons.payments_outlined,
                         ),
                         if (minPurchase.isNotEmpty)
                           RewardChipText(
                             label: tr('rewards.min_purchase'),
                             value: '\$$minPurchase',
+                            icon: Icons.shopping_cart_outlined,
                           ),
                         if (minQty > 0)
                           RewardChipText(
                             label: tr('rewards.min_qty'),
                             value: '$minQty',
+                            icon: Icons.inventory_2_outlined,
                           ),
                         if (expiration.isNotEmpty)
                           RewardChipText(
                             label: tr('rewards.expires'),
                             value: expiration,
+                            icon: Icons.timer_outlined,
                           ),
                         if (createdAt.isNotEmpty)
                           RewardChipText(
                             label: tr('rewards.created_at'),
                             value: createdAt,
+                            icon: Icons.calendar_today_outlined,
                           ),
                       ],
                     ),
@@ -124,14 +135,18 @@ class DiscountDetailsView extends StatelessWidget {
             const SizedBox(height: 14),
             Text(
               tr('rewards.applies_to'),
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w700,
-              ),
+              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
             ),
             const SizedBox(height: 10),
             if (products.isEmpty && brands.isEmpty && categories.isEmpty)
               Card(
+                color: Colors.white,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+                ),
+                margin: EdgeInsets.zero,
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Text(tr('rewards.no_target_items')),
@@ -149,6 +164,11 @@ class DiscountDetailsView extends StatelessWidget {
                           ar: product.arTitle,
                           fallback: '-',
                         ),
+                        onTap: () {
+                          if (product.id == null) return;
+                          Get.find<RewardsController>()
+                              .navigateToProductDetails(product.id!);
+                        },
                       ),
                     )
                     .toList(),
@@ -181,7 +201,7 @@ class DiscountDetailsView extends StatelessWidget {
                           ar: category.categoryArTitle,
                           fallback: '-',
                         ),
-                        subtitle: (category.categoryType ?? '').trim(),
+                        // subtitle: (category.categoryType ?? '').trim(),
                       ),
                     )
                     .toList(),
@@ -194,10 +214,7 @@ class DiscountDetailsView extends StatelessWidget {
 }
 
 class _DetailsSection extends StatelessWidget {
-  const _DetailsSection({
-    required this.title,
-    required this.children,
-  });
+  const _DetailsSection({required this.title, required this.children});
 
   final String title;
   final List<Widget> children;
@@ -207,8 +224,15 @@ class _DetailsSection extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Card(
+        color: Colors.white,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+        ),
+        margin: EdgeInsets.zero,
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -234,32 +258,73 @@ class _DetailsTile extends StatelessWidget {
     required this.icon,
     required this.title,
     this.subtitle = '',
+    this.onTap,
   });
 
   final IconData icon;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4),
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: Colors.black54),
-          const SizedBox(width: 8),
-          Expanded(
-            child: Text(
-              title,
-              style: const TextStyle(fontSize: 13),
+    return Container(
+      margin: const EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: onTap != null ? Colors.white : Colors.grey.shade50,
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.grey.shade200),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+            child: Row(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 18,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+                if (subtitle.trim().isNotEmpty) ...[
+                  Text(
+                    subtitle,
+                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                  ),
+                  const SizedBox(width: 8),
+                ],
+                if (onTap != null)
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    size: 16,
+                    color: Colors.grey.shade400,
+                  ),
+              ],
             ),
           ),
-          if (subtitle.trim().isNotEmpty)
-            Text(
-              subtitle,
-              style: const TextStyle(color: Colors.black54, fontSize: 12),
-            ),
-        ],
+        ),
       ),
     );
   }

@@ -134,7 +134,10 @@ class AppBindings extends Bindings {
     );
 
     Get.lazyPut<RewardsController>(
-      () => RewardsController(rewardsServices: sl<RewardsServices>()),
+      () => RewardsController(
+        rewardsServices: sl<RewardsServices>(),
+        productServices: sl<ProductServices>(),
+      ),
       fenix: true,
     );
 

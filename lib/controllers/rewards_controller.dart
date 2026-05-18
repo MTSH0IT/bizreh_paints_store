@@ -5,13 +5,20 @@ import 'package:bizreh_paints_store/models/discont_model/discont_model.dart';
 import 'package:bizreh_paints_store/models/point_rule_model.dart';
 import 'package:bizreh_paints_store/services/rewards_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:get/get.dart';
+import 'package:bizreh_paints_store/services/product_services.dart';
+import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
 
 class RewardsController extends GetxController {
   final RewardsServices _services;
+  final ProductServices _productServices;
 
-  RewardsController({required RewardsServices rewardsServices})
-    : _services = rewardsServices;
+  RewardsController({
+    required RewardsServices rewardsServices,
+    required ProductServices productServices,
+  }) : _services = rewardsServices,
+       _productServices = productServices;
 
   final RxList<DiscontModel> discountOffers = <DiscontModel>[].obs;
   final RxList<PointRuleModel> pointsRules = <PointRuleModel>[].obs;
@@ -67,6 +74,19 @@ class RewardsController extends GetxController {
       showMassage("حدث خطأ حاول مرة اخرى", false);
     } finally {
       isLoadingPointsRules.value = false;
+    }
+  }
+
+  Future<void> navigateToProductDetails(int productId) async {
+    Get.dialog(const BuildProgressIndicator(), barrierDismissible: false);
+    try {
+      final productModel = await _productServices.getProductById(id: productId);
+      Get.back(); // Close loading dialog
+      Get.to(() => ProductDetailsView(product: productModel));
+    } catch (e) {
+      Get.back(); // Close loading dialog
+      log("rewards controller catch navigate to product : ${e.toString()}");
+      showMassage("حدث خطأ أثناء جلب المنتج", false);
     }
   }
 }

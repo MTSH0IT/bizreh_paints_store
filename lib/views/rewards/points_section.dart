@@ -34,8 +34,11 @@ class PointsRulesTab extends StatelessWidget {
             physics: const AlwaysScrollableScrollPhysics(),
             children: [
               SizedBox(
-                height: 240,
-                child: Center(child: Text(tr('rewards.no_points_rules'))),
+                height: MediaQuery.of(context).size.height * 0.6,
+                child: RewardEmptyState(
+                  message: tr('rewards.no_points_rules'),
+                  icon: Icons.stars_outlined,
+                ),
               ),
             ],
           );
@@ -90,21 +93,38 @@ class PointsRuleCard extends StatelessWidget {
 
     return Card(
       color: Colors.white,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+      ),
+      margin: EdgeInsets.zero,
       child: Padding(
-        padding: const EdgeInsets.all(14.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
-                const Icon(Icons.stars_outlined, size: 20),
-                const SizedBox(width: 8),
+                Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.stars_outlined,
+                    size: 20,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+                const SizedBox(width: 12),
                 Expanded(
                   child: Text(
                     title,
                     style: const TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                 ),
@@ -123,41 +143,85 @@ class PointsRuleCard extends StatelessWidget {
                     isActive ? tr('rewards.active') : tr('rewards.inactive'),
                     style: TextStyle(
                       fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: isActive ? Colors.green : Colors.grey,
+                      fontWeight: FontWeight.bold,
+                      color: isActive ? Colors.green : Colors.grey.shade600,
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 16),
             Wrap(
-              spacing: 10,
+              spacing: 8,
               runSpacing: 8,
               children: [
                 RewardChipText(
                   label: tr('rewards.points_per_unit'),
                   value: '$pointsPerUnit',
+                  icon: Icons.add_circle_outline,
                 ),
                 if (minQty > 0)
-                  RewardChipText(label: tr('rewards.min_qty'), value: '$minQty'),
+                  RewardChipText(
+                    label: tr('rewards.min_qty'),
+                    value: '$minQty',
+                    icon: Icons.inventory_2_outlined,
+                  ),
                 if (start.isNotEmpty)
-                  RewardChipText(label: tr('rewards.start'), value: start),
+                  RewardChipText(
+                    label: tr('rewards.start'),
+                    value: start,
+                    icon: Icons.calendar_today_outlined,
+                  ),
                 if (end.isNotEmpty)
-                  RewardChipText(label: tr('rewards.end'), value: end),
+                  RewardChipText(
+                    label: tr('rewards.end'),
+                    value: end,
+                    icon: Icons.event_available_outlined,
+                  ),
               ],
             ),
-            const SizedBox(height: 10),
-            if (brandTitle.isNotEmpty)
-              Text(
-                '${tr('rewards.brand')}: $brandTitle',
-                style: const TextStyle(color: Colors.black54, fontSize: 13),
-              ),
-            if (packagingTitle.isNotEmpty)
-              Text(
-                '${tr('rewards.packaging')}: $packagingTitle',
-                style: const TextStyle(color: Colors.black54, fontSize: 13),
-              ),
+            if (brandTitle.isNotEmpty || packagingTitle.isNotEmpty) ...[
+              const SizedBox(height: 16),
+              const Divider(),
+              const SizedBox(height: 8),
+              if (brandTitle.isNotEmpty)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 6),
+                  child: Row(
+                    children: [
+                      Icon(Icons.business_outlined, size: 16, color: Colors.grey.shade600),
+                      const SizedBox(width: 8),
+                      Text(
+                        '${tr('rewards.brand')}: ',
+                        style: TextStyle(color: Colors.grey.shade700, fontSize: 13, fontWeight: FontWeight.w500),
+                      ),
+                      Expanded(
+                        child: Text(
+                          brandTitle,
+                          style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (packagingTitle.isNotEmpty)
+                Row(
+                  children: [
+                    Icon(Icons.view_in_ar_outlined, size: 16, color: Colors.grey.shade600),
+                    const SizedBox(width: 8),
+                    Text(
+                      '${tr('rewards.packaging')}: ',
+                      style: TextStyle(color: Colors.grey.shade700, fontSize: 13, fontWeight: FontWeight.w500),
+                    ),
+                    Expanded(
+                      child: Text(
+                        packagingTitle,
+                        style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ],
+                ),
+            ],
           ],
         ),
       ),

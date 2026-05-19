@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/cities_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AddressController extends GetxController {
   // Services
@@ -79,7 +80,7 @@ class AddressController extends GetxController {
       addresses.assignAll(res);
     } catch (e) {
       log("address controller loadAddresses error: ${e.toString()}");
-      showMassage("فشل في جلب العناوين", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -92,7 +93,7 @@ class AddressController extends GetxController {
       cities.assignAll(res);
     } catch (e) {
       log("address controller loadCities error: ${e.toString()}");
-      showMassage("فشل في جلب المدن", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingCities.value = false;
     }
@@ -125,12 +126,12 @@ class AddressController extends GetxController {
         longitude: lag!,
       );
       await loadAddresses();
-      showMassage("تمت إضافة العنوان بنجاح", true);
+      showMassage(tr('common.added_successfully'), true);
       Get.back();
       isSubmitting.value = false;
     } catch (e) {
       log("address controller createAddress error: ${e.toString()}");
-      showMassage("حدث خطأ أثناء إضافة العنوان", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -150,11 +151,11 @@ class AddressController extends GetxController {
         longitude: lag!,
       );
       await loadAddresses();
-      showMassage("تم تعديل العنوان بنجاح", true);
+      showMassage(tr('common.updated_successfully'), true);
       isSubmitting.value = false;
     } catch (e) {
       log("address controller updateAddress error: ${e.toString()}");
-      showMassage("حدث خطأ أثناء تعديل العنوان", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -173,11 +174,11 @@ class AddressController extends GetxController {
       //   defaultAddress.value = null;
       // }
 
-      showMassage("تم حذف العنوان", true);
+      showMassage(tr('common.deleted_successfully'), true);
       isSubmitting.value = false;
     } catch (e) {
       log("address controller deleteAddress error: ${e.toString()}");
-      showMassage("تعذر حذف العنوان", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -199,11 +200,11 @@ class AddressController extends GetxController {
   //       defaultAddress.value = newDefault;
   //       addresses.refresh();
   //     }
-  //     showMassage("تم تعيين العنوان الافتراضي", true);
+  //     showMassage(tr('common.updated_successfully'), true);
   //     isSubmitting.value = false;
   //   } catch (e) {
   //     log("address controller setDefault error: ${e.toString()}");
-  //     showMassage("تعذر تعيين العنوان الافتراضي", false);
+  //     showMassage(tr('common.error_try_again'), false);
   //   } finally {
   //     isSubmitting.value = false;
   //   }
@@ -212,20 +213,20 @@ class AddressController extends GetxController {
   // Helpers
   bool _validateFields() {
     if (cityId == null) {
-      showMassage("يرجى اختيار المدينة", false);
+      showMassage(tr('common.please_select_city'), false);
 
       return false;
     }
     if (addressLine.isEmpty) {
-      showMassage("يرجى إدخال العنوان", false);
+      showMassage(tr('common.please_enter_address'), false);
       return false;
     }
     if (lat == null || lag == null) {
-      showMassage("يرجى تحديد الموقع", false);
+      showMassage(tr('common.please_select_location'), false);
       return false;
     }
     if (nickname.isEmpty) {
-      showMassage("يرجى إدخال الاسم", false);
+      showMassage(tr('common.please_enter_name'), false);
       return false;
     }
     return true;

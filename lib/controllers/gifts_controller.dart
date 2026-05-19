@@ -7,6 +7,7 @@ import 'package:bizreh_paints_store/models/user_gifts_model.dart';
 import 'package:bizreh_paints_store/services/gifts_service.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class GiftsController extends GetxController {
   final GiftsService _giftsService;
@@ -51,7 +52,7 @@ class GiftsController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("gifts controller catch get gifts : ${e.toString()}");
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingGifts.value = false;
     }
@@ -67,7 +68,7 @@ class GiftsController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("gifts controller catch get my gifts : ${e.toString()}");
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingMyGifts.value = false;
     }
@@ -84,7 +85,7 @@ class GiftsController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("gifts controller catch get available : ${e.toString()}");
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingAvailable.value = false;
     }
@@ -94,14 +95,14 @@ class GiftsController extends GetxController {
     redeemingGiftId.value = giftId;
     try {
       await _giftsService.redeemGift(giftId: giftId);
-      showMassage("تم طلب استبدال الهدية", true);
+      showMassage(tr('common.sent_successfully'), true);
       await Future.wait([loadAvailable(), loadMyGifts()]);
     } on AppException catch (e) {
       log("gifts controller AppException redeem : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("gifts controller catch redeem : ${e.toString()}");
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       redeemingGiftId.value = 0;
     }
@@ -124,7 +125,7 @@ class GiftsController extends GetxController {
     } catch (e) {
       log("gifts controller catch get by id : ${e.toString()}");
       selectedGiftError.value = e.toString();
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingSelectedGift.value = false;
     }

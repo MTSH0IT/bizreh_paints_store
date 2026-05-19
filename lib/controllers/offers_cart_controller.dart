@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/models/offers_cart_model/offers_cart_model.d
 import 'package:bizreh_paints_store/services/offers_cart_service.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OffersCartController extends GetxController {
   final OffersCartService _service;
@@ -37,7 +38,7 @@ class OffersCartController extends GetxController {
     } catch (e) {
       log('offers cart controller catch load offers : ${e.toString()}');
       offersError.value = e.toString();
-      showMassage('حدث خطأ حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingOffers.value = false;
     }
@@ -55,14 +56,14 @@ class OffersCartController extends GetxController {
         quantity: quantity,
         addressId: addressId,
       );
-      showMassage('تم طلب العرض بنجاح', true);
+      showMassage(tr('common.sent_successfully'), true);
       await loadOffers();
     } on AppException catch (e) {
       log('offers cart controller AppException purchase offer : ${e.message}');
       showMassage(e.message, false);
     } catch (e) {
       log('offers cart controller catch purchase offer : ${e.toString()}');
-      showMassage('حدث خطأ حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       purchasingOfferId.value = 0;
     }

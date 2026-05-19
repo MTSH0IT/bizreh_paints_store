@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/models/collection_model/collection_model.dar
 import 'package:bizreh_paints_store/services/collection_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CollectionControllers extends GetxController {
   final CollectionServices _collectionServices;
@@ -30,7 +31,7 @@ class CollectionControllers extends GetxController {
       showMassage(e.message, false);
       log('AppException in getCollections: ${e.message}');
     } catch (e) {
-      showMassage('Failed to load collections', false);
+      showMassage(tr('common.error_try_again'), false);
       log('Error in getCollections: $e');
     } finally {
       isLoading.value = false;

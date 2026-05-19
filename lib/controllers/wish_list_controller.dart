@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/models/wishlist_model/wishlist_model.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class WishListController extends GetxController {
   final WishListServices _wishListServices;
@@ -41,7 +42,7 @@ class WishListController extends GetxController {
 
   Future<void> addToWishList(int id) async {
     if (id < 0) {
-      showMassage("اختر عنصر لأضافته الى المفضلة", false);
+      showMassage(tr('common.please_select_item_to_add'), false);
       return;
     }
     isAddRemoveLoading.value = true;
@@ -64,7 +65,7 @@ class WishListController extends GetxController {
     try {
       await _wishListServices.clearWishlist();
       items.clear();
-      showMassage("تم حذف كل العناصر من المفضلة", true);
+      showMassage(tr('common.deleted_successfully'), true);
     } on AppException catch (e) {
       log("wish list controller AppException clear : ${e.message}");
     } catch (e) {

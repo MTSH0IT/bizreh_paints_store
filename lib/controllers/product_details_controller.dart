@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bizreh_paints_store/controllers/cart_controllers.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class ProductDetailsController extends GetxController {
   final CartController cartController;
@@ -30,7 +31,7 @@ class ProductDetailsController extends GetxController {
 
   Future<void> addToCart({required int quantity}) async {
     if (selectedOption.value < 0 || selectedPackaging.value < 0) {
-      showMassage("اختر النوع وطريقة التغليف", false);
+      showMassage(tr('common.please_select_type_and_packaging'), false);
       return;
     }
 

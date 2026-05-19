@@ -1,7 +1,8 @@
 import 'package:bizreh_paints_store/helper/di/token_provider.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 
-/// Interceptor for adding authentication token to requests
+/// Interceptor for adding authentication token and language to requests
 class AuthInterceptor extends Interceptor {
   final ITokenProvider _tokenProvider;
 
@@ -13,6 +14,10 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    // Attach language headers
+    final lang = Get.locale?.languageCode ?? 'ar';
+    options.headers['Language'] = lang;
+
     // Get access token from token provider and attach to headers if present
     try {
       final token = _tokenProvider.getToken();

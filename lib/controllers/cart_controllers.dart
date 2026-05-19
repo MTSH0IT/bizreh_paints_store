@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/models/cart_model/cart_model.dart';
 import 'package:bizreh_paints_store/services/cart_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class CartController extends GetxController {
   final CartServices _cartServices;
@@ -32,7 +33,7 @@ class CartController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch get cart : ${e.toString()}");
-      showMassage("تعذر جلب السلة", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -51,13 +52,13 @@ class CartController extends GetxController {
         quantity: quantity,
       );
       await getCart();
-      showMassage("تمت إضافة المنتج إلى السلة", true);
+      showMassage(tr('common.added_successfully'), true);
     } on AppException catch (e) {
       log("cart controller AppException add : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch add : ${e.toString()}");
-      showMassage("تعذر إضافة المنتج", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isMutating.value = false;
     }
@@ -69,7 +70,7 @@ class CartController extends GetxController {
     //required int colorFamilyId,
   }) async {
     if (cartItemId <= 0 || quantity <= 0) {
-      showMassage("البيانات غير مكتملة لتحديث العنصر", false);
+      showMassage(tr('common.incomplete_data'), false);
       return;
     }
     isMutating.value = true;
@@ -80,13 +81,13 @@ class CartController extends GetxController {
         //colorFamilyId: colorFamilyId,
       );
       await getCart();
-      showMassage("تم تحديث العنصر", true);
+      showMassage(tr('common.updated_successfully'), true);
     } on AppException catch (e) {
       log("cart controller AppException update : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch update : ${e.toString()}");
-      showMassage("تعذر تحديث العنصر", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isMutating.value = false;
     }
@@ -94,20 +95,20 @@ class CartController extends GetxController {
 
   Future<void> deleteCartItem(int cartItemId) async {
     if (cartItemId <= 0) {
-      showMassage("العنصر غير صالح", false);
+      showMassage(tr('common.invalid_item'), false);
       return;
     }
     isMutating.value = true;
     try {
       await _cartServices.deleteCartItem(cartItemId: cartItemId);
       await getCart();
-      showMassage("تم حذف العنصر من السلة", true);
+      showMassage(tr('common.deleted_successfully'), true);
     } on AppException catch (e) {
       log("cart controller AppException delete : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch delete : ${e.toString()}");
-      showMassage("تعذر حذف العنصر", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isMutating.value = false;
     }
@@ -118,7 +119,7 @@ class CartController extends GetxController {
     required int? quantity,
   }) async {
     if (cartItemId <= 0) {
-      showMassage("البيانات غير مكتملة", false);
+      showMassage(tr('common.incomplete_data'), false);
       return;
     }
     isMutating.value = true;
@@ -128,13 +129,13 @@ class CartController extends GetxController {
         quantity: quantity,
       );
       await getCart();
-      showMassage("تمت زيادة الكمية", true);
+      showMassage(tr('common.updated_successfully'), true);
     } on AppException catch (e) {
       log("cart controller AppException increase : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch increase : ${e.toString()}");
-      showMassage("تعذر تعديل الكمية", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isMutating.value = false;
     }
@@ -145,7 +146,7 @@ class CartController extends GetxController {
     required int? quantity,
   }) async {
     if (cartItemId <= 0) {
-      showMassage("البيانات غير مكتملة", false);
+      showMassage(tr('common.incomplete_data'), false);
       return;
     }
     isMutating.value = true;
@@ -155,13 +156,13 @@ class CartController extends GetxController {
         quantity: quantity,
       );
       await getCart();
-      showMassage("تمت تقليل الكمية", true);
+      showMassage(tr('common.updated_successfully'), true);
     } on AppException catch (e) {
       log("cart controller AppException decrease : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("cart controller catch decrease : ${e.toString()}");
-      showMassage("تعذر تعديل الكمية", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isMutating.value = false;
     }

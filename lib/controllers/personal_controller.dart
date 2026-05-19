@@ -10,6 +10,7 @@ import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class PersonalController extends GetxController {
   final UserService _userService;
@@ -128,7 +129,7 @@ class PersonalController extends GetxController {
         phone: phone,
       );
 
-      showMassage("تم تحديث البيانات", true);
+      showMassage(tr('common.updated_successfully'), true);
       final user = await _userService.getProfile();
       log("personal controller get profile : ${user.toString()}");
       await _storage.setJson(StorageKey.user, user.toJson());
@@ -137,7 +138,7 @@ class PersonalController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("personal controller catch sign up : ${e.toString()}");
-      showMassage("حدث خطأ  حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoding.value = false;
     }
@@ -161,13 +162,13 @@ class PersonalController extends GetxController {
         currentPassword: currentPassword,
         newPassword: newPassword,
       );
-      showMassage("تم تحديث البيانات", true);
+      showMassage(tr('common.updated_successfully'), true);
     } on AppException catch (e) {
       log("personal controller AppException sign up : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("personal controller catch sign up : ${e.toString()}");
-      showMassage("حدث خطأ  حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoding.value = false;
     }
@@ -180,14 +181,14 @@ class PersonalController extends GetxController {
     isLoding.value = true;
     try {
       await _userService.deleteAccount(password: password);
-      showMassage("تم حذف حساب المستخدم", true);
+      showMassage(tr('common.deleted_successfully'), true);
       signOut();
     } on AppException catch (e) {
       log("personal controller AppException Delete Account : ${e.message}");
       showMassage(e.message, false);
     } catch (e) {
       log("personal controller catch Delete Account : ${e.toString()}");
-      showMassage("حدث خطأ  حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoding.value = false;
     }

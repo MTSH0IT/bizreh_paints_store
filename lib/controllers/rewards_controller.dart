@@ -9,6 +9,7 @@ import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart'
 import 'package:get/get.dart';
 import 'package:bizreh_paints_store/services/product_services.dart';
 import 'package:bizreh_paints_store/views/productDetails/product_details_view.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class RewardsController extends GetxController {
   final RewardsServices _services;
@@ -52,7 +53,7 @@ class RewardsController extends GetxController {
     } catch (e) {
       log("rewards controller catch discounts : ${e.toString()}");
       discountsError.value = e.toString();
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingDiscounts.value = false;
     }
@@ -71,7 +72,7 @@ class RewardsController extends GetxController {
     } catch (e) {
       log("rewards controller catch points rules : ${e.toString()}");
       pointsRulesError.value = e.toString();
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoadingPointsRules.value = false;
     }
@@ -86,7 +87,7 @@ class RewardsController extends GetxController {
     } catch (e) {
       Get.back(); // Close loading dialog
       log("rewards controller catch navigate to product : ${e.toString()}");
-      showMassage("حدث خطأ أثناء جلب المنتج", false);
+      showMassage(tr('common.error_try_again'), false);
     }
   }
 }

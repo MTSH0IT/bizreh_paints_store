@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/models/payments_model/payments_model.dart';
 import 'package:bizreh_paints_store/services/payments_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class PaymentsController extends GetxController {
   final PaymentsServices _paymentsServices;
@@ -30,7 +31,7 @@ class PaymentsController extends GetxController {
       showMassage(e.message, false);
     } catch (e) {
       log("payments controller catch get payments : ${e.toString()}");
-      showMassage("حدث خطأ حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }

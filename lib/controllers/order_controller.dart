@@ -4,6 +4,7 @@ import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/services/order_services.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:get/get.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class OrderController extends GetxController {
   final OrderServices _orderServices;
@@ -72,9 +73,9 @@ class OrderController extends GetxController {
 
       await loadOrderHistory();
 
-      showMassage('تم الغاء الطلب بنجاح', true);
+      showMassage(tr('common.canceled_successfully'), true);
     } catch (e) {
-      showMassage('فشل الغاء الطلب، حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -86,9 +87,9 @@ class OrderController extends GetxController {
       await _orderServices.reorder(id, body);
       await loadOrderHistory();
 
-      showMassage('تم إعادة الطلب بنجاح', true);
+      showMassage(tr('common.sent_successfully'), true);
     } catch (e) {
-      showMassage('فشل إعادة الطلب، حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -100,9 +101,9 @@ class OrderController extends GetxController {
       await _orderServices.complaint(id, message);
       await loadOrderHistory();
 
-      showMassage('تمت الشكوى بنجاح', true);
+      showMassage(tr('common.sent_successfully'), true);
     } catch (e) {
-      showMassage('فشلت الشكوى، حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }
@@ -117,7 +118,7 @@ class OrderController extends GetxController {
       return;
     }
     if (addressId == null || addressId <= 0) {
-      showMassage('اختر عنوان التوصيل', false);
+      showMassage(tr('common.please_select_address'), false);
       return;
     }
 
@@ -126,9 +127,9 @@ class OrderController extends GetxController {
       await _orderServices.createOrder(orderId: orderId, addressId: addressId);
       cartController.cart.value = null;
       Get.back();
-      showMassage('تم ارسال الطلب بنجاح', true);
+      showMassage(tr('common.sent_successfully'), true);
     } catch (e) {
-      showMassage('فشل ارسال الطلب، حاول مرة اخرى', false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isSubmitting.value = false;
     }

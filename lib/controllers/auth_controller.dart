@@ -12,6 +12,7 @@ import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
 import 'package:bizreh_paints_store/models/auth_response.dart';
 import 'package:bizreh_paints_store/helper/di/token_provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class AuthController extends GetxController {
   // Services
@@ -69,19 +70,6 @@ class AuthController extends GetxController {
     super.onClose();
   }
 
-  void closeCtrl() {
-    emailCtrl.dispose();
-    passwordCtrl.dispose();
-    confirmCtrl.dispose();
-    firstNameCtrl.dispose();
-    lastNameCtrl.dispose();
-    phoneCtrl.dispose();
-    loginEmailCtrl.dispose();
-    loginPasswordCtrl.dispose();
-    forgotPasswordEmailCtrl.dispose();
-    log("message👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌👌");
-  }
-
   void clearCtrl() {
     emailCtrl.clear();
     passwordCtrl.clear();
@@ -113,7 +101,7 @@ class AuthController extends GetxController {
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch sign in : ${generalError.value}");
-      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -159,7 +147,7 @@ class AuthController extends GetxController {
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch sign up : ${generalError.value}");
-      showMassage("حدث خطأ  حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -179,7 +167,7 @@ class AuthController extends GetxController {
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch forget password : ${generalError.value}");
-      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -199,7 +187,7 @@ class AuthController extends GetxController {
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch resend verification : ${generalError.value}");
-      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }
@@ -223,7 +211,7 @@ class AuthController extends GetxController {
     } catch (e) {
       generalError.value = e.toString();
       log("auth controller catch verify account : ${generalError.value}");
-      showMassage("حدث خطأ ما حاول مرة اخرى", false);
+      showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoading.value = false;
     }

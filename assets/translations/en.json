@@ -1,5 +1,15 @@
 {
   "app_name": "Bizreh Paints",
+  "errors": {
+    "connection_timeout": "Connection timeout. Please check your internet connection.",
+    "request_cancelled": "Request was cancelled",
+    "no_internet": "No internet connection. Please check your network.",
+    "certificate_failed": "Certificate verification failed",
+    "something_went_wrong": "Something went wrong. Please try again.",
+    "an_error_occurred": "An error occurred",
+    "server_error": "Server error. Please try again later.",
+    "service_unavailable": "Service temporarily unavailable"
+  },
   "common": {
     "cancel": "Cancel",
     "confirm": "Confirm",
@@ -7,6 +17,8 @@
     "back": "Back",
     "error_try_again": "An error occurred, please try again",
     "success": "Operation completed successfully",
+    "success_title": "Success",
+    "error_title": "Error",
     "added_successfully": "Added successfully",
     "deleted_successfully": "Deleted successfully",
     "updated_successfully": "Updated successfully",

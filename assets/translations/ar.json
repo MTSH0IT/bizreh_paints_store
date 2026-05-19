@@ -1,5 +1,15 @@
 {
   "app_name": "بزره للدهانات",
+  "errors": {
+    "connection_timeout": "انتهت مهلة الاتصال. يرجى التحقق من اتصالك بالإنترنت.",
+    "request_cancelled": "تم إلغاء الطلب",
+    "no_internet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من شبكتك.",
+    "certificate_failed": "فشل التحقق من الشهادة",
+    "something_went_wrong": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "an_error_occurred": "حدث خطأ",
+    "server_error": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقًا.",
+    "service_unavailable": "الخدمة غير متاحة مؤقتًا"
+  },
   "common": {
     "cancel": "إلغاء",
     "confirm": "تأكيد",
@@ -7,6 +17,8 @@
     "back": "رجوع",
     "error_try_again": "حدث خطأ، يرجى المحاولة مرة أخرى",
     "success": "تمت العملية بنجاح",
+    "success_title": "نجاح",
+    "error_title": "خطأ",
     "added_successfully": "تمت الإضافة بنجاح",
     "deleted_successfully": "تم الحذف بنجاح",
     "updated_successfully": "تم التحديث بنجاح",

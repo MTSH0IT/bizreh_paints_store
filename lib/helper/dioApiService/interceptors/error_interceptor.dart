@@ -1,5 +1,6 @@
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Interceptor for handling HTTP errors
 class ErrorInterceptor extends Interceptor {
@@ -12,7 +13,7 @@ class ErrorInterceptor extends Interceptor {
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
         exception = TimeoutException(
-          message: 'Connection timeout. Please check your internet connection.',
+          message: tr('errors.connection_timeout'),
         );
         break;
 
@@ -21,24 +22,24 @@ class ErrorInterceptor extends Interceptor {
         break;
 
       case DioExceptionType.cancel:
-        exception = RequestCancelledException(message: 'Request was cancelled');
+        exception = RequestCancelledException(message: tr('errors.request_cancelled'));
         break;
 
       case DioExceptionType.connectionError:
         exception = NetworkException(
-          message: 'No internet connection. Please check your network.',
+          message: tr('errors.no_internet'),
         );
         break;
 
       case DioExceptionType.badCertificate:
         exception = CertificateException(
-          message: 'Certificate verification failed',
+          message: tr('errors.certificate_failed'),
         );
         break;
 
       default:
         exception = UnknownException(
-          message: 'Something went wrong. Please try again.',
+          message: tr('errors.something_went_wrong'),
         );
     }
 
@@ -55,7 +56,7 @@ class ErrorInterceptor extends Interceptor {
     final data = response?.data;
 
     // Extract error message from response
-    String message = 'An error occurred';
+    String message = tr('errors.an_error_occurred');
     if (data is Map<String, dynamic>) {
       message = data['message'] ?? data['error'] ?? message;
     }
@@ -76,11 +77,11 @@ class ErrorInterceptor extends Interceptor {
         );
       case 500:
         return ServerException(
-          message: 'Server error. Please try again later.',
+          message: tr('errors.server_error'),
         );
       case 503:
         return ServiceUnavailableException(
-          message: 'Service temporarily unavailable',
+          message: tr('errors.service_unavailable'),
         );
       default:
         return UnknownException(message: message);

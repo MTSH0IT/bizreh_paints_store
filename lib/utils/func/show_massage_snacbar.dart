@@ -22,13 +22,25 @@
 //   );
 // }
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide Trans;
+import 'package:easy_localization/easy_localization.dart';
+
+String? _lastMessage;
+DateTime? _lastShownTime;
 
 void showMassage(String message, bool success) async {
+  final now = DateTime.now();
+  if (_lastMessage == message &&
+      _lastShownTime != null &&
+      now.difference(_lastShownTime!).inMilliseconds < 2000) {
+    return;
+  }
+  _lastMessage = message;
+  _lastShownTime = now;
   await Future.delayed(const Duration(milliseconds: 500));
   Get.showSnackbar(
     GetSnackBar(
-      title: success ? 'نجاح' : 'خطأ',
+      title: success ? tr('common.success_title') : tr('common.error_title'),
       message: message,
       backgroundColor: success ? Colors.green : Colors.red,
       snackPosition: SnackPosition.TOP,

@@ -18,9 +18,12 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: SearchInput(
@@ -201,7 +204,9 @@ class Search extends StatelessWidget {
                 );
               }),
             ),
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );

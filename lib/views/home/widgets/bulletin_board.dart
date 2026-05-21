@@ -26,15 +26,18 @@ class BulletinBoard extends StatelessWidget {
 
       return Column(
         children: [
-          SizedBox(
-            height: 150,
-            child: PageView.builder(
-              controller: controller.pageController,
-              itemCount: controller.ads.length,
-              itemBuilder: (context, index) {
-                final AdsModel ads = controller.ads[index];
-                return BannerCard(banner: ads);
-              },
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxHeight: 220),
+            child: AspectRatio(
+              aspectRatio: 2.8,
+              child: PageView.builder(
+                controller: controller.pageController,
+                itemCount: controller.ads.length,
+                itemBuilder: (context, index) {
+                  final AdsModel ads = controller.ads[index];
+                  return BannerCard(banner: ads);
+                },
+              ),
             ),
           ),
           const SizedBox(height: 8),

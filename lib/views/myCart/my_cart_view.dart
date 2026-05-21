@@ -42,19 +42,24 @@ class MyCartView extends StatelessWidget {
           }
           return Stack(
             children: [
-              Column(
-                children: [
-                  Expanded(
-                    child: CartItemsSection(
-                      items: items,
-                      cartController: cartController,
-                    ),
+              Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 800),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CartItemsSection(
+                          items: items,
+                          cartController: cartController,
+                        ),
+                      ),
+                      CartSummarySection(
+                        summary: cart.summary,
+                        onCheckout: () => Get.to(() => const OrderInitFlowView()),
+                      ),
+                    ],
                   ),
-                  CartSummarySection(
-                    summary: cart.summary,
-                    onCheckout: () => Get.to(() => const OrderInitFlowView()),
-                  ),
-                ],
+                ),
               ),
               // Loading overlay reacts only to isMutating
               Obx(() => cartController.isMutating.value

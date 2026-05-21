@@ -50,63 +50,68 @@ class HomeView extends StatelessWidget {
               parent: BouncingScrollPhysics(),
             ),
             padding: const EdgeInsets.only(bottom: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 8),
-                const BulletinBoard(),
-                const SizedBox(height: 12),
-                const RewardsEntryCard(),
-                const SizedBox(height: 16),
-                SectionHeader(
-                  title: tr('home.top_brands'),
-                  onSeeAll: () {
-                    controller.loadBrands();
-                    Get.to(() => const AllBrandsViewUniversal());
-                  },
-                ),
-                const SizedBox(height: 8),
-                const TopBrands(),
-                const SizedBox(height: 16),
-                SectionHeader(
-                  title: tr('home.categories'),
-                  onSeeAll: () {
-                    Get.to(() => const AllCategoriesViewUniversal());
-                  },
-                ),
-                const SizedBox(height: 8),
-                const Categories(),
-                const SizedBox(height: 16),
-                SectionHeader(
-                  title: tr('home.collections'),
-                  onSeeAll: () {
-                    Get.to(() => const AllCollectionsViewUniversal());
-                  },
-                ),
-                const CollectionsSection(),
-                const SizedBox(height: 16),
-                SectionHeader(
-                  title: tr('home.featured_products'),
-                  onSeeAll: () {
-                    controller.loadProducts();
-                    Get.to(() => AllProductsView());
-                  },
-                ),
-                const SizedBox(height: 8),
-                Obx(() {
-                  if (controller.isTopSellingLoading.value) {
-                    return AppSkeletons.productsGrid();
-                  }
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 1200),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 8),
+                    const BulletinBoard(),
+                    const SizedBox(height: 12),
+                    const RewardsEntryCard(),
+                    const SizedBox(height: 16),
+                    SectionHeader(
+                      title: tr('home.top_brands'),
+                      onSeeAll: () {
+                        controller.loadBrands();
+                        Get.to(() => const AllBrandsViewUniversal());
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    const TopBrands(),
+                    const SizedBox(height: 16),
+                    SectionHeader(
+                      title: tr('home.categories'),
+                      onSeeAll: () {
+                        Get.to(() => const AllCategoriesViewUniversal());
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    const Categories(),
+                    const SizedBox(height: 16),
+                    SectionHeader(
+                      title: tr('home.collections'),
+                      onSeeAll: () {
+                        Get.to(() => const AllCollectionsViewUniversal());
+                      },
+                    ),
+                    const CollectionsSection(),
+                    const SizedBox(height: 16),
+                    SectionHeader(
+                      title: tr('home.featured_products'),
+                      onSeeAll: () {
+                        controller.loadProducts();
+                        Get.to(() => AllProductsView());
+                      },
+                    ),
+                    const SizedBox(height: 8),
+                    Obx(() {
+                      if (controller.isTopSellingLoading.value) {
+                        return AppSkeletons.productsGrid();
+                      }
 
-                  if (controller.topSellingProducts.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.all(40.0),
-                      child: Center(child: Text(tr('home.no_products'))),
-                    );
-                  }
-                  return ProductsGrid(products: controller.topSellingProducts);
-                }),
-              ],
+                      if (controller.topSellingProducts.isEmpty) {
+                        return Padding(
+                          padding: const EdgeInsets.all(40.0),
+                          child: Center(child: Text(tr('home.no_products'))),
+                        );
+                      }
+                      return ProductsGrid(products: controller.topSellingProducts);
+                    }),
+                  ],
+                ),
+              ),
             ),
           ),
         ),

@@ -16,60 +16,67 @@ class PaymentsView extends StatelessWidget {
 
     return Scaffold(
       appBar: const CommonAppBar(titleKey: 'payments.title'),
-      body: Obx(() {
-        final isLoading = ctrl.isLoading.value;
-        final data = ctrl.paymentsData.value;
-        final payments = data?.payments ?? [];
-        final summary = data?.summary;
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              final isLoading = ctrl.isLoading.value;
+              final data = ctrl.paymentsData.value;
+              final payments = data?.payments ?? [];
+              final summary = data?.summary;
 
-        if (isLoading && data == null) {
-          return const BuildProgressIndicator();
-        }
+              if (isLoading && data == null) {
+                return const BuildProgressIndicator();
+              }
 
-        return Column(
-          children: [
-            const SizedBox(height: 12),
-            PaymentsSummaryCard(
-              totalRegularPayments: summary?.totalRegularPayments ?? 0,
-              totalBonus: summary?.totalBonus ?? 0,
-              totalTransactions: summary?.totalTransactions ?? 0,
-            ),
-            const SizedBox(height: 12),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  tr('payments.history'),
-                  style: const TextStyle(
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w700,
+              return Column(
+                children: [
+                  const SizedBox(height: 12),
+                  PaymentsSummaryCard(
+                    totalRegularPayments: summary?.totalRegularPayments ?? 0,
+                    totalBonus: summary?.totalBonus ?? 0,
+                    totalTransactions: summary?.totalTransactions ?? 0,
                   ),
-                ),
-              ),
-            ),
-            Expanded(
-              child: payments.isEmpty
-                  ? Center(
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        tr('payments.empty'),
+                        tr('payments.history'),
                         style: const TextStyle(
                           color: Colors.black54,
-                          fontWeight: FontWeight.w600,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    )
-                  : ListView.builder(
-                      itemCount: payments.length,
-                      itemBuilder: (context, index) {
-                        return PaymentHistoryItem(item: payments[index]);
-                      },
                     ),
-            ),
-            const SizedBox(height: 24),
-          ],
-        );
-      }),
+                  ),
+                  Expanded(
+                    child: payments.isEmpty
+                        ? Center(
+                            child: Text(
+                              tr('payments.empty'),
+                              style: const TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          )
+                        : ListView.builder(
+                            itemCount: payments.length,
+                            itemBuilder: (context, index) {
+                              return PaymentHistoryItem(item: payments[index]);
+                            },
+                          ),
+                  ),
+                  const SizedBox(height: 24),
+                ],
+              );
+            }),
+          ),
+        ),
+      ),
     );
   }
 }

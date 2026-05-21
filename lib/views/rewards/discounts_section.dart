@@ -20,39 +20,44 @@ class DiscountsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppRefreshWrapper(
-      onRefresh: ctrl.loadDiscountOffers,
-      child: Obx(() {
-        final isLoading = ctrl.isLoadingDiscounts.value;
-        final offers = ctrl.discountOffers;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: AppRefreshWrapper(
+          onRefresh: ctrl.loadDiscountOffers,
+          child: Obx(() {
+            final isLoading = ctrl.isLoadingDiscounts.value;
+            final offers = ctrl.discountOffers;
 
-        if (isLoading && offers.isEmpty) {
-          return const BuildProgressIndicator();
-        }
+            if (isLoading && offers.isEmpty) {
+              return const BuildProgressIndicator();
+            }
 
-        if (offers.isEmpty) {
-          return ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: RewardEmptyState(
-                  message: tr('rewards.no_discounts'),
-                  icon: Icons.local_offer_outlined,
-                ),
-              ),
-            ],
-          );
-        }
+            if (offers.isEmpty) {
+              return ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: RewardEmptyState(
+                      message: tr('rewards.no_discounts'),
+                      icon: Icons.local_offer_outlined,
+                    ),
+                  ),
+                ],
+              );
+            }
 
-        return ListView.separated(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(16),
-          itemCount: offers.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (_, i) => DiscountOfferCard(offer: offers[i]),
-        );
-      }),
+            return ListView.separated(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              itemCount: offers.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemBuilder: (_, i) => DiscountOfferCard(offer: offers[i]),
+            );
+          }),
+        ),
+      ),
     );
   }
 }

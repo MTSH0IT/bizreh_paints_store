@@ -27,7 +27,7 @@ class Categories extends StatelessWidget {
         );
       }
       return SizedBox(
-        height: 120,
+        height: 125,
         child: ListView.separated(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           scrollDirection: Axis.horizontal,

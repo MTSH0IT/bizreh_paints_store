@@ -89,6 +89,8 @@ class OrderHistoryItem extends StatelessWidget {
               Expanded(
                 child: Text(
                   tr('status.$statusLabel'),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: getOrderStatusColor(statusLabel),
                     fontWeight: FontWeight.w600,

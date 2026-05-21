@@ -75,24 +75,29 @@ class _BrandProductsViewState extends State<BrandProductsView> {
             ),
           ),
           body: SafeArea(
-            child: isLoading
-                ? const BuildProgressIndicator()
-                : hasProducts
-                ? TabBarView(
-                    children: List.generate(tabs.length, (index) {
-                      final int? tabId = tabs[index].id;
-                      final List<ProductModel> products = tabId == null
-                          ? items
-                          : items
-                                .where((p) => p.subCategoryId == tabId)
-                                .toList();
-                      return ProductsGrid(
-                        products: products,
-                        isNeverScrollable: false,
-                      );
-                    }),
-                  )
-                : Center(child: Text(tr('brand.no_products'))),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: isLoading
+                    ? const BuildProgressIndicator()
+                    : hasProducts
+                    ? TabBarView(
+                        children: List.generate(tabs.length, (index) {
+                          final int? tabId = tabs[index].id;
+                          final List<ProductModel> products = tabId == null
+                              ? items
+                              : items
+                                    .where((p) => p.subCategoryId == tabId)
+                                    .toList();
+                          return ProductsGrid(
+                            products: products,
+                            isNeverScrollable: false,
+                          );
+                        }),
+                      )
+                    : Center(child: Text(tr('brand.no_products'))),
+              ),
+            ),
           ),
         ),
       );

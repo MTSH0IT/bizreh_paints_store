@@ -81,40 +81,45 @@ class OrderDetailsView extends StatelessWidget {
             return Center(child: Text(tr('order_details.no_data')));
           }
 
-          return ListView(
-            children: [
-              OrderIdCard(
-                order: order,
-                datePlaced: formatDate(order.createdAt),
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: ListView(
+                children: [
+                  OrderIdCard(
+                    order: order,
+                    datePlaced: formatDate(order.createdAt),
+                  ),
+                  const SizedBox(height: 12),
+                  OrderItemsCard(order: order),
+                  const SizedBox(height: 12),
+                  OrderSummaryCard(order: order),
+                  const SizedBox(height: 12),
+                  ShippingDetails(order: order),
+                  const SizedBox(height: 12),
+                  if (order.id != null)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      child: MainButton(
+                        onPressed: orderController.isSubmitting.value
+                            ? null
+                            : () async {
+                                await orderController.reorder(
+                                  order.id!,
+                                  <String, dynamic>{},
+                                );
+                              },
+                        title: orderController.isSubmitting.value
+                            ? tr('order_details.reordering')
+                            : tr('order_details.reorder'),
+                      ),
+                    ),
+                ],
               ),
-              const SizedBox(height: 12),
-              OrderItemsCard(order: order),
-              const SizedBox(height: 12),
-              OrderSummaryCard(order: order),
-              const SizedBox(height: 12),
-              ShippingDetails(order: order),
-              const SizedBox(height: 12),
-              if (order.id != null)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 8,
-                  ),
-                  child: MainButton(
-                    onPressed: orderController.isSubmitting.value
-                        ? null
-                        : () async {
-                            await orderController.reorder(
-                              order.id!,
-                              <String, dynamic>{},
-                            );
-                          },
-                    title: orderController.isSubmitting.value
-                        ? tr('order_details.reordering')
-                        : tr('order_details.reorder'),
-                  ),
-                ),
-            ],
+            ),
           );
         }),
       ),

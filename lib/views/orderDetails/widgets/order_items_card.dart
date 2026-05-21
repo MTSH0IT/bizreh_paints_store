@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/models/order_model/item.dart';
+import 'package:bizreh_paints_store/models/order_model/item.dart';
 import 'package:bizreh_paints_store/models/order_model/order_model.dart';
 import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
@@ -175,13 +175,16 @@ class _ItemOrder extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      tr('order_details.unit_price'),
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 13,
+                    Expanded(
+                      child: Text(
+                        tr('order_details.unit_price'),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Text(
                       formatPriceWithSymbol(totalPrice, symbol: '\$'),
                       style: const TextStyle(fontSize: 13),
@@ -220,13 +223,16 @@ class _ItemOrder extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      tr('order_details.final_price'),
-                      style: const TextStyle(
-                        color: Colors.black54,
-                        fontSize: 13,
+                    Expanded(
+                      child: Text(
+                        tr('order_details.final_price'),
+                        style: const TextStyle(
+                          color: Colors.black54,
+                          fontSize: 13,
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Text(
                       formatPriceWithSymbol(finalItemPrice, symbol: '\$'),
                       style: const TextStyle(

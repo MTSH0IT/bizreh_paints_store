@@ -20,47 +20,54 @@ class OffersCartView extends StatelessWidget {
 
     return Scaffold(
       appBar: CommonAppBar(title: Text(tr('offers_cart.title'))),
-      body: Obx(() {
-        final isLoading = ctrl.isLoadingOffers.value;
-        final offers = ctrl.offers;
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              final isLoading = ctrl.isLoadingOffers.value;
+              final offers = ctrl.offers;
 
-        if (isLoading && offers.isEmpty) {
-          return const BuildProgressIndicator();
-        }
+              if (isLoading && offers.isEmpty) {
+                return const BuildProgressIndicator();
+              }
 
-        return AppRefreshWrapper(
-          onRefresh: ctrl.loadOffers,
-          child: offers.isEmpty
-              ? ListView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  children: [
-                    SizedBox(
-                      height: 240,
-                      child: Center(child: Text(tr('offers_cart.no_offers'))),
-                    ),
-                  ],
-                )
-              : SafeArea(
-                  child: ListView.separated(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.all(16),
-                    itemCount: offers.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (_, i) {
-                      final offer = offers[i];
-                      return OffersCartOfferCard(
-                        offer: offer,
-                        isPurchasing: ctrl.purchasingOfferId.value == offer.id,
-                        onPurchase: () => _purchase(context, offer),
-                        onViewDetails: () {
-                          Get.to(() => OffersCartDetailsView(offer: offer));
-                        },
-                      );
-                    },
-                  ),
-                ),
-        );
-      }),
+              return AppRefreshWrapper(
+                onRefresh: ctrl.loadOffers,
+                child: offers.isEmpty
+                    ? ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(
+                            height: 240,
+                            child: Center(child: Text(tr('offers_cart.no_offers'))),
+                          ),
+                        ],
+                      )
+                    : SafeArea(
+                        child: ListView.separated(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          padding: const EdgeInsets.all(16),
+                          itemCount: offers.length,
+                          separatorBuilder: (_, __) => const SizedBox(height: 12),
+                          itemBuilder: (_, i) {
+                            final offer = offers[i];
+                            return OffersCartOfferCard(
+                              offer: offer,
+                              isPurchasing: ctrl.purchasingOfferId.value == offer.id,
+                              onPurchase: () => _purchase(context, offer),
+                              onViewDetails: () {
+                                Get.to(() => OffersCartDetailsView(offer: offer));
+                              },
+                            );
+                          },
+                        ),
+                      ),
+              );
+            }),
+          ),
+        ),
+      ),
     );
   }
 

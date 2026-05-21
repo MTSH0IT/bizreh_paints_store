@@ -15,73 +15,72 @@ class SettingsView extends StatelessWidget {
     return Scaffold(
       appBar: const CommonAppBar(titleKey: 'settings.title'),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  SettingsTile(
-                    title: tr('settings.language'),
-                    onTap: () async {
-                      final result = await showDialog<Locale>(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(tr('settings.choose_language')),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                ListTile(
-                                  title: Text(tr('settings.arabic')),
-                                  onTap: () {
-                                    Navigator.of(
-                                      context,
-                                    ).pop(const Locale('ar'));
-                                  },
-                                ),
-                                ListTile(
-                                  title: Text(tr('settings.english')),
-                                  onTap: () {
-                                    Navigator.of(
-                                      context,
-                                    ).pop(const Locale('en'));
-                                  },
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView(
+              padding: const EdgeInsets.symmetric(vertical: 8),
+              children: [
+                SettingsTile(
+                  title: tr('settings.language'),
+                  onTap: () async {
+                    final result = await showDialog<Locale>(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(tr('settings.choose_language')),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              ListTile(
+                                title: Text(tr('settings.arabic')),
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pop(const Locale('ar'));
+                                },
+                              ),
+                              ListTile(
+                                title: Text(tr('settings.english')),
+                                onTap: () {
+                                  Navigator.of(
+                                    context,
+                                  ).pop(const Locale('en'));
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
 
-                      if (result != null) {
-                        if (!context.mounted) return;
-                        await context.setLocale(result);
-                        Get.updateLocale(result);
-                      }
-                    },
-                  ),
-                  SettingsTile(
-                    title: tr('settings.change_password'),
-                    onTap: () {
-                      Get.to(() => ChangePasswordView());
-                    },
-                  ),
-                  // const SettingsTile(title: 'Contact Support'),
-                  // const SettingsTile(title: 'Submit a Complaint'),
-                  // const SettingsTile(title: 'Privacy Policy'),
-                  // const SettingsTile(title: 'Terms of Service'),
-                  SettingsTile(
-                    title: tr('settings.delete_account'),
-                    destructive: true,
-                    onTap: () {
-                      Get.to(() => DeleteAccountView());
-                    },
-                  ),
-                ],
-              ),
+                    if (result != null) {
+                      if (!context.mounted) return;
+                      await context.setLocale(result);
+                      Get.updateLocale(result);
+                    }
+                  },
+                ),
+                SettingsTile(
+                  title: tr('settings.change_password'),
+                  onTap: () {
+                    Get.to(() => ChangePasswordView());
+                  },
+                ),
+                // const SettingsTile(title: 'Contact Support'),
+                // const SettingsTile(title: 'Submit a Complaint'),
+                // const SettingsTile(title: 'Privacy Policy'),
+                // const SettingsTile(title: 'Terms of Service'),
+                SettingsTile(
+                  title: tr('settings.delete_account'),
+                  destructive: true,
+                  onTap: () {
+                    Get.to(() => DeleteAccountView());
+                  },
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

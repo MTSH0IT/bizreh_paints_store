@@ -53,11 +53,14 @@ class _ManageAddressViewState extends State<ManageAddressView> {
         ),
       ),
       body: SafeArea(
-        child: Obx(() {
-          final citiesOptions = addressController.getLocalizedCities(context);
-          final selectedCityName = addressController
-              .getSelectedCityLocalizedName(context);
-          final center = _currentCenter();
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              final citiesOptions = addressController.getLocalizedCities(context);
+              final selectedCityName = addressController
+                  .getSelectedCityLocalizedName(context);
+              final center = _currentCenter();
 
           return Stack(
             children: [
@@ -128,7 +131,9 @@ class _ManageAddressViewState extends State<ManageAddressView> {
                 ),
             ],
           );
-        }),
+            }),
+          ),
+        ),
       ),
     );
   }

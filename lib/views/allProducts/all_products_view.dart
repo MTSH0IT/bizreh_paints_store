@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -23,11 +23,16 @@ class AllProductsView extends StatelessWidget {
           if (contr.products.isEmpty) {
             return Center(child: Text(tr('products.empty')));
           }
-          return Padding(
-            padding: const EdgeInsets.only(top: 8, bottom: 24),
-            child: ProductsGrid(
-              isNeverScrollable: false,
-              products: contr.products,
+          return Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 24),
+                child: ProductsGrid(
+                  isNeverScrollable: false,
+                  products: contr.products,
+                ),
+              ),
             ),
           );
         }),

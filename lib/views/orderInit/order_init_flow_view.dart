@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/func/show_massage_snacbar.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -86,69 +86,75 @@ class _OrderInitFlowViewState extends State<OrderInitFlowView> {
         ),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // const SizedBox(height: 8),
-            // StepIndicator(currentPage: _currentPage),
-            ProgressTracker(
-              key: ValueKey(_currentPage),
-              currentIndex: _currentPage,
-              statusList: [
-                Status(name: tr('order_init.address'), icon: null),
-                Status(name: tr('order_init.check'), icon: null),
-              ],
-              activeColor: primaryColor,
-              height: 80,
-              showStepNumber: true,
-              verticalPadding: 8,
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Card(
-                  color: Colors.white,
-                  elevation: 2,
-
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: PageView(
-                    controller: _pageController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    onPageChanged: (i) {
-                      setState(() {
-                        _currentPage = i;
-                      });
-                    },
-                    children: [
-                      AddressStep(
-                        orderController: orderController,
-                        addressController: addressController,
-                        onAddressSelected: () {
-                          setState(() {});
-                        },
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 900),
+            child: Column(
+              children: [
+                // const SizedBox(height: 8),
+                // StepIndicator(currentPage: _currentPage),
+                ProgressTracker(
+                  key: ValueKey(_currentPage),
+                  currentIndex: _currentPage,
+                  statusList: [
+                    Status(name: tr('order_init.address'), icon: null),
+                    Status(name: tr('order_init.check'), icon: null),
+                  ],
+                  activeColor: primaryColor,
+                  height: 80,
+                  showStepNumber: true,
+                  verticalPadding: 8,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Card(
+                      color: Colors.white,
+                      elevation: 2,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16),
                       ),
-                      ConfirmStep(orderController: orderController),
-                    ],
+                      child: PageView(
+                        controller: _pageController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        onPageChanged: (i) {
+                          setState(() {
+                            _currentPage = i;
+                          });
+                        },
+                        children: [
+                          AddressStep(
+                            orderController: orderController,
+                            addressController: addressController,
+                            onAddressSelected: () {
+                              setState(() {});
+                            },
+                          ),
+                          ConfirmStep(orderController: orderController),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                Obx(() {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 8,
+                    ),
+                    child: MainButton(
+                      title: orderController.isSubmitting.value
+                          ? tr('order_init.submitting')
+                          : _buttonTitle,
+                      onPressed: orderController.isSubmitting.value
+                          ? null
+                          : _next,
+                    ),
+                  );
+                }),
+              ],
             ),
-            Obx(() {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8,
-                ),
-                child: MainButton(
-                  title: orderController.isSubmitting.value
-                      ? tr('order_init.submitting')
-                      : _buttonTitle,
-                  onPressed: orderController.isSubmitting.value ? null : _next,
-                ),
-              );
-            }),
-          ],
+          ),
         ),
       ),
     );

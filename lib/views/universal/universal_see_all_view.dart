@@ -65,9 +65,14 @@ class _UniversalSeeAllViewState<T> extends State<UniversalSeeAllView<T>> {
         ],
       ),
       body: SafeArea(
-        child: widget.onRefresh != null
-            ? AppRefreshWrapper(onRefresh: widget.onRefresh!, child: content)
-            : content,
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: widget.onRefresh != null
+                ? AppRefreshWrapper(onRefresh: widget.onRefresh!, child: content)
+                : content,
+          ),
+        ),
       ),
     );
   }

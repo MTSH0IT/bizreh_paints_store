@@ -1,4 +1,4 @@
-﻿import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
@@ -95,11 +95,15 @@ class ConfirmStep extends StatelessWidget {
                                 const SizedBox(height: 2),
                                 Row(
                                   children: [
-                                    Text(
-                                      '${tr('order_init.color')}: ${item.packaging!.color!.degree!}',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey[600],
+                                    Flexible(
+                                      child: Text(
+                                        '${tr('order_init.color')}: ${item.packaging!.color!.degree!}',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.grey[600],
+                                        ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                     const SizedBox(width: 4),

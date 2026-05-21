@@ -19,39 +19,44 @@ class PointsRulesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppRefreshWrapper(
-      onRefresh: ctrl.loadPointsRules,
-      child: Obx(() {
-        final isLoading = ctrl.isLoadingPointsRules.value;
-        final rules = ctrl.pointsRules;
+    return Center(
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 800),
+        child: AppRefreshWrapper(
+          onRefresh: ctrl.loadPointsRules,
+          child: Obx(() {
+            final isLoading = ctrl.isLoadingPointsRules.value;
+            final rules = ctrl.pointsRules;
 
-        if (isLoading && rules.isEmpty) {
-          return const BuildProgressIndicator();
-        }
+            if (isLoading && rules.isEmpty) {
+              return const BuildProgressIndicator();
+            }
 
-        if (rules.isEmpty) {
-          return ListView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.6,
-                child: RewardEmptyState(
-                  message: tr('rewards.no_points_rules'),
-                  icon: Icons.stars_outlined,
-                ),
-              ),
-            ],
-          );
-        }
+            if (rules.isEmpty) {
+              return ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.6,
+                    child: RewardEmptyState(
+                      message: tr('rewards.no_points_rules'),
+                      icon: Icons.stars_outlined,
+                    ),
+                  ),
+                ],
+              );
+            }
 
-        return ListView.separated(
-          physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.all(16),
-          itemCount: rules.length,
-          separatorBuilder: (_, __) => const SizedBox(height: 12),
-          itemBuilder: (_, i) => PointsRuleCard(rule: rules[i]),
-        );
-      }),
+            return ListView.separated(
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.all(16),
+              itemCount: rules.length,
+              separatorBuilder: (_, __) => const SizedBox(height: 12),
+              itemBuilder: (_, i) => PointsRuleCard(rule: rules[i]),
+            );
+          }),
+        ),
+      ),
     );
   }
 }

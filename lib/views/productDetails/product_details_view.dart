@@ -41,69 +41,74 @@ class ProductDetailsView extends StatelessWidget {
       body: Stack(
         children: [
           SafeArea(
-            child: Column(
-              children: [
-                // Header image reacts only to selectedOption changes
-                Obx(() => ProductDetailsHeader(
-                      image: _resolveHeaderImage(controller.selectedOption.value),
-                      controller: controller,
-                      wishCtrl: wishCtrl,
-                    )),
-
-                // Static content — no Obx needed here
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Card(
-                      color: Colors.white,
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 20,
-                          vertical: 16,
-                        ),
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ProductInfoSection(product: product),
-                              const SizedBox(height: 16),
-                              ProductOptionsSection(
-                                product: product,
-                                controller: controller,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: Column(
+                  children: [
+                    // Header image reacts only to selectedOption changes
+                    Obx(() => ProductDetailsHeader(
+                          image: _resolveHeaderImage(controller.selectedOption.value),
+                          controller: controller,
+                          wishCtrl: wishCtrl,
+                        )),
+    
+                    // Static content — no Obx needed here
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Card(
+                          color: Colors.white,
+                          child: SingleChildScrollView(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 16,
+                            ),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ProductInfoSection(product: product),
+                                  const SizedBox(height: 16),
+                                  ProductOptionsSection(
+                                    product: product,
+                                    controller: controller,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  ProductPackagingSection(
+                                    product: product,
+                                    controller: controller,
+                                  ),
+                                  const SizedBox(height: 20),
+                                  ProductDescriptionSection(product: product),
+                                ],
                               ),
-                              const SizedBox(height: 16),
-                              ProductPackagingSection(
-                                product: product,
-                                controller: controller,
-                              ),
-                              const SizedBox(height: 20),
-                              ProductDescriptionSection(product: product),
-                            ],
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
+    
+                    // Button reacts only to isMutating changes
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Obx(() => MainButton(
+                            title: tr('product_details.add_to_cart'),
+                            onPressed: cartController.isMutating.value
+                                ? null
+                                : () async {
+                                    final quantity = await showQuantityInputDialog(
+                                      context,
+                                    );
+                                    if (quantity == null) return;
+                                    await controller.addToCart(quantity: quantity);
+                                  },
+                          )),
+                    ),
+                  ],
                 ),
-
-                // Button reacts only to isMutating changes
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Obx(() => MainButton(
-                        title: tr('product_details.add_to_cart'),
-                        onPressed: cartController.isMutating.value
-                            ? null
-                            : () async {
-                                final quantity = await showQuantityInputDialog(
-                                  context,
-                                );
-                                if (quantity == null) return;
-                                await controller.addToCart(quantity: quantity);
-                              },
-                      )),
-                ),
-              ],
+              ),
             ),
           ),
 

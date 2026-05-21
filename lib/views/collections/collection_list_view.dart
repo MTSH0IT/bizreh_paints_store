@@ -47,9 +47,14 @@ class CollectionListView extends StatelessWidget {
         return Scaffold(
           appBar: CommonAppBar(title: Text(appBarTitle)),
           body: SafeArea(
-            child: hasProducts
-                ? ProductsGrid(products: products, isNeverScrollable: false)
-                : const CollectionEmptyState(),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: hasProducts
+                    ? ProductsGrid(products: products, isNeverScrollable: false)
+                    : const CollectionEmptyState(),
+              ),
+            ),
           ),
         );
       }
@@ -59,19 +64,24 @@ class CollectionListView extends StatelessWidget {
         child: Scaffold(
           appBar: CommonAppBar(title: Text(appBarTitle)),
           body: SafeArea(
-            child: Column(
-              children: [
-                const SizedBox(height: 8),
-                _ChildrenTabBar(children: children),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: TabBarView(
-                    children: children
-                        .map((child) => CollectionChildTabBody(root: child))
-                        .toList(growable: false),
-                  ),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 8),
+                    _ChildrenTabBar(children: children),
+                    const SizedBox(height: 8),
+                    Expanded(
+                      child: TabBarView(
+                        children: children
+                            .map((child) => CollectionChildTabBody(root: child))
+                            .toList(growable: false),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
         ),

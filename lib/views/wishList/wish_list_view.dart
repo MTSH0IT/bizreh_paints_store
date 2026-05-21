@@ -1,4 +1,4 @@
-﻿import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
+import 'package:bizreh_paints_store/utils/widgets/build_progress_indicator.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'package:bizreh_paints_store/utils/widgets/app_refresh_wrapper.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
@@ -101,7 +101,10 @@ class WishList extends StatelessWidget {
                 : null,
           ),
           body: SafeArea(
-            child: hasItems
+            child: Center(
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 800),
+                child: hasItems
                 ? TabBarView(
                     children: List.generate(tabs.length, (index) {
                       final int? tabId = tabs[index].id;
@@ -181,6 +184,8 @@ class WishList extends StatelessWidget {
                       ],
                     ),
                   ),
+              ),
+            ),
           ),
         ),
       );

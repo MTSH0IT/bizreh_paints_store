@@ -32,6 +32,8 @@ class ProfileListItem extends StatelessWidget {
       ),
       title: Text(
         title,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
         style: TextStyle(color: destructive ? Colors.red : Colors.black),
       ),
       trailing: Row(

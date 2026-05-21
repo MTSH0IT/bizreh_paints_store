@@ -49,7 +49,10 @@ class _SavedAddressViewState extends State<SavedAddressView> {
         ],
       ),
       body: SafeArea(
-        child: Obx(() {
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
           final List<AddressModel> items = addressController.addresses;
           if (addressController.isLoading.value && items.isEmpty) {
             return BuildProgressIndicator();
@@ -80,7 +83,9 @@ class _SavedAddressViewState extends State<SavedAddressView> {
               );
             },
           );
-        }),
+            }),
+          ),
+        ),
       ),
     );
   }

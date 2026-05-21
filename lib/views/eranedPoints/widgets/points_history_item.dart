@@ -25,7 +25,10 @@ class PointsHistoryItem extends StatelessWidget {
 
     final typeTitle = _buildTypeTitle(context);
     final sourceText = _cleanText(item.sourceDescription);
-    final productTitle = _buildProductTitle(orderItem, context.locale.languageCode);
+    final productTitle = _buildProductTitle(
+      orderItem,
+      context.locale.languageCode,
+    );
     final actionText = _buildActionText();
 
     final content = Container(
@@ -86,12 +89,17 @@ class PointsHistoryItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                '${isSpent ? '-' : '+'}$absPoints',
-                style: TextStyle(
-                  color: mainColor,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18,
+              Flexible(
+                child: Text(
+                  '${isSpent ? '-' : '+'}$absPoints',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: mainColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ],
@@ -106,7 +114,8 @@ class PointsHistoryItem extends StatelessWidget {
                 color: mainColor,
               ),
               _buildChip(
-                label: '${tr('points.reference')}: ${item.referenceId ?? '---'}',
+                label:
+                    '${tr('points.reference')}: ${item.referenceId ?? '---'}',
                 color: const Color(0xFF334155),
               ),
               _buildChip(
@@ -136,7 +145,10 @@ class PointsHistoryItem extends StatelessWidget {
             const SizedBox(height: 8),
             _buildDetailRow(
               tr('points.order_number'),
-              _cleanText(details.orderNumber, fallback: '#${details.orderId ?? '---'}'),
+              _cleanText(
+                details.orderNumber,
+                fallback: '#${details.orderId ?? '---'}',
+              ),
             ),
             _buildDetailRow(
               tr('points.order_status'),
@@ -173,7 +185,10 @@ class PointsHistoryItem extends StatelessWidget {
                 context.locale.languageCode == 'ar'
                     ? giftDetails.arTitle
                     : giftDetails.title,
-                fallback: _cleanText(giftDetails.title, fallback: giftDetails.arTitle),
+                fallback: _cleanText(
+                  giftDetails.title,
+                  fallback: giftDetails.arTitle,
+                ),
               ),
             ),
             _buildDetailRow(
@@ -194,8 +209,10 @@ class PointsHistoryItem extends StatelessWidget {
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
                 decoration: BoxDecoration(
                   color: mainColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),

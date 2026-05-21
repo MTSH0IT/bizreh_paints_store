@@ -69,13 +69,18 @@ class _CatogorieDitailsViewState extends State<CatogorieDitailsView> {
           ),
         ),
         body: SafeArea(
-          child: TabBarView(
-            children: List.generate(
-              _categories.length,
-              (index) => _SubCategoriesGrid(
-                subCategories: _categories.isNotEmpty
-                    ? (_categories[index].subCategories ?? const [])
-                    : const [],
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 800),
+              child: TabBarView(
+                children: List.generate(
+                  _categories.length,
+                  (index) => _SubCategoriesGrid(
+                    subCategories: _categories.isNotEmpty
+                        ? (_categories[index].subCategories ?? const [])
+                        : const [],
+                  ),
+                ),
               ),
             ),
           ),
@@ -203,15 +208,22 @@ class _SubCategoryProducts extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.transparent,
       ),
-      body: Obx(() {
-        if (controler.isSubCategoryProductsLoading.value) {
-          return const BuildProgressIndicator();
-        }
-        return ProductsGrid(
-          products: controler.subCategoryProducts,
-          isNeverScrollable: false,
-        );
-      }),
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              if (controler.isSubCategoryProductsLoading.value) {
+                return const BuildProgressIndicator();
+              }
+              return ProductsGrid(
+                products: controler.subCategoryProducts,
+                isNeverScrollable: false,
+              );
+            }),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -27,7 +27,12 @@ class SettingsTile extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: ListTile(
         onTap: onTap,
-        title: Text(title, style: textStyle),
+        title: Text(
+          title,
+          style: textStyle,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
         trailing: Icon(
           Icons.chevron_right,
           color: destructive ? Colors.deepOrangeAccent : Colors.grey,

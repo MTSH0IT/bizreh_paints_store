@@ -78,12 +78,17 @@ class PaymentHistoryItem extends StatelessWidget {
                   ],
                 ),
               ),
-              Text(
-                formatPrice(amount),
-                style: TextStyle(
-                  color: mainColor,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18,
+              Flexible(
+                child: Text(
+                  formatPrice(amount),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.end,
+                  style: TextStyle(
+                    color: mainColor,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18,
+                  ),
                 ),
               ),
             ],

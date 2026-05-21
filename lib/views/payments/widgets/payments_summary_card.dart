@@ -50,21 +50,29 @@ class PaymentsSummaryCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
-                '${tr('payments.total_bonus')}: ${formatPrice(totalBonus)}',
-                style: const TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
+              Flexible(
+                child: Text(
+                  '${tr('payments.total_bonus')}: ${formatPrice(totalBonus)}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
               ),
               const SizedBox(width: 16),
-              Text(
-                '${tr('payments.total_transactions')}: ${totalTransactions.toInt()}',
-                style: const TextStyle(
-                  color: Colors.black54,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
+              Flexible(
+                child: Text(
+                  '${tr('payments.total_transactions')}: ${totalTransactions.toInt()}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
               ),
             ],

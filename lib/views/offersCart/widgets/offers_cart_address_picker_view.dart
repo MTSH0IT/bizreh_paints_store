@@ -17,47 +17,54 @@ class OffersCartAddressPickerView extends StatelessWidget {
 
     return Scaffold(
       appBar: CommonAppBar(title: Text(tr('offers_cart.select_address'))),
-      body: Obx(() {
-        if (addressCtrl.isLoading.value) {
-          return const BuildProgressIndicator();
-        }
+      body: SafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              if (addressCtrl.isLoading.value) {
+                return const BuildProgressIndicator();
+              }
 
-        final items = addressCtrl.addresses;
-        if (items.isEmpty) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  tr('order_init.no_saved_addresses'),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () => Get.to(() => ManageAddressView()),
-                child: Text(tr('order_init.add_address')),
-              ),
-            ],
-          );
-        }
+              final items = addressCtrl.addresses;
+              if (items.isEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        tr('order_init.no_saved_addresses'),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () => Get.to(() => ManageAddressView()),
+                      child: Text(tr('order_init.add_address')),
+                    ),
+                  ],
+                );
+              }
 
-        return ListView.builder(
-          padding: const EdgeInsets.all(16),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final address = items[index];
-            return GestureDetector(
-              onTap: () => Get.back<AddressModel>(result: address),
-              child: Opacity(
-                opacity: 0.95,
-                child: AddressCard(address: address),
-              ),
-            );
-          },
-        );
-      }),
+              return ListView.builder(
+                padding: const EdgeInsets.all(16),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final address = items[index];
+                  return GestureDetector(
+                    onTap: () => Get.back<AddressModel>(result: address),
+                    child: Opacity(
+                      opacity: 0.95,
+                      child: AddressCard(address: address),
+                    ),
+                  );
+                },
+              );
+            }),
+          ),
+        ),
+      ),
     );
   }
 }

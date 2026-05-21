@@ -56,8 +56,11 @@ class NotificationsView extends StatelessWidget {
         ],
       ),
       body: SafeArea(
-        child: Obx(() {
-          if (controller.isNotificationsLoading.value) {
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: Obx(() {
+              if (controller.isNotificationsLoading.value) {
             return const BuildProgressIndicator();
           }
 
@@ -116,7 +119,9 @@ class NotificationsView extends StatelessWidget {
                     },
                   ),
           );
-        }),
+            }),
+          ),
+        ),
       ),
     );
   }

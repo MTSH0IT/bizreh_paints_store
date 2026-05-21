@@ -39,9 +39,12 @@ class DiscountDetailsView extends StatelessWidget {
     return Scaffold(
       appBar: CommonAppBar(title: Text(tr('rewards.discount_details_title'))),
       body: SafeArea(
-        child: ListView(
-          padding: const EdgeInsets.all(16),
-          children: [
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 800),
+            child: ListView(
+              padding: const EdgeInsets.all(16),
+              children: [
             Card(
               color: Colors.white,
               elevation: 0,
@@ -207,6 +210,8 @@ class DiscountDetailsView extends StatelessWidget {
                     .toList(),
               ),
           ],
+            ),
+          ),
         ),
       ),
     );

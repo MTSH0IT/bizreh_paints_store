@@ -40,39 +40,45 @@ class AddressCard extends StatelessWidget {
           Row(
             children: [
               // Icon and title
-              Row(
-                children: [
-                  Icon(Icons.location_on, color: primaryColor, size: 20),
-                  const SizedBox(width: 8),
-                  Text(
-                    address.nickname ?? tr('address.nickname_default'),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  if (isDefaultAddress == true)
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                        color: primaryColor.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
+              Flexible(
+                child: Row(
+                  children: [
+                    Icon(Icons.location_on, color: primaryColor, size: 20),
+                    const SizedBox(width: 8),
+                    Flexible(
                       child: Text(
-                        tr('address.default'),
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                          color: primaryColor,
+                        address.nickname ?? tr('address.nickname_default'),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
                         ),
                       ),
                     ),
-                ],
+                    const SizedBox(width: 8),
+                    if (isDefaultAddress == true)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: primaryColor.withValues(alpha: 0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          tr('address.default'),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: primaryColor,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
               ),
               const Spacer(),
 
@@ -107,7 +113,11 @@ class AddressCard extends StatelessWidget {
           // Full name
           Text(
             context.localizedValue(
-                en: address.cityName, ar: address.arCityName),
+              en: address.cityName,
+              ar: address.arCityName,
+            ),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -118,6 +128,8 @@ class AddressCard extends StatelessWidget {
           // Address
           Text(
             address.addressLine ?? tr('address.line_default'),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 14, color: Colors.black87),
           ),
           const SizedBox(height: 8),

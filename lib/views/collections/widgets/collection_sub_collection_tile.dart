@@ -117,7 +117,10 @@ class CollectionSubCollectionTile extends StatelessWidget {
     }
 
     if (hasChildren) {
-      return tr('collections.categories_count', args: [childrenCount.toString()]);
+      return tr(
+        'collections.categories_count',
+        args: [childrenCount.toString()],
+      );
     }
 
     if (hasProducts) {

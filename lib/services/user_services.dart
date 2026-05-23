@@ -6,6 +6,8 @@ import 'package:bizreh_paints_store/models/user_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 import 'package:bizreh_paints_store/utils/consts/const_key.dart';
+import 'package:bizreh_paints_store/models/user_report.dart';
+
 class UserService {
   final IApiClient _apiClient;
 
@@ -105,6 +107,26 @@ class UserService {
     } on AppException {
       rethrow;
     } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  Future<UserReport> getUserReport() async {
+    try {
+      final response = await _apiClient.get(ApiEndpoint.getUserReport);
+      final apiResponse = ApiResponse.fromJson(
+        response,
+        (json) => UserReport.fromJson(json),
+      );
+      if (apiResponse.success && apiResponse.data != null) {
+        return apiResponse.data!;
+      } else {
+        throw Exception(apiResponse.message ?? 'Something went wrong');
+      }
+    } on AppException {
+      rethrow;
+    } catch (e) {
+      log("user service catch get user report : ${e.toString()}");
       throw Exception(e.toString());
     }
   }

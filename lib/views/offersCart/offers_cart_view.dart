@@ -40,7 +40,9 @@ class OffersCartView extends StatelessWidget {
                         children: [
                           SizedBox(
                             height: 240,
-                            child: Center(child: Text(tr('offers_cart.no_offers'))),
+                            child: Center(
+                              child: Text(tr('offers_cart.no_offers')),
+                            ),
                           ),
                         ],
                       )
@@ -49,15 +51,19 @@ class OffersCartView extends StatelessWidget {
                           physics: const AlwaysScrollableScrollPhysics(),
                           padding: const EdgeInsets.all(16),
                           itemCount: offers.length,
-                          separatorBuilder: (_, __) => const SizedBox(height: 12),
+                          separatorBuilder: (_, __) =>
+                              const SizedBox(height: 12),
                           itemBuilder: (_, i) {
                             final offer = offers[i];
                             return OffersCartOfferCard(
                               offer: offer,
-                              isPurchasing: ctrl.purchasingOfferId.value == offer.id,
+                              isPurchasing:
+                                  ctrl.purchasingOfferId.value == offer.id,
                               onPurchase: () => _purchase(context, offer),
                               onViewDetails: () {
-                                Get.to(() => OffersCartDetailsView(offer: offer));
+                                Get.to(
+                                  () => OffersCartDetailsView(offer: offer),
+                                );
                               },
                             );
                           },

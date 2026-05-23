@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/models/brands_featured_model.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class BrandsServices {
   final IApiClient _apiClient;
 
@@ -65,15 +66,14 @@ class BrandsServices {
     try {
       final response = await _apiClient.get(ApiEndpoint.brandProducts(brandId));
 
-      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
-        response,
-        (json) {
-          final List raw = (json['products'] as List?) ?? [];
-          return raw
-              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-        },
-      );
+      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(response, (
+        json,
+      ) {
+        final List raw = (json['products'] as List?) ?? [];
+        return raw
+            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      });
 
       if (apiResponse.success) {
         return apiResponse;

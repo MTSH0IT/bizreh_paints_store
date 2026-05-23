@@ -105,85 +105,88 @@ class WishList extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 800),
                 child: hasItems
-                ? TabBarView(
-                    children: List.generate(tabs.length, (index) {
-                      final int? tabId = tabs[index].id;
-                      final filteredItems = tabId == null
-                          ? ctrl.items
-                          : ctrl.items.where((item) {
-                              final subCategoryid = item.product?.subCategoryId;
-                              return subCategoryid != null &&
-                                  subCategoryid == tabId;
-                            }).toList();
-                      return AppRefreshWrapper(
-                        onRefresh: ctrl.loadWishListProducts,
-                        child: filteredItems.isEmpty
-                            ? ListView(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                children: [
-                                  SizedBox(
-                                    height: 240,
-                                    child: Center(
-                                      child: Text(
-                                        context.localizedValue(
-                                          en: 'No items in this category',
-                                          ar: 'لا توجد عناصر في هذه الفئة',
-                                          fallback: 'No items',
+                    ? TabBarView(
+                        children: List.generate(tabs.length, (index) {
+                          final int? tabId = tabs[index].id;
+                          final filteredItems = tabId == null
+                              ? ctrl.items
+                              : ctrl.items.where((item) {
+                                  final subCategoryid =
+                                      item.product?.subCategoryId;
+                                  return subCategoryid != null &&
+                                      subCategoryid == tabId;
+                                }).toList();
+                          return AppRefreshWrapper(
+                            onRefresh: ctrl.loadWishListProducts,
+                            child: filteredItems.isEmpty
+                                ? ListView(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    children: [
+                                      SizedBox(
+                                        height: 240,
+                                        child: Center(
+                                          child: Text(
+                                            context.localizedValue(
+                                              en: 'No items in this category',
+                                              ar: 'لا توجد عناصر في هذه الفئة',
+                                              fallback: 'No items',
+                                            ),
+                                          ),
                                         ),
                                       ),
+                                    ],
+                                  )
+                                : ListView.builder(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 8,
                                     ),
-                                  ),
-                                ],
-                              )
-                            : ListView.builder(
-                                physics: const AlwaysScrollableScrollPhysics(),
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 8,
-                                ),
-                                itemCount: filteredItems.length,
-                                itemBuilder: (context, index) {
-                                  final item = filteredItems[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      //  Get.to(() => ProductDetailsView(product: item));
-                                    },
-                                    child: WishListItemCard(
-                                      item: item,
-                                      onMoveToCart: () async {
-                                        final quantity =
-                                            await showQuantityInputDialog(
-                                              context,
+                                    itemCount: filteredItems.length,
+                                    itemBuilder: (context, index) {
+                                      final item = filteredItems[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          //  Get.to(() => ProductDetailsView(product: item));
+                                        },
+                                        child: WishListItemCard(
+                                          item: item,
+                                          onMoveToCart: () async {
+                                            final quantity =
+                                                await showQuantityInputDialog(
+                                                  context,
+                                                );
+                                            if (quantity == null) return;
+                                            await ctrl.addWishlistItemToCart(
+                                              item,
+                                              quantity: quantity,
                                             );
-                                        if (quantity == null) return;
-                                        await ctrl.addWishlistItemToCart(
-                                          item,
-                                          quantity: quantity,
-                                        );
-                                      },
-                                      onRemove: () {
-                                        ctrl.removeItem(
-                                          item.optionPackagingId!,
-                                        );
-                                      },
-                                    ),
-                                  );
-                                },
-                              ),
-                      );
-                    }),
-                  )
-                : AppRefreshWrapper(
-                    onRefresh: ctrl.loadWishListProducts,
-                    child: ListView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      children: [
-                        SizedBox(
-                          height: 240,
-                          child: Center(child: Text(tr('wishlist.empty'))),
+                                          },
+                                          onRemove: () {
+                                            ctrl.removeItem(
+                                              item.optionPackagingId!,
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          );
+                        }),
+                      )
+                    : AppRefreshWrapper(
+                        onRefresh: ctrl.loadWishListProducts,
+                        child: ListView(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          children: [
+                            SizedBox(
+                              height: 240,
+                              child: Center(child: Text(tr('wishlist.empty'))),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
+                      ),
               ),
             ),
           ),

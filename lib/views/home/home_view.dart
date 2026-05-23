@@ -107,7 +107,9 @@ class HomeView extends StatelessWidget {
                           child: Center(child: Text(tr('home.no_products'))),
                         );
                       }
-                      return ProductsGrid(products: controller.topSellingProducts);
+                      return ProductsGrid(
+                        products: controller.topSellingProducts,
+                      );
                     }),
                   ],
                 ),

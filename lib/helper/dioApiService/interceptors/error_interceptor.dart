@@ -12,9 +12,7 @@ class ErrorInterceptor extends Interceptor {
       case DioExceptionType.connectionTimeout:
       case DioExceptionType.sendTimeout:
       case DioExceptionType.receiveTimeout:
-        exception = TimeoutException(
-          message: tr('errors.connection_timeout'),
-        );
+        exception = TimeoutException(message: tr('errors.connection_timeout'));
         break;
 
       case DioExceptionType.badResponse:
@@ -22,13 +20,13 @@ class ErrorInterceptor extends Interceptor {
         break;
 
       case DioExceptionType.cancel:
-        exception = RequestCancelledException(message: tr('errors.request_cancelled'));
+        exception = RequestCancelledException(
+          message: tr('errors.request_cancelled'),
+        );
         break;
 
       case DioExceptionType.connectionError:
-        exception = NetworkException(
-          message: tr('errors.no_internet'),
-        );
+        exception = NetworkException(message: tr('errors.no_internet'));
         break;
 
       case DioExceptionType.badCertificate:
@@ -43,11 +41,7 @@ class ErrorInterceptor extends Interceptor {
         );
     }
 
-    return handler.next(
-      err.copyWith(
-        error: exception,
-      ),
-    );
+    return handler.next(err.copyWith(error: exception));
   }
 
   /// Handle HTTP response errors
@@ -76,9 +70,7 @@ class ErrorInterceptor extends Interceptor {
           errors: data is Map ? data['errors'] : null,
         );
       case 500:
-        return ServerException(
-          message: tr('errors.server_error'),
-        );
+        return ServerException(message: tr('errors.server_error'));
       case 503:
         return ServiceUnavailableException(
           message: tr('errors.service_unavailable'),

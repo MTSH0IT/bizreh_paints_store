@@ -25,7 +25,9 @@ class GiftsView extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 12),
-                Obx(() => AvailablePointsCard(points: ctrl.availablePoints.value)),
+                Obx(
+                  () => AvailablePointsCard(points: ctrl.availablePoints.value),
+                ),
                 const SizedBox(height: 12),
                 Obx(
                   () => GiftsTabSwitch(

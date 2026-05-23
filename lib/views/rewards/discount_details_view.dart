@@ -45,171 +45,174 @@ class DiscountDetailsView extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(16),
               children: [
-            Card(
-              color: Colors.white,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-                side: BorderSide(color: Colors.grey.shade200, width: 1.5),
-              ),
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
+                Card(
+                  color: Colors.white,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                    side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+                  ),
+                  margin: EdgeInsets.zero,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Expanded(
-                          child: Text(
-                            title,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 16,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                title,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                ),
+                              ),
                             ),
-                          ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isActive
+                                    ? Colors.green.withValues(alpha: 0.12)
+                                    : Colors.grey.withValues(alpha: 0.12),
+                                borderRadius: BorderRadius.circular(999),
+                              ),
+                              child: Text(
+                                isActive
+                                    ? tr('rewards.active')
+                                    : tr('rewards.inactive'),
+                                style: TextStyle(
+                                  color: isActive ? Colors.green : Colors.grey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
-                          ),
-                          decoration: BoxDecoration(
-                            color: isActive
-                                ? Colors.green.withValues(alpha: 0.12)
-                                : Colors.grey.withValues(alpha: 0.12),
-                            borderRadius: BorderRadius.circular(999),
-                          ),
-                          child: Text(
-                            isActive
-                                ? tr('rewards.active')
-                                : tr('rewards.inactive'),
-                            style: TextStyle(
-                              color: isActive ? Colors.green : Colors.grey,
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
+                        const SizedBox(height: 12),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: [
+                            RewardChipText(
+                              label: tr('rewards.amount'),
+                              value: amountType == 'percentage'
+                                  ? '$amount%'
+                                  : '\$$amount',
+                              icon: Icons.payments_outlined,
                             ),
-                          ),
+                            if (minPurchase.isNotEmpty)
+                              RewardChipText(
+                                label: tr('rewards.min_purchase'),
+                                value: '\$$minPurchase',
+                                icon: Icons.shopping_cart_outlined,
+                              ),
+                            if (minQty > 0)
+                              RewardChipText(
+                                label: tr('rewards.min_qty'),
+                                value: '$minQty',
+                                icon: Icons.inventory_2_outlined,
+                              ),
+                            if (expiration.isNotEmpty)
+                              RewardChipText(
+                                label: tr('rewards.expires'),
+                                value: expiration,
+                                icon: Icons.timer_outlined,
+                              ),
+                            if (createdAt.isNotEmpty)
+                              RewardChipText(
+                                label: tr('rewards.created_at'),
+                                value: createdAt,
+                                icon: Icons.calendar_today_outlined,
+                              ),
+                          ],
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
-                    Wrap(
-                      spacing: 8,
-                      runSpacing: 8,
-                      children: [
-                        RewardChipText(
-                          label: tr('rewards.amount'),
-                          value: amountType == 'percentage'
-                              ? '$amount%'
-                              : '\$$amount',
-                          icon: Icons.payments_outlined,
-                        ),
-                        if (minPurchase.isNotEmpty)
-                          RewardChipText(
-                            label: tr('rewards.min_purchase'),
-                            value: '\$$minPurchase',
-                            icon: Icons.shopping_cart_outlined,
-                          ),
-                        if (minQty > 0)
-                          RewardChipText(
-                            label: tr('rewards.min_qty'),
-                            value: '$minQty',
+                  ),
+                ),
+                const SizedBox(height: 14),
+                Text(
+                  tr('rewards.applies_to'),
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                if (products.isEmpty && brands.isEmpty && categories.isEmpty)
+                  Card(
+                    color: Colors.white,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      side: BorderSide(color: Colors.grey.shade200, width: 1.5),
+                    ),
+                    margin: EdgeInsets.zero,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(tr('rewards.no_target_items')),
+                    ),
+                  ),
+                if (products.isNotEmpty)
+                  _DetailsSection(
+                    title: tr('rewards.products'),
+                    children: products
+                        .map(
+                          (product) => _DetailsTile(
                             icon: Icons.inventory_2_outlined,
+                            title: context.localizedValue(
+                              en: product.title,
+                              ar: product.arTitle,
+                              fallback: '-',
+                            ),
+                            onTap: () {
+                              if (product.id == null) return;
+                              Get.find<RewardsController>()
+                                  .navigateToProductDetails(product.id!);
+                            },
                           ),
-                        if (expiration.isNotEmpty)
-                          RewardChipText(
-                            label: tr('rewards.expires'),
-                            value: expiration,
-                            icon: Icons.timer_outlined,
+                        )
+                        .toList(),
+                  ),
+                if (brands.isNotEmpty)
+                  _DetailsSection(
+                    title: tr('rewards.brands'),
+                    children: brands
+                        .map(
+                          (brand) => _DetailsTile(
+                            icon: Icons.business_outlined,
+                            title: context.localizedValue(
+                              en: brand.title,
+                              ar: brand.arTitle,
+                              fallback: '-',
+                            ),
                           ),
-                        if (createdAt.isNotEmpty)
-                          RewardChipText(
-                            label: tr('rewards.created_at'),
-                            value: createdAt,
-                            icon: Icons.calendar_today_outlined,
+                        )
+                        .toList(),
+                  ),
+                if (categories.isNotEmpty)
+                  _DetailsSection(
+                    title: tr('rewards.categories'),
+                    children: categories
+                        .map(
+                          (category) => _DetailsTile(
+                            icon: Icons.category_outlined,
+                            title: context.localizedValue(
+                              en: category.categoryTitle,
+                              ar: category.categoryArTitle,
+                              fallback: '-',
+                            ),
+                            // subtitle: (category.categoryType ?? '').trim(),
                           ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 14),
-            Text(
-              tr('rewards.applies_to'),
-              style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
-            ),
-            const SizedBox(height: 10),
-            if (products.isEmpty && brands.isEmpty && categories.isEmpty)
-              Card(
-                color: Colors.white,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                  side: BorderSide(color: Colors.grey.shade200, width: 1.5),
-                ),
-                margin: EdgeInsets.zero,
-                child: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(tr('rewards.no_target_items')),
-                ),
-              ),
-            if (products.isNotEmpty)
-              _DetailsSection(
-                title: tr('rewards.products'),
-                children: products
-                    .map(
-                      (product) => _DetailsTile(
-                        icon: Icons.inventory_2_outlined,
-                        title: context.localizedValue(
-                          en: product.title,
-                          ar: product.arTitle,
-                          fallback: '-',
-                        ),
-                        onTap: () {
-                          if (product.id == null) return;
-                          Get.find<RewardsController>()
-                              .navigateToProductDetails(product.id!);
-                        },
-                      ),
-                    )
-                    .toList(),
-              ),
-            if (brands.isNotEmpty)
-              _DetailsSection(
-                title: tr('rewards.brands'),
-                children: brands
-                    .map(
-                      (brand) => _DetailsTile(
-                        icon: Icons.business_outlined,
-                        title: context.localizedValue(
-                          en: brand.title,
-                          ar: brand.arTitle,
-                          fallback: '-',
-                        ),
-                      ),
-                    )
-                    .toList(),
-              ),
-            if (categories.isNotEmpty)
-              _DetailsSection(
-                title: tr('rewards.categories'),
-                children: categories
-                    .map(
-                      (category) => _DetailsTile(
-                        icon: Icons.category_outlined,
-                        title: context.localizedValue(
-                          en: category.categoryTitle,
-                          ar: category.categoryArTitle,
-                          fallback: '-',
-                        ),
-                        // subtitle: (category.categoryType ?? '').trim(),
-                      ),
-                    )
-                    .toList(),
-              ),
-          ],
+                        )
+                        .toList(),
+                  ),
+              ],
             ),
           ),
         ),

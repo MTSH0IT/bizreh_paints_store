@@ -1,4 +1,3 @@
-import 'package:bizreh_paints_store/controllers/order_controller.dart';
 import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
 import 'package:bizreh_paints_store/views/payments/payments_view.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -11,6 +10,7 @@ import 'package:bizreh_paints_store/views/savedAddress/saved_address_view.dart';
 import 'package:bizreh_paints_store/views/settings/settings_view.dart';
 import 'package:bizreh_paints_store/views/notifications/notifications_view.dart';
 import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
+import 'package:bizreh_paints_store/views/AccountActivityStatus/account_activity_status_view.dart';
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'widgets/profile_list_item.dart';
@@ -72,10 +72,17 @@ class ProfileView extends StatelessWidget {
                             Get.to(() => const SavedAddressView());
                           },
                         ),
+                        ProfileListItem(
+                          icon: Icons.analytics_outlined,
+                          title: tr('activity_status.title'),
+                          onTap: () {
+                            Get.to(() => const AccountActivityStatusView());
+                          },
+                        ),
                       ],
                     ),
                   ),
-    
+
                   SectionTitle(title: tr('profile.orders')),
                   Card(
                     margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -90,7 +97,6 @@ class ProfileView extends StatelessWidget {
                           icon: Icons.local_shipping_outlined,
                           title: tr('profile.order_history'),
                           onTap: () {
-                            Get.find<OrderController>().loadOrderHistory();
                             Get.to(() => const OrderHistory());
                           },
                         ),
@@ -111,10 +117,13 @@ class ProfileView extends StatelessWidget {
                       ],
                     ),
                   ),
-    
+
                   SectionTitle(title: tr('profile.settings')),
                   Card(
-                    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 8,
+                    ),
                     elevation: 0,
                     color: Colors.transparent,
                     shape: RoundedRectangleBorder(
@@ -129,7 +138,7 @@ class ProfileView extends StatelessWidget {
                             Get.to(() => NotificationsView());
                           },
                         ),
-    
+
                         ProfileListItem(
                           icon: Icons.settings_outlined,
                           title: tr('profile.app_preferences'),
@@ -157,7 +166,9 @@ class ProfileView extends StatelessWidget {
                               builder: (context) => ConfirmationDialog(
                                 title: tr('settings.logout_dialog.title'),
                                 message: tr('settings.logout_dialog.message'),
-                                confirmText: tr('settings.logout_dialog.confirm'),
+                                confirmText: tr(
+                                  'settings.logout_dialog.confirm',
+                                ),
                                 cancelText: tr('settings.logout_dialog.cancel'),
                                 isDestructive: false,
                                 onConfirm: () {
@@ -170,7 +181,7 @@ class ProfileView extends StatelessWidget {
                       ],
                     ),
                   ),
-    
+
                   const SizedBox(height: 24),
                 ],
               ),

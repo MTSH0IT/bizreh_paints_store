@@ -69,7 +69,10 @@ class _UniversalSeeAllViewState<T> extends State<UniversalSeeAllView<T>> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
             child: widget.onRefresh != null
-                ? AppRefreshWrapper(onRefresh: widget.onRefresh!, child: content)
+                ? AppRefreshWrapper(
+                    onRefresh: widget.onRefresh!,
+                    child: content,
+                  )
                 : content,
           ),
         ),

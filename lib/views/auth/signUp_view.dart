@@ -91,9 +91,7 @@ class SignUpView extends StatelessWidget {
                         return validateConfirmPassword(
                           value,
                           auth.passwordCtrl.text,
-                          requiredMessage: tr(
-                            'auth.confirm_password_required',
-                          ),
+                          requiredMessage: tr('auth.confirm_password_required'),
                           mismatchMessage: tr('auth.password_mismatch'),
                         );
                       },
@@ -104,19 +102,21 @@ class SignUpView extends StatelessWidget {
                         horizontal: 16,
                         vertical: 8,
                       ),
-                      child: Obx(() => MainButton(
-                            title: auth.isLoading.value
-                                ? tr('auth.please_wait')
-                                : tr('auth.sign_up.button'),
-                            onPressed: auth.isLoading.value
-                                ? null
-                                : () async {
-                                    if (_formKey.currentState?.validate() ??
-                                        false) {
-                                      await auth.signUp();
-                                    }
-                                  },
-                          )),
+                      child: Obx(
+                        () => MainButton(
+                          title: auth.isLoading.value
+                              ? tr('auth.please_wait')
+                              : tr('auth.sign_up.button'),
+                          onPressed: auth.isLoading.value
+                              ? null
+                              : () async {
+                                  if (_formKey.currentState?.validate() ??
+                                      false) {
+                                    await auth.signUp();
+                                  }
+                                },
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 8),
                     Padding(
@@ -146,14 +146,16 @@ class SignUpView extends StatelessWidget {
             ),
           ),
           // Loading overlay — reacts only to isLoading
-          Obx(() => auth.isLoading.value
-              ? Positioned.fill(
-                  child: Container(
-                    color: Colors.black38,
-                    child: const BuildProgressIndicator(),
-                  ),
-                )
-              : const SizedBox.shrink()),
+          Obx(
+            () => auth.isLoading.value
+                ? Positioned.fill(
+                    child: Container(
+                      color: Colors.black38,
+                      child: const BuildProgressIndicator(),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
     );

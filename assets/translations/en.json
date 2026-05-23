@@ -470,5 +470,21 @@
     "enter_quantity": "Enter quantity",
     "quantity_hint": "e.g. 1",
     "confirm_purchase": "Confirm purchase"
+  },
+  "activity_status": {
+    "title": "Account Activity Status",
+    "payments_title": "Payments",
+    "orders_title": "Orders",
+    "points_title": "Points",
+    "total_payments": "Total Payments",
+    "total_bonus": "Total Bonus",
+    "remaining_amount": "Total Remaining",
+    "payments_count": "Payment Count",
+    "orders_count": "Orders Count",
+    "total_orders_price": "Total Orders Price",
+    "points_balance": "Total Points Balance",
+    "earned_points": "Earned Points",
+    "transactions_count": "Transactions Count",
+    "spent_points": "Spent Points"
   }
 }

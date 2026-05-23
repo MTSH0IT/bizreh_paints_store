@@ -52,7 +52,9 @@ class BulletinBoard extends StatelessWidget {
                   height: 6,
                   width: isActive ? 16 : 6,
                   decoration: BoxDecoration(
-                    color: isActive ? Colors.blueGrey : Colors.blueGrey.shade200,
+                    color: isActive
+                        ? Colors.blueGrey
+                        : Colors.blueGrey.shade200,
                     borderRadius: BorderRadius.circular(3),
                   ),
                 );

@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/product_model/product_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class FilterServices {
   final IApiClient _apiClient;
 
@@ -29,15 +30,14 @@ class FilterServices {
         },
       );
 
-      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(
-        response,
-        (json) {
-          final List raw = (json['products'] as List?) ?? [];
-          return raw
-              .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-        },
-      );
+      final apiResponse = ApiResponse<List<ProductModel>>.fromJson(response, (
+        json,
+      ) {
+        final List raw = (json['products'] as List?) ?? [];
+        return raw
+            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      });
 
       if (apiResponse.success) {
         log("filter service search products : ${apiResponse.message}");

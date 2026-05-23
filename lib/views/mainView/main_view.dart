@@ -28,10 +28,12 @@ class MainView extends StatelessWidget {
     final controller = Get.find<MainViewController>();
     return Scaffold(
       body: SafeArea(
-        child: Obx(() => IndexedStack(
-              index: controller.selectedIndex.value,
-              children: _views,
-            )),
+        child: Obx(
+          () => IndexedStack(
+            index: controller.selectedIndex.value,
+            children: _views,
+          ),
+        ),
       ),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(

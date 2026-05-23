@@ -18,24 +18,24 @@ class GiftDetails {
   });
 
   factory GiftDetails.fromJson(Map<String, dynamic> json) => GiftDetails(
-        giftId: json['gift_id'] as int?,
-        title: json['title'] as String?,
-        arTitle: json['ar_title'] as String?,
-        points: json['points'] as int?,
-        image: json['image'] as String?,
-        status: json['status'] as String?,
-        redeemedAt: json['redeemed_at'] == null
-            ? null
-            : DateTime.parse(json['redeemed_at'] as String),
-      );
+    giftId: json['gift_id'] as int?,
+    title: json['title'] as String?,
+    arTitle: json['ar_title'] as String?,
+    points: json['points'] as int?,
+    image: json['image'] as String?,
+    status: json['status'] as String?,
+    redeemedAt: json['redeemed_at'] == null
+        ? null
+        : DateTime.parse(json['redeemed_at'] as String),
+  );
 
   Map<String, dynamic> toJson() => {
-        'gift_id': giftId,
-        'title': title,
-        'ar_title': arTitle,
-        'points': points,
-        'image': image,
-        'status': status,
-        'redeemed_at': redeemedAt?.toIso8601String(),
-      };
+    'gift_id': giftId,
+    'title': title,
+    'ar_title': arTitle,
+    'points': points,
+    'image': image,
+    'status': status,
+    'redeemed_at': redeemedAt?.toIso8601String(),
+  };
 }

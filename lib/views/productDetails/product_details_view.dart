@@ -47,12 +47,16 @@ class ProductDetailsView extends StatelessWidget {
                 child: Column(
                   children: [
                     // Header image reacts only to selectedOption changes
-                    Obx(() => ProductDetailsHeader(
-                          image: _resolveHeaderImage(controller.selectedOption.value),
-                          controller: controller,
-                          wishCtrl: wishCtrl,
-                        )),
-    
+                    Obx(
+                      () => ProductDetailsHeader(
+                        image: _resolveHeaderImage(
+                          controller.selectedOption.value,
+                        ),
+                        controller: controller,
+                        wishCtrl: wishCtrl,
+                      ),
+                    ),
+
                     // Static content — no Obx needed here
                     Expanded(
                       child: Padding(
@@ -89,22 +93,25 @@ class ProductDetailsView extends StatelessWidget {
                         ),
                       ),
                     ),
-    
+
                     // Button reacts only to isMutating changes
                     Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: Obx(() => MainButton(
-                            title: tr('product_details.add_to_cart'),
-                            onPressed: cartController.isMutating.value
-                                ? null
-                                : () async {
-                                    final quantity = await showQuantityInputDialog(
-                                      context,
-                                    );
-                                    if (quantity == null) return;
-                                    await controller.addToCart(quantity: quantity);
-                                  },
-                          )),
+                      child: Obx(
+                        () => MainButton(
+                          title: tr('product_details.add_to_cart'),
+                          onPressed: cartController.isMutating.value
+                              ? null
+                              : () async {
+                                  final quantity =
+                                      await showQuantityInputDialog(context);
+                                  if (quantity == null) return;
+                                  await controller.addToCart(
+                                    quantity: quantity,
+                                  );
+                                },
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -113,14 +120,16 @@ class ProductDetailsView extends StatelessWidget {
           ),
 
           // Loading overlay reacts only to isMutating changes
-          Obx(() => cartController.isMutating.value
-              ? Positioned.fill(
-                  child: Container(
-                    color: Colors.black.withValues(alpha: 0.15),
-                    child: const Center(child: CircularProgressIndicator()),
-                  ),
-                )
-              : const SizedBox.shrink()),
+          Obx(
+            () => cartController.isMutating.value
+                ? Positioned.fill(
+                    child: Container(
+                      color: Colors.black.withValues(alpha: 0.15),
+                      child: const Center(child: CircularProgressIndicator()),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
     );

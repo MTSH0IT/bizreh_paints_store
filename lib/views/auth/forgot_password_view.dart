@@ -64,20 +64,22 @@ class ForgotPasswordView extends StatelessWidget {
                     const SizedBox(height: 12),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Obx(() => MainButton(
-                            title: auth.isLoading.value
-                                ? tr('auth.please_wait')
-                                : tr('auth.forgot_password.send_button'),
-                            onPressed: auth.isLoading.value
-                                ? null
-                                : () async {
-                                    if (!(_formKey.currentState?.validate() ??
-                                        false)) {
-                                      return;
-                                    }
-                                    await auth.forgetPassword();
-                                  },
-                          )),
+                      child: Obx(
+                        () => MainButton(
+                          title: auth.isLoading.value
+                              ? tr('auth.please_wait')
+                              : tr('auth.forgot_password.send_button'),
+                          onPressed: auth.isLoading.value
+                              ? null
+                              : () async {
+                                  if (!(_formKey.currentState?.validate() ??
+                                      false)) {
+                                    return;
+                                  }
+                                  await auth.forgetPassword();
+                                },
+                        ),
+                      ),
                     ),
                     const SizedBox(height: 24),
                   ],
@@ -86,14 +88,16 @@ class ForgotPasswordView extends StatelessWidget {
             ),
           ),
           // Loading overlay — reacts only to isLoading
-          Obx(() => auth.isLoading.value
-              ? Positioned.fill(
-                  child: Container(
-                    color: Colors.black38,
-                    child: const BuildProgressIndicator(),
-                  ),
-                )
-              : const SizedBox.shrink()),
+          Obx(
+            () => auth.isLoading.value
+                ? Positioned.fill(
+                    child: Container(
+                      color: Colors.black38,
+                      child: const BuildProgressIndicator(),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
     );

@@ -9,18 +9,26 @@ import 'package:bizreh_paints_store/utils/func/text_input_dialog.dart';
 import 'package:bizreh_paints_store/utils/widgets/common_app_bar.dart';
 import 'widgets/order_history_item.dart';
 
-class OrderHistory extends StatelessWidget {
+class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final orderController = Get.find<OrderController>();
+  State<OrderHistory> createState() => _OrderHistoryState();
+}
 
-    if (orderController.orders.isEmpty &&
-        !orderController.isHistoryLoading.value) {
+class _OrderHistoryState extends State<OrderHistory> {
+  final OrderController orderController = Get.find<OrderController>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       orderController.loadOrderHistory();
-    }
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CommonAppBar(titleKey: 'orders.history.title'),
       body: Obx(() {
@@ -55,7 +63,7 @@ class OrderHistory extends StatelessWidget {
                 final date = formatDate(o.createdAt);
                 final amount = o.financialSummary?.total ?? 0.0;
                 final status = o.status ?? '';
-    
+
                 return OrderHistoryItem(
                   orderNo: o.orderNumber ?? '',
                   date: date,

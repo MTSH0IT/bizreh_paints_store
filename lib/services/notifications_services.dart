@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/notification_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class NotificationsServices {
   final IApiClient _apiClient;
 

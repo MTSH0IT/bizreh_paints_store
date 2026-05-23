@@ -11,10 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
 class DiscountsTab extends StatelessWidget {
-  const DiscountsTab({
-    super.key,
-    required this.ctrl,
-  });
+  const DiscountsTab({super.key, required this.ctrl});
 
   final RewardsController ctrl;
 
@@ -63,10 +60,7 @@ class DiscountsTab extends StatelessWidget {
 }
 
 class DiscountOfferCard extends StatelessWidget {
-  const DiscountOfferCard({
-    super.key,
-    required this.offer,
-  });
+  const DiscountOfferCard({super.key, required this.offer});
 
   final DiscontModel offer;
 
@@ -109,7 +103,9 @@ class DiscountOfferCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    color: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -213,7 +209,8 @@ class DiscountOfferCard extends StatelessWidget {
                   ),
                 ),
                 OutlinedButton.icon(
-                  onPressed: () => Get.to(() => DiscountDetailsView(offer: offer)),
+                  onPressed: () =>
+                      Get.to(() => DiscountDetailsView(offer: offer)),
                   icon: const Icon(Icons.arrow_forward_rounded, size: 18),
                   label: Text(tr('rewards.view_details')),
                   style: OutlinedButton.styleFrom(

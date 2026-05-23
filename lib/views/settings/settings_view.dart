@@ -35,17 +35,13 @@ class SettingsView extends StatelessWidget {
                               ListTile(
                                 title: Text(tr('settings.arabic')),
                                 onTap: () {
-                                  Navigator.of(
-                                    context,
-                                  ).pop(const Locale('ar'));
+                                  Navigator.of(context).pop(const Locale('ar'));
                                 },
                               ),
                               ListTile(
                                 title: Text(tr('settings.english')),
                                 onTap: () {
-                                  Navigator.of(
-                                    context,
-                                  ).pop(const Locale('en'));
+                                  Navigator.of(context).pop(const Locale('en'));
                                 },
                               ),
                             ],

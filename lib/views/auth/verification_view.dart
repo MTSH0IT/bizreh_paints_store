@@ -87,14 +87,16 @@ class _VerificationViewState extends State<VerificationView> {
             ),
           ),
           // Loading overlay — reacts only to isLoading
-          Obx(() => auth.isLoading.value
-              ? Positioned.fill(
-                  child: Container(
-                    color: Colors.black38,
-                    child: const BuildProgressIndicator(),
-                  ),
-                )
-              : const SizedBox.shrink()),
+          Obx(
+            () => auth.isLoading.value
+                ? Positioned.fill(
+                    child: Container(
+                      color: Colors.black38,
+                      child: const BuildProgressIndicator(),
+                    ),
+                  )
+                : const SizedBox.shrink(),
+          ),
         ],
       ),
     );

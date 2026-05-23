@@ -61,64 +61,67 @@ class NotificationsView extends StatelessWidget {
             constraints: const BoxConstraints(maxWidth: 800),
             child: Obx(() {
               if (controller.isNotificationsLoading.value) {
-            return const BuildProgressIndicator();
-          }
+                return const BuildProgressIndicator();
+              }
 
-          final list = controller.notifications;
+              final list = controller.notifications;
 
-          return AppRefreshWrapper(
-            onRefresh: () async {
-              await Future.wait([
-                controller.getUnreadCount(),
-                controller.getNotifications(),
-              ]);
-            },
-            child: controller.notifications.isEmpty
-                ? ListView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    children: [
-                      SizedBox(
-                        height: 300,
-                        child: Center(child: Text(tr('notifications.empty'))),
-                      ),
-                    ],
-                  )
-                : ListView.separated(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
-                    itemCount: list.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: 12),
-                    itemBuilder: (context, index) {
-                      final notification = list[index];
-                      return NotificationCard(
-                        notification: notification,
-                        onTap: () async {
-                          final id = notification.id;
-                          if (id != null && (notification.isRead ?? 0) != 1) {
-                            await controller.readNotification(id: id);
-                            notification.isRead = 1;
-                            controller.unreadCount.value--;
-                            controller.notifications.refresh();
-                          }
-
-                          showModalBottomSheet(
-                            context: context,
-                            isScrollControlled: true,
-                            backgroundColor: CardColor,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(20),
-                              ),
+              return AppRefreshWrapper(
+                onRefresh: () async {
+                  await Future.wait([
+                    controller.getUnreadCount(),
+                    controller.getNotifications(),
+                  ]);
+                },
+                child: controller.notifications.isEmpty
+                    ? ListView(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        children: [
+                          SizedBox(
+                            height: 300,
+                            child: Center(
+                              child: Text(tr('notifications.empty')),
                             ),
-                            builder: (context) => NotificationDetailsSheet(
-                              notification: notification,
-                            ),
+                          ),
+                        ],
+                      )
+                    : ListView.separated(
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
+                        itemCount: list.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 12),
+                        itemBuilder: (context, index) {
+                          final notification = list[index];
+                          return NotificationCard(
+                            notification: notification,
+                            onTap: () async {
+                              final id = notification.id;
+                              if (id != null &&
+                                  (notification.isRead ?? 0) != 1) {
+                                await controller.readNotification(id: id);
+                                notification.isRead = 1;
+                                controller.unreadCount.value--;
+                                controller.notifications.refresh();
+                              }
+
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: CardColor,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.vertical(
+                                    top: Radius.circular(20),
+                                  ),
+                                ),
+                                builder: (context) => NotificationDetailsSheet(
+                                  notification: notification,
+                                ),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                  ),
-          );
+                      ),
+              );
             }),
           ),
         ),

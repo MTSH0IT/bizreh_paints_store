@@ -470,5 +470,21 @@
     "enter_quantity": "أدخل الكمية",
     "quantity_hint": "مثال: 1",
     "confirm_purchase": "تأكيد الطلب"
+  },
+  "activity_status": {
+    "title": "حالة نشاط الحساب",
+    "payments_title": "الدفوعات",
+    "orders_title": "الطلبات",
+    "points_title": "النقاط",
+    "total_payments": "إجمالي المدفوعات",
+    "total_bonus": "اجمالي البونص",
+    "remaining_amount": "اجمالي المتبقي",
+    "payments_count": "عدد عمليات الدفع",
+    "orders_count": "عدد الطلبات",
+    "total_orders_price": "إجمالي سعر الطلبات",
+    "points_balance": "رصيد النقاط الإجمالي",
+    "earned_points": "النقاط المكتسبة",
+    "transactions_count": "عدد العمليات",
+    "spent_points": "النقاط المستهلكة"
   }
 }

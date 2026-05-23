@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/models/points_history_model/points_history_m
 import 'package:bizreh_paints_store/models/user_points_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class PointsServices {
   final IApiClient _apiClient;
 

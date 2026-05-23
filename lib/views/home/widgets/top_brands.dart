@@ -44,10 +44,7 @@ class TopBrands extends StatelessWidget {
 }
 
 class BrandItem extends StatelessWidget {
-  const BrandItem({
-    super.key,
-    required this.item,
-  });
+  const BrandItem({super.key, required this.item});
 
   final BrandModel item;
 

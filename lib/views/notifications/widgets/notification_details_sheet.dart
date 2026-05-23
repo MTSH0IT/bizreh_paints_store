@@ -26,52 +26,52 @@ class NotificationDetailsSheet extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Center(
-              child: Container(
-                width: 40,
-                height: 4,
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade500,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-              ),
-            ),
-            Row(
-              children: [
-                Icon(Icons.notifications_none_rounded, color: primaryColor),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    notification.title ?? '',
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                Center(
+                  child: Container(
+                    width: 40,
+                    height: 4,
+                    margin: const EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade500,
+                      borderRadius: BorderRadius.circular(50),
                     ),
                   ),
                 ),
+                Row(
+                  children: [
+                    Icon(Icons.notifications_none_rounded, color: primaryColor),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        notification.title ?? '',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                ...[
+                  const SizedBox(height: 4),
+                  Text(
+                    dateText,
+                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
+                  ),
+                ],
+                const SizedBox(height: 12),
+                const Divider(),
+                const SizedBox(height: 12),
+                Text(
+                  notification.message ?? '',
+                  style: const TextStyle(fontSize: 18, height: 1.5),
+                ),
+                const SizedBox(height: 24),
               ],
             ),
-            ...[
-              const SizedBox(height: 4),
-              Text(
-                dateText,
-                style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-              ),
-            ],
-            const SizedBox(height: 12),
-            const Divider(),
-            const SizedBox(height: 12),
-            Text(
-              notification.message ?? '',
-              style: const TextStyle(fontSize: 18, height: 1.5),
-            ),
-            const SizedBox(height: 24),
-          ],
+          ),
         ),
       ),
-    ),
-  ),
-);
+    );
   }
 }

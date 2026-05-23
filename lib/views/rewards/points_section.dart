@@ -10,10 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 
 class PointsRulesTab extends StatelessWidget {
-  const PointsRulesTab({
-    super.key,
-    required this.ctrl,
-  });
+  const PointsRulesTab({super.key, required this.ctrl});
 
   final RewardsController ctrl;
 
@@ -62,10 +59,7 @@ class PointsRulesTab extends StatelessWidget {
 }
 
 class PointsRuleCard extends StatelessWidget {
-  const PointsRuleCard({
-    super.key,
-    required this.rule,
-  });
+  const PointsRuleCard({super.key, required this.rule});
 
   final PointRuleModel rule;
 
@@ -114,7 +108,9 @@ class PointsRuleCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(8),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor.withValues(alpha: 0.1),
+                    color: Theme.of(
+                      context,
+                    ).primaryColor.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
                   child: Icon(
@@ -194,16 +190,28 @@ class PointsRuleCard extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: 6),
                   child: Row(
                     children: [
-                      Icon(Icons.business_outlined, size: 16, color: Colors.grey.shade600),
+                      Icon(
+                        Icons.business_outlined,
+                        size: 16,
+                        color: Colors.grey.shade600,
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         '${tr('rewards.brand')}: ',
-                        style: TextStyle(color: Colors.grey.shade700, fontSize: 13, fontWeight: FontWeight.w500),
+                        style: TextStyle(
+                          color: Colors.grey.shade700,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                       Expanded(
                         child: Text(
                           brandTitle,
-                          style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w600),
+                          style: const TextStyle(
+                            color: Colors.black87,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ],
@@ -212,16 +220,28 @@ class PointsRuleCard extends StatelessWidget {
               if (packagingTitle.isNotEmpty)
                 Row(
                   children: [
-                    Icon(Icons.view_in_ar_outlined, size: 16, color: Colors.grey.shade600),
+                    Icon(
+                      Icons.view_in_ar_outlined,
+                      size: 16,
+                      color: Colors.grey.shade600,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       '${tr('rewards.packaging')}: ',
-                      style: TextStyle(color: Colors.grey.shade700, fontSize: 13, fontWeight: FontWeight.w500),
+                      style: TextStyle(
+                        color: Colors.grey.shade700,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                     Expanded(
                       child: Text(
                         packagingTitle,
-                        style: const TextStyle(color: Colors.black87, fontSize: 13, fontWeight: FontWeight.w600),
+                        style: const TextStyle(
+                          color: Colors.black87,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],

@@ -11,6 +11,7 @@ import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:bizreh_paints_store/models/user_report.dart';
 
 class PersonalController extends GetxController {
   final UserService _userService;
@@ -46,6 +47,8 @@ class PersonalController extends GetxController {
   String get password => passwordCtrl.text.trim();
 
   final RxBool isLoding = false.obs;
+  final Rxn<UserReport> userReport = Rxn<UserReport>();
+  final RxBool isReportLoading = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -191,6 +194,22 @@ class PersonalController extends GetxController {
       showMassage(tr('common.error_try_again'), false);
     } finally {
       isLoding.value = false;
+    }
+  }
+
+  Future<void> fetchUserReport() async {
+    isReportLoading.value = true;
+    try {
+      final report = await _userService.getUserReport();
+      userReport.value = report;
+    } on AppException catch (e) {
+      log("personal controller AppException fetchUserReport : ${e.message}");
+      showMassage(e.message, false);
+    } catch (e) {
+      log("personal controller catch fetchUserReport : ${e.toString()}");
+      showMassage(tr('common.error_try_again'), false);
+    } finally {
+      isReportLoading.value = false;
     }
   }
 }

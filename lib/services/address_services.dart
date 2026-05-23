@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/models/address_model.dart';
 import 'package:bizreh_paints_store/models/cities_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class AddressServices {
   final IApiClient _apiClient;
 
@@ -14,13 +15,12 @@ class AddressServices {
   Future<List<AddressModel>> getAddresses() async {
     try {
       final response = await _apiClient.get(ApiEndpoint.getAddresses);
-      final apiResponse = ApiResponse<List<AddressModel>>.fromJson(
-        response,
-        (json) {
-          final list = json['addresses'] as List? ?? [];
-          return list.map((e) => AddressModel.fromJson(e)).toList();
-        },
-      );
+      final apiResponse = ApiResponse<List<AddressModel>>.fromJson(response, (
+        json,
+      ) {
+        final list = json['addresses'] as List? ?? [];
+        return list.map((e) => AddressModel.fromJson(e)).toList();
+      });
       if (apiResponse.success && apiResponse.data != null) {
         return apiResponse.data as List<AddressModel>;
       } else {

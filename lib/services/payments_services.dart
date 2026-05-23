@@ -5,6 +5,7 @@ import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
 import 'package:bizreh_paints_store/models/payments_model/payments_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class PaymentsServices {
   final IApiClient _apiClient;
 
@@ -13,9 +14,7 @@ class PaymentsServices {
   Future<PaymentsModel> getPayments() async {
     try {
       final response = await _apiClient.get(ApiEndpoint.getPayments);
-      final apiResponse = ApiResponse<PaymentsModel>.fromJson(response, (
-        json,
-      ) {
+      final apiResponse = ApiResponse<PaymentsModel>.fromJson(response, (json) {
         final data = (json as Map<String, dynamic>?) ?? {};
         return PaymentsModel.fromJson(data);
       });

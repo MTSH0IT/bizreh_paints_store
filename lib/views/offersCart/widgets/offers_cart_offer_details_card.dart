@@ -5,10 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class OffersCartOfferDetailsCard extends StatelessWidget {
-  const OffersCartOfferDetailsCard({
-    super.key,
-    required this.offer,
-  });
+  const OffersCartOfferDetailsCard({super.key, required this.offer});
 
   final OffersCartModel offer;
 

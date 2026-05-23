@@ -102,4 +102,5 @@ class ApiEndpoint {
 
   //payments
   static const String getPayments = "/user/payment";
+  static const String getUserReport = "/user/payment/report";
 }

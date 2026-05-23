@@ -57,80 +57,84 @@ class _ManageAddressViewState extends State<ManageAddressView> {
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
             child: Obx(() {
-              final citiesOptions = addressController.getLocalizedCities(context);
+              final citiesOptions = addressController.getLocalizedCities(
+                context,
+              );
               final selectedCityName = addressController
                   .getSelectedCityLocalizedName(context);
               final center = _currentCenter();
 
-          return Stack(
-            children: [
-              ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8,
-                ),
+              return Stack(
                 children: [
-                  LabeledTextField(
-                    hint: tr('address.nickname_hint'),
-                    label: tr('address.nickname'),
-                    controller: addressController.nicknameCtrl,
+                  ListView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
+                    children: [
+                      LabeledTextField(
+                        hint: tr('address.nickname_hint'),
+                        label: tr('address.nickname'),
+                        controller: addressController.nicknameCtrl,
+                      ),
+                      CityDropdown(
+                        label: tr('address.city'),
+                        value: selectedCityName,
+                        options: citiesOptions.isEmpty
+                            ? const ['']
+                            : citiesOptions,
+                        onChanged: (v) => addressController
+                            .updateCityByLocalizedName(v, context),
+                      ),
+                      LabeledTextField(
+                        hint: tr('address.address_line_hint'),
+                        label: tr('address.address_line'),
+                        controller: addressController.addressLineCtrl,
+                      ),
+                      LabeledTextField(
+                        hint: tr('address.notes_hint'),
+                        label: tr('address.notes'),
+                        controller: addressController.noteCtrl,
+                        maxLines: 3,
+                      ),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        onTap: () async {
+                          if (center == null) return;
+                          final selectedLocation = await Get.to<LatLng>(
+                            () => FullScreenMap(initialCenter: center),
+                          );
+                          if (selectedLocation != null) {
+                            addressController.latitude.value =
+                                selectedLocation.latitude;
+                            addressController.longitude.value =
+                                selectedLocation.longitude;
+                          }
+                        },
+                        child: MapCard(center: center),
+                      ),
+                      const SizedBox(height: 20),
+                      MainButton(
+                        onPressed: addressController.isSubmitting.value
+                            ? null
+                            : _handleSave,
+                        title: addressController.isSubmitting.value
+                            ? tr('address.please_wait')
+                            : (widget.address != null
+                                  ? tr('address.update')
+                                  : tr('address.save')),
+                      ),
+                    ],
                   ),
-                  CityDropdown(
-                    label: tr('address.city'),
-                    value: selectedCityName,
-                    options: citiesOptions.isEmpty ? const [''] : citiesOptions,
-                    onChanged: (v) =>
-                        addressController.updateCityByLocalizedName(v, context),
-                  ),
-                  LabeledTextField(
-                    hint: tr('address.address_line_hint'),
-                    label: tr('address.address_line'),
-                    controller: addressController.addressLineCtrl,
-                  ),
-                  LabeledTextField(
-                    hint: tr('address.notes_hint'),
-                    label: tr('address.notes'),
-                    controller: addressController.noteCtrl,
-                    maxLines: 3,
-                  ),
-                  const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: () async {
-                      if (center == null) return;
-                      final selectedLocation = await Get.to<LatLng>(
-                        () => FullScreenMap(initialCenter: center),
-                      );
-                      if (selectedLocation != null) {
-                        addressController.latitude.value =
-                            selectedLocation.latitude;
-                        addressController.longitude.value =
-                            selectedLocation.longitude;
-                      }
-                    },
-                    child: MapCard(center: center),
-                  ),
-                  const SizedBox(height: 20),
-                  MainButton(
-                    onPressed: addressController.isSubmitting.value
-                        ? null
-                        : _handleSave,
-                    title: addressController.isSubmitting.value
-                        ? tr('address.please_wait')
-                        : (widget.address != null
-                              ? tr('address.update')
-                              : tr('address.save')),
-                  ),
+                  if (addressController.isSubmitting.value)
+                    const Positioned.fill(
+                      child: ColoredBox(
+                        color: Colors.black38,
+                        child: BuildProgressIndicator(),
+                      ),
+                    ),
                 ],
-              ),
-              if (addressController.isSubmitting.value)
-                const Positioned.fill(
-                  child: ColoredBox(
-                    color: Colors.black38,
-                    child: BuildProgressIndicator(),
-                  ),
-                ),
-            ],
-          );
+              );
             }),
           ),
         ),

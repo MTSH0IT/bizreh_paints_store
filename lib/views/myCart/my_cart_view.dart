@@ -55,21 +55,24 @@ class MyCartView extends StatelessWidget {
                       ),
                       CartSummarySection(
                         summary: cart.summary,
-                        onCheckout: () => Get.to(() => const OrderInitFlowView()),
+                        onCheckout: () =>
+                            Get.to(() => const OrderInitFlowView()),
                       ),
                     ],
                   ),
                 ),
               ),
               // Loading overlay reacts only to isMutating
-              Obx(() => cartController.isMutating.value
-                  ? Positioned.fill(
-                      child: Container(
-                        color: Colors.black.withValues(alpha: 0.15),
-                        child: const BuildProgressIndicator(),
-                      ),
-                    )
-                  : const SizedBox.shrink()),
+              Obx(
+                () => cartController.isMutating.value
+                    ? Positioned.fill(
+                        child: Container(
+                          color: Colors.black.withValues(alpha: 0.15),
+                          child: const BuildProgressIndicator(),
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+              ),
             ],
           );
         }),

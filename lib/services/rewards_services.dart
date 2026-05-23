@@ -6,6 +6,7 @@ import 'package:bizreh_paints_store/models/discont_model/discont_model.dart';
 import 'package:bizreh_paints_store/models/point_rule_model.dart';
 import 'package:bizreh_paints_store/utils/api_response.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
+
 class RewardsServices {
   final IApiClient _apiClient;
 
@@ -14,15 +15,14 @@ class RewardsServices {
   Future<List<DiscontModel>> getDiscountOffers() async {
     try {
       final response = await _apiClient.get(ApiEndpoint.getDiscountOffers);
-      final apiResponse = ApiResponse<List<DiscontModel>>.fromJson(
-        response,
-        (json) {
-          final list = (json as List?) ?? [];
-          return list
-              .map((e) => DiscontModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-        },
-      );
+      final apiResponse = ApiResponse<List<DiscontModel>>.fromJson(response, (
+        json,
+      ) {
+        final list = (json as List?) ?? [];
+        return list
+            .map((e) => DiscontModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      });
 
       if (apiResponse.success && apiResponse.data != null) {
         return apiResponse.data!;
@@ -40,15 +40,14 @@ class RewardsServices {
   Future<List<PointRuleModel>> getPointsRules() async {
     try {
       final response = await _apiClient.get(ApiEndpoint.getPointsRules);
-      final apiResponse = ApiResponse<List<PointRuleModel>>.fromJson(
-        response,
-        (json) {
-          final list = (json as List?) ?? [];
-          return list
-              .map((e) => PointRuleModel.fromJson(e as Map<String, dynamic>))
-              .toList();
-        },
-      );
+      final apiResponse = ApiResponse<List<PointRuleModel>>.fromJson(response, (
+        json,
+      ) {
+        final list = (json as List?) ?? [];
+        return list
+            .map((e) => PointRuleModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      });
 
       if (apiResponse.success && apiResponse.data != null) {
         return apiResponse.data!;

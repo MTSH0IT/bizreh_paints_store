@@ -42,8 +42,6 @@ class ActivityStatusCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 14.0),
           child: Row(
             children: [
-              // Inside RTL: index 0 (this container) will be placed on the right.
-              // Inside LTR: index 0 will be placed on the left.
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -60,7 +58,7 @@ class ActivityStatusCard extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 11,
@@ -71,7 +69,7 @@ class ActivityStatusCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       value,
-                      maxLines: 1,
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
                         fontSize: 16,

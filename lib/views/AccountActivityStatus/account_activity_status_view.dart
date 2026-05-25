@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/views/payments/payments_view.dart';
 import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';
@@ -30,6 +32,27 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
     });
   }
 
+  Widget _buildResponsiveRow({
+    required Widget child1,
+    required Widget child2,
+    required bool isSmallScreen,
+  }) {
+    if (isSmallScreen) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [child1, const SizedBox(height: 8), child2],
+      );
+    } else {
+      return Row(
+        children: [
+          Expanded(child: child1),
+          const SizedBox(width: 8),
+          Expanded(child: child2),
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,48 +69,53 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
           alignment: Alignment.topCenter,
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 800),
-            child: Obx(() {
-              final isLoading = ctrl.isReportLoading.value;
-              final report = ctrl.userReport.value;
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final isSmallScreen = constraints.maxWidth < 370;
 
-              if (isLoading && report == null) {
-                return const BuildProgressIndicator();
-              }
+                return Obx(() {
+                  final isLoading = ctrl.isReportLoading.value;
+                  final report = ctrl.userReport.value;
 
-              final totalPayments = report?.totalPayments?.toString() ?? '0';
-              final totalBonus = report?.totalBonus?.toString() ?? '0';
-              final totalRemaining = report?.totalRemaining?.toString() ?? '0';
-              final paymentCount = report?.paymentCount?.toString() ?? '0';
-              final ordersTotal = report?.ordersTotal?.toString() ?? '0';
-              final ordersCount = report?.ordersCount?.toString() ?? '0';
-              final totalPointsBalance =
-                  report?.totalPointsBalance?.toString() ?? '0';
-              final pointsEarned = report?.pointsEarned?.toString() ?? '0';
-              final pointsSpent = report?.pointsSpent?.toString() ?? '0';
-              final totalOperations =
-                  report?.totalOperations?.toString() ?? '0';
+                  if (isLoading && report == null) {
+                    return const BuildProgressIndicator();
+                  }
 
-              return SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 12.0,
-                ),
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // --- PAYMENTS SECTION ---
-                    ActivitySectionHeader(
-                      title: tr('activity_status.payments_title'),
-                      onTap: () {
-                        Get.to(() => const PaymentsView());
-                      },
+                  final totalPayments =
+                      report?.totalPayments?.toString() ?? '0';
+                  final totalBonus = report?.totalBonus?.toString() ?? '0';
+                  final totalRemaining =
+                      report?.totalRemaining?.toString() ?? '0';
+                  final paymentCount = report?.paymentCount?.toString() ?? '0';
+                  final ordersTotal = report?.ordersTotal?.toString() ?? '0';
+                  final ordersCount = report?.ordersCount?.toString() ?? '0';
+                  final totalPointsBalance =
+                      report?.totalPointsBalance?.toString() ?? '0';
+                  final pointsEarned = report?.pointsEarned?.toString() ?? '0';
+                  final pointsSpent = report?.pointsSpent?.toString() ?? '0';
+                  final totalOperations =
+                      report?.totalOperations?.toString() ?? '0';
+
+                  return SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0,
+                      vertical: 12.0,
                     ),
-                    const SizedBox(height: 8),
-                    Row(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Expanded(
-                          child: ActivityStatusCard(
+                        // --- PAYMENTS SECTION ---
+                        ActivitySectionHeader(
+                          title: tr('activity_status.payments_title'),
+                          onTap: () {
+                            Get.to(() => const PaymentsView());
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        _buildResponsiveRow(
+                          isSmallScreen: isSmallScreen,
+                          child1: ActivityStatusCard(
                             title: tr('activity_status.total_payments'),
                             value: totalPayments,
                             icon: Icons.credit_card_rounded,
@@ -95,10 +123,7 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             iconBgColor: Colors.blue.shade50,
                             valueColor: primaryColor,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ActivityStatusCard(
+                          child2: ActivityStatusCard(
                             title: tr('activity_status.total_bonus'),
                             value: totalBonus,
                             icon: Icons.redeem_rounded,
@@ -107,13 +132,10 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             valueColor: primaryColor,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ActivityStatusCard(
+                        const SizedBox(height: 12),
+                        _buildResponsiveRow(
+                          isSmallScreen: isSmallScreen,
+                          child1: ActivityStatusCard(
                             title: tr('activity_status.remaining_amount'),
                             value: totalRemaining,
                             icon: Icons.account_balance_wallet_rounded,
@@ -121,10 +143,7 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             iconBgColor: Colors.red.shade50,
                             valueColor: Colors.red.shade700,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ActivityStatusCard(
+                          child2: ActivityStatusCard(
                             title: tr('activity_status.payments_count'),
                             value: paymentCount,
                             icon: Icons.receipt_rounded,
@@ -133,22 +152,19 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             valueColor: Colors.black87,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
+                        const SizedBox(height: 24),
 
-                    // --- ORDERS SECTION ---
-                    ActivitySectionHeader(
-                      title: tr('activity_status.orders_title'),
-                      onTap: () {
-                        Get.to(() => const OrderHistory());
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ActivityStatusCard(
+                        // --- ORDERS SECTION ---
+                        ActivitySectionHeader(
+                          title: tr('activity_status.orders_title'),
+                          onTap: () {
+                            Get.to(() => const OrderHistory());
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        _buildResponsiveRow(
+                          isSmallScreen: isSmallScreen,
+                          child1: ActivityStatusCard(
                             title: tr('activity_status.total_orders_price'),
                             value: ordersTotal,
                             icon: Icons.shopping_cart_rounded,
@@ -156,10 +172,7 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             iconBgColor: Colors.blue.shade50,
                             valueColor: Colors.black87,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ActivityStatusCard(
+                          child2: ActivityStatusCard(
                             title: tr('activity_status.orders_count'),
                             value: ordersCount,
                             icon: Icons.inventory_rounded,
@@ -168,22 +181,19 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             valueColor: Colors.black87,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 24),
+                        const SizedBox(height: 24),
 
-                    // --- POINTS SECTION ---
-                    ActivitySectionHeader(
-                      title: tr('activity_status.points_title'),
-                      onTap: () {
-                        Get.to(() => const EranedPointsView());
-                      },
-                    ),
-                    const SizedBox(height: 8),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ActivityStatusCard(
+                        // --- POINTS SECTION ---
+                        ActivitySectionHeader(
+                          title: tr('activity_status.points_title'),
+                          onTap: () {
+                            Get.to(() => const EranedPointsView());
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        _buildResponsiveRow(
+                          isSmallScreen: isSmallScreen,
+                          child1: ActivityStatusCard(
                             title: tr('activity_status.points_balance'),
                             value: totalPointsBalance,
                             icon: Icons.star_rounded,
@@ -191,10 +201,7 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             iconBgColor: Colors.indigo.shade50,
                             valueColor: Colors.indigo.shade700,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ActivityStatusCard(
+                          child2: ActivityStatusCard(
                             title: tr('activity_status.earned_points'),
                             value: pointsEarned,
                             icon: Icons.add_circle_outline_rounded,
@@ -203,13 +210,10 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             valueColor: Colors.indigo.shade700,
                           ),
                         ),
-                      ],
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: ActivityStatusCard(
+                        const SizedBox(height: 12),
+                        _buildResponsiveRow(
+                          isSmallScreen: isSmallScreen,
+                          child1: ActivityStatusCard(
                             title: tr('activity_status.spent_points'),
                             value: pointsSpent,
                             icon: Icons.remove_circle_outline_rounded,
@@ -217,10 +221,7 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             iconBgColor: Colors.orange.shade50,
                             valueColor: Colors.orange.shade700,
                           ),
-                        ),
-                        const SizedBox(width: 12),
-                        Expanded(
-                          child: ActivityStatusCard(
+                          child2: ActivityStatusCard(
                             title: tr('activity_status.transactions_count'),
                             value: totalOperations,
                             icon: Icons.receipt_long_rounded,
@@ -229,17 +230,16 @@ class _AccountActivityStatusViewState extends State<AccountActivityStatusView> {
                             valueColor: Colors.black87,
                           ),
                         ),
+                        const SizedBox(height: 24),
                       ],
                     ),
-                    const SizedBox(height: 24),
-                  ],
-                ),
-              );
-            }),
+                  );
+                });
+              },
+            ),
           ),
         ),
       ),
     );
   }
 }
-

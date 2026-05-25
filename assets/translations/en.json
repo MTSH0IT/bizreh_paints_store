@@ -486,5 +486,11 @@
     "earned_points": "Earned Points",
     "transactions_count": "Transactions Count",
     "spent_points": "Spent Points"
+  },
+  "exit_dialog": {
+    "title": "Exit App",
+    "message": "Are you sure you want to exit the app?",
+    "confirm": "Exit",
+    "cancel": "Cancel"
   }
 }

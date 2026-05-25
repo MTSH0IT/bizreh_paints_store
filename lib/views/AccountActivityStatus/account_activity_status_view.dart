@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/views/payments/payments_view.dart';
 import 'package:bizreh_paints_store/views/orderHistory/order_history.dart';

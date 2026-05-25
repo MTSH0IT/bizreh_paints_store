@@ -1,9 +1,11 @@
 import 'package:bizreh_paints_store/views/wishList/wish_list_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
 import 'package:bizreh_paints_store/controllers/main_view_controller.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
+import 'package:bizreh_paints_store/utils/widgets/confirmation_dialog.dart';
 import 'package:bizreh_paints_store/views/home/home_view.dart';
 import 'package:bizreh_paints_store/views/myCart/my_cart_view.dart';
 import 'package:bizreh_paints_store/views/profile/profile_view.dart';
@@ -26,50 +28,69 @@ class MainView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MainViewController>();
-    return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => IndexedStack(
-            index: controller.selectedIndex.value,
-            children: _views,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (didPop) return;
+        showDialog(
+          context: context,
+          builder: (context) => ConfirmationDialog(
+            title: tr('exit_dialog.title'),
+            message: tr('exit_dialog.message'),
+            confirmText: tr('exit_dialog.confirm'),
+            cancelText: tr('exit_dialog.cancel'),
+            onConfirm: () {
+              SystemNavigator.pop();
+            },
+          ),
+        );
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Obx(
+            () => IndexedStack(
+              index: controller.selectedIndex.value,
+              children: _views,
+            ),
           ),
         ),
-      ),
-      bottomNavigationBar: Obx(
-        () => BottomNavigationBar(
-          backgroundColor: Colors.white,
-          selectedItemColor: primaryColor,
-          currentIndex: controller.selectedIndex.value,
-          type: BottomNavigationBarType.fixed,
-          onTap: (i) => controller.selectedIndex.value = i,
-          items: [
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home_outlined),
-              label: tr('home.title'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.card_giftcard),
-              label: tr('gifts.title'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.search),
-              label: tr('search.search'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.favorite_border),
-              label: tr('wishlist.title'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.shopping_cart_outlined),
-              label: tr('cart.sub_title'),
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.person_outline),
-              label: tr('profile.account'),
-            ),
-          ],
+        bottomNavigationBar: Obx(
+          () => BottomNavigationBar(
+            backgroundColor: Colors.white,
+            selectedItemColor: primaryColor,
+            currentIndex: controller.selectedIndex.value,
+            type: BottomNavigationBarType.fixed,
+            onTap: (i) => controller.selectedIndex.value = i,
+            items: [
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.home_outlined),
+                label: tr('home.title'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.card_giftcard),
+                label: tr('gifts.title'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.search),
+                label: tr('search.search'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.favorite_border),
+                label: tr('wishlist.title'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.shopping_cart_outlined),
+                label: tr('cart.sub_title'),
+              ),
+              BottomNavigationBarItem(
+                icon: const Icon(Icons.person_outline),
+                label: tr('profile.account'),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
+

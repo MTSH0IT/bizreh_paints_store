@@ -33,7 +33,7 @@ class UserReport {
     totalPointsBalance: json['total_points_balance'] as int?,
     pointsEarned: json['points_earned'] as int?,
     pointsSpent: json['points_spent'] as int?,
-    totalOperations: json['total_operations'] as int?,
+    totalOperations: json['points_redemption_count'] as int?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -47,6 +47,6 @@ class UserReport {
     'points_earned': pointsEarned,
     'points_spent': pointsSpent,
     'total_operations': totalOperations,
+    'points_redemption_count': totalOperations,
   };
 }
-

@@ -198,6 +198,8 @@
     "no_delivery_address_selected": "لم يتم تحديد عنوان للتوصيل",
     "order_items": "عناصر الطلب",
     "unknown_product": "منتج غير معروف",
+    "option": "الخيار",
+    "packaging": "التغليف",
     "color": "اللون",
     "qty": "الكمية",
     "order_summary": "ملخص الطلب",
@@ -206,7 +208,8 @@
     "delivery_fee": "رسوم التوصيل",
     "discount": "الخصم",
     "total": "الإجمالي",
-    "no_items_in_cart": "لا توجد عناصر في السلة"
+    "no_items_in_cart": "لا توجد عناصر في السلة",
+    "points_earned": "النقاط"
   },
   "order_details": {
     "show_qr": "عرض QR الطلب",
@@ -234,7 +237,8 @@
     "packaging": "التغليف",
     "order_summary": "ملخص الطلب",
     "shipping_details": "تفاصيل الشحن",
-    "total": "الإجمالي"
+    "total": "الإجمالي",
+    "total_points": "إجمالي النقاط"
   },
   "address": {
     "edit": "تعديل العنوان",

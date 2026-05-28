@@ -33,11 +33,20 @@ class OrderSummaryCard extends StatelessWidget {
                 formatPriceWithSymbol(subTotal, symbol: '\$'),
               ),
               const SizedBox(height: 8),
-              _buildSummaryRow(
-                tr('order_details.total_discount'),
-                '- ${formatPriceWithSymbol(totalDiscount, symbol: '\$')}',
-              ),
-              const SizedBox(height: 8),
+              if (totalDiscount != null && totalDiscount > 0) ...[
+                _buildSummaryRow(
+                  tr('order_details.total_discount'),
+                  '- ${formatPriceWithSymbol(totalDiscount, symbol: '\$')}',
+                ),
+                const SizedBox(height: 8),
+              ],
+              if (summary.totalPoints != null && summary.totalPoints! > 0) ...[
+                _buildSummaryRow(
+                  tr('order_details.total_points'),
+                  '${summary.totalPoints} ${tr('gifts.points')}',
+                ),
+                const SizedBox(height: 8),
+              ],
             ],
             _buildSummaryRow(
               tr('order_details.total'),

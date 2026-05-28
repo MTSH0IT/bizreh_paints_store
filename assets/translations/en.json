@@ -198,6 +198,8 @@
     "no_delivery_address_selected": "No delivery address selected",
     "order_items": "Order Items",
     "unknown_product": "Unknown Product",
+    "option": "Option",
+    "packaging": "Packaging",
     "color": "Color",
     "qty": "Qty",
     "order_summary": "Order summary",
@@ -206,7 +208,8 @@
     "delivery_fee": "Delivery Fee",
     "discount": "Discount",
     "total": "Total",
-    "no_items_in_cart": "No items in cart"
+    "no_items_in_cart": "No items in cart",
+    "points_earned": "Points"
   },
   "order_details": {
     "show_qr": "Show Order QR",
@@ -234,7 +237,8 @@
     "packaging": "Packaging",
     "order_summary": "Order Summary",
     "shipping_details": "Shipping Details",
-    "total": "Total"
+    "total": "Total",
+    "total_points": "Total Points"
   },
   "address": {
     "edit": "Edit Address",

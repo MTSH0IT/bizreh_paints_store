@@ -309,8 +309,8 @@ class PointsHistoryItem extends StatelessWidget {
   }
 
   String _buildTypeTitle(BuildContext context) {
-    final text = _cleanText(item.referenceTypeAr, fallback: item.referenceType);
-    if (text.isNotEmpty) return text;
+    // final text = _cleanText(item.referenceTypeAr, fallback: item.referenceType);
+    // if (text.isNotEmpty) return text;
     final isSpent = (item.pointsType ?? '').toLowerCase() == 'spent';
     return isSpent ? tr('points.gift_redemption') : tr('points.order_earning');
   }

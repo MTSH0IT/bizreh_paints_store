@@ -23,6 +23,7 @@ class Item {
   Brand? brand;
   num? subtotal;
   dynamic availableStock;
+  num? pointsEarned;
 
   Item({
     this.id,
@@ -43,6 +44,7 @@ class Item {
     this.brand,
     this.subtotal,
     this.availableStock,
+    this.pointsEarned,
   });
 
   factory Item.fromJson(Map<String, dynamic> json) => Item(
@@ -76,6 +78,7 @@ class Item {
         : Brand.fromJson(json['brand'] as Map<String, dynamic>),
     subtotal: json['subtotal'] as num?,
     availableStock: json['available_stock'] as dynamic,
+    pointsEarned: json['points_earned'] as num?,
   );
 
   Map<String, dynamic> toJson() => {
@@ -97,5 +100,6 @@ class Item {
     'brand': brand?.toJson(),
     'subtotal': subtotal,
     'available_stock': availableStock,
+    'points_earned': pointsEarned,
   };
 }

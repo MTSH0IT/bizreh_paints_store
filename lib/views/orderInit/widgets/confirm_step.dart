@@ -1,9 +1,8 @@
+import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
 import 'package:easy_localization/easy_localization.dart';
-import 'package:bizreh_paints_store/utils/func/price_format.dart';
-import 'package:bizreh_paints_store/utils/func/color_degree.dart';
-import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:bizreh_paints_store/views/orderInit/widgets/confirm_item_tile.dart';
 import 'package:bizreh_paints_store/controllers/order_controller.dart';
 
 class ConfirmStep extends StatelessWidget {
@@ -62,122 +61,18 @@ class ConfirmStep extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               if (cart?.items != null && cart!.items!.isNotEmpty) ...[
-                ...cart.items!.map(
-                  (item) => Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                item.product?.title ??
-                                    tr('order_init.unknown_product'),
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              if (item.option?.optionName != null) ...[
-                                const SizedBox(height: 2),
-                                Text(
-                                  item.option!.optionName!,
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                              ],
-                              if (item.packaging?.color?.degree != null) ...[
-                                const SizedBox(height: 2),
-                                Row(
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                        '${tr('order_init.color')}: ${item.packaging!.color!.degree!}',
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey[600],
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 4),
-                                    ColorDot(
-                                      color: parseColorDegree(
-                                        item.packaging!.color!.degree!,
-                                      ),
-                                      selected: false,
-                                      width: 16,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ],
-                          ),
+                ...cart.items!.expand(
+                  (item) => [
+                    ConfirmItemTile(item: item),
+                    if (item != cart.items!.last)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 45,
+                          vertical: 8,
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: Text(
-                            '${tr('order_init.qty')}: ${item.quantityPerUnit}',
-                            style: const TextStyle(fontSize: 12),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Builder(
-                            builder: (context) {
-                              final totalPrice = (item.totalPrice ?? 0)
-                                  .toDouble();
-
-                              final discount =
-                                  double.tryParse(item.discountAmount ?? '0') ??
-                                  0;
-                              final finalPrice =
-                                  double.tryParse(item.finalItemPrice ?? '') ??
-                                  0;
-                              final hasDiscount = discount > 0;
-                              final hasFinal = finalPrice > 0;
-
-                              return Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    formatPrice(totalPrice),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                    textAlign: TextAlign.right,
-                                  ),
-                                  if (hasDiscount)
-                                    Text(
-                                      '- ${formatPrice(discount)}',
-                                      style: const TextStyle(
-                                        fontSize: 11,
-                                        color: Colors.green,
-                                      ),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                  if (hasFinal)
-                                    Text(
-                                      formatPrice(finalPrice),
-                                      style: const TextStyle(fontSize: 11),
-                                      textAlign: TextAlign.right,
-                                    ),
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        child: const Divider(height: 16),
+                      ),
+                  ],
                 ),
               ] else ...[
                 Text(

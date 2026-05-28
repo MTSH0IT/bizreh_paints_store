@@ -265,13 +265,11 @@ class _DetailsTile extends StatelessWidget {
   const _DetailsTile({
     required this.icon,
     required this.title,
-    this.subtitle = '',
     this.onTap,
   });
 
   final IconData icon;
   final String title;
-  final String subtitle;
   final VoidCallback? onTap;
 
   @override
@@ -316,13 +314,6 @@ class _DetailsTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (subtitle.trim().isNotEmpty) ...[
-                  Text(
-                    subtitle,
-                    style: TextStyle(color: Colors.grey.shade600, fontSize: 12),
-                  ),
-                  const SizedBox(width: 8),
-                ],
                 if (onTap != null)
                   Icon(
                     Icons.arrow_forward_ios_rounded,

@@ -5,8 +5,9 @@ import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:flutter/material.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:bizreh_paints_store/utils/widgets/products_grid.dart';
-import 'package:bizreh_paints_store/views/search/widgets/search_filter_dropdown.dart';
+import 'package:bizreh_paints_store/views/search/widgets/loading_dropdown_form_field2.dart';
 import 'package:bizreh_paints_store/views/search/widgets/search_input.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:get/get.dart' hide Trans;
 
 class Search extends StatelessWidget {
@@ -61,43 +62,65 @@ class Search extends StatelessWidget {
                           children: [
                             Expanded(
                               child: Obx(
-                                () => SearchFilterDropdown(
-                                  label: tr('search.brand'),
-                                  allLabel: tr('search.all_brands'),
-                                  selectedId:
-                                      _searchController.selectedBrandId.value,
+                                () => LoadingDropdownFormField2<int?>(
                                   isLoading:
                                       _searchController.isOptionsLoading.value,
-                                  options: _searchController.brands,
-                                  idOf: (b) => b.id,
-                                  titleOf: (b) => context.localizedValue(
-                                    en: b.title,
-                                    ar: b.arTitle,
-                                    fallback: '',
-                                  ),
+                                  value:
+                                      _searchController.selectedBrandId.value,
                                   onChanged: _searchController.setBrand,
+                                  labelText: tr('search.brand'),
+                                  hintText: tr('search.all_brands'),
+                                  enableSearch: true,
+                                  searchHintText: tr('search.search'),
+                                  items: [
+                                    DropdownItem<int?>(
+                                      value: null,
+                                      child: Text(tr('search.all_brands')),
+                                    ),
+                                    ..._searchController.brands.map(
+                                      (b) => DropdownItem<int?>(
+                                        value: b.id,
+                                        child: Text(context.localizedValue(
+                                          en: b.title,
+                                          ar: b.arTitle,
+                                          fallback: '',
+                                        )),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: Obx(
-                                () => SearchFilterDropdown(
-                                  label: tr('search.category'),
-                                  allLabel: tr('search.all_categories'),
-                                  selectedId: _searchController
-                                      .selectedSubCategoryId
-                                      .value,
+                                () => LoadingDropdownFormField2<int?>(
                                   isLoading:
                                       _searchController.isOptionsLoading.value,
-                                  options: _searchController.subCategories,
-                                  idOf: (c) => c.id,
-                                  titleOf: (c) => context.localizedValue(
-                                    en: c.title,
-                                    ar: c.arTitle,
-                                    fallback: '',
-                                  ),
+                                  value: _searchController
+                                      .selectedSubCategoryId
+                                      .value,
                                   onChanged: _searchController.setSubCategory,
+                                  labelText: tr('search.category'),
+                                  hintText: tr('search.all_categories'),
+                                  enableSearch: true,
+                                  searchHintText: tr('search.search'),
+                                  items: [
+                                    DropdownItem<int?>(
+                                      value: null,
+                                      child: Text(tr('search.all_categories')),
+                                    ),
+                                    ..._searchController.subCategories.map(
+                                      (c) => DropdownItem<int?>(
+                                        value: c.id,
+                                        child: Text(context.localizedValue(
+                                          en: c.title,
+                                          ar: c.arTitle,
+                                          fallback: '',
+                                        )),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

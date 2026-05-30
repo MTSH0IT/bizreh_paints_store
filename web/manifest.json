@@ -1,6 +1,6 @@
 {
-    "name": "bizreh_paints_store",
-    "short_name": "bizreh_paints_store",
+    "name": "Bizreh Paints",
+    "short_name": "Bizreh Paints",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

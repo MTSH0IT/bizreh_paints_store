@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.bizreh" "\0"
-            VALUE "FileDescription", "bizreh_paints_store" "\0"
+            VALUE "FileDescription", "Bizreh Paints" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
             VALUE "InternalName", "bizreh_paints_store" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.bizreh. All rights reserved." "\0"
             VALUE "OriginalFilename", "bizreh_paints_store.exe" "\0"
-            VALUE "ProductName", "bizreh_paints_store" "\0"
+            VALUE "ProductName", "Bizreh Paints" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

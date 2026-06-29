@@ -13,7 +13,7 @@ class UniversalSeeAllView<T> extends StatefulWidget {
     this.onRefresh,
     this.isLoading = false,
     this.emptyMessage = 'No items found',
-    this.useGridView = true,
+    this.useGridView = false,
     this.gridDelegate,
     this.padding,
   });
@@ -123,7 +123,7 @@ class _UniversalSeeAllViewState<T> extends State<UniversalSeeAllView<T>> {
             crossAxisCount: 2,
             mainAxisSpacing: 18,
             crossAxisSpacing: 16,
-            childAspectRatio: 1.25,
+            childAspectRatio: 0.85,
           ),
       itemCount: widget.items.length,
       itemBuilder: (context, index) {

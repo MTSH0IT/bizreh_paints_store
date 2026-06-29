@@ -7,9 +7,11 @@ class ImageNetwork extends StatelessWidget {
     super.key,
     required this.image,
     this.icon = Icons.image_not_supported,
+    this.fit = BoxFit.contain,
   });
   final String image;
   final IconData icon;
+  final BoxFit fit;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class ImageNetwork extends StatelessWidget {
           const Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) =>
           Icon(icon, size: 40, color: Colors.black54),
-      fit: BoxFit.cover,
+      fit: fit,
       width: double.infinity,
       height: double.infinity,
     );

@@ -8,7 +8,7 @@ class SeeAllListCard extends StatelessWidget {
     required this.imageUrl,
     required this.onTap,
     this.subtitle,
-    this.height = 80,
+    this.height = 90,
     this.borderRadius = 12,
   });
 
@@ -51,11 +51,11 @@ class SeeAllListCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: SizedBox(
-                    width: 60,
-                    height: 60,
+                    width: 70,
+                    height: 70,
                     child: ColoredBox(
                       color: Colors.grey.shade100,
-                      child: ImageNetwork(image: imageUrl),
+                      child: ImageNetwork(image: imageUrl, fit: BoxFit.cover),
                     ),
                   ),
                 ),

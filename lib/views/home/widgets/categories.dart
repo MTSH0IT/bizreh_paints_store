@@ -49,7 +49,7 @@ class Categories extends StatelessWidget {
 }
 
 class CategorieItem extends StatelessWidget {
-  const CategorieItem({required this.item});
+  const CategorieItem({super.key, required this.item});
 
   final CategoryTreeModle item;
 
@@ -66,7 +66,7 @@ class CategorieItem extends StatelessWidget {
               color: Colors.white,
               border: Border.all(color: Colors.grey.shade200),
             ),
-            child: ImageNetwork(image: item.image ?? ''),
+            child: ImageNetwork(image: item.image ?? '', fit: BoxFit.cover),
           ),
         ),
         const SizedBox(height: 6),

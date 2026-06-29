@@ -66,7 +66,7 @@ class BrandItem extends StatelessWidget {
             ),
           ],
         ),
-        child: ImageNetwork(image: item.image ?? ''),
+        child: ImageNetwork(image: item.image ?? '', fit: BoxFit.cover),
       ),
     );
   }

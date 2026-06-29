@@ -8,7 +8,7 @@ class SeeAllGridCard extends StatelessWidget {
     required this.imageUrl,
     required this.onTap,
     this.subtitle,
-    this.height = 120,
+
     this.borderRadius = 12,
   });
 
@@ -16,7 +16,7 @@ class SeeAllGridCard extends StatelessWidget {
   final String imageUrl;
   final VoidCallback onTap;
   final String? subtitle;
-  final double height;
+
   final double borderRadius;
 
   @override
@@ -46,8 +46,8 @@ class SeeAllGridCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Image Section
-              Expanded(
-                flex: 3,
+              AspectRatio(
+                aspectRatio: 1.2,
                 child: ClipRRect(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(borderRadius),
@@ -55,41 +55,40 @@ class SeeAllGridCard extends StatelessWidget {
                   child: Container(
                     width: double.infinity,
                     color: Colors.grey.shade100,
-                    child: ImageNetwork(image: imageUrl),
+                    child: ImageNetwork(image: imageUrl, fit: BoxFit.cover),
                   ),
                 ),
               ),
 
               // Text Section
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      name,
+                      style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13,
+                      ),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    if (subtitle != null) ...[
+                      const SizedBox(height: 4),
                       Text(
-                        name,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 13,
+                        subtitle!,
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                          color: Colors.grey[600],
+                          fontSize: 11,
                         ),
-                        maxLines: 2,
+                        maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      if (subtitle != null) ...[
-                        const SizedBox(height: 4),
-                        Text(
-                          subtitle!,
-                          style: Theme.of(context).textTheme.bodySmall
-                              ?.copyWith(color: Colors.grey[600], fontSize: 11),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
                     ],
-                  ),
+                  ],
                 ),
               ),
             ],

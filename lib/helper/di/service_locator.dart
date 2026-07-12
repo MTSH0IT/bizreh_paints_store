@@ -21,6 +21,7 @@ import 'package:bizreh_paints_store/services/payments_services.dart';
 import 'package:bizreh_paints_store/services/points_services.dart';
 import 'package:bizreh_paints_store/services/rewards_services.dart';
 import 'package:bizreh_paints_store/services/ads_services.dart';
+import 'package:bizreh_paints_store/services/version_service.dart';
 import 'package:bizreh_paints_store/helper/di/token_provider.dart';
 
 /// Service Locator using GetIt for dependency injection
@@ -49,6 +50,7 @@ Future<void> init() async {
   _initPaymentsServices();
   _initPointsServices();
   _initRewardsServices();
+  _initVersionServices();
   _initAdsServices();
 }
 
@@ -172,5 +174,11 @@ void _initRewardsServices() {
 void _initAdsServices() {
   sl.registerLazySingleton<AdsServices>(
     () => AdsServices(apiClient: sl<IApiClient>()),
+  );
+}
+
+void _initVersionServices() {
+  sl.registerLazySingleton<VersionService>(
+    () => VersionService(apiClient: sl<IApiClient>()),
   );
 }

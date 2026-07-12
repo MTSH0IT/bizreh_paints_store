@@ -39,6 +39,7 @@ dependencies:
   geolocator: ^14.0.2
   get: ^4.7.3
   get_it: ^9.2.1
+  package_info_plus: ^8.1.2
   progress_tracker: ^0.0.16
   qr_flutter: ^4.1.0
   shared_preferences: ^2.5.3

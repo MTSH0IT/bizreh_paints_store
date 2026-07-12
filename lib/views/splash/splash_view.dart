@@ -1,4 +1,5 @@
 import 'package:bizreh_paints_store/controllers/auth_controller.dart';
+import 'package:bizreh_paints_store/controllers/version_controller.dart';
 import 'package:bizreh_paints_store/views/auth/signIn_view.dart';
 import 'package:bizreh_paints_store/views/mainView/main_view.dart';
 import 'package:bizreh_paints_store/utils/consts/colors.dart';
@@ -20,6 +21,16 @@ class _SplashViewState extends State<SplashView> {
   }
 
   Future<void> _load() async {
+    final versionController = Get.find<VersionController>();
+    final needsUpdate = await versionController.checkVersion();
+
+    if (!mounted) return;
+
+    if (needsUpdate) {
+      versionController.showForceUpdateDialog();
+      return;
+    }
+
     final auth = Get.find<AuthController>();
     final ok = await auth.tryAutoLogin();
 

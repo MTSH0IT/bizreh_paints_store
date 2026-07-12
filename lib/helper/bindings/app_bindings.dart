@@ -14,6 +14,7 @@ import 'package:bizreh_paints_store/controllers/personal_controller.dart';
 import 'package:bizreh_paints_store/controllers/points_controller.dart';
 import 'package:bizreh_paints_store/controllers/product_details_controller.dart';
 import 'package:bizreh_paints_store/controllers/rewards_controller.dart';
+import 'package:bizreh_paints_store/controllers/version_controller.dart';
 import 'package:bizreh_paints_store/controllers/wish_list_controller.dart';
 import 'package:bizreh_paints_store/helper/di/service_locator.dart';
 import 'package:bizreh_paints_store/helper/di/token_provider.dart';
@@ -34,6 +35,7 @@ import 'package:bizreh_paints_store/services/points_services.dart';
 import 'package:bizreh_paints_store/services/product_services.dart';
 import 'package:bizreh_paints_store/services/rewards_services.dart';
 import 'package:bizreh_paints_store/services/user_services.dart';
+import 'package:bizreh_paints_store/services/version_service.dart';
 import 'package:bizreh_paints_store/services/wishList_services.dart';
 import 'package:bizreh_paints_store/utils/storageService/storage_service.dart';
 import 'package:get/get.dart';
@@ -41,6 +43,11 @@ import 'package:get/get.dart';
 class AppBindings extends Bindings {
   @override
   void dependencies() {
+    Get.lazyPut<VersionController>(
+      () => VersionController(versionService: sl<VersionService>()),
+      fenix: true,
+    );
+
     Get.lazyPut<AuthController>(
       () => AuthController(
         authService: sl<AuthService>(),

@@ -1,4 +1,4 @@
-{
+﻿{
   "app_name": "Bizreh Paints",
   "errors": {
     "connection_timeout": "Connection timeout. Please check your internet connection.",
@@ -496,5 +496,11 @@
     "message": "Are you sure you want to exit the app?",
     "confirm": "Exit",
     "cancel": "Cancel"
+  },
+  "version": {
+    "update_required": "Update Required",
+    "update_message": "You must update the app to the latest version to continue using it",
+    "current_version": "Required Version",
+    "update_now": "Update Now"
   }
 }

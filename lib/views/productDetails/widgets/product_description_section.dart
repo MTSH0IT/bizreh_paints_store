@@ -14,17 +14,25 @@ class ProductDescriptionSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '${tr('product_details.description')} :',
-          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+          tr('product_details.description'),
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            color: Colors.black87,
+          ),
         ),
-        SizedBox(height: 4),
+        const SizedBox(height: 8),
         Text(
           context.localizedValue(
             en: product.description,
             ar: product.arDescription,
             fallback: '',
           ),
-          style: TextStyle(color: Colors.black, height: 2, fontSize: 14),
+          style: TextStyle(
+            color: Colors.grey.shade800,
+            height: 1.6,
+            fontSize: 14,
+          ),
         ),
       ],
     );

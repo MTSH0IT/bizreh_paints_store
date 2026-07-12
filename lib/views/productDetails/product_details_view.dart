@@ -57,12 +57,19 @@ class ProductDetailsView extends StatelessWidget {
                       ),
                     ),
 
+                    const SizedBox(height: 12),
+
                     // Static content — no Obx needed here
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
                         child: Card(
                           color: Colors.white,
+                          elevation: 2,
+                          shadowColor: Colors.black.withValues(alpha: 0.05),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                           child: SingleChildScrollView(
                             padding: const EdgeInsets.symmetric(
                               horizontal: 20,

@@ -8,6 +8,7 @@ import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/product_option.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/packaging_variants_bottom_sheet.dart';
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Trans;
@@ -139,41 +140,128 @@ class ProductPackagingSection extends StatelessWidget {
               );
             }),
           ),
-          const SizedBox(height: 8),
-          if (selectedPackagingModel != null)
-            Text(
-              '${tr('product_details.price')} : ${formatPrice(selectedPackagingModel.pricePerUnit ?? 0)}',
-              style: const TextStyle(
-                fontSize: 16,
-                //fontWeight: FontWeight.w700,
-                color: Colors.black,
+          const SizedBox(height: 16),
+          if (selectedPackagingModel != null) ...[
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade50,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: Colors.grey.shade200, width: 1),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tr('product_details.price'),
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.grey.shade600,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          //const SizedBox(height: 4),
+                        ],
+                      ),
+                      // Container(
+                      //   padding: const EdgeInsets.symmetric(
+                      //     horizontal: 12,
+                      //     vertical: 6,
+                      //   ),
+                      //   decoration: BoxDecoration(
+                      //     color: (selectedPackagingModel.stockQuantity ?? 0) > 0
+                      //         ? Colors.green.shade50
+                      //         : Colors.red.shade50,
+                      //     borderRadius: BorderRadius.circular(20),
+                      //   ),
+                      // child: Row(
+                      //   mainAxisSize: MainAxisSize.min,
+                      //   children: [
+                      //     Container(
+                      //       width: 8,
+                      //       height: 8,
+                      //       decoration: BoxDecoration(
+                      //         shape: BoxShape.circle,
+                      //         color:
+                      //             (selectedPackagingModel.stockQuantity ??
+                      //                     0) >
+                      //                 0
+                      //             ? Colors.green
+                      //             : Colors.red,
+                      //       ),
+                      //     ),
+                      //     const SizedBox(width: 6),
+                      //     Text(
+                      //       (selectedPackagingModel.stockQuantity ?? 0) > 0
+                      //           ? '${tr('product_details.stock')}: ${selectedPackagingModel.stockQuantity}'
+                      //           : tr('product_details.out_of_stock'),
+                      //       style: TextStyle(
+                      //         color:
+                      //             (selectedPackagingModel.stockQuantity ??
+                      //                     0) >
+                      //                 0
+                      //             ? Colors.green.shade800
+                      //             : Colors.red.shade800,
+                      //         fontWeight: FontWeight.bold,
+                      //         fontSize: 12,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      //),
+                      Text(
+                        formatPrice(selectedPackagingModel.pricePerUnit ?? 0),
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w800,
+                          color: primaryColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  if (selectedPackagingModel.color != null) ...[
+                    const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: Divider(color: Colors.black12, height: 1),
+                    ),
+                    Row(
+                      children: [
+                        ColorDot(
+                          color: parseColorDegree(
+                            selectedPackagingModel.color!.degree,
+                          ),
+                          selected: true,
+                          width: 24,
+                          height: 24,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            context.localizedValue(
+                              en: selectedPackagingModel.color!.name,
+                              ar: selectedPackagingModel.color!.arName,
+                              fallback: '',
+                            ),
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
               ),
             ),
-          if (selectedPackagingModel != null)
-            Text(
-              '${tr('product_details.stock')} : ${selectedPackagingModel.stockQuantity ?? 0}',
-              style: const TextStyle(fontSize: 14, color: Colors.black),
-            ),
-          const SizedBox(height: 8),
-          if (selectedPackagingModel != null &&
-              selectedPackagingModel.color != null)
-            Row(
-              children: [
-                ColorDot(
-                  color: parseColorDegree(selectedPackagingModel.color!.degree),
-                  selected: true,
-                ),
-                const SizedBox(width: 10),
-                Text(
-                  context.localizedValue(
-                    en: selectedPackagingModel.color!.name,
-                    ar: selectedPackagingModel.color!.arName,
-                    fallback: '',
-                  ),
-                  style: const TextStyle(fontSize: 14),
-                ),
-              ],
-            ),
+          ],
         ],
       );
     });

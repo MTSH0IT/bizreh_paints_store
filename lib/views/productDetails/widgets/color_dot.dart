@@ -25,20 +25,36 @@ class ColorDot extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-      padding: const EdgeInsets.all(2),
-      alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: color,
         shape: BoxShape.circle,
         border: Border.all(
-          color: selected ? primaryColor : Colors.transparent,
-          width: 2,
+          color: selected ? primaryColor : Colors.grey.shade300,
+          width: selected ? 2 : 1,
         ),
-        boxShadow: const [
-          BoxShadow(color: Colors.black12, blurRadius: 1, offset: Offset(0, 1)),
-        ],
       ),
-      child: selected ? Icon(Icons.check, size: 18, color: iconColor) : null,
+      padding: const EdgeInsets.all(3),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          shape: BoxShape.circle,
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 1,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: selected
+            ? Center(
+                child: Icon(
+                  Icons.check,
+                  size: (width - 12) > 10 ? (width - 12) : 10,
+                  color: iconColor,
+                ),
+              )
+            : null,
+      ),
     );
   }
 }

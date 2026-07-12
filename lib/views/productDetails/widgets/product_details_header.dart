@@ -21,38 +21,47 @@ class ProductDetailsHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 2.5 / 2,
-      child: Stack(
-        fit: StackFit.expand,
-        children: [
-          ImageNetwork(image: image, icon: Icons.format_paint),
-          Positioned(
-            top: 8,
-            left: 8,
-            right: 8,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleIconButton(icon: Icons.arrow_back, onPressed: Get.back),
-                Obx(() {
-                  final opid = controller.selectedPackaging.value;
-                  final isFav = wishCtrl.isFavorite(opid);
-                  if (wishCtrl.isAddRemoveLoading.value) {
-                    return BuildProgressIndicator();
-                  }
-                  return CircleIconButton(
-                    icon: isFav ? Icons.favorite : Icons.favorite_border,
-                    onPressed: () {
-                      isFav
-                          ? wishCtrl.removeItem(opid)
-                          : wishCtrl.addToWishList(opid);
-                    },
-                  );
-                }),
-              ],
-            ),
+      aspectRatio: 3 / 2,
+      child: ClipRRect(
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(24)),
+        child: Container(
+          color: Colors.white,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              ImageNetwork(image: image, icon: Icons.format_paint),
+              Positioned(
+                top: 10,
+                left: 12,
+                right: 12,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CircleIconButton(
+                      icon: Icons.arrow_back,
+                      onPressed: Get.back,
+                    ),
+                    Obx(() {
+                      final opid = controller.selectedPackaging.value;
+                      final isFav = wishCtrl.isFavorite(opid);
+                      if (wishCtrl.isAddRemoveLoading.value) {
+                        return BuildProgressIndicator();
+                      }
+                      return CircleIconButton(
+                        icon: isFav ? Icons.favorite : Icons.favorite_border,
+                        onPressed: () {
+                          isFav
+                              ? wishCtrl.removeItem(opid)
+                              : wishCtrl.addToWishList(opid);
+                        },
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }

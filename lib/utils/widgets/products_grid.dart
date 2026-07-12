@@ -29,7 +29,7 @@ class ProductsGrid extends StatelessWidget {
           maxCrossAxisExtent: 220,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.72,
+          childAspectRatio: 0.8,
         ),
         itemCount: products.length,
         itemBuilder: (_, i) {
@@ -64,10 +64,11 @@ class _ProductCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
+              AspectRatio(
+                aspectRatio: 1.25,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: ClipRRect(

@@ -3,6 +3,7 @@ import 'package:bizreh_paints_store/utils/func/localized_value.dart';
 import 'package:bizreh_paints_store/utils/func/color_degree.dart';
 import 'package:bizreh_paints_store/utils/func/price_format.dart';
 import 'package:bizreh_paints_store/views/productDetails/widgets/color_dot.dart';
+import 'package:bizreh_paints_store/utils/consts/colors.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -61,12 +62,15 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
+                            color: isSelected
+                                ? primaryColor.withValues(alpha: 0.04)
+                                : Colors.white,
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: isSelected
-                                  ? Colors.blue
+                                  ? primaryColor
                                   : Colors.grey.shade300,
-                              width: isSelected ? 1.8 : 1,
+                              width: isSelected ? 2.0 : 1.0,
                             ),
                           ),
                           child: Row(
@@ -121,10 +125,10 @@ class PackagingVariantsBottomSheet extends StatelessWidget {
                                       '${tr('product_details.price')}: ${formatPrice(v.pricePerUnit ?? 0)}',
                                       style: const TextStyle(fontSize: 13),
                                     ),
-                                    Text(
-                                      '${tr('product_details.stock')}: ${v.stockQuantity ?? 0}',
-                                      style: const TextStyle(fontSize: 13),
-                                    ),
+                                    // Text(
+                                    //   '${tr('product_details.stock')}: ${v.stockQuantity ?? 0}',
+                                    //   style: const TextStyle(fontSize: 13),
+                                    // ),
                                   ],
                                 ),
                               ),

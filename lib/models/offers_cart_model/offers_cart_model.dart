@@ -6,14 +6,14 @@ class OffersCartModel {
   String? arName;
   String? description;
   String? arDescription;
-  String? price;
+  double? price;
   int? quantity;
   int? isActive;
   DateTime? createdAt;
   DateTime? updatedAt;
   int? itemsCount;
-  int? calculatedTotal;
-  int? savings;
+  double? calculatedTotal;
+  double? savings;
   List<Item>? items;
 
   OffersCartModel({
@@ -40,7 +40,9 @@ class OffersCartModel {
       arName: json['ar_name'] as String?,
       description: json['description'] as String?,
       arDescription: json['ar_description'] as String?,
-      price: json['price'] as String?,
+      price: json['price'] == null
+          ? null
+          : double.tryParse(json['price'].toString()),
       quantity: json['quantity'] as int?,
       isActive: json['is_active'] as int?,
       createdAt: json['created_at'] == null
@@ -50,8 +52,12 @@ class OffersCartModel {
           ? null
           : DateTime.parse(json['updated_at'] as String),
       itemsCount: json['items_count'] as int?,
-      calculatedTotal: json['calculated_total'] as int?,
-      savings: json['savings'] as int?,
+      calculatedTotal: json['calculated_total'] == null
+          ? null
+          : double.tryParse(json['calculated_total'].toString()),
+      savings: json['savings'] == null
+          ? null
+          : double.tryParse(json['savings'].toString()),
       items: (json['items'] as List<dynamic>?)
           ?.map((e) => Item.fromJson(e as Map<String, dynamic>))
           .toList(),

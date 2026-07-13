@@ -90,7 +90,7 @@ class OffersCartOfferCard extends StatelessWidget {
               children: [
                 OffersCartChipText(
                   label: tr('offers_cart.price'),
-                  value: offer.price ?? '-',
+                  value: offer.price?.toString() ?? '-',
                 ),
                 OffersCartChipText(
                   label: tr('offers_cart.quantity'),

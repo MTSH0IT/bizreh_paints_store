@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:bizreh_paints_store/helper/dioApiService/i_api_client.dart';
 import 'package:bizreh_paints_store/helper/exceptions/app_exception.dart';
+import 'package:bizreh_paints_store/models/version_info.dart';
 import 'package:bizreh_paints_store/utils/consts/api_endpoint.dart';
 
 class VersionService {
@@ -9,14 +10,14 @@ class VersionService {
 
   VersionService({required IApiClient apiClient}) : _apiClient = apiClient;
 
-  Future<String> getMinVersion() async {
+  Future<VersionInfo> getMinVersion() async {
     try {
       final response = await _apiClient.get(ApiEndpoint.getVersion);
       log('Version API response: $response');
 
       if (response is Map<String, dynamic>) {
         if (response['success'] == true && response['version'] != null) {
-          return response['version'] as String;
+          return VersionInfo.fromJson(response);
         } else {
           throw Exception('API response indicates failure or missing version');
         }

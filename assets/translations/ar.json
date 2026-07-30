@@ -500,7 +500,8 @@
   "version": {
     "update_required": "تحديث مطلوب",
     "update_message": "يجب تحديث التطبيق إلى أحدث إصدار لمواصلة استخدامه",
-    "current_version": "الإصدار المطلوب",
+    "current_version": "الإصدار الحالي",
+    "minimum_required_version": "الحد الأدنى للإصدار المطلوب",
     "update_now": "تحديث الآن"
   }
 }

@@ -16,20 +16,26 @@ class VersionController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxBool needsUpdate = false.obs;
   final RxString minVersion = ''.obs;
+  final RxString currentVersion = ''.obs;
+  final RxString androidLink = ''.obs;
+  final RxString iOSLink = ''.obs;
 
   Future<bool> checkVersion() async {
     isLoading.value = true;
     try {
-      final minVer = await _versionService.getMinVersion();
-      minVersion.value = minVer;
+      final versionResponse = await _versionService.getMinVersion();
+      minVersion.value = versionResponse.version;
+      androidLink.value = versionResponse.androidLink;
+      iOSLink.value = versionResponse.iOSLink;
 
       final packageInfo = await PackageInfo.fromPlatform();
-      final currentVersion = packageInfo.version;
+      currentVersion.value = packageInfo.version;
       log('*******************************************');
-      log('Current version: $currentVersion');
-      log('Minimum required version: $minVer');
+      log('Current version: ${currentVersion.value}');
+      log('Minimum required version: ${minVersion.value}');
 
-      final needsUpdate = _compareVersions(currentVersion, minVer) < 0;
+      final needsUpdate =
+          _compareVersions(currentVersion.value, minVersion.value) < 0;
       this.needsUpdate.value = needsUpdate;
 
       return needsUpdate;
@@ -75,10 +81,18 @@ class VersionController extends GetxController {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('version.update_message'.tr(), style: TextStyle(fontSize: 14)),
+              Text(
+                'version.update_message'.tr(),
+                style: TextStyle(fontSize: 14),
+              ),
               SizedBox(height: 8),
               Text(
-                '${'version.current_version'.tr()}: ${minVersion.value}',
+                '${'version.minimum_required_version'.tr()}: ${minVersion.value}',
+                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+              ),
+              SizedBox(height: 8),
+              Text(
+                '${'version.current_version'.tr()}: ${currentVersion.value}',
                 style: TextStyle(fontSize: 12, color: Colors.grey[600]),
               ),
             ],
@@ -110,13 +124,16 @@ class VersionController extends GetxController {
     final packageInfo = await PackageInfo.fromPlatform();
 
     if (GetPlatform.isAndroid) {
-      final url =
-          'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
+      final url = androidLink.value.isNotEmpty
+          ? androidLink.value
+          : 'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
       }
     } else if (GetPlatform.isIOS) {
-      final url = 'https://apps.apple.com/app/id${packageInfo.packageName}';
+      final url = iOSLink.value.isNotEmpty
+          ? iOSLink.value
+          : 'https://apps.apple.com/app/id${packageInfo.packageName}';
       if (await canLaunchUrl(Uri.parse(url))) {
         await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
       }

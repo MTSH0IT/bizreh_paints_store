@@ -500,7 +500,8 @@
   "version": {
     "update_required": "Update Required",
     "update_message": "You must update the app to the latest version to continue using it",
-    "current_version": "Required Version",
+    "current_version": "Current Version",
+    "minimum_required_version": "Minimum Required Version",
     "update_now": "Update Now"
   }
 }
